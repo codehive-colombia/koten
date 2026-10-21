@@ -1,0 +1,142 @@
+@import "tailwindcss";
+@import "./tokens.css";
+
+@source "../../../../apps/*/src/**/*.{ts,tsx}";
+@source "../**/*.{ts,tsx}";
+
+@theme inline {
+  /* Lock the default Tailwind palette. Components must use Koten roles. */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --color-kinari: var(--koten-kinari);
+  --color-paper: var(--koten-bg);
+  --color-surface: var(--koten-bg-raised);
+  --color-tint: var(--koten-bg-tint);
+  --color-ink: var(--koten-fg);
+  --color-muted: var(--koten-fg-muted);
+  --color-faint: var(--koten-fg-faint);
+  --color-rule: var(--koten-border);
+  --color-rule-strong: var(--koten-border-strong);
+  --color-primary: var(--koten-primary);
+  --color-primary-hover: var(--koten-primary-hover);
+  --color-primary-strong: var(--koten-primary-strong);
+  --color-primary-foreground: var(--koten-primary-fg);
+  --color-link: var(--koten-link);
+  --color-danger: var(--koten-danger);
+  --color-danger-strong: var(--koten-danger-strong);
+  --color-success: var(--koten-success);
+  --color-warning: var(--koten-warning);
+  --color-info: var(--koten-info);
+  --color-sale: var(--koten-sale);
+  --color-new: var(--koten-new);
+  --color-focus: var(--koten-focus);
+  --color-selection: var(--koten-selection);
+  --color-ai: var(--koten-ai);
+  --color-shu: var(--koten-shu);
+  --color-kin: var(--koten-kin);
+  --color-matcha: var(--koten-matcha);
+  --color-sumi: var(--koten-sumi);
+
+  --color-accent-blue: var(--koten-accent-blue);
+  --color-accent-red: var(--koten-accent-red);
+  --color-accent-orange: var(--koten-accent-orange);
+  --color-accent-yellow: var(--koten-accent-yellow);
+  --color-accent-green: var(--koten-accent-green);
+  --color-accent-pink: var(--koten-accent-pink);
+  --color-accent-purple: var(--koten-accent-purple);
+
+  /* Typography */
+  --font-*: initial;
+  --font-sans: var(--koten-font-sans);
+  --font-serif: var(--koten-font-serif);
+  --font-mono: var(--koten-font-mono);
+
+  --text-*: initial;
+  --text-2xs: var(--koten-text-2xs);
+  --text-xs: var(--koten-text-xs);
+  --text-sm: var(--koten-text-sm);
+  --text-base: var(--koten-text-base);
+  --text-lg: var(--koten-text-lg);
+  --text-xl: var(--koten-text-xl);
+  --text-2xl: var(--koten-text-2xl);
+  --text-3xl: var(--koten-text-3xl);
+  --text-4xl: var(--koten-text-4xl);
+
+  /* Shape */
+  --radius-*: initial;
+  --radius-sm: var(--koten-radius-sm);
+  --radius-md: var(--koten-radius-md);
+  --shadow-*: initial;
+  --shadow-overlay: var(--koten-shadow-overlay);
+
+  --ease-koten: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+  html {
+    background: var(--koten-bg);
+    color: var(--koten-fg);
+    font-family: var(--koten-font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100dvh;
+    margin: 0;
+    background: var(--koten-bg);
+    color: var(--koten-fg);
+    font-size: var(--koten-text-sm);
+    line-height: var(--koten-leading-relaxed);
+  }
+
+  :lang(ja) {
+    line-height: var(--koten-leading-ja);
+  }
+
+  *,
+  ::before,
+  ::after {
+    border-color: var(--koten-border);
+  }
+
+  ::selection {
+    background: var(--koten-selection);
+    color: var(--koten-fg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--koten-focus);
+    outline-offset: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility koten-container {
+  width: 100%;
+  max-width: var(--koten-layout-default);
+  margin-inline: auto;
+  padding-inline: var(--koten-page-px);
+}
+
+@utility rule-double {
+  border-block-end: 3px double var(--koten-border-strong);
+}
+
+@utility tategaki {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}

@@ -1,0 +1,145 @@
+:root {
+  color-scheme: light;
+
+  /* ---- Primitive colors ------------------------------------------------- */
+  --koten-kinari: #f5f0e4;
+  --koten-raised: #fffdf7;
+  --koten-tint: #efe9db;
+  --koten-ink: #1c1a17;
+  --koten-muted: #5e574b;
+  --koten-faint: #6f675a;
+  --koten-rule: #d6cdbb;
+  --koten-rule-strong: #948a75;
+  --koten-ai: #1e3a5f;
+  --koten-ai-hover: #162c49;
+  --koten-ai-tint: #e9eef5;
+  --koten-shu: #c23b22;
+  --koten-shu-hover: #a02f1a;
+  --koten-shu-tint: #fbeae5;
+  --koten-kin: #845c0e;
+  --koten-matcha: #4f6b3a;
+  --koten-sumi: #24211d;
+
+  /* Matsuri accents: Chirashi only. */
+  --koten-accent-blue: #0b63b6;
+  --koten-accent-red: #c8102e;
+  --koten-accent-orange: #e07a1f;
+  --koten-accent-yellow: #f2c200;
+  --koten-accent-green: #2e7d4f;
+  --koten-accent-pink: #d6336c;
+  --koten-accent-purple: #6b4c9a;
+
+  /* ---- Semantic roles: Kanso by default -------------------------------- */
+  --koten-bg: var(--koten-kinari);
+  --koten-bg-raised: var(--koten-raised);
+  --koten-bg-tint: var(--koten-tint);
+  --koten-fg: var(--koten-ink);
+  --koten-fg-muted: var(--koten-muted);
+  --koten-fg-faint: var(--koten-faint);
+  --koten-border: var(--koten-rule);
+  --koten-border-strong: var(--koten-rule-strong);
+  --koten-primary: var(--koten-ai);
+  --koten-primary-hover: var(--koten-ai-hover);
+  --koten-primary-strong: #142a44;
+  --koten-primary-fg: #ffffff;
+  --koten-link: var(--koten-ai);
+  --koten-danger: var(--koten-shu);
+  --koten-danger-strong: #8f2815;
+  --koten-success: var(--koten-matcha);
+  --koten-warning: var(--koten-kin);
+  --koten-info: var(--koten-ai);
+  --koten-sale: var(--koten-shu);
+  --koten-new: var(--koten-ai);
+  --koten-focus: var(--koten-ai);
+  --koten-selection: var(--koten-ai-tint);
+  --koten-overlay: rgb(28 26 23 / 42%);
+  --koten-shadow-overlay: 0 8px 24px rgb(28 26 23 / 18%);
+  --koten-highlight: rgb(255 255 255 / 22%);
+
+  /* ---- Typography ------------------------------------------------------ */
+  --koten-font-sans:
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "YuGothic", Meiryo, "Noto Sans JP",
+    system-ui, sans-serif;
+  --koten-font-serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+  --koten-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --koten-text-2xs: 11px;
+  --koten-text-xs: 12px;
+  --koten-text-sm: 13px;
+  --koten-text-base: 14px;
+  --koten-text-lg: 16px;
+  --koten-text-xl: 20px;
+  --koten-text-2xl: 24px;
+  --koten-text-3xl: 30px;
+  --koten-text-4xl: 38px;
+
+  --koten-leading-tight: 1.2;
+  --koten-leading-normal: 1.5;
+  --koten-leading-relaxed: 1.7;
+  --koten-leading-ja: 1.75;
+
+  /* ---- Shape ----------------------------------------------------------- */
+  --koten-radius-sm: 2px;
+  --koten-radius-md: 3px;
+
+  /* ---- Density: default ------------------------------------------------ */
+  --koten-row-h: 32px;
+  --koten-control-h: 32px;
+  --koten-control-px: 10px;
+  --koten-panel-p: 12px;
+  --koten-gap: 12px;
+
+  /* ---- Layout ---------------------------------------------------------- */
+  --koten-layout-classic: 990px;
+  --koten-layout-default: 1200px;
+  --koten-layout-wide: 1440px;
+  --koten-page-px: 16px;
+}
+
+/* ---- Themes ------------------------------------------------------------ */
+[data-theme="chirashi"] {
+  --koten-primary: var(--koten-shu);
+  --koten-primary-hover: var(--koten-shu-hover);
+  --koten-primary-strong: #8f2815;
+  --koten-danger: #a82c18;
+  --koten-danger-strong: #7f1f10;
+  --koten-focus: var(--koten-shu);
+  --koten-selection: var(--koten-shu-tint);
+}
+
+[data-theme="daicho"] {
+  --koten-primary: var(--koten-ai);
+  --koten-primary-hover: var(--koten-ai-hover);
+  --koten-primary-strong: #142a44;
+  --koten-danger: var(--koten-shu);
+  --koten-danger-strong: #8f2815;
+  --koten-focus: var(--koten-ai);
+  --koten-selection: var(--koten-ai-tint);
+}
+
+[data-theme="kanso"] {
+  --koten-primary: var(--koten-ai);
+  --koten-primary-hover: var(--koten-ai-hover);
+  --koten-primary-strong: #142a44;
+  --koten-danger: var(--koten-shu);
+  --koten-danger-strong: #8f2815;
+  --koten-focus: var(--koten-ai);
+  --koten-selection: var(--koten-ai-tint);
+}
+
+/* ---- Density ----------------------------------------------------------- */
+[data-density="compact"] {
+  --koten-row-h: 28px;
+  --koten-control-h: 28px;
+  --koten-control-px: 8px;
+  --koten-panel-p: 10px;
+  --koten-gap: 8px;
+}
+
+[data-density="comfortable"] {
+  --koten-row-h: 36px;
+  --koten-control-h: 38px;
+  --koten-control-px: 14px;
+  --koten-panel-p: 16px;
+  --koten-gap: 16px;
+}
