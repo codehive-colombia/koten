@@ -1,3 +1,4 @@
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
 import { type KotenLocale, useKoten } from "@koten/ui";
 import { PageHeader } from "../../components/docs";
 import { DensityGrid, Section, SubHeading } from "../../components/specimen";
@@ -79,7 +80,7 @@ export function TokensDensityPage() {
 
       <div className="mt-[calc(var(--koten-gap)*2)] space-y-[calc(var(--koten-gap)*2)]">
         <Section id="valores" title={t.values.title} jp="値" meta={t.values.meta}>
-          <div className="overflow-x-auto border border-rule">
+          <div tabIndex={0} className="overflow-x-auto border border-rule">
             <table className="w-full min-w-[36rem] border-collapse text-start">
               <caption className="sr-only">{t.values.caption}</caption>
               <thead>

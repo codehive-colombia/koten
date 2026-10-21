@@ -1,9 +1,10 @@
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
 import type { ComponentProps } from "react";
 import { cn } from "../../lib/cn";
 
 export function Table({ className, ...props }: ComponentProps<"table">) {
   return (
-    <div className="w-full min-w-0 overflow-x-auto border border-rule">
+    <div tabIndex={0} className="w-full min-w-0 overflow-x-auto border border-rule">
       <table
         data-slot="table"
         className={cn("w-full min-w-[32rem] border-collapse text-start text-xs", className)}

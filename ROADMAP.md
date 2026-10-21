@@ -3,9 +3,9 @@
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-21**
 > Fase actual: **4 — Cierre del POC** (`in_progress`)
-> Próxima tarea: **`F4-002`** — auditoría a11y
+> Próxima tarea: **`F4-003`** — auditoría de performance
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`F4-001`**
+> Última tarea completada: **`F4-002`**
 > Mejora puntual completada: **`M-001`** — i18n del catálogo
 > Bloqueos: **ninguno**
 
@@ -104,6 +104,8 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-019` | Catálogo wiki multipágina con React Router 7 y sidebar. | accepted | [D-019](./docs/DECISIONS.md#d-019) |
 | `D-020` | UI del catálogo en ES/JA/EN; documentación en español. | accepted | [D-020](./docs/DECISIONS.md#d-020) |
 | `D-026` | RTL best-effort con propiedades lógicas y guardia de i18n. | accepted | [D-026](./docs/DECISIONS.md#d-026) |
+| `D-027` | Piso tipográfico de 12 px (`2xs` = 12 px). | accepted | [D-027](./docs/DECISIONS.md#d-027) |
+| `D-028` | axe excluye solo los focus guards internos de Base UI. | accepted | [D-028](./docs/DECISIONS.md#d-028) |
 
 ---
 
@@ -115,7 +117,7 @@ ISO 8601: `YYYY-MM-DD`.
 - [x] `bun run check` pasa: Biome + TypeScript + tests unitarios.
 - [x] Storefront y ERP funcionan en **JA/ES/EN** sin clipping ni overflow horizontal.
 - [x] Catálogo documenta todos los componentes usados, con variantes, código y notas de accesibilidad.
-- [ ] Sin violaciones `serious`/`critical` de axe en las rutas principales.
+- [x] Sin violaciones `serious`/`critical` de axe en las rutas principales.
 - [x] Presupuestos: LCP < 1.5 s local, CLS < 0.02, JS inicial < 150 KB gzip (storefront) y < 250 KB (ERP), CSS < 30 KB, **0 bytes de fuentes CJK**.
 - [x] QA visual en 1440, 1280 y 1024 px.
 - [x] Ningún texto crítico vive dentro de una imagen.
@@ -241,7 +243,7 @@ ISO 8601: `YYYY-MM-DD`.
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
 | `F4-001` | Auditoría i18n: strings, labels, `Intl`, expansión de texto y RTL best-effort. | `F2-007`, `F3-008` | `done` | Sin strings hardcodeadas; ES/EN sin clipping; fechas/moneda correctas. | `scripts/check-i18n.ts` + test (30 archivos / 177 tests); badge `NEW` y ratings a `formatNumber`/`formatCurrency`; utilidades físicas → lógicas en 25 archivos; `scripts/qa-overflow.ts` → 72 combinaciones sin desbordamiento/recorte, RTL incluido; `D-026`; `Q-010` cerrada. |
-| `F4-002` | Auditoría a11y: axe, teclado, contraste y lector de pantalla. | `F4-001` | `todo` | AA; foco visible; 12 px mínimo; sin serious/critical. | — |
+| `F4-002` | Auditoría a11y: axe, teclado, contraste y lector de pantalla. | `F4-001` | `done` | AA; foco visible; 12 px mínimo; sin serious/critical. | `scripts/qa-a11y.ts`: axe-core en Chromium con contraste real, 12 rutas × 3 idiomas × 1440/390 (72 páginas, drawer y select incluidos) → 0 serious/critical, 0 textos < 12 px, 0 focos sin indicador. Correcciones: piso tipográfico `2xs` 11→12 px (`D-027`), activos nav a `text-primary-strong`, labels de marca y `viewOrder` alineados con el texto visible, regiones desplazables de tabla/código con `tabIndex={0}`, focus guards de Base UI acotados en axe (`D-028`). |
 | `F4-003` | Auditoría performance: bundles, fuentes, LCP/CLS y code splitting. | `F4-001` | `todo` | Presupuestos de la sección 4 cumplidos. | — |
 | `F4-004` | QA visual en 1440/1280/1024 para catálogo, storefront y ERP. | `F4-001` | `todo` | Capturas archivadas; diferencias corregidas. | — |
 | `F4-005` | Documentación final: README, catálogo, principios, tokens y recetas. | `F4-001` | `todo` | Un tercero puede usar el sistema sin leer el código. | — |
@@ -372,7 +374,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-008` | Bun, Biome, React, TypeScript y estándares modernos. | `F0-001`, `F0-002` | `done` |
 | `R-009` | Base UI + Tailwind v4. | `D-003`, `D-004`, `F0-003` | `done` |
 | `R-010` | Catálogo y documentación viva. | `F0-006`, `F0-012`, `F1-009`, `F4-005` | `done` |
-| `R-011` | Accesibilidad AA. | `F1-010`, `F4-002` | `todo` |
+| `R-011` | Accesibilidad AA. | `F1-010`, `F4-002` | `done` |
 | `R-012` | Presupuestos de performance. | `F4-003` | `todo` |
 | `R-013` | Estrategia de fuentes CJK sin archivos completos. | `D-006`, `F0-004`, `F4-003` | `done` |
 | `R-014` | Texto real, nunca texto en imágenes. | `D-010`, `F2-003`, `F2-004`, `F4-002` | `done` |
@@ -459,6 +461,7 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Catálogo completo de primitivas: inventario C-001–C-041 + C-062, enlaces, copiar código y trazabilidad. `F1-009` → `done`. | Sesión 013 |
 | 2026-10-21 | A11y/performance: axe en 11 páginas, `bun run budget` con presupuestos de JS/CSS/fuentes, foco visible y QA visual. `F1-010` → `done`; **fase 1 → `done`**. Próxima: `F2-001`. | Sesión 014 |
 | 2026-10-21 | Auditoría i18n: guardia automática (`check:i18n`) de strings, labels, `Intl` y utilidades físicas; ratings y badge localizados; migración a propiedades lógicas; QA de expansión y RTL en 72 combinaciones. `F4-001` → `done`; `D-026`; **fase 4 → `in_progress`**. Próxima: `F4-002`. | Sesión 019 |
+| 2026-10-21 | Auditoría a11y en navegador: axe con contraste real, foco por teclado y piso de 12 px en 30 páginas (1440/390, 3 idiomas, drawer y select). `F4-002` → `done`; `D-027`, `D-028`; `R-011` → `done`. Próxima: `F4-003`. | Sesión 020 |
 | 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |

@@ -306,7 +306,7 @@ const spanish: ErpCopy = {
       total: "Total",
       status: "Estado",
       actions: "Acciones",
-      viewOrder: (id) => `Abrir el pedido ${id}`,
+      viewOrder: (id) => `Ver pedido ${id}`,
     },
     empty: "No hay pedidos para los filtros seleccionados.",
     selection: {
@@ -539,7 +539,7 @@ const japanese: ErpCopy = {
       total: "金額",
       status: "状態",
       actions: "操作",
-      viewOrder: (id) => `${id}の詳細を開く`,
+      viewOrder: (id) => `表示: ${id}の詳細`,
     },
     empty: "条件に一致する受注はありません。",
     selection: {
@@ -765,7 +765,7 @@ const english: ErpCopy = {
       total: "Total",
       status: "Status",
       actions: "Actions",
-      viewOrder: (id) => `Open order ${id}`,
+      viewOrder: (id) => `View order ${id}`,
     },
     empty: "No orders match the selected filters.",
     selection: {

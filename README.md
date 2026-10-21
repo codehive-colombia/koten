@@ -44,7 +44,8 @@ bun run ci       # check + build + presupuestos, equivalente local del workflow
 bun run build    # build de las tres apps
 bun run budget   # JS/CSS gzip y 0 fuentes locales
 bun run check:i18n  # strings hardcodeadas y utilidades físicas
-bun scripts/qa-overflow.ts  # desbordamiento/recorte en 1440, 1024 y 390 (requiere dev + Chromium)
+bun run qa:overflow # desbordamiento/recorte/RTL en 1440, 1024 y 390 (requiere dev + Chromium)
+bun run qa:a11y     # axe, 12 px mínimo y foco visible en navegador (requiere dev + Chromium)
 ```
 
 ## Estructura

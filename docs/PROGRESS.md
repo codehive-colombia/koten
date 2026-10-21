@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 4 — Cierre del POC (`in_progress`) |
-| Última tarea completada | `F4-001` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F4-002` |
+| Última tarea completada | `F4-002` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F4-003` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`, `Q-009`; `Q-003` cerrada por `D-021`/`D-022` y `Q-010` por `D-026` |
 
@@ -38,6 +38,31 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 020 — Auditoría a11y en navegador
+
+- **Objetivo:** cerrar `F4-002` midiendo accesibilidad real en Chromium, no solo en jsdom: contraste calculado, foco con teclado y tamaño mínimo de texto.
+- **Hecho:**
+  - **Auditoría nueva** (`scripts/qa-a11y.ts`): inyecta `axe-core` en la página, ejecuta WCAG 2.0/2.1 A y AA (incluye `color-contrast`), recorre con `Tab` los primeros 15 interactivos y verifica `outline`/`box-shadow` en `:focus-visible`, y detecta nodos de texto visible por debajo de 12 px. Matriz: 12 rutas × 3 idiomas × 1440/390, con estados abiertos de `DetailDrawer` y `Select` (72 combinaciones). Resultado: **0 serious/critical, 0 textos < 12 px, 0 focos sin indicador**.
+  - **Hallazgos corregidos:**
+    - Texto a 11 px en la capa `2xs` (utility bar, fechas, metadatos): `--koten-text-2xs` sube a 12 px (`D-027`).
+    - Contraste de enlaces activos `text-primary` sobre `bg-tint`/`bg-selection`: pasan a `text-primary-strong` en `StoreHeader`, `SideNav`, rail del storefront y layout del catálogo; `Menu` resaltado también.
+    - `label-content-name-mismatch`: la marca del storefront y del ERP ahora incluye el sello y el texto visible en el nombre accesible; `viewOrder` empieza por la etiqueta visible ("Ver pedido…", "表示: …", "View order…").
+    - `scrollable-region-focusable` en el catálogo a 390 px: las tablas y bloques de código con scroll horizontal ahora reciben foco (`tabIndex={0}` en `Table`, `SpecTable`, `PropsTable`, tablas del espécimen y páginas de tokens); la regla de Biome `noNoninteractiveTabindex` se excluye por archivo con motivo.
+    - `aria-hidden-focus` de los focus guards internos de Base UI: se acota la exclusión de axe a `[data-base-ui-focus-guard]` sin desactivar la regla (`D-028`).
+  - `bun run check` incorpora la guardia i18n de la sesión anterior; los scripts de QA quedan disponibles como `bun run qa:a11y` y `bun run qa:overflow`.
+- **Tareas tocadas:** `F4-002` → `done`; `R-011` → `done`.
+- **Decisiones:** `D-027` (piso de 12 px), `D-028` (alcance de axe sobre Base UI).
+- **Evidencia:**
+  - `scripts/qa-a11y.ts`, `scripts/lib/cdp.ts`, `packages/ui/src/styles/tokens.css`, `packages/ui/src/components/patterns/{store-header,side-nav}.tsx`, `packages/ui/src/components/ui/menu.tsx`, `apps/storefront/src/pages/product.tsx`, `apps/catalog/src/components/catalog-layout.tsx`, `apps/erp/src/{App.tsx,data/copy.ts}`, `apps/erp/src/App.test.tsx`.
+  - `bun run qa:a11y` → `a11y: 72 páginas · 0 violaciones serious/critical · 0 textos < 12px · 0 focos sin indicador`.
+  - `bun run qa:overflow` → 72 combinaciones sin desbordamiento ni recorte (LTR y RTL).
+  - `bun run check` verde (**30 archivos / 177 tests**).
+- **Sin validar:** lector de pantalla real (NVDA/VoiceOver); la auditoría cubre nombres accesibles, landmarks y orden de foco, no la experiencia narrada. Los focus guards de Base UI quedan excluidos por diseño (`D-028`).
+- **Próximo:** `F4-003` — auditoría de performance (bundles, code splitting, LCP/CLS).
+- **Bloqueos:** ninguno.
 
 ---
 

@@ -363,11 +363,11 @@ export const typeScale: readonly {
   {
     token: "--koten-text-2xs",
     utility: "text-2xs",
-    px: 11,
+    px: 12,
     use: {
-      es: "Notas y contadores no críticos",
-      ja: "注記と非重要カウンタ",
-      en: "Non-critical notes and counters",
+      es: "Notas y contadores; piso de 12 px",
+      ja: "注記とカウンタ（最小 12px）",
+      en: "Notes and counters (12 px floor)",
     },
   },
   {

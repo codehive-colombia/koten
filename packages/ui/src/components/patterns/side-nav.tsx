@@ -49,7 +49,7 @@ export function SideNav({ groups, label, onNavigate, footer, className }: SideNa
                   className={cn(
                     "flex min-h-[var(--koten-row-h)] items-center gap-2 border-s-2 px-2 text-xs no-underline transition-colors",
                     item.active
-                      ? "border-primary bg-selection font-semibold text-primary"
+                      ? "border-primary bg-selection font-semibold text-primary-strong"
                       : "border-transparent text-muted hover:bg-tint hover:text-ink",
                   )}
                 >

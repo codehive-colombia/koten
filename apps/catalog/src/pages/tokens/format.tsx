@@ -1,3 +1,4 @@
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
 import {
   formatCurrency,
   formatDate,
@@ -186,7 +187,7 @@ export function TokensFormatPage() {
         </Section>
 
         <Section id="comparacion" title={t.comparison.title} jp="比較" meta={t.comparison.meta}>
-          <div className="overflow-x-auto border border-rule">
+          <div tabIndex={0} className="overflow-x-auto border border-rule">
             <table className="w-full min-w-[40rem] border-collapse text-start">
               <caption className="sr-only">{t.comparison.caption}</caption>
               <thead>

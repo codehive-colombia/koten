@@ -129,7 +129,7 @@ Los componentes usan **roles**, nunca nombres de color. `bg-primary`, no `bg-shu
 
 | Token | Tamaño | Uso |
 | --- | --- | --- |
-| `--text-2xs` | 11 px | Notas, contadores, micro-metadatos. |
+| `--text-2xs` | 12 px | Notas, contadores, micro-metadatos (piso de 12 px para todo texto visible). |
 | `--text-xs` | 12 px | Metadatos, table headers, captions. |
 | `--text-sm` | 13 px | Body, celdas, botones. |
 | `--text-base` | 14 px | Body ERP, lectura. |

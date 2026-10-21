@@ -72,7 +72,7 @@ describe("ERP KURA", () => {
     renderErp("/orders");
 
     const trigger = screen.getAllByRole("button", {
-      name: /Abrir el pedido KURA-/,
+      name: /Ver pedido KURA-/,
     })[0] as HTMLElement;
 
     fireEvent.click(trigger);

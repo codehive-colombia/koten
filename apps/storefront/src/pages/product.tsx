@@ -182,7 +182,7 @@ export function ProductPage({ locale, onLocaleChange }: ProductPageProps) {
                       className={cn(
                         "flex min-h-[var(--koten-row-h)] items-center border-s-2 px-2 text-xs no-underline transition-colors",
                         category.id === "cameras"
-                          ? "border-primary bg-selection font-semibold text-primary"
+                          ? "border-primary bg-selection font-semibold text-primary-strong"
                           : "border-transparent text-muted hover:bg-tint hover:text-ink",
                       )}
                     >

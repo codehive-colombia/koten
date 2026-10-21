@@ -404,3 +404,27 @@
   - `bun scripts/qa-overflow.ts` fuerza `dir="rtl"` en cada página medida y verifica que no aparezca scroll horizontal ni recorte; hoy pasa en las 72 combinaciones (3 apps, 3 idiomas, 1440/1024/390).
 - **Consecuencias:** El layout no se rompe al espejarse y el costo es cero en LTR (`text-start` equivale a `left`). Queda pendiente para una v2 la revisión visual RTL (iconos direccionales, `Tategaki`, gráficos y tablas congeladas). `Q-010` se cierra con esta decisión.
 - **Alternativas:** RTL completo en la v1 (sin presupuesto ni locale de prueba; se descarta); ignorar RTL y usar utilidades físicas (barato hoy, deuda cara después); mezclar ambos sin guardia (deriva silenciosa, descartado).
+
+---
+
+<a id="d-027"></a>
+## D-027 · Piso tipográfico de 12 px
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** `D-014` fija 12 px como mínimo, pero la escala de tokens conservaba `--koten-text-2xs: 11px` para notas y contadores. La auditoría de navegador de `F4-002` encontró 36 nodos de texto a 11 px solo en la página de producto (utility bar, fechas, micro-metadatos); jsdom nunca lo detectó porque no calcula estilos.
+- **Decisión:** El token `--koten-text-2xs` pasa a **12 px**. La escala mantiene el nombre `2xs` por compatibilidad de utilidades, pero ningún texto visible queda por debajo de 12 px. La jerarquía entre `2xs` y `xs` se resuelve con peso, color y espaciado, no con tamaño.
+- **Consecuencias:** Cambio de 1 px en la capa más pequeña; el layout se revalidó con `qa-overflow` (72 combinaciones) y `qa-a11y` (sin textos < 12 px en 30 páginas × 2 anchos). El catálogo muestra el token actualizado y `DESIGN-SYSTEM.md` documenta el piso. Si en el futuro hace falta micro-tipografía, requiere una decisión nueva que reabra `D-014`.
+- **Alternativas:** Mantener 11 px como excepción documentada (contradice el criterio de `F4-002`); eliminar `2xs` y migrar todas las utilidades a `xs` (cambio masivo sin beneficio visual); bajar el mínimo a 11 px (peor accesibilidad, descartado).
+
+---
+
+<a id="d-028"></a>
+## D-028 · Alcance de axe sobre los focus guards de Base UI
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** Con `Select` no modal (`D-024`), Base UI renderiza dos `span` internos con `aria-hidden="true"` y `tabindex="0"` (`data-base-ui-focus-guard`) para detectar cuándo el foco sale del popup. axe los marca como `aria-hidden-focus` (serious). Son plumbing del componente, visualmente ocultos y sin contenido; no los controla el consumidor.
+- **Decisión:** La auditoría `scripts/qa-a11y.ts` ejecuta axe con `exclude: [["[data-base-ui-focus-guard]"]]`. La regla `aria-hidden-focus` sigue activa para el resto del documento: no se desactiva ni se silencia. El alcance excluido se limita a ese atributo interno y se imprime en el resumen de la auditoría.
+- **Consecuencias:** El POC queda sin violaciones serious/critical reales en el contenido y los componentes propios. Si Base UI deja de usar focus guards o cambia el atributo, la exclusión deja de aplicar sin romper la auditoría. Cualquier otro elemento `aria-hidden` con foco sigue fallando. La decisión se revisa al actualizar Base UI (`RISK-001`).
+- **Alternativas:** Desactivar `aria-hidden-focus` (oculta problemas propios, descartado); parchear el DOM con un `MutationObserver` (frágil y ajeno a React); usar `modal` en todos los popups (reintroduce el bloqueo de página de `D-024`).

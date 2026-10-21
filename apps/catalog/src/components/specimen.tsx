@@ -1,3 +1,4 @@
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
 import { cn, type KotenLocale, useKoten } from "@koten/ui";
 import type { ReactNode } from "react";
 import type { ColorToken, DensityId, SemanticRole, ThemeId } from "../data/tokens";
@@ -199,7 +200,7 @@ export function RoleTable({ roles }: { roles: readonly SemanticRole[] }) {
   const labels = specimenLabels[locale];
 
   return (
-    <div className="overflow-x-auto border border-rule">
+    <div tabIndex={0} className="overflow-x-auto border border-rule">
       <table className="w-full min-w-[40rem] border-collapse text-start">
         <caption className="sr-only">{labels.roleCaption}</caption>
         <thead>
@@ -313,7 +314,7 @@ export function ValueTable({
   rows: readonly { token: string; value: string; use: string }[];
 }) {
   return (
-    <div className="overflow-x-auto border border-rule">
+    <div tabIndex={0} className="overflow-x-auto border border-rule">
       <table className="w-full min-w-[28rem] border-collapse text-start">
         <caption className="sr-only">{caption}</caption>
         <thead>

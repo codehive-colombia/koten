@@ -76,7 +76,7 @@ function NavItemLink({
         cn(
           "flex min-h-[var(--koten-control-h)] items-center border-s-2 px-[var(--koten-panel-p)] text-xs no-underline transition-colors",
           isActive
-            ? "border-primary bg-selection font-semibold text-primary"
+            ? "border-primary bg-selection font-semibold text-primary-strong"
             : "border-transparent text-muted hover:bg-tint hover:text-ink",
         )
       }

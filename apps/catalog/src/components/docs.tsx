@@ -1,3 +1,4 @@
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
 import { type KotenLocale, useKoten } from "@koten/ui";
 import { type ReactNode, useState } from "react";
 import { Link } from "react-router";
@@ -118,7 +119,10 @@ export function Code({
       >
         {copied ? copiedText : copyText}
       </button>
-      <pre className="overflow-x-auto border border-rule bg-tint p-[var(--koten-panel-p)] pe-20 font-mono text-2xs leading-relaxed">
+      <pre
+        tabIndex={0}
+        className="overflow-x-auto border border-rule bg-tint p-[var(--koten-panel-p)] pe-20 font-mono text-2xs leading-relaxed"
+      >
         <code>{children}</code>
       </pre>
       <span aria-live="polite" className="sr-only">
@@ -139,7 +143,7 @@ export function PropsTable({
   const headers = docsLabels[locale];
 
   return (
-    <div className="mt-[var(--koten-gap)] overflow-x-auto border border-rule">
+    <div tabIndex={0} className="mt-[var(--koten-gap)] overflow-x-auto border border-rule">
       <table className="w-full min-w-[32rem] border-collapse text-start">
         <caption className="sr-only">{caption}</caption>
         <thead>

@@ -51,12 +51,10 @@ export function StoreHeader({
         <div className="koten-container flex flex-wrap items-center gap-[var(--koten-gap)] py-2.5">
           <a
             href={brand.href}
-            aria-label={brand.label}
+            aria-label={brand.jp ? `${brand.jp} ${brand.label}` : brand.label}
             className="flex shrink-0 items-center gap-2.5 text-ink no-underline"
           >
-            <Hanko size="sm" label={brand.label}>
-              {brand.jp ?? brand.name.slice(0, 1)}
-            </Hanko>
+            <Hanko size="sm">{brand.jp ?? brand.name.slice(0, 1)}</Hanko>{" "}
             <span className="font-serif text-xl font-semibold leading-none tracking-tight">
               {brand.name}
             </span>
@@ -77,7 +75,7 @@ export function StoreHeader({
                 className={cn(
                   "flex h-full shrink-0 items-center whitespace-nowrap border-b-2 text-xs no-underline transition-colors",
                   item.active
-                    ? "border-primary font-semibold text-primary"
+                    ? "border-primary font-semibold text-primary-strong"
                     : "border-transparent text-muted hover:text-link",
                 )}
               >

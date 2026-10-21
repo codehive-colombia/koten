@@ -1,3 +1,4 @@
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
 import type { ReactNode } from "react";
 import { cn } from "../../lib/cn";
 
@@ -27,7 +28,7 @@ export function SpecTable({ groups, caption, className }: SpecTableProps) {
           <h3 className="border-b border-rule-strong pb-1 text-xs font-semibold text-ink">
             {group.title}
           </h3>
-          <div className="overflow-x-auto border border-t-0 border-rule">
+          <div tabIndex={0} className="overflow-x-auto border border-t-0 border-rule">
             <table className="w-full min-w-[24rem] border-collapse text-start">
               <caption className="sr-only">{`${caption}: ${String(group.title)}`}</caption>
               <tbody className="divide-y divide-rule">

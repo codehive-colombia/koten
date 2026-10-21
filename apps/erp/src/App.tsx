@@ -161,10 +161,10 @@ function ErpShell({
         <Link
           to="/"
           className="flex min-w-0 items-center gap-2 text-ink no-underline"
-          aria-label={copy.brand.name}
+          aria-label={`${copy.brand.jp} ${copy.brand.name} ${copy.brand.product}`}
         >
-          <Hanko size="sm">{copy.brand.jp}</Hanko>
-          <span className="font-serif text-base font-semibold">{copy.brand.name}</span>
+          <Hanko size="sm">{copy.brand.jp}</Hanko>{" "}
+          <span className="font-serif text-base font-semibold">{copy.brand.name}</span>{" "}
           <span className="ms-auto text-2xs text-faint">{copy.brand.product}</span>
         </Link>
       }
