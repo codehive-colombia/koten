@@ -49,6 +49,12 @@ const components = [
     jp: "導線",
     description: "Link, Breadcrumb, Pagination, Tabs y Accordion.",
   },
+  {
+    to: "/components/overlays",
+    title: "Overlays",
+    jp: "重なり",
+    description: "Dialog, Drawer, Menu, Popover y Tooltip.",
+  },
 ] as const;
 
 export function ComponentsIndexPage() {
@@ -59,7 +65,7 @@ export function ComponentsIndexPage() {
         title="Componentes"
         jp="部品"
         description="La primera validación de la gramática: variantes CVA, roles semánticos y composición con render. Estos componentes fijan el tono del resto del sistema."
-        meta="8 páginas · preview, props, código y a11y"
+        meta="9 páginas · preview, props, código y a11y"
       />
 
       <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">

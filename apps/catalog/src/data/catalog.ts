@@ -70,6 +70,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
         path: "/components/navigation",
         label: { es: "Navegación", ja: "導線", en: "Navigation" },
       },
+      {
+        path: "/components/overlays",
+        label: { es: "Overlays", ja: "重なり", en: "Overlays" },
+      },
     ],
   },
   {

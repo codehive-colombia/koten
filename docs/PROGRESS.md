@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-005` — navegación |
-| Tarea en curso | ninguna — próxima `F1-006` |
+| Última tarea completada | `F1-006` — overlays |
+| Tarea en curso | ninguna — próxima `F1-007` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 010 — Overlays
+
+- **Objetivo:** completar `F1-006` con `Dialog`, `Drawer`, `Menu`, `Popover` y `Tooltip`.
+- **Hecho:**
+  - `Dialog` y `Drawer` con título/descripción, cierre, foco gestionado y lado configurable.
+  - `Menu` con acciones/enlaces, separadores y teclado de Base UI.
+  - `Popover` con cabecera, cierre y contenido breve.
+  - `Tooltip` con delay y lado configurable, sin duplicar acciones críticas.
+  - Página `/components/overlays` con demos, props, código y a11y; sidebar e índice.
+- **Tareas tocadas:** `F1-006` → `done`; `C-031`–`C-035` → `done`.
+- **Decisiones:** Ninguna nueva.
+- **Evidencia:** `packages/ui/src/components/ui/{dialog,drawer,menu,popover,tooltip}.tsx` + `overlays.test.tsx`; `apps/catalog/src/pages/components/overlays.tsx`; `bun run check` verde (**18 archivos / 92 tests**).
+- **Sin validar:** axe real (`F1-010`), lector de pantalla y gestos de swipe del Drawer.
+- **Próximo:** `F1-007` — `Table`, `DataTable`, `StatCard`, `Sparkline` y `BarChart`.
+- **Bloqueos:** ninguno.
 
 ---
 

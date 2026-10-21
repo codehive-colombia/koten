@@ -11,6 +11,7 @@ import { FormsPage } from "./components/forms";
 import { ComponentsIndexPage } from "./components/index";
 import { InputsPage } from "./components/inputs";
 import { NavigationPage } from "./components/navigation";
+import { OverlaysPage } from "./components/overlays";
 import { PanelPage } from "./components/panel";
 import { SurfacesPage } from "./components/surfaces";
 import { NotFoundPage } from "./not-found";
@@ -145,12 +146,20 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("heading", { name: "Sin pedidos" })).toBeInTheDocument();
     feedback.unmount();
 
-    renderPage(<NavigationPage />);
+    const navigation = renderPage(<NavigationPage />);
     expect(screen.getByRole("heading", { level: 1, name: /Navegación/ })).toBeInTheDocument();
     expect(screen.getByRole("navigation", { name: "Migas de pan" })).toBeInTheDocument();
     expect(screen.getByRole("navigation", { name: "Paginación de pedidos" })).toBeInTheDocument();
     expect(screen.getByRole("tablist", { name: "Vista del pedido" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Envío y entrega" })).toBeInTheDocument();
+    navigation.unmount();
+
+    renderPage(<OverlaysPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Overlays/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Abrir diálogo" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Abrir drawer" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Acciones" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ver resumen" })).toBeInTheDocument();
   });
 
   it("muestra una página 404 traducida", () => {

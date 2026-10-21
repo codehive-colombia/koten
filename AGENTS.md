@@ -187,10 +187,10 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-La fase 0 está cerrada (`F0-001`–`F0-012`) y la fase 1 está en curso: `F1-001` formularios, `F1-002` inputs avanzados, `F1-003` superficies, `F1-004` feedback y `F1-005` navegación. El catálogo es wiki con React Router, selector ES/JA/EN y documentación sensible a tema/densidad. **No repitas `git init`, el workspace ni `bun install`.** El repo sigue sin commit inicial; que `git status` muestre archivos sin versionar es esperado.
+La fase 0 está cerrada (`F0-001`–`F0-012`) y la fase 1 está en curso: formularios, inputs avanzados, superficies, feedback, navegación y overlays. El catálogo es wiki con React Router, selector ES/JA/EN y documentación sensible a tema/densidad. **No repitas `git init`, el workspace ni `bun install`.** El repo sigue sin commit inicial; que `git status` muestre archivos sin versionar es esperado.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
-2. Continuar la fase 1 con `F1-006`: `Dialog`, `Drawer`, `Menu`, `Popover` y `Tooltip`.
+2. Continuar la fase 1 con `F1-007`: `Table`, `DataTable`, `StatCard`, `Sparkline` y `BarChart`.
 3. Seguir el patrón de `Button`/`Panel`/`Badge` y de los formularios: CVA, roles semánticos, `data-slot`, tests y página propia en el catálogo.
 4. Mantener la documentación en español (`D-020`) y la UI del catálogo en ES/JA/EN; no traducir el cuerpo de los docs sin una decisión nueva.
 5. No saltar a fases 2/3 sin cerrar la fase 1; registrar cualquier cambio de alcance con `D-*`.
