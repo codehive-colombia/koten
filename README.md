@@ -2,8 +2,8 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0–3 cerradas y fase 4 avanzada (i18n, a11y, performance y QA visual hechos). 42 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe, con presupuestos de bundle y capturas archivadas.
-> **Tarea en curso:** ninguna — próxima `F4-006` (Definition of Done y tag `v0.1.0-poc`).
+> **Estado:** **`v0.1.0-poc`** — fase 4 cerrada. 42 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe, con presupuestos de bundle y capturas archivadas.
+> **Siguiente:** fase 5 opcional (registry, tema Sumi, DatePicker, CommandPalette, virtualización, SSG/SSR).
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación

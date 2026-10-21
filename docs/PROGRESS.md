@@ -9,9 +9,9 @@
 | Campo | Valor |
 | --- | --- |
 | Fecha | 2026-10-21 |
-| Fase | 4 — Cierre del POC (`in_progress`) |
-| Última tarea completada | `F4-005` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F4-006` |
+| Fase | 4 — Cierre del POC (`done`) · tag `v0.1.0-poc` |
+| Última tarea completada | `F4-006` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — fase 5 opcional |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`, `Q-009`; `Q-003` cerrada por `D-021`/`D-022` y `Q-010` por `D-026` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 024 — Definition of Done y tag v0.1.0-poc
+
+- **Objetivo:** cerrar `F4-006`: revisar la Definition of Done, resolver lo que faltaba y etiquetar el hito.
+- **Hecho:**
+  - **DoD revisada** contra `AGENTS.md` §6 y los criterios de la sección 4 del roadmap: criterios por tarea con evidencia, tests, catálogo documentado, tokens/densidad/tema, teclado y foco, axe sin serious/critical, 0 fuentes CJK, sin texto crítico en imágenes, sin dependencias pesadas sin decisión.
+  - **Verificación final:** `bun run ci` verde (Biome + TypeScript + i18n + 178 tests + build + presupuestos); `qa:a11y` → 78 páginas × 1440/390 sin violaciones serious/critical, sin textos < 12 px y con foco visible; `qa:overflow` → 108 combinaciones LTR/RTL sin desbordamiento ni recorte; `qa:perf` → LCP 84–396 ms y CLS 0; 24 capturas en `docs/qa/2026-10-21`.
+  - **Presupuestos ajustados:** el catálogo sube su tope total de 330 a 340 KB tras la página Empezar trilingüe (medido 333,0 KB); inicial 243,5 KB. Storefront 122,3 KB, ERP 196,5 KB, CSS 9,2 KB, 0 fuentes.
+  - **`D-031`:** el POC se entrega como repositorio + CI, sin deploy alojado; `Q-004` queda cerrada. `Q-005` (licencia) sigue abierta como decisión del dueño del repo, no bloquea el tag.
+  - **Tag `v0.1.0-poc`** sobre el commit de cierre, con la fase 4 marcada `done`.
+- **Tareas tocadas:** `F4-006` → `done`; **fase 4 → `done`**.
+- **Decisiones:** `D-031`.
+- **Evidencia:** `bun run ci`, `bun run qa:a11y`, `bun run qa:overflow`, `bun run qa:perf`, `docs/qa/2026-10-21/`, `scripts/check-budgets.ts`; tag `v0.1.0-poc`.
+- **Sin validar:** lector de pantalla real, Firefox/Safari (`Q-006`), deploy y licencia (`Q-004` cerrada por `D-031`; `Q-005` abierta).
+- **Próximo:** fase 5 opcional — registry shadcn (`F5-001`), tema Sumi (`F5-002`), DatePicker (`F5-003`), CommandPalette (`F5-004`), virtualización (`F5-005`), evaluación SSG/SSR (`F5-006`) y publicación (`F5-007`).
+- **Bloqueos:** ninguno.
 
 ---
 

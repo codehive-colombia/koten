@@ -440,8 +440,8 @@
 - **Decisión:**
   - El catálogo carga la portada en el entry y cada página de documentación con `React.lazy` + `Suspense`. El fallback reserva la altura de una página (`min-h-[1400px]`) para no mover el pager: CLS medido 0.
   - El ERP y el storefront mantienen imports estáticos: un solo bundle, navegación instantánea, sin estados de carga artificiales.
-  - `scripts/check-budgets.ts` distingue **JS inicial** (entry + assets referenciados por `index.html`) de **JS total** (todos los chunks). Presupuestos: storefront 150/150, ERP 250/250, catálogo 250/330 KB gzip; CSS 30 KB; 0 fuentes.
-- **Consecuencias:** El catálogo baja su JS inicial de 304,5 a **243,4 KB** (−20 %) y conserva LCP < 400 ms local y CLS 0 en rutas lazy. El ERP no gana con splitting mientras `@koten/ui` sea un barrel compartido; dividir el paquete queda para la fase 5 si el POC crece. `bun run qa:perf` mide LCP/CLS y `bun run budget` verifica inicial/total.
+  - `scripts/check-budgets.ts` distingue **JS inicial** (entry + assets referenciados por `index.html`) de **JS total** (todos los chunks). Presupuestos: storefront 150/150, ERP 250/250, catálogo 250/340 KB gzip; CSS 30 KB; 0 fuentes.
+- **Consecuencias:** El catálogo baja su JS inicial de 304,5 a **243,5 KB** (−20 %) y conserva LCP < 400 ms local y CLS 0 en rutas lazy. El ERP no gana con splitting mientras `@koten/ui` sea un barrel compartido; dividir el paquete queda para la fase 5 si el POC crece. `bun run qa:perf` mide LCP/CLS y `bun run budget` verifica inicial/total. El presupuesto total del catálogo sube 10 KB con la página Empezar trilingüe (`F4-005`).
 - **Alternativas:** Dividir todas las rutas (regresión de UX sin ahorro real en ERP); dividir el barrel de `@koten/ui` en subpaths (cambio de API grande, fuera de la v1); dejar todo en un bundle (catálogo 304,5 KB inicial, más lento en la primera visita).
 
 ---
@@ -455,3 +455,15 @@
 - **Decisión:** La v1 **no** incluye estilos de impresión dedicados. `SpecTable` y el detalle de pedido se imprimen con el layout de pantalla; no se promete un formato de factura. Cuando el ERP pase a producción se define el documento (papel A4, cabecera legal, numeración, totales y pie) y se implementa como tarea nueva con su propia decisión.
 - **Consecuencias:** Se evita deuda de un formato que habría que rehacer; `Q-009` se cierra. La accesibilidad y la densidad en pantalla siguen cubiertas por `F4-002`.
 - **Alternativas:** `@media print` mínimo solo para specs (barato pero incompleto y sin uso real); factura imprimible completa (fuera del alcance del POC).
+
+---
+
+<a id="d-031"></a>
+## D-031 · Entrega del POC sin deploy alojado
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (cierra `Q-004`)
+- **Contexto:** `Q-004` preguntaba por el destino de deploy del POC. El objetivo de la v1 es validar la gramática visual y la calidad de implementación, no operar un sitio: no hay dominio, presupuesto, CDN, secretos ni requisitos de disponibilidad. Las tres apps son SPAs (`D-017`) y el CI ya construye los tres bundles.
+- **Decisión:** El POC se entrega como **repositorio reproducible + CI**: `bun install`, `bun run dev`, `bun run ci` y los `qa:*` locales. No se publica en un hosting en la v1. El destino (estático con fallback SPA, CDN o plataforma con previews) se decide cuando exista un producto que lo necesite, junto con dominio, analítica y política de datos.
+- **Consecuencias:** El tag `v0.1.0-poc` marca un hito auditable, no un servicio. Cualquier deploy futuro reutiliza los builds de `apps/*/dist` y necesita fallback SPA para las rutas del ERP y el catálogo. `Q-004` se cierra.
+- **Alternativas:** Deploy estático inmediato (sin producto ni dominio, coste de mantenimiento sin valor); Vercel/Netlify con previews (útil más adelante, fuera del alcance del POC).

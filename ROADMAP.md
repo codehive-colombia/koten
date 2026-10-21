@@ -2,10 +2,10 @@
 
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-21**
-> Fase actual: **4 — Cierre del POC** (`in_progress`)
-> Próxima tarea: **`F4-006`** — Definition of Done y tag
+> Fase actual: **4 — Cierre del POC** (`done`) · **tag `v0.1.0-poc`**
+> Próxima fase: **5 — Opcional / posterior**
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`F4-005`**
+> Última tarea completada: **`F4-006`**
 > Mejora puntual completada: **`M-001`** — i18n del catálogo
 > Bloqueos: **ninguno**
 
@@ -108,6 +108,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-028` | axe excluye solo los focus guards internos de Base UI. | accepted | [D-028](./docs/DECISIONS.md#d-028) |
 | `D-029` | Code splitting por ruta solo en el catálogo. | accepted | [D-029](./docs/DECISIONS.md#d-029) |
 | `D-030` | Sin estilos de impresión en la v1. | accepted | [D-030](./docs/DECISIONS.md#d-030) |
+| `D-031` | Entrega del POC sin deploy alojado. | accepted | [D-031](./docs/DECISIONS.md#d-031) |
 
 ---
 
@@ -240,7 +241,7 @@ ISO 8601: `YYYY-MM-DD`.
 
 ### Fase 4 — Cierre del POC
 
-**Estado:** `in_progress` · **Objetivo:** dejar el POC auditable, medible y retomable.
+**Estado:** `done` · **Objetivo:** dejar el POC auditable, medible y retomable.
 
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
@@ -249,7 +250,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `F4-003` | Auditoría performance: bundles, fuentes, LCP/CLS y code splitting. | `F4-001` | `done` | Presupuestos de la sección 4 cumplidos. | `scripts/qa-perf.ts` (LCP/CLS/FCP en 6 rutas × 3 muestras): LCP 84–396 ms, CLS 0. `scripts/check-budgets.ts` separa inicial/total → storefront 122,3/122,3 KB · ERP 196,4/196,4 KB · catálogo 243,4/327,7 KB · CSS 9,2 KB · 0 fuentes. Code splitting del catálogo con `React.lazy` y fallback de altura reservada (`D-029`); ERP/storefront sin split por falta de ahorro. |
 | `F4-004` | QA visual en 1440/1280/1024 para catálogo, storefront y ERP. | `F4-001` | `done` | Capturas archivadas; diferencias corregidas. | `scripts/qa-visual.ts` → **21 capturas** en `docs/qa/2026-10-21/` (7 páginas × 1440/1280/1024, JPEG + `index.md`). `qa-overflow` ampliado a 1280 → **96 combinaciones** LTR/RTL sin desbordamiento ni recorte. Corrección: IDs de pedido con `whitespace-nowrap` para no partir identificadores a 1024. |
 | `F4-005` | Documentación final: README, catálogo, principios, tokens y recetas. | `F4-001` | `done` | Un tercero puede usar el sistema sin leer el código. | Página **Empezar** (`/start`, ES/JA/EN) con requisitos, instalación, copia de una primitiva, reglas y verificación; `docs/RECIPES.md` con 8 recetas copiables; README con uso rápido y enlaces; `D-030` cierra `Q-009` (sin impresión en v1). Test de la página nueva (178 tests). |
-| `F4-006` | Revisión de Definition of Done y tag `v0.1.0-poc`. | `F4-002`–`F4-005` | `todo` | Checklist completo; tag creado; bitácora actualizada. | — |
+| `F4-006` | Revisión de Definition of Done y tag `v0.1.0-poc`. | `F4-002`–`F4-005` | `done` | Checklist completo; tag creado; bitácora actualizada. | DoD revisado: 178 tests, `bun run ci` verde, `qa:a11y` 78 páginas sin serious/critical, `qa:overflow` 108 combinaciones, `qa:perf` LCP 84–396 ms/CLS 0, 24 capturas archivadas, 0 fuentes. `D-031` cierra `Q-004`. Tag `v0.1.0-poc`. |
 
 ---
 
@@ -467,6 +468,7 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Auditoría de performance: LCP/CLS medidos sobre el build, presupuesto inicial/total y code splitting del catálogo (304,5 → 243,4 KB inicial). `F4-003` → `done`; `D-029`; `R-012` → `done`. Próxima: `F4-004`. | Sesión 021 |
 | 2026-10-21 | QA visual con capturas archivadas (21 en 1440/1280/1024), overflow/RTL en 96 combinaciones y corrección de IDs en la tabla. `F4-004` → `done`. Próxima: `F4-005`. | Sesión 022 |
 | 2026-10-21 | Documentación final: página Empezar trilingüe, `docs/RECIPES.md`, README actualizado y decisión de impresión. `F4-005` → `done`; `D-030`; `Q-009` cerrada. Próxima: `F4-006`. | Sesión 023 |
+| 2026-10-21 | Definition of Done revisado y cierre de fase 4: `D-031` (sin deploy en v1), presupuesto del catálogo a 340 KB total, tag `v0.1.0-poc`. `F4-006` → `done`; **fase 4 → `done`**. | Sesión 024 |
 | 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |
