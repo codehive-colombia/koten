@@ -86,6 +86,7 @@ export const navGroups: readonly CatalogNavGroup[] = [
         path: "/components/controls",
         label: { es: "Controles", ja: "操作", en: "Controls" },
       },
+      { path: "/components/date", label: { es: "Fecha", ja: "日付", en: "Date" } },
     ],
   },
   {

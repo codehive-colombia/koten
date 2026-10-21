@@ -520,3 +520,19 @@
   - El test de contraste cubre los cuatro temas, incluidos los pares `solid-fg`/`*-solid` y `inverse-fg`/`inverse-bg`.
 - **Consecuencias:** Sumi es un tema completo y auditable (axe 0 serious/critical en catálogo, storefront y ERP; capturas en `docs/qa`). Los componentes existentes no cambian su API; solo los dos que pintaban fondos de estado con `text-white`. Cualquier tema futuro debe declarar sus `*-solid` si invierte la base.
 - **Alternativas:** Un único rol de color con opacidad para fondos (rompe AA); mantener `bg-sumi`/`text-paper` (ilegible en oscuro); tema oscuro solo en el catálogo (no prueba el sistema completo).
+
+---
+
+<a id="d-036"></a>
+## D-036 · DatePicker propio, sin dependencias y con panel anclado
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`F5-003`)
+- **Contexto:** El ERP usaba `<input type="date">`: el navegador decide el formato, no hay rango y la experiencia cambia por motor. Un date-picker completo suele traer una librería de fechas (peso, zona horaria, locale) o un paquete de calendario que duplica lo que ya resuelven `Intl` y los tokens. El POC necesita fecha simple, rango, teclado completo y ES/JA/EN.
+- **Decisión:**
+  - `Calendar` es una **tabla** con encabezados de día, un único `tabindex=0` (roving focus) y navegación con flechas, Home/End y PageUp/PageDown; Enter/Space selecciona. Los nombres accesibles usan `Intl` del `KotenProvider`.
+  - `DatePicker` envuelve el calendario en un panel **anclado al campo** (sin portal), con `aria-expanded`, `aria-controls`, `aria-labelledby` que incluye el texto visible, Escape y cierre por clic fuera. Modos `single` y `range`; el rango se invierte si el segundo día es anterior.
+  - Sin dependencias nuevas: aritmética de fechas local en el componente y `Intl.DateTimeFormat` para meses, días y valores.
+  - El ERP reemplaza el input nativo por `DatePicker` con `min`/`max` y mantiene el estado como ISO (`YYYY-MM-DD`).
+- **Consecuencias:** El formato deja de depender del navegador y el rango es testeable. El panel inline puede quedar recortado por un ancestro con `overflow: hidden`; si aparece ese caso, se migra a portal en una tarea nueva. La semana empieza en lunes para `es` y en domingo para `ja`/`en` (`Intl.Locale.weekInfo` con fallback).
+- **Alternativas:** Librería de calendario (peso y API extra para 2 modos); `<input type="date">` (sin rango, formato del navegador); date-picker con portal (más piezas y foco más frágil en este tamaño).

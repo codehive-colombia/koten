@@ -24,6 +24,7 @@ const componentRoutes = {
   overlays: { to: "/components/overlays", jp: "重なり" },
   data: { to: "/components/data", jp: "データ" },
   controls: { to: "/components/controls", jp: "操作" },
+  date: { to: "/components/date", jp: "日付" },
 } as const;
 
 type ComponentKey = keyof typeof componentRoutes;
@@ -40,6 +41,7 @@ const componentOrder: readonly ComponentKey[] = [
   "overlays",
   "data",
   "controls",
+  "date",
 ];
 
 const inventory: readonly { id: string; name: string; page: ComponentKey; to: string }[] = [
@@ -85,6 +87,8 @@ const inventory: readonly { id: string; name: string; page: ComponentKey; to: st
   { id: "C-040", name: "Sparkline / BarChart", page: "data", to: "/components/data" },
   { id: "C-041", name: "ToggleGroup", page: "controls", to: "/components/controls" },
   { id: "C-062", name: "Label", page: "forms", to: "/components/forms" },
+  { id: "C-063", name: "Calendar", page: "date", to: "/components/date" },
+  { id: "C-064", name: "DatePicker", page: "date", to: "/components/date" },
 ];
 
 const copy = {
@@ -93,7 +97,7 @@ const copy = {
     title: "Componentes",
     description:
       "La primera validación de la gramática: variantes CVA, roles semánticos y composición con render. Estos componentes fijan el tono del resto del sistema.",
-    meta: "11 páginas · 42 primitivas documentadas · preview, props, código y a11y",
+    meta: "12 páginas · 44 primitivas documentadas · preview, props, código y a11y",
     cards: {
       button: {
         title: "Button",
@@ -139,6 +143,10 @@ const copy = {
         title: "Controles",
         description: "IconButton, ToggleGroup y Toolbar.",
       },
+      date: {
+        title: "Fecha",
+        description: "Calendar y DatePicker con teclado, rango y locale.",
+      },
     },
     pageLabels: {
       button: "Button",
@@ -152,6 +160,7 @@ const copy = {
       overlays: "Overlays",
       data: "Datos",
       controls: "Controles",
+      date: "Fecha",
     },
     inventory: {
       heading: "Inventario de primitivas",
@@ -171,7 +180,7 @@ const copy = {
     title: "コンポーネント",
     description:
       "文法の最初の検証：CVAのバリエーション、意味的役割、render による合成。これらのコンポーネントがシステム全体の調子を決める。",
-    meta: "11ページ · 42のプリミティブ · プレビュー、props、コード、a11y",
+    meta: "12ページ · 44のプリミティブ · プレビュー、props、コード、a11y",
     cards: {
       button: {
         title: "Button",
@@ -217,6 +226,10 @@ const copy = {
         title: "コントロール",
         description: "IconButton、ToggleGroup、Toolbar。",
       },
+      date: {
+        title: "日付",
+        description: "Calendar と DatePicker。キーボード、範囲、ロケール。",
+      },
     },
     pageLabels: {
       button: "Button",
@@ -230,6 +243,7 @@ const copy = {
       overlays: "Overlays",
       data: "データ",
       controls: "コントロール",
+      date: "日付",
     },
     inventory: {
       heading: "プリミティブ一覧",
@@ -249,7 +263,7 @@ const copy = {
     title: "Components",
     description:
       "The first validation of the grammar: CVA variants, semantic roles and composition with render. These components set the tone for the rest of the system.",
-    meta: "11 pages · 42 documented primitives · preview, props, code and a11y",
+    meta: "12 pages · 44 documented primitives · preview, props, code and a11y",
     cards: {
       button: {
         title: "Button",
@@ -295,6 +309,10 @@ const copy = {
         title: "Controls",
         description: "IconButton, ToggleGroup and Toolbar.",
       },
+      date: {
+        title: "Date",
+        description: "Calendar and DatePicker with keyboard, range and locale.",
+      },
     },
     pageLabels: {
       button: "Button",
@@ -308,6 +326,7 @@ const copy = {
       overlays: "Overlays",
       data: "Data",
       controls: "Controls",
+      date: "Date",
     },
     inventory: {
       heading: "Primitive inventory",

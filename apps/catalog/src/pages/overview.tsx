@@ -19,7 +19,7 @@ const copy = {
     title: "Koten UI",
     description:
       "Sencillez de medios, densidad de información. Un sistema de componentes para el web japonés clásico, validado en un catálogo, un storefront y un ERP.",
-    meta: "Fases 1–3 cerradas · 42 primitivas · 20 patrones · 4 temas · 3 densidades",
+    meta: "Fases 1–3 cerradas · 44 primitivas · 20 patrones · 4 temas · 3 densidades",
     principles: [
       "El marco es la unidad: panel, cabecera, regla, borde.",
       "El color señala; no decora.",
@@ -37,7 +37,7 @@ const copy = {
       components: {
         title: "Componentes",
         jp: "部品",
-        description: "42 primitivas con previews, props, código y notas de accesibilidad.",
+        description: "44 primitivas con previews, props, código y notas de accesibilidad.",
       },
       patterns: {
         title: "Patrones",
@@ -91,7 +91,7 @@ const copy = {
       components: {
         title: "部品",
         jp: "部品",
-        description: "42のプリミティブ。プレビュー、props、コード、アクセシビリティ注記付き。",
+        description: "44のプリミティブ。プレビュー、props、コード、アクセシビリティ注記付き。",
       },
       patterns: {
         title: "応用",
@@ -127,7 +127,7 @@ const copy = {
     title: "Koten UI",
     description:
       "Simplicity of means, density of information. A component system for the classic Japanese web, validated in a catalog, a storefront and an ERP.",
-    meta: "Phases 1–3 complete · 42 primitives · 20 patterns · 4 themes · 3 densities",
+    meta: "Phases 1–3 complete · 44 primitives · 20 patterns · 4 themes · 3 densities",
     principles: [
       "The frame is the unit: panel, header, rule, border.",
       "Color signals; it does not decorate.",
@@ -144,7 +144,7 @@ const copy = {
       components: {
         title: "Components",
         jp: "部品",
-        description: "42 primitives with previews, props, code and accessibility notes.",
+        description: "44 primitives with previews, props, code and accessibility notes.",
       },
       patterns: {
         title: "Patterns",

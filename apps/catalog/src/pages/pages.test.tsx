@@ -8,6 +8,7 @@ import { BadgePage } from "./components/badge";
 import { ButtonPage } from "./components/button";
 import { ControlsPage } from "./components/controls";
 import { DataPage } from "./components/data";
+import { DatePickerPage } from "./components/date";
 import { FeedbackPage } from "./components/feedback";
 import { FormsPage } from "./components/forms";
 import { ComponentsIndexPage } from "./components/index";
@@ -108,6 +109,14 @@ describe("páginas del catálogo", () => {
     expect(themes.container.querySelectorAll("article[data-theme]")).toHaveLength(4);
   });
 
+  it("documenta DatePicker y Calendar", () => {
+    renderPage(<DatePickerPage />);
+
+    expect(screen.getByRole("heading", { level: 1, name: /DatePicker/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Fecha de entrega/ })).toBeInTheDocument();
+    expect(screen.getByRole("table", { name: /octubre de 2026/i })).toBeInTheDocument();
+  });
+
   it("responde al locale en la vista previa de formato", () => {
     renderPage(<TokensFormatPage />, "ja");
 
@@ -121,7 +130,7 @@ describe("páginas del catálogo", () => {
     expect(
       screen.getByRole("table", { name: "Inventario de primitivas de la fase 1" }),
     ).toBeInTheDocument();
-    expect(screen.getAllByRole("row")).toHaveLength(43);
+    expect(screen.getAllByRole("row")).toHaveLength(45);
     index.unmount();
 
     const button = renderPage(<ButtonPage />);

@@ -14,6 +14,9 @@ Criterio: sin overflow horizontal, sin recortes, jerarquía y densidad estables.
 | catalog | formularios | 1440×900 | `catalog-formularios-1440.jpg` |
 | catalog | formularios | 1280×800 | `catalog-formularios-1280.jpg` |
 | catalog | formularios | 1024×768 | `catalog-formularios-1024.jpg` |
+| catalog | fecha | 1440×900 | `catalog-fecha-1440.jpg` |
+| catalog | fecha | 1280×800 | `catalog-fecha-1280.jpg` |
+| catalog | fecha | 1024×768 | `catalog-fecha-1024.jpg` |
 | catalog | patrones | 1440×900 | `catalog-patrones-1440.jpg` |
 | catalog | patrones | 1280×800 | `catalog-patrones-1280.jpg` |
 | catalog | patrones | 1024×768 | `catalog-patrones-1024.jpg` |

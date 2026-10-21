@@ -4,6 +4,7 @@ import {
   Button,
   buttonVariants,
   cn,
+  DatePicker,
   Field,
   FormSection,
   Input,
@@ -37,6 +38,12 @@ type FormState = {
 };
 
 type FormErrors = Partial<Record<"customer" | "contact" | "email" | "dueDate", string>>;
+
+function toIsoDate(value: Date): string {
+  return `${value.getFullYear()}-${String(value.getMonth() + 1).padStart(2, "0")}-${String(
+    value.getDate(),
+  ).padStart(2, "0")}`;
+}
 
 export function OrderFormPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocale }) {
   const formatters = useKotenFormatters();
@@ -226,16 +233,18 @@ export function OrderFormPage({ copy, locale }: { copy: ErpCopy; locale: KotenLo
                   { value: "fukuoka", label: copy.warehouse.fukuoka },
                 ]}
               />
-              <Field label={copy.form.fields.dueDate} required error={errors.dueDate}>
-                <Input
-                  type="date"
-                  min="2026-10-22"
-                  value={values.dueDate}
-                  onChange={(event) =>
-                    setValues((current) => ({ ...current, dueDate: event.target.value }))
-                  }
-                />
-              </Field>
+              <DatePicker
+                label={copy.form.fields.dueDate}
+                required
+                error={errors.dueDate}
+                value={values.dueDate ? new Date(`${values.dueDate}T00:00:00`) : null}
+                min={new Date(2026, 9, 22)}
+                max={new Date(2027, 2, 31)}
+                defaultMonth={new Date(2026, 9, 22)}
+                onValueChange={(date) =>
+                  setValues((current) => ({ ...current, dueDate: date ? toIsoDate(date) : "" }))
+                }
+              />
               <div className="flex items-end">
                 <Switch
                   label={copy.form.fields.notify}

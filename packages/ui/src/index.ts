@@ -71,6 +71,12 @@ export type { ComboboxProps } from "./components/ui/combobox";
 export { Combobox } from "./components/ui/combobox";
 export type { DataTableColumn, DataTableProps } from "./components/ui/data-table";
 export { DataTable } from "./components/ui/data-table";
+export type {
+  CalendarProps,
+  DatePickerProps,
+  DateRange,
+} from "./components/ui/date-picker";
+export { Calendar, DatePicker } from "./components/ui/date-picker";
 export type { DialogProps } from "./components/ui/dialog";
 export { Dialog } from "./components/ui/dialog";
 export type { DrawerProps } from "./components/ui/drawer";

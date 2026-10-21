@@ -70,6 +70,9 @@ const OverlaysPage = lazy(() =>
 const DataPage = lazy(() =>
   import("./pages/components/data").then((module) => ({ default: module.DataPage })),
 );
+const DatePickerPage = lazy(() =>
+  import("./pages/components/date").then((module) => ({ default: module.DatePickerPage })),
+);
 const ControlsPage = lazy(() =>
   import("./pages/components/controls").then((module) => ({ default: module.ControlsPage })),
 );
@@ -125,6 +128,7 @@ export function App() {
             <Route path="/components/overlays" element={<OverlaysPage />} />
             <Route path="/components/data" element={<DataPage />} />
             <Route path="/components/controls" element={<ControlsPage />} />
+            <Route path="/components/date" element={<DatePickerPage />} />
             <Route path="/patterns" element={<PatternsIndexPage />} />
             <Route path="/patterns/storefront" element={<StorefrontPatternsPage />} />
             <Route path="/patterns/erp" element={<ErpPatternsPage />} />

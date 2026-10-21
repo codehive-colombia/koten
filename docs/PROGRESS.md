@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`in_progress`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `F5-002` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F5-003` (DatePicker) |
+| Última tarea completada | `F5-003` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F5-004` (CommandPalette) |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 027 — DatePicker y Calendar
+
+- **Objetivo:** cerrar `F5-003` con fecha simple, rango, teclado completo y locale, sin dependencias nuevas.
+- **Hecho:**
+  - **`Calendar`**: tabla con encabezados de día, roving focus y un solo `tabindex=0`; flechas, Home/End, PageUp/PageDown, Enter/Space; `aria-pressed` para selección, `aria-current="date"` para hoy; min/max y semana según `Intl.Locale.weekInfo` (lunes en ES, domingo en JA/EN).
+  - **`DatePicker`**: campo con label/descripción/error propios, panel anclado (sin portal), `aria-expanded`/`aria-controls`, Escape, cierre por clic fuera y modos `single`/`range` (invierte el rango si el segundo día es anterior). El nombre accesible incluye el texto visible.
+  - **ERP**: el formulario reemplaza `<input type="date">` por `DatePicker` con `min`/`max`, manteniendo el estado ISO.
+  - **Catálogo**: página `/components/date` en ES/JA/EN con demos, props, código y notas; inventario `C-063`/`C-064`; el índice pasa a 44 primitivas y 12 páginas.
+  - 9 tests nuevos del calendario y del picker (locale, teclado, rango, foco, min/max); axe sin serious/critical en la página y en el formulario.
+- **Tareas tocadas:** `F5-003` → `done`.
+- **Decisiones:** `D-036` (DatePicker propio, sin dependencias, panel anclado).
+- **Evidencia:** `packages/ui/src/components/ui/date-picker.tsx` + `date-picker.test.tsx`, `apps/erp/src/pages/order-form.tsx`, `apps/catalog/src/pages/components/date.tsx`, `App.tsx`, `data/catalog.ts`, `pages/components/index.tsx`; `bun run check` verde (**31 archivos / 190 tests**); `qa:a11y` catálogo 54 páginas y ERP 36 sin serious/critical; 39 capturas.
+- **Sin validar:** recorte del panel dentro de ancestros con `overflow: hidden`; soporte de `Intl.Locale.weekInfo` en navegadores antiguos (hay fallback).
+- **Próximo:** `F5-004` — CommandPalette.
+- **Bloqueos:** ninguno.
 
 ---
 

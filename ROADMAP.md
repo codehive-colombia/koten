@@ -112,6 +112,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-033` | No publicar `@koten/ui`. | accepted | [D-033](./docs/DECISIONS.md#d-033) |
 | `D-034` | La v1 cierra sin Sumi ni registry. | accepted | [D-034](./docs/DECISIONS.md#d-034) |
 | `D-035` | Sumi post-v1 con roles sólidos e inversos. | accepted | [D-035](./docs/DECISIONS.md#d-035) |
+| `D-036` | DatePicker propio, sin dependencias y panel anclado. | accepted | [D-036](./docs/DECISIONS.md#d-036) |
 
 ---
 
@@ -265,7 +266,7 @@ ISO 8601: `YYYY-MM-DD`.
 | --- | --- | --- | --- | --- | --- |
 | `F5-001` | Registry shadcn: `registry.json`, build y instalación por URL. | `F4-006` | `todo` | `npx shadcn add <url>` instala un componente con sus tokens. | — |
 | `F5-002` | Tema Sumi (dark) con contraste AA. | `F4-006` | `done` | Tema conmutable; sin flash; componentes existentes sin cambios. | `[data-theme="sumi"]` + roles `*-solid`/`solid-fg` e `inverse-bg`/`inverse-fg` (`D-035`); selector del catálogo y `?theme=sumi` en demos; script inline pre-paint; contraste AA en 4 temas; axe Sumi en catálogo/storefront/ERP → 0 serious/critical; capturas `*-sumi` a 1440/1280/1024. |
-| `F5-003` | DatePicker / Calendar. | `F4-006` | `todo` | Teclado, rango y locale. | — |
+| `F5-003` | DatePicker / Calendar. | `F4-006` | `done` | Teclado, rango y locale. | `Calendar` + `DatePicker` (`D-036`): tabla con roving focus, flechas/Home/End/PageUp/PageDown, Enter, single/range, min/max, panel anclado y `Intl`; 9 tests; ERP usa el componente; página `/components/date` en ES/JA/EN; axe 0 serious/critical. |
 | `F5-004` | CommandPalette. | `F4-006` | `todo` | Búsqueda, teclado y focus trap. | — |
 | `F5-005` | Virtualización de DataTable. | `F4-006` | `todo` | 10k filas sin degradación perceptible. | — |
 | `F5-006` | Evaluar SSG/SSR para el storefront (Astro/Next). | `F4-006` | `done` | Decisión documentada con tradeoffs. | `D-032`: Astro con islas React para producción; el POC sigue SPA. |
@@ -333,6 +334,8 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-040` | Sparkline / BarChart | 1 | `done` | SVG; fallback accesible. |
 | `C-041` | ToggleGroup | 1 | `done` | Base UI ToggleGroup; vistas/densidad. |
 | `C-062` | Label | 1 | `done` | Base UI Label dentro de Field; `htmlFor` independiente; required visual. |
+| `C-063` | Calendar | 5 | `done` | Tabla con roving focus; flechas/Home/End/PageUp/PageDown; min/max; locale. |
+| `C-064` | DatePicker | 5 | `done` | Field con panel anclado; single/range; Escape y clic fuera; formato `Intl`. |
 
 ### Patrones de storefront
 
@@ -474,6 +477,7 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Definition of Done revisado y cierre de fase 4: `D-031` (sin deploy en v1), presupuesto del catálogo a 340 KB total, tag `v0.1.0-poc`. `F4-006` → `done`; **fase 4 → `done`**. | Sesión 024 |
 | 2026-10-21 | Fase 5 iniciada con las dos evaluaciones: `D-032` (Astro con islas para el storefront productivo) y `D-033` (no publicar el paquete); `D-034` cierra `Q-001`/`Q-002`. `F5-006`, `F5-007` → `done`. | Sesión 025 |
 | 2026-10-21 | Tema Sumi: tokens oscuros, roles sólidos e inversos, selector y pre-paint, contraste AA en 4 temas y axe en oscuro. `F5-002` → `done`; `D-035`. | Sesión 026 |
+| 2026-10-21 | DatePicker y Calendar sin dependencias: teclado, rango, locale y panel anclado; ERP migra el campo de fecha. `F5-003` → `done`; `D-036`; `C-063`/`C-064`. | Sesión 027 |
 | 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |
