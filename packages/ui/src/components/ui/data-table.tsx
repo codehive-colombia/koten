@@ -1,3 +1,4 @@
+// biome-ignore-all lint/a11y/noAriaHiddenOnFocusable: filas espaciadoras de la tabla virtualizada, sin contenido ni foco.
 import {
   type ColumnDef,
   flexRender,
@@ -50,6 +51,14 @@ export type DataTableProps<T> = {
   pageSize?: number;
   onSelectionChange?: (ids: string[]) => void;
   className?: string;
+  /** Renderiza solo las filas visibles en un contenedor con scroll. */
+  virtualized?: boolean;
+  /** Altura del contenedor virtualizado, en px. */
+  height?: number;
+  /** Altura fija de cada fila, en px (debe coincidir con la densidad). */
+  rowHeight?: number;
+  /** Filas extra arriba y abajo de la ventana visible. */
+  overscan?: number;
 };
 
 function SelectionCheckbox({
@@ -100,9 +109,14 @@ export function DataTable<T>({
   pageSize = 8,
   onSelectionChange,
   className,
+  virtualized = false,
+  height = 480,
+  rowHeight = 36,
+  overscan = 8,
 }: DataTableProps<T>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+  const [scrollTop, setScrollTop] = useState(0);
 
   const columnDefs = useMemo<ColumnDef<T>[]>(() => {
     const selectionColumn: ColumnDef<T>[] = selectable
@@ -163,13 +177,21 @@ export function DataTable<T>({
     enableRowSelection: selectable,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: { pagination: { pageSize } },
+    getPaginationRowModel: virtualized ? undefined : getPaginationRowModel(),
+    initialState: virtualized ? {} : { pagination: { pageSize } },
   });
 
   const selectedCount = Object.keys(rowSelection).length;
   const pageIndex = table.getState().pagination.pageIndex;
   const pageCount = table.getPageCount();
+  const rows = table.getRowModel().rows;
+  const windowStart = virtualized ? Math.max(0, Math.floor(scrollTop / rowHeight) - overscan) : 0;
+  const windowEnd = virtualized
+    ? Math.min(rows.length, windowStart + Math.ceil(height / rowHeight) + overscan * 2)
+    : rows.length;
+  const visibleRows = rows.slice(windowStart, windowEnd);
+  const topPadding = windowStart * rowHeight;
+  const bottomPadding = (rows.length - windowEnd) * rowHeight;
 
   return (
     <div data-slot="data-table" className={cn("grid min-w-0 gap-2", className)}>
@@ -177,9 +199,23 @@ export function DataTable<T>({
         {selectedCount > 0 ? selectedLabel(selectedCount) : null}
       </div>
 
-      <Table>
+      <Table
+        aria-rowcount={virtualized ? rows.length + 1 : undefined}
+        containerClassName={
+          virtualized ? "max-h-[var(--koten-vtable-h)] overflow-y-auto" : undefined
+        }
+        containerProps={
+          virtualized
+            ? {
+                style: { "--koten-vtable-h": `${height}px` } as React.CSSProperties,
+                onScroll: (event) => setScrollTop(event.currentTarget.scrollTop),
+                "aria-label": caption ?? paginationLabel,
+              }
+            : undefined
+        }
+      >
         {caption ? <TableCaption>{caption}</TableCaption> : null}
-        <TableHeader>
+        <TableHeader className={virtualized ? "sticky top-0 z-1 bg-tint" : undefined}>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
@@ -225,6 +261,15 @@ export function DataTable<T>({
           ))}
         </TableHeader>
         <TableBody>
+          {virtualized && topPadding > 0 ? (
+            <tr aria-hidden="true">
+              <td
+                colSpan={columnDefs.length}
+                className="border-0 p-0"
+                style={{ height: topPadding }}
+              />
+            </tr>
+          ) : null}
           {loading ? (
             [0, 1, 2].map((row) => (
               <TableRow key={`skeleton-${row}`}>
@@ -233,22 +278,30 @@ export function DataTable<T>({
                 </TableCell>
               </TableRow>
             ))
-          ) : table.getRowModel().rows.length === 0 ? (
+          ) : rows.length === 0 ? (
             <TableRow>
               <TableCell colSpan={columnDefs.length} className="py-4 text-center text-muted">
                 {emptyLabel}
               </TableCell>
             </TableRow>
           ) : (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() ? "selected" : undefined}>
+            visibleRows.map((row, index) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() ? "selected" : undefined}
+                aria-rowindex={virtualized ? windowStart + index + 2 : undefined}
+                style={virtualized ? { height: rowHeight } : undefined}
+              >
                 {row.getVisibleCells().map((cell) => {
                   const column = columns.find((item) => item.id === cell.column.id);
 
                   return (
                     <TableCell
                       key={cell.id}
-                      className={column?.align === "right" ? "text-end tabular-nums" : undefined}
+                      className={cn(
+                        column?.align === "right" ? "text-end tabular-nums" : undefined,
+                        virtualized && "overflow-hidden whitespace-nowrap",
+                      )}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
@@ -257,18 +310,29 @@ export function DataTable<T>({
               </TableRow>
             ))
           )}
+          {virtualized && bottomPadding > 0 ? (
+            <tr aria-hidden="true">
+              <td
+                colSpan={columnDefs.length}
+                className="border-0 p-0"
+                style={{ height: bottomPadding }}
+              />
+            </tr>
+          ) : null}
         </TableBody>
       </Table>
 
-      <Pagination
-        page={pageIndex + 1}
-        pageCount={Math.max(pageCount, 1)}
-        onPageChange={(page) => table.setPageIndex(page - 1)}
-        previousLabel={previousLabel}
-        nextLabel={nextLabel}
-        navLabel={paginationLabel}
-        pageLabel={(page) => String(page)}
-      />
+      {virtualized ? null : (
+        <Pagination
+          page={pageIndex + 1}
+          pageCount={Math.max(pageCount, 1)}
+          onPageChange={(page) => table.setPageIndex(page - 1)}
+          previousLabel={previousLabel}
+          nextLabel={nextLabel}
+          navLabel={paginationLabel}
+          pageLabel={(page) => String(page)}
+        />
+      )}
     </div>
   );
 }

@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`in_progress`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `F5-004` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F5-005` (virtualización) |
+| Última tarea completada | `F5-005` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F5-001` (registry) |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 029 — Virtualización de DataTable
+
+- **Objetivo:** cerrar `F5-005` para recorrer 10 000 filas sin degradación perceptible.
+- **Hecho:**
+  - `DataTable` gana `virtualized`, `height`, `rowHeight` y `overscan`: desactiva paginación, calcula la ventana desde `scrollTop` y renderiza solo filas visibles más overscan, sin dependencias.
+  - Header sticky dentro del contenedor con scroll; `aria-rowcount` en la tabla y `aria-rowindex` por fila; espaciadores `aria-hidden`; contenedor enfocable.
+  - Demo en `/components/data` con 10 000 pedidos y nota sobre `rowHeight`/densidad; props y código en ES/JA/EN.
+  - Test: 10 000 filas → menos de 40 filas en el DOM, sin paginación, `aria-rowcount=10001` y salto a la fila 5 000.
+  - Performance: LCP 416 ms y CLS 0 en la página del catálogo con la tabla de 10k; el DOM se mantiene en ~29 filas.
+- **Tareas tocadas:** `F5-005` → `done`.
+- **Decisiones:** `D-038`.
+- **Evidencia:** `packages/ui/src/components/ui/{data-table,table}.tsx`, `data-displays.test.tsx`, `apps/catalog/src/pages/components/data.tsx`, `scripts/qa-perf.ts`; `bun run check` verde (**32 archivos / 197 tests**); `qa:a11y` catálogo 60 páginas OK; `qa:perf` 7 rutas OK; presupuesto OK.
+- **Sin validar:** filas de altura variable y celdas que envuelven (fuera del modo virtual); medición de frames con throttling de CPU.
+- **Próximo:** `F5-001` — registry shadcn (última tarea de la fase 5).
+- **Bloqueos:** ninguno.
 
 ---
 

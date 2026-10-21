@@ -150,6 +150,47 @@ describe("DataTable", () => {
     expect(screen.queryByText("A-001")).not.toBeInTheDocument();
   });
 
+  it("virtualiza 10 000 filas sin paginación y conserva el scroll", () => {
+    const many: Order[] = Array.from({ length: 10_000 }, (_, index) => ({
+      id: `K-${index}`,
+      customer: `Cliente ${index}`,
+      total: index,
+    }));
+
+    render(
+      <DataTable
+        data={many}
+        columns={columns}
+        getRowId={(row) => row.id}
+        caption="Pedidos virtualizados"
+        emptyLabel="Sin pedidos"
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        paginationLabel="Paginación"
+        selectAllLabel="Todo"
+        selectRowLabel={(id) => id}
+        selectedLabel={(count) => String(count)}
+        virtualized
+        height={400}
+        rowHeight={32}
+      />,
+    );
+
+    expect(screen.getByRole("table", { name: "Pedidos virtualizados" })).toHaveAttribute(
+      "aria-rowcount",
+      "10001",
+    );
+    expect(screen.getAllByRole("row").length).toBeLessThan(40);
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
+    expect(screen.getByText("K-0")).toBeInTheDocument();
+
+    const container = screen.getByRole("table").parentElement as HTMLElement;
+    fireEvent.scroll(container, { target: { scrollTop: 5000 * 32 } });
+
+    expect(screen.getByText("K-5000")).toBeInTheDocument();
+    expect(screen.queryByText("K-0")).not.toBeInTheDocument();
+  });
+
   it("renders empty and loading states", () => {
     const { container, rerender } = render(
       <DataTable

@@ -34,6 +34,7 @@ const apps: Record<AppId, { port: number; directory: string }> = {
 const pages: readonly Page[] = [
   { app: "catalog", label: "portada", path: "/" },
   { app: "catalog", label: "formularios", path: "/components/forms" },
+  { app: "catalog", label: "datos 10k", path: "/components/data" },
   { app: "catalog", label: "patrones", path: "/patterns/storefront" },
   { app: "storefront", label: "producto", path: "/" },
   { app: "erp", label: "dashboard", path: "/" },

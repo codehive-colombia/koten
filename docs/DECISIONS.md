@@ -552,3 +552,20 @@
   - Los textos (`label`, `placeholder`, `emptyLabel`, `hint`) entran por props: el componente no hardcodea strings. Los items llevan icono y atajo opcionales.
 - **Consecuencias:** El patrón es reutilizable en cualquier app y no agrega dependencias. La página `/components/command` lo documenta con demo, props y notas; axe lo audita con el diálogo abierto (`qa:a11y` lo abre desde `article button`). El catálogo sube a 344,4 KB totales, dentro del nuevo presupuesto 260/360 KB.
 - **Alternativas:** `role="menu"` (semántica de acciones, no de búsqueda); opciones realmente enfocables (más saltos de tabulación y pierde el patrón combobox); una librería de command palette (peso y estilos ajenos).
+
+---
+
+<a id="d-038"></a>
+## D-038 · Virtualización manual de DataTable
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`F5-005`)
+- **Contexto:** El ERP pagina de a 12 filas, pero un backoffice real a veces necesita recorrer miles de pedidos de una vez (auditoría, exportación visual, búsqueda amplia). Montar 10 000 filas bloquea el hilo principal y dispara el DOM. `@tanstack/react-virtual` resolvería el cálculo, pero agrega una dependencia y su integración con `<table>` requeriría reescribir el markup.
+- **Decisión:**
+  - `DataTable` acepta `virtualized`, `height`, `rowHeight` y `overscan`. En ese modo desactiva la paginación, calcula la ventana visible desde `scrollTop` y renderiza solo esas filas más `overscan` arriba y abajo.
+  - El header queda sticky dentro del contenedor con scroll; el contenedor ya es enfocable y mantiene el scroll horizontal de `Table`.
+  - La tabla expone `aria-rowcount` y cada fila `aria-rowindex`; las filas espaciadoras son `aria-hidden` y no contienen foco.
+  - `rowHeight` es fijo (32 px por defecto, igual a la densidad default). Si la densidad cambia, el consumidor pasa 28/32/36; las celdas virtualizadas no envuelven texto.
+  - Sin dependencias nuevas: aritmética de ventana y `onScroll`.
+- **Consecuencias:** Con 10 000 filas el DOM mantiene ~29 filas y el LCP del catálogo con esa página es 416 ms local; el scroll solo reemplaza la ventana. Limitación documentada: filas de altura variable y celdas que envuelven no son compatibles con este modo; usar paginación o columnas cortas. El test cubre el conteo de filas, `aria-rowcount` y el salto a la fila 5 000.
+- **Alternativas:** `@tanstack/react-virtual` (dependencia y API extra); paginación solamente (no cubre el caso de 10k); renderizar todo (DOM y memoria inviables).

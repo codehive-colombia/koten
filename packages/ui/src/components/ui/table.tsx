@@ -2,9 +2,27 @@
 import type { ComponentProps } from "react";
 import { cn } from "../../lib/cn";
 
-export function Table({ className, ...props }: ComponentProps<"table">) {
+export type TableProps = ComponentProps<"table"> & {
+  /** Clases del contenedor con scroll horizontal. */
+  containerClassName?: string;
+  /** Props del contenedor (scroll vertical, onScroll, etiquetas). */
+  containerProps?: ComponentProps<"div">;
+};
+
+export function Table({ className, containerClassName, containerProps, ...props }: TableProps) {
+  const { className: containerPropsClassName, ...restContainerProps } = containerProps ?? {};
+
   return (
-    <div tabIndex={0} className="w-full min-w-0 overflow-x-auto border border-rule">
+    <div
+      tabIndex={0}
+      {...restContainerProps}
+      data-slot="table-container"
+      className={cn(
+        "w-full min-w-0 overflow-x-auto border border-rule",
+        containerClassName,
+        containerPropsClassName,
+      )}
+    >
       <table
         data-slot="table"
         className={cn("w-full min-w-[32rem] border-collapse text-start text-xs", className)}

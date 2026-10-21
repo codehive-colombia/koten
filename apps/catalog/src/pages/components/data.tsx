@@ -40,6 +40,13 @@ const orders: Order[] = [
   { id: "KURA-0153", customer: "Aoyama Retail", state: "shipped", total: 19000 },
 ];
 
+const manyOrders: Order[] = Array.from({ length: 10_000 }, (_, index) => ({
+  id: `KURA-${String(10_000 + index)}`,
+  customer: `Cliente ${(index % 20) + 1}`,
+  state: (["pending", "preparing", "shipped"] as const)[index % 3] ?? "pending",
+  total: 12_000 + (index % 90) * 1_000,
+}));
+
 const stateTone = {
   pending: "warning",
   preparing: "info",
@@ -73,6 +80,7 @@ const copy = {
     sections: {
       table: { title: "Table", meta: "Semántica y densidad" },
       dataTable: { title: "DataTable", meta: "Sort, selección y paginación" },
+      virtual: { title: "Virtualización", meta: "10 000 filas; solo lo visible" },
       stats: { title: "StatCard y Sparkline", meta: "KPIs con tendencia" },
       barChart: { title: "BarChart", meta: "Fallback en tabla" },
       props: { title: "Props y código", meta: "Cinco piezas" },
@@ -97,6 +105,10 @@ const copy = {
       customerHeader: "Cliente",
       stateHeader: "Estado",
       totalHeader: "Total",
+    },
+    virtual: {
+      caption: "10 000 pedidos virtualizados",
+      hint: "Scroll vertical: el DOM mantiene ~25 filas. rowHeight debe coincidir con la densidad (32 px por defecto).",
     },
     states: {
       pending: "Pendiente",
@@ -154,6 +166,24 @@ const copy = {
           note: "Agrega checkbox por fila y aria-live del conteo.",
         },
         {
+          prop: "DataTable virtualized",
+          type: "boolean",
+          default: "false",
+          note: "Ventana de filas visibles; desactiva la paginación.",
+        },
+        {
+          prop: "DataTable height / rowHeight",
+          type: "number",
+          default: "480 / 36",
+          note: "Alto del scroll y alto fijo de fila; debe coincidir con la densidad.",
+        },
+        {
+          prop: "DataTable overscan",
+          type: "number",
+          default: "8",
+          note: "Filas extra arriba y abajo para suavizar el scroll.",
+        },
+        {
           prop: "StatCard delta",
           type: "{ value, tone? }",
           default: "—",
@@ -189,7 +219,15 @@ const copy = {
   sparkline={<Sparkline data={[18, 24, 21, 32]} label="Tendencia" />}
 />
 
-<BarChart label="Pedidos por día" data={chartData} />`,
+<BarChart label="Pedidos por día" data={chartData} />
+
+<DataTable
+  data={manyOrders}
+  columns={columns}
+  virtualized
+  height={360}
+  rowHeight={32}
+/>`,
     a11y: {
       label: "Notas de accesibilidad de datos",
       items: [
@@ -199,6 +237,7 @@ const copy = {
         "Sparkline y BarChart incluyen texto alternativo; el chart visual es decorativo.",
         "Los números usan tabular-nums y se alinean a la derecha.",
         "DataTable conserva la identidad de data: no la copies en cada render o la paginación se reinicia.",
+        "La tabla virtualizada mantiene aria-rowcount y aria-rowindex, y su contenedor recibe foco para recorrerla con teclado.",
       ],
     },
   },
@@ -212,6 +251,7 @@ const copy = {
     sections: {
       table: { title: "Table", meta: "意味論と密度" },
       dataTable: { title: "DataTable", meta: "並べ替え・選択・ページ送り" },
+      virtual: { title: "仮想化", meta: "1万行、表示分だけ" },
       stats: { title: "StatCard と Sparkline", meta: "傾向付きKPI" },
       barChart: { title: "BarChart", meta: "表によるフォールバック" },
       props: { title: "Propsとコード", meta: "5つの部品" },
@@ -236,6 +276,10 @@ const copy = {
       customerHeader: "顧客",
       stateHeader: "状態",
       totalHeader: "合計",
+    },
+    virtual: {
+      caption: "仮想化した1万件の注文",
+      hint: "縦スクロール時、DOM は約25行だけ。rowHeight は密度（既定32px）に合わせます。",
     },
     states: {
       pending: "保留中",
@@ -293,6 +337,24 @@ const copy = {
           note: "行ごとのチェックボックスと件数の aria-live を追加する。",
         },
         {
+          prop: "DataTable virtualized",
+          type: "boolean",
+          default: "false",
+          note: "Ventana de filas visibles; desactiva la paginación.",
+        },
+        {
+          prop: "DataTable height / rowHeight",
+          type: "number",
+          default: "480 / 36",
+          note: "Alto del scroll y alto fijo de fila; debe coincidir con la densidad.",
+        },
+        {
+          prop: "DataTable overscan",
+          type: "number",
+          default: "8",
+          note: "Filas extra arriba y abajo para suavizar el scroll.",
+        },
+        {
           prop: "StatCard delta",
           type: "{ value, tone? }",
           default: "—",
@@ -328,7 +390,15 @@ const copy = {
   sparkline={<Sparkline data={[18, 24, 21, 32]} label="推移" />}
 />
 
-<BarChart label="日別の注文" data={chartData} />`,
+<BarChart label="日別の注文" data={chartData} />
+
+<DataTable
+  data={manyOrders}
+  columns={columns}
+  virtualized
+  height={360}
+  rowHeight={32}
+/>`,
     a11y: {
       label: "データのアクセシビリティ注記",
       items: [
@@ -338,6 +408,7 @@ const copy = {
         "Sparkline と BarChart は代替テキストを持ち、視覚的なチャートは装飾。",
         "数値は tabular-nums を使い、右揃えにする。",
         "DataTable は data の同一性を保つ。毎レンダーでコピーするとページ送りがリセットされる。",
+        "仮想化した表は aria-rowcount と aria-rowindex を保ち、コンテナにフォーカスしてキーボードでスクロールできる。",
       ],
     },
   },
@@ -351,6 +422,7 @@ const copy = {
     sections: {
       table: { title: "Table", meta: "Semantics and density" },
       dataTable: { title: "DataTable", meta: "Sort, selection and pagination" },
+      virtual: { title: "Virtualization", meta: "10,000 rows, only the visible ones" },
       stats: { title: "StatCard and Sparkline", meta: "KPIs with trend" },
       barChart: { title: "BarChart", meta: "Table fallback" },
       props: { title: "Props and code", meta: "Five pieces" },
@@ -375,6 +447,10 @@ const copy = {
       customerHeader: "Customer",
       stateHeader: "State",
       totalHeader: "Total",
+    },
+    virtual: {
+      caption: "10,000 virtualized orders",
+      hint: "Vertical scroll keeps ~25 rows in the DOM. rowHeight must match the density (32 px by default).",
     },
     states: {
       pending: "Pending",
@@ -432,6 +508,24 @@ const copy = {
           note: "Adds a per-row checkbox and aria-live for the count.",
         },
         {
+          prop: "DataTable virtualized",
+          type: "boolean",
+          default: "false",
+          note: "Ventana de filas visibles; desactiva la paginación.",
+        },
+        {
+          prop: "DataTable height / rowHeight",
+          type: "number",
+          default: "480 / 36",
+          note: "Alto del scroll y alto fijo de fila; debe coincidir con la densidad.",
+        },
+        {
+          prop: "DataTable overscan",
+          type: "number",
+          default: "8",
+          note: "Filas extra arriba y abajo para suavizar el scroll.",
+        },
+        {
           prop: "StatCard delta",
           type: "{ value, tone? }",
           default: "—",
@@ -467,7 +561,15 @@ const copy = {
   sparkline={<Sparkline data={[18, 24, 21, 32]} label="Trend" />}
 />
 
-<BarChart label="Orders per day" data={chartData} />`,
+<BarChart label="Orders per day" data={chartData} />
+
+<DataTable
+  data={manyOrders}
+  columns={columns}
+  virtualized
+  height={360}
+  rowHeight={32}
+/>`,
     a11y: {
       label: "Data accessibility notes",
       items: [
@@ -477,6 +579,7 @@ const copy = {
         "Sparkline and BarChart include alternative text; the visual chart is decorative.",
         "Numbers use tabular-nums and are right-aligned.",
         "DataTable keeps the identity of data: do not copy it on every render or pagination resets.",
+        "The virtualized table keeps aria-rowcount and aria-rowindex, and its container is focusable for keyboard scrolling.",
       ],
     },
   },
@@ -579,6 +682,31 @@ export function DataPage() {
             selectable
             pageSize={5}
           />
+        </Section>
+
+        <Section
+          id="virtual"
+          title={t.sections.virtual.title}
+          jp="仮想"
+          meta={t.sections.virtual.meta}
+        >
+          <DataTable
+            data={manyOrders}
+            columns={columns}
+            getRowId={(row) => row.id}
+            caption={t.virtual.caption}
+            emptyLabel={t.dataTable.emptyLabel}
+            previousLabel={t.dataTable.previousLabel}
+            nextLabel={t.dataTable.nextLabel}
+            paginationLabel={t.dataTable.paginationLabel}
+            selectAllLabel={t.dataTable.selectAllLabel}
+            selectRowLabel={t.dataTable.selectRowLabel}
+            selectedLabel={t.dataTable.selectedLabel}
+            virtualized
+            height={360}
+            rowHeight={32}
+          />
+          <p className="mt-1 text-2xs text-faint">{t.virtual.hint}</p>
         </Section>
 
         <Section id="stats" title={t.sections.stats.title} jp="指標" meta={t.sections.stats.meta}>
