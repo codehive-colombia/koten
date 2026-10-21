@@ -33,7 +33,7 @@ function renderPalette(overrides: Partial<Parameters<typeof CommandPalette>[0]> 
 }
 
 describe("CommandPalette", () => {
-  it("enfoca el campo y lista todos los comandos", async () => {
+  it("focuses the field and lists every command", async () => {
     renderPalette();
 
     const input = await screen.findByRole("combobox", { name: "Comandos" });
@@ -43,7 +43,7 @@ describe("CommandPalette", () => {
     expect(input).toHaveAttribute("aria-expanded", "true");
   });
 
-  it("filtra por label, descripción y palabras clave sin acentos", async () => {
+  it("filters by label, description and keywords without accents", async () => {
     renderPalette();
 
     const input = await screen.findByRole("combobox", { name: "Comandos" });
@@ -59,7 +59,7 @@ describe("CommandPalette", () => {
     expect(screen.getByRole("option", { name: /Pedidos/ })).toBeInTheDocument();
   });
 
-  it("navega con flechas y selecciona con Enter", async () => {
+  it("navigates with arrows and selects with Enter", async () => {
     const { onSelect, onOpenChange } = renderPalette();
 
     const input = await screen.findByRole("combobox", { name: "Comandos" });
@@ -80,7 +80,7 @@ describe("CommandPalette", () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 
-  it("muestra el vacío y desactiva la selección sin resultados", async () => {
+  it("shows the empty state and disables selection with no results", async () => {
     renderPalette();
 
     const input = await screen.findByRole("combobox", { name: "Comandos" });
@@ -94,7 +94,7 @@ describe("CommandPalette", () => {
     expect(screen.getByText("Sin resultados")).toBeInTheDocument();
   });
 
-  it("cierra con Escape y al hacer clic en una opción", async () => {
+  it("closes with Escape and by clicking an option", async () => {
     const { onSelect, onOpenChange } = renderPalette();
 
     const input = await screen.findByRole("combobox", { name: "Comandos" });

@@ -1,7 +1,7 @@
 import { toIntlLocale } from "./intl";
 
 export type FormatOptions = {
-  /** Código BCP 47 corto (`es`, `ja`, `en`) o completo (`fr-FR`). */
+  /** Short BCP 47 code (`es`, `ja`, `en`) or a full one (`fr-FR`). */
   locale?: string;
 };
 
@@ -59,7 +59,7 @@ function toDate(value: Date | string | number): Date {
   const date = value instanceof Date ? value : new Date(value);
 
   if (Number.isNaN(date.getTime())) {
-    throw new TypeError("formatDate recibió una fecha inválida");
+    throw new TypeError("formatDate received an invalid date");
   }
 
   return date;

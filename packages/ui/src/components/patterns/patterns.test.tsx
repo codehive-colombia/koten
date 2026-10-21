@@ -17,8 +17,8 @@ import { SideNav } from "./side-nav";
 import { StatusBadge } from "./status-badge";
 import { Timeline } from "./timeline";
 
-describe("patrones de storefront", () => {
-  it("SearchBar envía el texto y la categoría", () => {
+describe("storefront patterns", () => {
+  it("SearchBar submits the text and the category", () => {
     const onSubmit = vi.fn();
 
     render(
@@ -46,7 +46,7 @@ describe("patrones de storefront", () => {
     expect(onSubmit).toHaveBeenCalledWith("K-1", "cameras");
   });
 
-  it("PriceBlock muestra precio anterior, puntos y stock", () => {
+  it("PriceBlock shows the previous price, points and stock", () => {
     render(
       <PriceBlock
         price="¥58,300"
@@ -64,7 +64,7 @@ describe("patrones de storefront", () => {
     expect(screen.getByText("En stock")).toBeInTheDocument();
   });
 
-  it("ProductGallery cambia la imagen principal con las miniaturas", () => {
+  it("ProductGallery swaps the main image from the thumbnails", () => {
     render(
       <ProductGallery
         label="Galería"
@@ -81,7 +81,7 @@ describe("patrones de storefront", () => {
     expect(screen.getByRole("img", { name: "Vista superior" })).toBeInTheDocument();
   });
 
-  it("ProductGallery admite imágenes repetidas sin claves duplicadas", () => {
+  it("ProductGallery accepts repeated images without duplicate keys", () => {
     const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
 
     render(
@@ -100,7 +100,7 @@ describe("patrones de storefront", () => {
     consoleError.mockRestore();
   });
 
-  it("ReviewSummary muestra la distribución y las reseñas", () => {
+  it("ReviewSummary shows the distribution and the reviews", () => {
     render(
       <ReviewSummary
         rating={4.6}
@@ -133,7 +133,7 @@ describe("patrones de storefront", () => {
     expect(screen.getByText("Compra verificada")).toBeInTheDocument();
   });
 
-  it("NoticeList conserva la fecha ISO y enlaza el aviso", () => {
+  it("NoticeList keeps the ISO date and links the notice", () => {
     render(
       <NoticeList
         label="Avisos"
@@ -154,7 +154,7 @@ describe("patrones de storefront", () => {
     expect(screen.getByText("21/10")).toHaveAttribute("dateTime", "2026-10-21");
   });
 
-  it("CampaignBanner expone un CTA real", () => {
+  it("CampaignBanner exposes a real CTA", () => {
     render(
       <CampaignBanner
         eyebrow="Campaña"
@@ -168,8 +168,8 @@ describe("patrones de storefront", () => {
   });
 });
 
-describe("patrones de ERP", () => {
-  it("SideNav marca el activo y navega sin recargar", () => {
+describe("ERP patterns", () => {
+  it("SideNav marks the active item and navigates without reloading", () => {
     const onNavigate = vi.fn();
 
     render(
@@ -225,7 +225,7 @@ describe("patrones de ERP", () => {
     expect(onReset).toHaveBeenCalledTimes(1);
   });
 
-  it("Timeline lista eventos con fecha y tono", () => {
+  it("Timeline lists events with date and tone", () => {
     render(
       <Timeline
         label="Historial"
@@ -247,7 +247,7 @@ describe("patrones de ERP", () => {
     expect(screen.getByText("21/10 12:00")).toHaveAttribute("dateTime", "2026-10-21T12:00:00.000Z");
   });
 
-  it("FormSection agrupa campos con legend", () => {
+  it("FormSection groups fields with a legend", () => {
     render(
       <FormSection title="Cliente" description="Datos de contacto">
         <label htmlFor="form-demo">Nombre</label>
@@ -259,7 +259,7 @@ describe("patrones de ERP", () => {
     expect(screen.getByText("Datos de contacto")).toBeInTheDocument();
   });
 
-  it("DetailDrawer abre, muestra secciones y cierra con Escape", async () => {
+  it("DetailDrawer opens, shows sections and closes with Escape", async () => {
     render(
       <DetailDrawer
         trigger={<Button>Abrir detalle</Button>}
@@ -286,7 +286,7 @@ describe("patrones de ERP", () => {
     });
   });
 
-  it("Toolbar mantiene los botones accesibles", () => {
+  it("Toolbar keeps the buttons accessible", () => {
     render(
       <Toolbar label="Acciones">
         <ToolbarButton label="Exportar">Exportar</ToolbarButton>

@@ -150,7 +150,7 @@ describe("DataTable", () => {
     expect(screen.queryByText("A-001")).not.toBeInTheDocument();
   });
 
-  it("virtualiza 10 000 filas sin paginación y conserva el scroll", () => {
+  it("virtualizes 10,000 rows without pagination and keeps the scroll", () => {
     const many: Order[] = Array.from({ length: 10_000 }, (_, index) => ({
       id: `K-${index}`,
       customer: `Cliente ${index}`,
@@ -265,7 +265,7 @@ describe("BarChart", () => {
     expect(screen.getByRole("cell", { name: "18" })).toBeInTheDocument();
   });
 
-  it("localiza la tabla de respaldo con el locale del provider", () => {
+  it("localizes the fallback table with the provider locale", () => {
     render(
       <KotenProvider locale="ja">
         <BarChart label="日別の注文" data={[{ label: "月", value: 12 }]} />

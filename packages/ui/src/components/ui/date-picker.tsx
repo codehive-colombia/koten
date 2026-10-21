@@ -64,7 +64,7 @@ function compareDays(first: Date, second: Date): number {
   return startOfDay(first).getTime() - startOfDay(second).getTime();
 }
 
-/** Lunes para es, domingo para ja/en; usa Intl.Locale cuando está disponible. */
+/** Monday for es, Sunday for ja/en; uses Intl.Locale when available. */
 function weekStartsOn(locale: string): number {
   try {
     const info = (
@@ -77,17 +77,17 @@ function weekStartsOn(locale: string): number {
       return info.firstDay % 7;
     }
   } catch {
-    // Locale no soportado: cae al valor por idioma.
+    // Unsupported locale: falls back to the value per language.
   }
 
   return locale.startsWith("es") ? 1 : 0;
 }
 
 export type CalendarProps = {
-  /** Fecha seleccionada (modo simple). */
+  /** Selected date (single mode). */
   selected?: Date | null;
   onSelect?: (date: Date) => void;
-  /** Rango activo (modo rango). */
+  /** Active range (range mode). */
   rangeStart?: Date | null;
   rangeEnd?: Date | null;
   month?: Date;
@@ -96,7 +96,7 @@ export type CalendarProps = {
   min?: Date;
   max?: Date;
   className?: string;
-  /** Enfoca el día seleccionado o hoy al montar. */
+  /** Focuses the selected day or today on mount. */
   autoFocus?: boolean;
 };
 
@@ -377,10 +377,10 @@ type DatePickerSharedProps = {
   placeholder?: string;
   min?: Date;
   max?: Date;
-  /** Mes con el que abre el panel; por defecto, el valor o hoy. */
+  /** Month the panel opens on; defaults to the value or today. */
   defaultMonth?: Date;
   className?: string;
-  /** Etiqueta del panel; por defecto, la del campo. */
+  /** Panel label; defaults to the field label. */
   dialogLabel?: string;
 };
 

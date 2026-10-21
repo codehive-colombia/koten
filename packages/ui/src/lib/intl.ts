@@ -6,7 +6,7 @@ const locales: Record<KotenLocale, string> = {
   en: "en-US",
 };
 
-/** Resuelve un código corto (`es`) o deja pasar un BCP 47 completo (`fr-FR`). */
+/** Resolves a short code (`es`) or lets a full BCP 47 tag through (`fr-FR`). */
 export function toIntlLocale(locale: string): string {
   if (locale in locales) {
     return locales[locale as KotenLocale];

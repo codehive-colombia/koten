@@ -1,4 +1,4 @@
-// biome-ignore-all lint/a11y/noAriaHiddenOnFocusable: filas espaciadoras de la tabla virtualizada, sin contenido ni foco.
+// biome-ignore-all lint/a11y/noAriaHiddenOnFocusable: spacer rows in the virtualized table hold no content and no focus.
 import {
   type ColumnDef,
   flexRender,
@@ -51,13 +51,13 @@ export type DataTableProps<T> = {
   pageSize?: number;
   onSelectionChange?: (ids: string[]) => void;
   className?: string;
-  /** Renderiza solo las filas visibles en un contenedor con scroll. */
+  /** Renders only the visible rows inside a scroll container. */
   virtualized?: boolean;
-  /** Altura del contenedor virtualizado, en px. */
+  /** Height of the virtualized container, in px. */
   height?: number;
-  /** Altura fija de cada fila, en px (debe coincidir con la densidad). */
+  /** Fixed height of each row, in px (must match the density). */
   rowHeight?: number;
-  /** Filas extra arriba y abajo de la ventana visible. */
+  /** Extra rows above and below the visible window. */
   overscan?: number;
 };
 

@@ -90,11 +90,11 @@ const textPairs = [
   ["inverse-fg", "inverse-bg", "texto sobre superficie inversa"],
 ] as const;
 
-describe("contraste de tokens", () => {
+describe("token contrast", () => {
   for (const theme of themeIds) {
     const block = themeBlocks[theme];
 
-    it(`cumple AA en el tema ${theme}`, () => {
+    it(`meets AA in the ${theme} theme`, () => {
       for (const [foreground, background, label] of textPairs) {
         const ratio = contrast(resolve(foreground, block), resolve(background, block));
 
@@ -102,7 +102,7 @@ describe("contraste de tokens", () => {
       }
     });
 
-    it(`mantiene texto legible sobre el primario en ${theme}`, () => {
+    it(`keeps readable text over the primary in ${theme}`, () => {
       const ratio = contrast(resolve("primary-fg", block), resolve("primary", block));
 
       expect(
@@ -112,7 +112,7 @@ describe("contraste de tokens", () => {
     });
   }
 
-  it("mantiene el texto sólido legible sobre cada fondo de estado", () => {
+  it("keeps solid text readable over every state background", () => {
     const tones = ["info", "success", "warning", "danger", "sale", "new", "neutral"] as const;
 
     for (const theme of themeIds) {
@@ -129,7 +129,7 @@ describe("contraste de tokens", () => {
     }
   });
 
-  it("mantiene el borde de control en al menos 3:1", () => {
+  it("keeps the control border at least 3:1", () => {
     for (const theme of themeIds) {
       const block = themeBlocks[theme];
 

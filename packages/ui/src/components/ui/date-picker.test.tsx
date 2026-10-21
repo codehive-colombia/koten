@@ -15,21 +15,21 @@ function day(name: RegExp) {
 }
 
 describe("Calendar", () => {
-  it("muestra el mes y las semanas según el locale", () => {
+  it("shows the month and weeks per locale", () => {
     renderIn(<Calendar defaultMonth={october} selected={october} />);
 
     expect(screen.getByRole("table", { name: /octubre de 2026/i })).toBeInTheDocument();
     expect(screen.getAllByRole("columnheader")[0]).toHaveAccessibleName("lunes");
   });
 
-  it("empieza la semana en domingo para inglés", () => {
+  it("starts the week on Sunday for English", () => {
     renderIn(<Calendar defaultMonth={october} />, "en");
 
     expect(screen.getAllByRole("columnheader")[0]).toHaveAccessibleName("Sunday");
     expect(screen.getByRole("table", { name: /October 2026/i })).toBeInTheDocument();
   });
 
-  it("navega con flechas, Home/End y PageDown", () => {
+  it("navigates with arrows, Home/End and PageDown", () => {
     renderIn(<Calendar defaultMonth={october} selected={october} autoFocus />);
 
     const grid = screen.getByRole("table");
@@ -49,7 +49,7 @@ describe("Calendar", () => {
     expect(document.activeElement).toHaveAccessibleName(/jueves, 26 de noviembre de 2026/i);
   });
 
-  it("selecciona con Enter y respeta min/max", () => {
+  it("selects with Enter and respects min/max", () => {
     const onSelect = vi.fn();
 
     renderIn(
@@ -75,7 +75,7 @@ describe("Calendar", () => {
 });
 
 describe("DatePicker", () => {
-  it("asocia el label y muestra la fecha formateada", () => {
+  it("associates the label and shows the formatted date", () => {
     renderIn(<DatePicker label="Fecha de entrega" defaultValue={october} />);
 
     expect(screen.getByRole("button", { name: /Fecha de entrega/ })).toHaveTextContent(
@@ -83,7 +83,7 @@ describe("DatePicker", () => {
     );
   });
 
-  it("abre el panel, selecciona un día y devuelve el foco", () => {
+  it("opens the panel, selects a day and returns focus", () => {
     const onChange = vi.fn();
 
     renderIn(
@@ -108,7 +108,7 @@ describe("DatePicker", () => {
     expect(document.activeElement).toBe(trigger);
   });
 
-  it("cierra con Escape y con el botón del campo", () => {
+  it("closes with Escape and with the field button", () => {
     renderIn(<DatePicker label="Entrega" defaultValue={october} defaultMonth={october} />);
 
     const trigger = screen.getByRole("button", { name: /Entrega/ });
@@ -119,7 +119,7 @@ describe("DatePicker", () => {
     expect(document.activeElement).toBe(trigger);
   });
 
-  it("selecciona un rango completo y lo muestra", () => {
+  it("selects a full range and shows it", () => {
     const onChange = vi.fn();
 
     renderIn(
@@ -140,7 +140,7 @@ describe("DatePicker", () => {
     expect(trigger).toHaveTextContent("10 oct 2026 – 14 oct 2026");
   });
 
-  it("invierte el rango si el segundo día es anterior", () => {
+  it("reverses the range when the second day comes earlier", () => {
     const onChange = vi.fn();
 
     renderIn(

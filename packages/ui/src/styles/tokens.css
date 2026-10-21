@@ -52,8 +52,8 @@
   --koten-new: var(--koten-ai);
   --koten-focus: var(--koten-ai);
 
-  /* Fondos sólidos con texto claro. En Sumi se separan del color de texto
-     para que ambos mantengan contraste AA. */
+  /* Solid backgrounds with light text. In Sumi they are kept apart from the text
+     color so both hold AA contrast. */
   --koten-solid-fg: #ffffff;
   --koten-neutral-solid: var(--koten-ink);
   --koten-danger-solid: var(--koten-danger);

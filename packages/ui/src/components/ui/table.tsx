@@ -1,11 +1,11 @@
-// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: scroll regions kept keyboard accessible (F4-002).
 import type { ComponentProps } from "react";
 import { cn } from "../../lib/cn";
 
 export type TableProps = ComponentProps<"table"> & {
-  /** Clases del contenedor con scroll horizontal. */
+  /** Classes for the horizontal scroll container. */
   containerClassName?: string;
-  /** Props del contenedor (scroll vertical, onScroll, etiquetas). */
+  /** Container props (vertical scroll, onScroll, labels). */
   containerProps?: ComponentProps<"div">;
 };
 

@@ -15,9 +15,9 @@ export type CommandItem = {
   id: string;
   label: string;
   description?: string;
-  /** Texto de agrupación visible a la derecha. */
+  /** Group text shown on the right. */
   group?: string;
-  /** Términos extra para la búsqueda. */
+  /** Extra terms for the search. */
   keywords?: string;
   icon?: ReactNode;
   shortcut?: string;
@@ -31,7 +31,7 @@ export type CommandPaletteProps = {
   emptyLabel: string;
   items: readonly CommandItem[];
   onSelect: (item: CommandItem) => void;
-  /** Pista de teclado al pie; el componente no contiene strings. */
+  /** Keyboard hint at the bottom; the component holds no strings. */
   hint?: ReactNode;
   className?: string;
 };
