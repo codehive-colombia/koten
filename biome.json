@@ -6,6 +6,7 @@
       "!**/node_modules",
       "!**/dist",
       "!**/coverage",
+      "!**/public/r",
       "!**/.openchamber",
       "!**/playwright-report",
       "!**/test-results"
