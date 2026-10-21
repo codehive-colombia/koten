@@ -2,7 +2,7 @@
 
 > ADR ligero. Cada decisión tiene ID estable y no se renumera.
 > Si una decisión se reemplaza, se agrega una nueva con `supersede a D-00x`.
-> Última actualización: 2026-10-20.
+> Última actualización: 2026-10-21.
 
 ## Índice
 
@@ -26,6 +26,10 @@
 - [D-018 · CI en GitHub Actions](#d-018)
 - [D-019 · Catálogo wiki multipágina](#d-019)
 - [D-020 · Idioma de interfaz y documentación](#d-020)
+- [D-021 · Contenido y datos mock deterministas](#d-021)
+- [D-022 · Assets SVG locales del POC](#d-022)
+- [D-023 · Rutas y estado en URL de las demos](#d-023)
+- [D-024 · Select no modal y paginación con identidad estable](#d-024)
 
 ---
 
@@ -297,3 +301,72 @@
 - **Decisión:** El catálogo tiene un selector **ES/JA/EN** que cambia la interfaz (navegación, labels, estados, vista previa de formato) y se persiste en `?lang=`. La documentación de fondo permanece en español. El documento conserva `lang="es"`; los fragmentos de interfaz localizados llevan su propio `lang`.
 - **Consecuencias:** La UI demuestra labels y formatos reales sin duplicar toda la documentación. El idioma de la interfaz no altera el significado de la documentación; el aviso de idioma es explícito. Los demos de las fases 2 y 3 sí se traducen completos.
 - **Alternativas:** Traducir toda la documentación (coste alto y fuera de `D-008`), no ofrecer toggle (i18n invisible), traducir solo la página de formato (demasiado parcial).
+
+---
+
+<a id="d-021"></a>
+## D-021 · Contenido y datos mock deterministas
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** `F2-001` y `F3-001` necesitan contenido realista en JA/ES/EN, sin backend ni CMS. Un generador aleatorio haría imposibles las capturas, los tests y la comparación entre sesiones.
+- **Decisión:**
+  - El contenido de cada demo vive en su app: `apps/storefront/src/content/` y `apps/erp/src/data/`.
+  - Los textos localizados son diccionarios tipados por locale (`Localized<T>`), no un runtime de i18n.
+  - Los pedidos KURA se generan con una función determinista a partir de una semilla fija: **132 pedidos**, 12 clientes y 16 productos.
+  - La fecha ancla del POC es **2026-10-21**; fechas, KPIs, series y timelines se derivan de ella.
+  - Los componentes siguen sin strings: reciben labels y datos por props.
+- **Consecuencias:**
+  - Las capturas y los tests son reproducibles; no hay `Math.random` en los datos.
+  - Cambiar el contenido no requiere tocar componentes.
+  - Cuando exista backend, los módulos de datos se reemplazan por adaptadores sin cambiar la UI.
+- **Alternativas:** i18n runtime (peso y ceremonia para tres locales), datos aleatorios (no reproducibles), JSON remoto (fuera de alcance y con red).
+
+---
+
+<a id="d-022"></a>
+## D-022 · Assets SVG locales del POC
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** `Q-003` dejó abierta la definición de assets. El POC necesita imágenes locales, ligeras y sin riesgo de licencia; además no puede usar texto dentro de imágenes (`D-010`).
+- **Decisión:** Usar ilustraciones **SVG locales** para la HIKARI K-1, el objetivo y la bolsa: `apps/storefront/src/assets/`. Cada asset lleva `title` interno, y la UI aporta `alt` localizado, `width`/`height` y `loading` según posición. No hay hotlinking ni imágenes con texto.
+- **Consecuencias:**
+  - 0 KB de fuentes e imágenes de pocos KB; ninguna dependencia ni CDN.
+  - Las ilustraciones no son fotografía de producto: se reemplazan antes de producción sin cambiar la API de los patrones.
+  - La licencia queda dentro del repo y documentada por origen propio.
+- **Alternativas:** Fotos de stock (licencia y peso), hotlinking (frágil y con privacidad), texto en imágenes (rechazado por `D-010`).
+
+---
+
+<a id="d-023"></a>
+## D-023 · Rutas y estado en URL de las demos
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** El storefront necesita un selector de idioma compartible y el ERP necesita filtros que sobrevivan a la recarga y al deep link. `D-019` ya había introducido React Router en el catálogo.
+- **Decisión:**
+  - El storefront persiste el idioma en `?lang=`.
+  - El ERP usa React Router 7 (ya en `D-005`) con `/`, `/orders` y `/orders/new`; los filtros viven en `?q=`, `?status=`, `?warehouse=` y `?range=`.
+  - Las rutas de módulos fuera del POC (`/products`, `/inventory`, etc.) existen como placeholder para no dejar enlaces muertos.
+- **Consecuencias:** Los estados son compartibles y testeables; el hosting necesita fallback SPA (`D-017`). La navegación interna usa `Link`/`useNavigate`; los breadcrumbs de patrón siguen siendo anchors copiables.
+- **Alternativas:** Estado solo en memoria (se pierde al recargar), hash routing (peor integración), rutas por idioma (fuera de alcance).
+
+---
+
+<a id="d-024"></a>
+## D-024 · Select no modal y paginación con identidad estable
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** En pruebas manuales, abrir un `Select` podía dejar la página bloqueada: Base UI 1.9 usa `modal: true` por defecto, bloquea el scroll y las interacciones fuera del popup, y su modo `alignItemWithTrigger` añade mediciones de viewport. Además, `DataTable` pasaba `[...data]` a TanStack en cada render; el nuevo array hacía que la tabla interpretara un cambio de datos y reiniciara la página, por lo que la paginación no avanzaba en el navegador. En consola aparecía el aviso de `flushSync` desde un lifecycle de Base UI.
+- **Decisión:**
+  - `Select` usa `modal={false}` por defecto. El consumidor puede activar el modo modal con `modal`.
+  - El popup usa `alignItemWithTrigger={false}`: se posiciona debajo del trigger como un dropdown normal, sin el modo de alineación especial.
+  - `Menu` también usa `modal={false}` por defecto (Base UI lo abre modal por defecto).
+  - `DataTable` pasa la misma referencia de `data` a TanStack; no la copia en cada render.
+  - Se agregan tests de regresión para el scroll bloqueado y para conservar la página tras un re-render del padre.
+- **Consecuencias:** Abrir un select o un menú ya no secuestra la página ni el scroll; se puede seguir interactuando con filtros, paginación y navegación. La paginación avanza y conserva el estado. El modo modal sigue disponible para casos que lo necesiten.
+- **Alternativas:** Mantener el modal por defecto (bloquea la página), deshabilitar `Select`/`Menu` (pierde primitivas), copiar `data` pero memoizarla (más asignaciones y todavía frágil), parchear Base UI (dependencia externa).
+
+---
