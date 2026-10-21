@@ -27,5 +27,8 @@ describe("site URLs", () => {
     expect(registryCommand("button")).toBe(
       "npx shadcn@latest add https://koten.example.test/custom-registry/button.json",
     );
+    expect(registryCommand("button", "bun")).toBe(
+      "bunx shadcn@latest add https://koten.example.test/custom-registry/button.json",
+    );
   });
 });

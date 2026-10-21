@@ -29,6 +29,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
         label: { es: "Empezar", ja: "はじめかた", en: "Getting started" },
       },
       {
+        path: "/ai",
+        label: { es: "IA y agentes", ja: "AIとエージェント", en: "AI & agents" },
+      },
+      {
         path: "/tokens",
         label: { es: "Fundamentos", ja: "基礎", en: "Foundations" },
       },
@@ -150,6 +154,7 @@ export type ShellLabels = {
   backHome: string;
   pagerLabel: string;
   catalog: string;
+  runner: string;
 };
 
 export const shellLabels: Record<KotenLocale, ShellLabels> = {
@@ -170,6 +175,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     backHome: "Volver al inicio",
     pagerLabel: "Paginación del catálogo",
     catalog: "Catálogo",
+    runner: "Ejecutar con",
   },
   ja: {
     skipToContent: "本文へ移動",
@@ -187,6 +193,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     backHome: "ホームへ戻る",
     pagerLabel: "カタログのページ送り",
     catalog: "カタログ",
+    runner: "実行",
   },
   en: {
     skipToContent: "Skip to content",
@@ -204,5 +211,6 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     backHome: "Back to home",
     pagerLabel: "Catalog pagination",
     catalog: "Catalog",
+    runner: "Run with",
   },
 };

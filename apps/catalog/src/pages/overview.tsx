@@ -29,12 +29,13 @@ import { Link } from "react-router";
 import sampleCamera from "../assets/sample-camera.svg";
 import { Code } from "../components/docs";
 import { DemoCard, EntryCard, RegisterCard, SwatchRow, SystemPlate } from "../components/landing";
+import { PackageManagerTabs } from "../components/view-toggles";
+import { shellLabels } from "../data/catalog";
 import { componentInventory, patternInventory } from "../data/inventory";
+import { usePackageManager } from "../lib/package-manager";
 import { registryCommand, site } from "../lib/site";
 
 type PieceKind = "foundations" | "components" | "patterns" | "format";
-
-const installCommand = registryCommand("button");
 
 const copy = {
   es: {
@@ -234,7 +235,6 @@ const copy = {
       lead: "La fuente se copia con el registry, hereda los tokens y se adapta. Sin dependencias ocultas ni fuentes de megabytes.",
       panelTitle: "Instalación por URL",
       panelMeta: "shadcn · registry",
-      command: installCommand,
       note: "El catálogo genera 64 items autocontenidos: componentes, bloques, núcleo y estilos.",
       start: "Empezar",
       components: "Ver componentes",
@@ -437,7 +437,6 @@ const copy = {
       lead: "ソースはレジストリでコピーし、トークンを継承して適応する。隠れた依存も、メガバイトのフォントもない。",
       panelTitle: "URLからインストール",
       panelMeta: "shadcn · registry",
-      command: installCommand,
       note: "カタログは64の自己完結アイテムを生成する：コンポーネント、ブロック、コア、スタイル。",
       start: "はじめる",
       components: "部品を見る",
@@ -640,7 +639,6 @@ const copy = {
       lead: "Copy the source with the registry, inherit the tokens and adapt it. No hidden dependencies, no megabyte fonts.",
       panelTitle: "Install by URL",
       panelMeta: "shadcn · registry",
-      command: installCommand,
       note: "The catalog generates 64 self-contained items: components, blocks, core and styles.",
       start: "Get started",
       components: "Browse components",
@@ -702,6 +700,8 @@ export function OverviewPage() {
   const { locale } = useKoten();
   const t = copyByLocale[locale];
   const formatters = useKotenFormatters();
+  const { packageManager, setPackageManager } = usePackageManager();
+  const installCommand = registryCommand("button", packageManager);
 
   return (
     <div className="pb-[calc(var(--koten-gap)*2)]">
@@ -1146,7 +1146,12 @@ export function OverviewPage() {
               </PanelActions>
             </PanelHeader>
             <PanelBody>
-              <Code>{t.closing.command}</Code>
+              <PackageManagerTabs
+                value={packageManager}
+                label={shellLabels[locale].runner}
+                onChange={setPackageManager}
+              />
+              <Code>{installCommand}</Code>
               <p className="mt-2 text-2xs leading-relaxed text-muted">{t.closing.note}</p>
             </PanelBody>
           </Panel>

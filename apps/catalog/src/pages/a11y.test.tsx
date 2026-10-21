@@ -8,8 +8,10 @@ import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
 import { BlockDocPage, PrimitiveDocPage } from "../components/doc-page";
 import { allBlockDoc, allPrimitiveBySlug } from "../data/docs/all";
+import { AIPage } from "./ai";
 import { BlocksIndexPage } from "./blocks/index";
 import { ComponentsIndexPage } from "./components/index";
+import { StartPage } from "./start";
 import { TokensIndexPage } from "./tokens/index";
 
 function primitive(slug: string) {
@@ -53,6 +55,8 @@ const pages: readonly [string, ReactElement][] = [
   ],
   ["Componentes", createElement(ComponentsIndexPage, { key: "components" })],
   ["Bloques", createElement(BlocksIndexPage, { key: "blocks" })],
+  ["IA y agentes", createElement(AIPage, { key: "ai" })],
+  ["Empezar", createElement(StartPage, { key: "start" })],
   ["Fundamentos", createElement(TokensIndexPage, { key: "tokens" })],
 ];
 

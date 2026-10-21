@@ -1,10 +1,13 @@
 // biome-ignore-all lint/a11y/noNoninteractiveTabindex: scroll regions kept keyboard accessible (F4-002).
 import { Badge, cn, type KotenLocale, useKoten } from "@koten/ui";
 import { type ReactNode, useState } from "react";
+import { shellLabels } from "../data/catalog";
 import type { BlockDoc, DocRequirement, L10n, PrimitiveDoc } from "../data/docs/types";
-import { registryCommand } from "../lib/site";
+import { usePackageManager } from "../lib/package-manager";
+import { registryCommand, site } from "../lib/site";
 import { Code } from "./docs";
 import { Section } from "./specimen";
+import { PackageManagerTabs } from "./view-toggles";
 
 type Chrome = {
   preview: string;
@@ -31,6 +34,7 @@ type Chrome = {
   baseUi: string;
   tanstack: string;
   external: string;
+  markdown: string;
 };
 
 const chrome: Record<KotenLocale, Chrome> = {
@@ -62,6 +66,7 @@ const chrome: Record<KotenLocale, Chrome> = {
     baseUi: "Base UI",
     tanstack: "TanStack Table",
     external: "Se abre en una pestaña nueva",
+    markdown: "Markdown para agentes",
   },
   ja: {
     preview: "プレビュー",
@@ -91,6 +96,7 @@ const chrome: Record<KotenLocale, Chrome> = {
     baseUi: "Base UI",
     tanstack: "TanStack Table",
     external: "新しいタブで開きます",
+    markdown: "エージェント向けMarkdown",
   },
   en: {
     preview: "Preview",
@@ -120,6 +126,7 @@ const chrome: Record<KotenLocale, Chrome> = {
     baseUi: "Base UI",
     tanstack: "TanStack Table",
     external: "Opens in a new tab",
+    markdown: "Agent-readable Markdown",
   },
 };
 
@@ -135,6 +142,10 @@ const requirementLabels: Record<DocRequirement["kind"], L10n> = {
 function PageMeta({ doc, kind }: { doc: PrimitiveDoc | BlockDoc; kind: "component" | "block" }) {
   const { locale } = useKoten();
   const t = chrome[locale];
+  const markdownHref =
+    "category" in doc
+      ? `${site.origin}/md/blocks/${doc.category}/${doc.slug}.md`
+      : `${site.origin}/md/components/${doc.slug}.md`;
 
   return (
     <dl className="mt-4 grid gap-2 text-2xs sm:grid-cols-2" lang={locale}>
@@ -161,6 +172,20 @@ function PageMeta({ doc, kind }: { doc: PrimitiveDoc | BlockDoc; kind: "componen
       <div className="flex flex-wrap items-baseline gap-2">
         <dt className="font-semibold uppercase tracking-[0.12em] text-faint">ID</dt>
         <dd className="font-mono text-muted">{doc.id}</dd>
+      </div>
+      <div className="flex flex-wrap items-baseline gap-2">
+        <dt className="font-semibold uppercase tracking-[0.12em] text-faint">MD</dt>
+        <dd>
+          <a
+            href={markdownHref}
+            target="_blank"
+            rel="noreferrer"
+            title={t.external}
+            className="font-semibold text-link underline-offset-2 hover:underline"
+          >
+            {t.markdown} ↗
+          </a>
+        </dd>
       </div>
     </dl>
   );
@@ -265,7 +290,8 @@ function Requirements({ items }: { items: readonly DocRequirement[] }) {
 function Installation({ doc }: { doc: PrimitiveDoc | BlockDoc }) {
   const { locale } = useKoten();
   const t = chrome[locale];
-  const command = registryCommand(doc.registrySlug ?? doc.slug);
+  const { packageManager, setPackageManager } = usePackageManager();
+  const command = registryCommand(doc.registrySlug ?? doc.slug, packageManager);
 
   return (
     <Section
@@ -275,6 +301,13 @@ function Installation({ doc }: { doc: PrimitiveDoc | BlockDoc }) {
       meta={`/r/${doc.registrySlug ?? doc.slug}.json`}
     >
       <p className="text-xs leading-relaxed text-muted">{t.installBody}</p>
+      <div className="mt-[var(--koten-gap)] flex flex-wrap items-center gap-3">
+        <PackageManagerTabs
+          value={packageManager}
+          label={shellLabels[locale].runner}
+          onChange={setPackageManager}
+        />
+      </div>
       <Code>{command}</Code>
       <h3 className="mt-4 text-2xs font-semibold uppercase tracking-[0.12em] text-faint">
         {t.files}

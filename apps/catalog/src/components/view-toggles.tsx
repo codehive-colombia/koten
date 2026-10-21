@@ -1,5 +1,6 @@
 import { cn, type KotenLocale } from "@koten/ui";
 import { type DensityId, densities, type ThemeId, themes } from "../data/tokens";
+import type { PackageManager } from "../lib/package-manager";
 
 const toggleClassName =
   "inline-flex h-[var(--koten-control-h)] items-center border px-[var(--koten-control-px)] text-2xs font-semibold transition-colors";
@@ -106,6 +107,28 @@ export function LocaleToggle({
         { id: "es", label: "ES" },
         { id: "ja", label: "日本語" },
         { id: "en", label: "EN" },
+      ]}
+    />
+  );
+}
+
+export function PackageManagerTabs({
+  value,
+  label,
+  onChange,
+}: {
+  value: PackageManager;
+  label: string;
+  onChange: (value: PackageManager) => void;
+}) {
+  return (
+    <ToggleGroup
+      label={label}
+      value={value}
+      onChange={onChange}
+      options={[
+        { id: "npm", label: "npx" },
+        { id: "bun", label: "bunx" },
       ]}
     />
   );

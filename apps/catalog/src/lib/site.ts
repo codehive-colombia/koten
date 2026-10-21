@@ -8,6 +8,8 @@
  * environment variable at build time.
  */
 
+import { type PackageManager, packageRunner } from "./package-manager";
+
 const productionOrigin = "https://koten.codehive.com.co";
 
 function readUrl(value: string | undefined, fallback: string): string {
@@ -35,6 +37,6 @@ export const site = {
 } as const;
 
 /** shadcn command for one registry item. */
-export function registryCommand(item: string): string {
-  return `npx shadcn@latest add ${site.registry}/${item}.json`;
+export function registryCommand(item: string, packageManager: PackageManager = "npm"): string {
+  return `${packageRunner(packageManager)} shadcn@latest add ${site.registry}/${item}.json`;
 }

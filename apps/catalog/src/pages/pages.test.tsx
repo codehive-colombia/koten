@@ -3,11 +3,13 @@ import { KotenProvider } from "@koten/ui";
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { MemoryRouter, Route, Routes } from "react-router";
-import { describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import { BlockDocPage, PrimitiveDocPage } from "../components/doc-page";
 import { blockCategories, blockDocs, primitiveDocs } from "../data/docs";
 import { allBlockDoc, allBlockDocs, allPrimitiveBySlug, allPrimitiveDocs } from "../data/docs/all";
 import type { BlockCategoryId } from "../data/docs/types";
+import { PACKAGE_MANAGER_STORAGE_KEY } from "../lib/package-manager";
+import { AIPage } from "./ai";
 import { BlockCategoryPage, BlocksIndexPage } from "./blocks/index";
 import { ComponentsIndexPage } from "./components/index";
 import { NotFoundPage } from "./not-found";
@@ -50,6 +52,10 @@ function block(category: BlockCategoryId, slug: string) {
   return doc;
 }
 
+beforeEach(() => {
+  window.localStorage.removeItem(PACKAGE_MANAGER_STORAGE_KEY);
+});
+
 describe("catalog pages", () => {
   it("renders the landing page with its entry points and live plates", () => {
     const landing = renderPage(<OverviewPage />);
@@ -72,14 +78,49 @@ describe("catalog pages", () => {
     expect(landing.container.querySelectorAll("article[data-theme]")).toHaveLength(3);
   });
 
-  it("explains how to start and copy a primitive", () => {
+  it("separates using the components from developing the repository", () => {
     renderPage(<StartPage />);
 
     expect(screen.getByRole("heading", { level: 1, name: /Empezar/ })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: /Usar Koten UI en tu proyecto/ }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: /Desarrollar Koten UI/ }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Quiero usar Koten UI/ })).toHaveAttribute(
+      "href",
+      "#usar",
+    );
+    expect(screen.getByRole("link", { name: /Quiero desarrollar Koten UI/ })).toHaveAttribute(
+      "href",
+      "#desarrollar",
+    );
+    expect(screen.getByText(/koten-theme\.json/)).toBeInTheDocument();
+    expect(screen.getAllByText(/bun run dev/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/bun run check/).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: "Ver componentes" })).toHaveAttribute(
       "href",
       "/components",
+    );
+    expect(screen.getByRole("link", { name: "IA y agentes" })).toHaveAttribute("href", "/ai");
+    expect(screen.queryByText(/cp packages\/ui/)).not.toBeInTheDocument();
+  });
+
+  it("explains the three AI access levels", () => {
+    renderPage(<AIPage />);
+
+    expect(screen.getByRole("heading", { level: 1, name: /IA y agentes/ })).toBeInTheDocument();
+    expect(screen.getAllByText(/npx skills add codehive-colombia\/koten/).length).toBeGreaterThan(
+      0,
+    );
+    expect(screen.getByRole("link", { name: /llms\.txt/ })).toHaveAttribute(
+      "href",
+      "http://localhost:5173/llms.txt",
+    );
+    expect(screen.getByRole("link", { name: /Markdown/ })).toHaveAttribute(
+      "href",
+      "http://localhost:5173/md/components/button.md",
     );
   });
 
@@ -170,6 +211,44 @@ describe("catalog pages", () => {
     expect(screen.getByRole("heading", { level: 2, name: /^Props/ })).toBeInTheDocument();
     expect(screen.getByRole("list", { name: /Button · Accesibilidad/ })).toBeInTheDocument();
     expect(screen.getByText(/HTML nativo/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Markdown para agentes/ })).toHaveAttribute(
+      "href",
+      "http://localhost:5173/md/components/button.md",
+    );
+  });
+
+  it("switches shadcn commands between npx and bunx and remembers the choice", () => {
+    const first = renderPage(<PrimitiveDocPage doc={primitive("button")} />);
+
+    expect(
+      screen.getByText("npx shadcn@latest add http://localhost:5173/r/button.json"),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "bunx" }));
+
+    expect(
+      screen.getByText("bunx shadcn@latest add http://localhost:5173/r/button.json"),
+    ).toBeInTheDocument();
+    expect(window.localStorage.getItem(PACKAGE_MANAGER_STORAGE_KEY)).toBe("bun");
+    first.unmount();
+
+    renderPage(<BlockDocPage doc={block("storefront", "product-card")} />);
+
+    expect(
+      screen.getByText("bunx shadcn@latest add http://localhost:5173/r/product-card.json"),
+    ).toBeInTheDocument();
+  });
+
+  it("uses the saved runner in the getting started commands", () => {
+    window.localStorage.setItem(PACKAGE_MANAGER_STORAGE_KEY, "bun");
+
+    renderPage(<StartPage />);
+
+    expect(
+      screen.getAllByText(/bunx shadcn@latest add .*koten-theme\.json/).length,
+    ).toBeGreaterThan(0);
+    expect(screen.getAllByText(/bunx shadcn@latest init/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/npx shadcn@latest add .*koten-theme\.json/)).not.toBeInTheDocument();
   });
 
   it("marks form components with a form usage section", () => {
