@@ -32,7 +32,7 @@ function formatKb(bytes: number): string {
 
 /** Assets referenced by `index.html`: what the browser requests on open. */
 function initialAssets(html: string): string[] {
-  const matches = html.matchAll(/(?:src|href)="\/assets\/([^"]+\.(?:js|css))"/g);
+  const matches = html.matchAll(/(?:src|href)="[^"]*?\/assets\/([^"]+\.(?:js|css))"/g);
 
   return [...new Set([...matches].map((match) => match[1] as string))];
 }

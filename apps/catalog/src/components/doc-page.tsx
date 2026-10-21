@@ -2,6 +2,7 @@
 import { Badge, cn, type KotenLocale, useKoten } from "@koten/ui";
 import { type ReactNode, useState } from "react";
 import type { BlockDoc, DocRequirement, L10n, PrimitiveDoc } from "../data/docs/types";
+import { registryCommand } from "../lib/site";
 import { Code } from "./docs";
 import { Section } from "./specimen";
 
@@ -261,7 +262,7 @@ function Requirements({ items }: { items: readonly DocRequirement[] }) {
 function Installation({ doc }: { doc: PrimitiveDoc | BlockDoc }) {
   const { locale } = useKoten();
   const t = chrome[locale];
-  const command = `npx shadcn@latest add http://localhost:5173/r/${doc.registrySlug ?? doc.slug}.json`;
+  const command = registryCommand(doc.registrySlug ?? doc.slug);
 
   return (
     <Section

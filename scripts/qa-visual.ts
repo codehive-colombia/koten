@@ -17,10 +17,10 @@ type AppId = "catalog" | "storefront" | "erp";
 
 type Shot = { app: AppId; label: string; path: string; theme?: string };
 
-const apps: Record<AppId, { port: number; directory: string }> = {
-  catalog: { port: 4173, directory: "apps/catalog" },
-  storefront: { port: 4174, directory: "apps/storefront" },
-  erp: { port: 4175, directory: "apps/erp" },
+const apps: Record<AppId, { port: number; directory: string; base: string }> = {
+  catalog: { port: 4173, directory: "apps/catalog", base: "/" },
+  storefront: { port: 4174, directory: "apps/storefront", base: "/demos/store/" },
+  erp: { port: 4175, directory: "apps/erp", base: "/demos/erp/" },
 };
 
 const shots: readonly Shot[] = [
@@ -55,7 +55,7 @@ async function startPreview(app: AppId): Promise<() => void> {
 
   for (let attempt = 0; attempt < 80; attempt += 1) {
     try {
-      const response = await fetch(`http://localhost:${config.port}/`);
+      const response = await fetch(`http://localhost:${config.port}${config.base}`);
       if (response.ok) break;
     } catch {
       // The preview is not listening yet.
@@ -107,7 +107,10 @@ async function run() {
         });
 
         const loaded = cdp.once("Page.loadEventFired").catch(() => undefined);
-        const url = new URL(shot.path, `http://localhost:${config.port}`);
+        const url = new URL(
+          shot.path.replace(/^\//, ""),
+          `http://localhost:${config.port}${config.base}`,
+        );
         url.searchParams.set("lang", "es");
         if (shot.theme) url.searchParams.set("theme", shot.theme);
         await send("Page.navigate", { url: url.href });

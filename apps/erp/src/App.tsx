@@ -21,6 +21,13 @@ import { NotFoundPage } from "./pages/not-found";
 import { OrderFormPage } from "./pages/order-form";
 import { OrdersPage } from "./pages/orders";
 
+// The ERP is served under /demos/erp in production and at / in development (D-043).
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+function appHref(path: string): string {
+  return `${basePath}${path}`;
+}
+
 function sectionLabel(copy: ErpCopy, pathname: string): string {
   if (pathname === "/") {
     return copy.shell.nav.dashboard;
@@ -69,7 +76,7 @@ function ErpShell({
 
     if (url.searchParams.get("lang") !== locale) {
       url.searchParams.set("lang", locale);
-      window.history.replaceState(null, "", `${pathname}${url.search}${url.hash}`);
+      window.history.replaceState(null, "", `${basePath}${pathname}${url.search}${url.hash}`);
     }
   }, [locale, pathname]);
 
@@ -81,13 +88,13 @@ function ErpShell({
         {
           id: "dashboard",
           label: copy.shell.nav.dashboard,
-          href: "/",
+          href: appHref("/"),
           active: pathname === "/",
         },
         {
           id: "orders",
           label: copy.shell.nav.orders,
-          href: "/orders",
+          href: appHref("/orders"),
           active: pathname.startsWith("/orders"),
           count: openOrders.length,
         },
@@ -100,26 +107,26 @@ function ErpShell({
         {
           id: "products",
           label: copy.shell.nav.products,
-          href: "/products",
+          href: appHref("/products"),
           active: pathname === "/products",
         },
         {
           id: "inventory",
           label: copy.shell.nav.inventory,
-          href: "/inventory",
+          href: appHref("/inventory"),
           active: pathname === "/inventory",
           count: lowStockProducts.length,
         },
         {
           id: "customers",
           label: copy.shell.nav.customers,
-          href: "/customers",
+          href: appHref("/customers"),
           active: pathname === "/customers",
         },
         {
           id: "reports",
           label: copy.shell.nav.reports,
-          href: "/reports",
+          href: appHref("/reports"),
           active: pathname === "/reports",
         },
       ],
@@ -131,7 +138,7 @@ function ErpShell({
         {
           id: "settings",
           label: copy.shell.nav.settings,
-          href: "/settings",
+          href: appHref("/settings"),
           active: pathname === "/settings",
         },
       ],
@@ -140,7 +147,8 @@ function ErpShell({
 
   const handleNavigate = (href: string) => {
     menuRef.current?.removeAttribute("open");
-    navigate(href);
+    const path = basePath && href.startsWith(basePath) ? href.slice(basePath.length) || "/" : href;
+    navigate(path);
   };
 
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
@@ -315,7 +323,7 @@ export function ErpApp() {
 
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basePath || "/"}>
       <ErpApp />
     </BrowserRouter>
   );

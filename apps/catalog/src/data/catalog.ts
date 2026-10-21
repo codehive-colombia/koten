@@ -1,4 +1,5 @@
 import type { KotenLocale } from "@koten/ui";
+import { site } from "../lib/site";
 import { blockDocs, primitiveDocs } from "./docs";
 
 export type Localized = Record<KotenLocale, string>;
@@ -80,12 +81,12 @@ export const navGroups: readonly CatalogNavGroup[] = [
     label: { es: "Demos", ja: "デモ", en: "Demos" },
     items: [
       {
-        path: "http://localhost:5174",
+        path: site.storefront,
         label: { es: "Storefront", ja: "店舗", en: "Storefront" },
         external: true,
       },
       {
-        path: "http://localhost:5175",
+        path: site.erp,
         label: { es: "ERP", ja: "台帳", en: "ERP" },
         external: true,
       },

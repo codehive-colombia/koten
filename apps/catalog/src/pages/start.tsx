@@ -2,6 +2,7 @@ import { type KotenLocale, useKoten } from "@koten/ui";
 import { Link } from "react-router";
 import { Code, List, PageHeader } from "../components/docs";
 import { Section } from "../components/specimen";
+import { registryCommand } from "../lib/site";
 
 const copy = {
   es: {
@@ -60,7 +61,7 @@ createRoot(root).render(
 bun run dev        # sirve http://localhost:5173/r/button.json
 
 # en tu proyecto
-npx shadcn@latest add http://localhost:5173/r/button.json`,
+${registryCommand("button")}`,
     },
     copyComponent: {
       title: "Copiar una primitiva",
@@ -163,7 +164,7 @@ createRoot(root).render(
 bun run dev        # http://localhost:5173/r/button.json を配信
 
 # 自分のプロジェクトで
-npx shadcn@latest add http://localhost:5173/r/button.json`,
+${registryCommand("button")}`,
     },
     copyComponent: {
       title: "プリミティブをコピーする",
@@ -266,7 +267,7 @@ createRoot(root).render(
 bun run dev        # serves http://localhost:5173/r/button.json
 
 # in your project
-npx shadcn@latest add http://localhost:5173/r/button.json`,
+${registryCommand("button")}`,
     },
     copyComponent: {
       title: "Copying a primitive",

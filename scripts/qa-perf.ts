@@ -25,10 +25,10 @@ type Measurement = {
   jsTransfer: number;
 };
 
-const apps: Record<AppId, { port: number; directory: string }> = {
-  catalog: { port: 4173, directory: "apps/catalog" },
-  storefront: { port: 4174, directory: "apps/storefront" },
-  erp: { port: 4175, directory: "apps/erp" },
+const apps: Record<AppId, { port: number; directory: string; base: string }> = {
+  catalog: { port: 4173, directory: "apps/catalog", base: "/" },
+  storefront: { port: 4174, directory: "apps/storefront", base: "/demos/store/" },
+  erp: { port: 4175, directory: "apps/erp", base: "/demos/erp/" },
 };
 
 const pages: readonly Page[] = [
@@ -94,7 +94,7 @@ async function startPreview(app: AppId): Promise<() => void> {
 
   for (let attempt = 0; attempt < 80; attempt += 1) {
     try {
-      const response = await fetch(`http://localhost:${config.port}/`);
+      const response = await fetch(`http://localhost:${config.port}${config.base}`);
       if (response.ok) break;
     } catch {
       // The preview is not listening yet.
@@ -164,9 +164,13 @@ async function run() {
 
       for (let index = 0; index < runs; index += 1) {
         const loaded = cdp.once("Page.loadEventFired").catch(() => undefined);
-        await send("Page.navigate", {
-          url: `http://localhost:${config.port}${page.path}?lang=es`,
-        });
+        const url = new URL(
+          page.path.replace(/^\//, ""),
+          `http://localhost:${config.port}${config.base}`,
+        );
+        url.searchParams.set("lang", "es");
+
+        await send("Page.navigate", { url: url.href });
         await loaded;
         await sleep(2200);
 

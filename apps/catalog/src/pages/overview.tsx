@@ -30,8 +30,11 @@ import sampleCamera from "../assets/sample-camera.svg";
 import { Code } from "../components/docs";
 import { DemoCard, EntryCard, RegisterCard, SwatchRow, SystemPlate } from "../components/landing";
 import { componentInventory, patternInventory } from "../data/inventory";
+import { registryCommand, site } from "../lib/site";
 
 type PieceKind = "foundations" | "components" | "patterns" | "format";
+
+const installCommand = registryCommand("button");
 
 const copy = {
   es: {
@@ -231,7 +234,7 @@ const copy = {
       lead: "La fuente se copia con el registry, hereda los tokens y se adapta. Sin dependencias ocultas ni fuentes de megabytes.",
       panelTitle: "Instalación por URL",
       panelMeta: "shadcn · registry",
-      command: "npx shadcn@latest add http://localhost:5173/r/button.json",
+      command: installCommand,
       note: "El catálogo genera 64 items autocontenidos: componentes, bloques, núcleo y estilos.",
       start: "Empezar",
       components: "Ver componentes",
@@ -434,7 +437,7 @@ const copy = {
       lead: "ソースはレジストリでコピーし、トークンを継承して適応する。隠れた依存も、メガバイトのフォントもない。",
       panelTitle: "URLからインストール",
       panelMeta: "shadcn · registry",
-      command: "npx shadcn@latest add http://localhost:5173/r/button.json",
+      command: installCommand,
       note: "カタログは64の自己完結アイテムを生成する：コンポーネント、ブロック、コア、スタイル。",
       start: "はじめる",
       components: "部品を見る",
@@ -637,7 +640,7 @@ const copy = {
       lead: "Copy the source with the registry, inherit the tokens and adapt it. No hidden dependencies, no megabyte fonts.",
       panelTitle: "Install by URL",
       panelMeta: "shadcn · registry",
-      command: "npx shadcn@latest add http://localhost:5173/r/button.json",
+      command: installCommand,
       note: "The catalog generates 64 self-contained items: components, blocks, core and styles.",
       start: "Get started",
       components: "Browse components",
@@ -1023,7 +1026,7 @@ export function OverviewPage() {
             jp="光"
             description={t.demos.storefront.description}
             tags={t.demos.storefront.tags}
-            demoHref="http://localhost:5174"
+            demoHref={site.storefront}
             patternTo="/blocks/storefront"
             openLabel={t.demos.open}
             patternLabel={t.demos.pattern}
@@ -1067,7 +1070,7 @@ export function OverviewPage() {
             jp="蔵"
             description={t.demos.erp.description}
             tags={t.demos.erp.tags}
-            demoHref="http://localhost:5175"
+            demoHref={site.erp}
             patternTo="/blocks/erp"
             openLabel={t.demos.open}
             patternLabel={t.demos.pattern}

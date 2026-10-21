@@ -42,6 +42,7 @@ const libRoot = join(root, "packages/ui/src/lib");
 const i18nRoot = join(root, "packages/ui/src/i18n");
 const stylesRoot = join(root, "packages/ui/src/styles");
 const outputRoot = join(root, "apps/catalog/public/r");
+const siteUrl = (process.env.KOTEN_SITE_URL ?? "https://koten.codehive.com.co").replace(/\/+$/, "");
 
 type RegistryFile = {
   path: string;
@@ -286,7 +287,7 @@ export function writeRegistry(items: RegistryItem[]): void {
   const index: RegistryIndex = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "koten",
-    homepage: "http://localhost:5173/start",
+    homepage: `${siteUrl}/start`,
     items: items.map((item) => ({
       name: item.name,
       type: item.type,
