@@ -31,6 +31,24 @@ describe("Select", () => {
 
     expect(trigger).toHaveTextContent("Osaka");
   });
+
+  it("opens without locking the page scroll", async () => {
+    render(
+      <Select
+        label="Almacén"
+        items={[
+          { value: "tokyo", label: "Tokio" },
+          { value: "osaka", label: "Osaka" },
+        ]}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("combobox", { name: "Almacén" }));
+
+    expect(await screen.findByRole("option", { name: "Osaka" })).toBeInTheDocument();
+    expect(document.body.style.overflow).not.toBe("hidden");
+    expect(document.documentElement.style.overflow).not.toBe("hidden");
+  });
 });
 
 describe("Combobox", () => {
