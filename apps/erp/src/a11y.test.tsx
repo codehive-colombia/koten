@@ -11,9 +11,9 @@ const routes = [
   ["nuevo pedido", "/orders/new"],
 ] as const;
 
-describe("accesibilidad del ERP", () => {
+describe("ERP accessibility", () => {
   for (const [name, path] of routes) {
-    it(`${name} no tiene violaciones serious/critical`, async () => {
+    it(`${name} has no serious/critical violations`, async () => {
       window.history.replaceState(null, "", "/");
       const { container } = render(
         <MemoryRouter initialEntries={[path]}>

@@ -17,7 +17,7 @@ describe("ERP KURA", () => {
     window.history.replaceState(null, "", "/");
   });
 
-  it("muestra el dashboard con KPIs, chart y pedidos recientes", () => {
+  it("renders the dashboard with KPIs, chart and recent orders", () => {
     renderErp();
 
     expect(screen.getByRole("heading", { level: 1, name: "Dashboard" })).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe("ERP KURA", () => {
     expect(screen.getByRole("link", { name: "Ver todos →" })).toBeInTheDocument();
   });
 
-  it("cambia de idioma de interfaz y de datos", () => {
+  it("switches UI and data language", () => {
     renderErp();
 
     fireEvent.click(screen.getByRole("button", { name: "日本語" }));
@@ -41,7 +41,7 @@ describe("ERP KURA", () => {
     expect(screen.getAllByText("最近の受注").length).toBeGreaterThan(0);
   });
 
-  it("actualiza el título del documento con el idioma", () => {
+  it("updates the document title with the language", () => {
     renderErp();
     expect(document.title).toBe("KURA · ERP de distribución");
 
@@ -50,7 +50,7 @@ describe("ERP KURA", () => {
     expect(document.title).toBe("KURA · 流通ERP");
   });
 
-  it("navega a pedidos y aplica filtros en la URL", () => {
+  it("navigates to orders and applies filters in the URL", () => {
     renderErp();
 
     fireEvent.click(screen.getAllByRole("link", { name: /Pedidos/ })[0] as HTMLElement);
@@ -60,7 +60,7 @@ describe("ERP KURA", () => {
     expect(screen.getByRole("searchbox", { name: "Buscar pedidos" })).toBeInTheDocument();
   });
 
-  it("muestra solo los pedidos del estado indicado en la URL", () => {
+  it("shows only the orders for the status given in the URL", () => {
     renderErp("/orders?status=shipped");
 
     expect(screen.getAllByText(/pedidos$/).length).toBeGreaterThan(0);
@@ -68,7 +68,7 @@ describe("ERP KURA", () => {
     expect(screen.getAllByText("Enviado").length).toBeGreaterThan(0);
   });
 
-  it("abre el detalle de un pedido y devuelve el foco al cerrar", async () => {
+  it("opens the order detail and returns focus on close", async () => {
     renderErp("/orders");
 
     const trigger = screen.getAllByRole("button", {
@@ -89,7 +89,7 @@ describe("ERP KURA", () => {
     expect(document.activeElement).toBe(trigger);
   });
 
-  it("selecciona pedidos y aplica una acción masiva", async () => {
+  it("selects orders and applies a bulk action", async () => {
     renderErp("/orders");
 
     const checkboxes = screen.getAllByRole("checkbox");
@@ -102,7 +102,7 @@ describe("ERP KURA", () => {
     expect(await screen.findByText(/marcados como Enviado/)).toBeInTheDocument();
   });
 
-  it("valida el formulario de nuevo pedido y muestra el resumen de errores", () => {
+  it("validates the new order form and shows the error summary", () => {
     renderErp("/orders/new");
 
     expect(screen.getByRole("heading", { level: 1, name: "Nuevo pedido" })).toBeInTheDocument();

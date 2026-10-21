@@ -19,8 +19,8 @@ function expectLocalized(value: Localized) {
   }
 }
 
-describe("contenido del storefront", () => {
-  it("define todos los idiomas de la interfaz", () => {
+describe("storefront content", () => {
+  it("defines every UI language", () => {
     for (const locale of locales) {
       const copy = storeCopy[locale];
 
@@ -31,7 +31,7 @@ describe("contenido del storefront", () => {
     }
   });
 
-  it("localiza el producto, sus textos y especificaciones", () => {
+  it("localizes the product, its copy and specs", () => {
     expectLocalized(product.tagline);
     expectLocalized(product.shortDescription);
 
@@ -57,7 +57,7 @@ describe("contenido del storefront", () => {
     expect(product.price).toBeGreaterThan(0);
   });
 
-  it("pluralea puntos y formatea valoraciones con Intl", () => {
+  it("pluralizes points and formats ratings with Intl", () => {
     expect(storeCopy.es.buy.points(1)).toBe("1 punto");
     expect(storeCopy.en.buy.points(1)).toBe("1 point");
     expect(storeCopy.en.buy.points(583)).toBe("583 points");
@@ -67,7 +67,7 @@ describe("contenido del storefront", () => {
     expect(storeCopy.es.buy.reviews(128)).toBe("128 valoraciones");
   });
 
-  it("publica avisos, ranking, campaña y relacionados con datos reales", () => {
+  it("publishes notices, ranking, campaign and related items with real data", () => {
     expect(notices.length).toBeGreaterThanOrEqual(5);
     expect(ranking.length).toBeGreaterThanOrEqual(4);
     expect(relatedProducts.length).toBe(4);
@@ -89,7 +89,7 @@ describe("contenido del storefront", () => {
     }
   });
 
-  it("suma las valoraciones y mantiene el promedio", () => {
+  it("sums the ratings and keeps the average", () => {
     const total = reviewDistribution.reduce((sum, item) => sum + item.count, 0);
 
     expect(total).toBe(product.reviewCount);

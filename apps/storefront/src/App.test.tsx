@@ -10,7 +10,7 @@ function resetUrl() {
 describe("storefront HIKARI", () => {
   beforeEach(resetUrl);
 
-  it("renderiza la página de producto en japonés por defecto", () => {
+  it("renders the product page in Japanese by default", () => {
     render(<App />);
 
     expect(screen.getByRole("heading", { level: 1, name: "HIKARI K-1" })).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe("storefront HIKARI", () => {
     expect(window.location.search).toBe("?lang=ja");
   });
 
-  it("cambia a español desde la URL y desde el selector", () => {
+  it("switches to Spanish from the URL and from the selector", () => {
     window.history.replaceState(null, "", "/?lang=es");
     render(<App />);
 
@@ -40,7 +40,7 @@ describe("storefront HIKARI", () => {
     expect(window.location.search).toBe("?lang=en");
   });
 
-  it("añade al carrito y anuncia el resultado", async () => {
+  it("adds to the cart and announces the result", async () => {
     render(<App />);
 
     fireEvent.click(screen.getByRole("button", { name: "カートに入れる" }));
@@ -49,7 +49,7 @@ describe("storefront HIKARI", () => {
     expect(screen.getByRole("link", { name: /カート 1/ })).toBeInTheDocument();
   });
 
-  it("muestra el límite de cantidad al llegar a cinco", () => {
+  it("shows the quantity limit when it reaches five", () => {
     render(<App />);
 
     const increment = screen.getByRole("button", { name: "数量を増やす" });
@@ -61,7 +61,7 @@ describe("storefront HIKARI", () => {
     expect(screen.getByText("1回のご注文は5点までです。")).toBeInTheDocument();
   });
 
-  it("mantiene visibles precio, impuestos y puntos", () => {
+  it("keeps price, tax and points visible", () => {
     render(<App />);
 
     expect(screen.getAllByText(/58[,.]300/).length).toBeGreaterThan(0);

@@ -4,8 +4,8 @@ import axe from "axe-core";
 import { describe, expect, it } from "vitest";
 import { App } from "./App";
 
-describe("accesibilidad del storefront", () => {
-  it("no tiene violaciones serious/critical", async () => {
+describe("storefront accessibility", () => {
+  it("has no serious/critical violations", async () => {
     window.history.replaceState(null, "", "/?lang=ja");
     const { container } = render(<App />);
 
