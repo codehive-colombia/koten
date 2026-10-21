@@ -187,10 +187,10 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-Las fases 0 a 3 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, las 45 primitivas, los 20 patrones de storefront y ERP, y los dos demos navegables. La próxima es la fase 4 (cierre del POC). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
+Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 45 primitivas, 20 patrones, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
-2. Empezar la fase 4 con `F4-001`: auditoría i18n de las demos y del catálogo.
+2. No hay tareas abiertas: cualquier trabajo nuevo entra como `M-*` o una fase 6 con decisión `D-*`.
 3. Seguir el patrón de `Button`/`Panel`/`Badge`, de los formularios y de `packages/ui/src/components/patterns`: CVA, roles semánticos, `data-slot`, tests y página propia en el catálogo.
 4. Mantener los documentos de trabajo en español (`D-008`) y el cuerpo del catálogo completo en ES/JA/EN (`D-025`); no traducir los `.md` internos sin una decisión nueva.
 5. No saltar a fase 5 sin cerrar la fase 4; registrar cualquier cambio de alcance con `D-*`.

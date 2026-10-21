@@ -16,3 +16,6 @@ Thumbs.db
 .openchamber/
 playwright-report/
 test-results/
+
+# Registry generado por scripts/build-registry.ts
+apps/catalog/public/r/

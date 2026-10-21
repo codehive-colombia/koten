@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "bun ../../scripts/build-registry.ts",
+    "prebuild": "bun ../../scripts/build-registry.ts",
     "dev": "vite --port 5173",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 4173",

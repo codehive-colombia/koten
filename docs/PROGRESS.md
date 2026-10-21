@@ -9,9 +9,9 @@
 | Campo | Valor |
 | --- | --- |
 | Fecha | 2026-10-21 |
-| Fase | 5 — Opcional (`in_progress`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `F5-005` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F5-001` (registry) |
+| Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
+| Última tarea completada | `F5-001` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — roadmap completo |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 030 — Registry shadcn y cierre de la fase 5
+
+- **Objetivo:** cerrar `F5-001` y con él la fase 5, con instalación real por URL.
+- **Hecho:**
+  - **`scripts/build-registry.ts`**: genera 64 items (primitivas y patrones) en `apps/catalog/public/r`, más `registry.json`. Cada item es autocontenido: archivos del closure de imports, núcleo `lib/koten` (cn, formato, intl, labels, provider) y `styles/koten.css` con tokens, `@theme`, base y utilidades (sin `@source`).
+  - Los imports se reescriben al layout instalado (`../../lib/koten/...`, `../ui/...`) sin depender del alias `@/`; los targets son `components/ui`, `components/patterns`, `lib/koten` y `styles/koten.css`.
+  - `predev`/`prebuild` del catálogo regeneran el registry; `apps/catalog/public/r/` queda en `.gitignore` y el build copia los 65 archivos a `dist/r`.
+  - **Validación real:** `bunx shadcn@latest add http://localhost:4180/r/button.json` instaló 7 archivos en un proyecto de prueba y `tsc --noEmit` pasó; también `date-picker` y `detail-drawer` (con `drawer`). 4 tests cubren el layout, las dependencias y la reescritura de imports.
+  - Documentación: sección de registry en `/start` (ES/JA/EN) y en el README; `D-039`.
+- **Tareas tocadas:** `F5-001` → `done`; `R-018` → `done`; **fase 5 → `done`**.
+- **Decisiones:** `D-039`.
+- **Evidencia:** `scripts/build-registry.ts` + `build-registry.test.ts`, `apps/catalog/{package.json,public/r/**}`, `apps/catalog/src/pages/start.tsx`, `README.md`; `bun run check` verde (**33 archivos / 201 tests**); `bun run build` copia `dist/r`; instalación shadcn 4.x + `tsc` limpio.
+- **Sin validar:** instalación en un proyecto Next.js con `src/` y Tailwind 4 real; el registry no se publica en un hosting (usa el dev server o cualquier estático).
+- **Próximo:** ninguna tarea abierta; el roadmap queda completo (fases 0–5).
+- **Bloqueos:** ninguno.
 
 ---
 

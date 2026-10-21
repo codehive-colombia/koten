@@ -569,3 +569,19 @@
   - Sin dependencias nuevas: aritmética de ventana y `onScroll`.
 - **Consecuencias:** Con 10 000 filas el DOM mantiene ~29 filas y el LCP del catálogo con esa página es 416 ms local; el scroll solo reemplaza la ventana. Limitación documentada: filas de altura variable y celdas que envuelven no son compatibles con este modo; usar paginación o columnas cortas. El test cubre el conteo de filas, `aria-rowcount` y el salto a la fila 5 000.
 - **Alternativas:** `@tanstack/react-virtual` (dependencia y API extra); paginación solamente (no cubre el caso de 10k); renderizar todo (DOM y memoria inviables).
+
+---
+
+<a id="d-039"></a>
+## D-039 · Registry shadcn autocontenido, servido por el catálogo
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`F5-001`; complementa `D-033` y `D-007`)
+- **Contexto:** `D-007` dejó el registry para después y `D-033` descartó publicar `@koten/ui` en npm. El modelo sigue siendo copiar la fuente, pero copiar a mano un patrón con sus dependencias (cn, i18n, tokens) es propenso a errores. shadcn permite instalar por URL si existe un registry con el esquema correcto.
+- **Decisión:**
+  - `scripts/build-registry.ts` genera `apps/catalog/public/r/<item>.json` (uno por primitiva y patrón, 64 items) más `registry.json`. `predev` y `prebuild` del catálogo lo regeneran; el directorio está en `.gitignore`.
+  - **Cada item es autocontenido**: incluye los archivos de su closure de imports internos, el núcleo (`lib/koten/cn.ts`, `format.ts`, `intl.ts`, `labels.ts`, `provider.tsx`) y `styles/koten.css` (tokens + `@theme` + base + utilidades, sin `@source`). Los imports se reescriben al layout instalado (`../../lib/koten/...`, `../ui/...`), sin asumir `@/`.
+  - Los targets son `components/ui/*`, `components/patterns/*`, `lib/koten/*` y `styles/koten.css`; el consumidor importa `@import "tailwindcss"; @import "./styles/koten.css";`.
+  - Sin `registryDependencies` por nombre: al instalar por URL, las dependencias por nombre podrían resolverse contra el registry por defecto. La autocontención evita ese riesgo a costa de repetir el núcleo.
+- **Consecuencias:** `npx shadcn@latest add http://localhost:5173/r/button.json` instala 7 archivos y `tsc --noEmit` pasa; lo mismo con `date-picker` y `detail-drawer`. Un cambio en un componente o en los tokens requiere regenerar (lo hacen `predev`/`prebuild`) y republicar. El JSON del registry no entra al presupuesto de JS: son assets estáticos. Sigue sin haber paquete npm (`D-033`).
+- **Alternativas:** Publicar en npm (descartado en `D-033`); registry con `registryDependencies` por nombre (frágil fuera del namespace); un único item con todo el sistema (instalaciones enormes y sin granularidad).

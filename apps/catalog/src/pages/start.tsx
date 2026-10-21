@@ -52,6 +52,16 @@ createRoot(root).render(
   </KotenProvider>,
 );`,
     },
+    registry: {
+      title: "Registry shadcn",
+      meta: "Instalar por URL",
+      body: "Cada item es autocontenido: trae el componente, `lib/koten` (cn, formato e i18n) y `styles/koten.css` con tokens y roles de Tailwind. `predev` y `prebuild` regeneran el registry; no se publica en npm.",
+      code: `bun run registry   # genera apps/catalog/public/r/*
+bun run dev        # sirve http://localhost:5173/r/button.json
+
+# en tu proyecto
+npx shadcn@latest add http://localhost:5173/r/button.json`,
+    },
     copyComponent: {
       title: "Copiar una primitiva",
       meta: "La receta de AGENTS.md §9",
@@ -144,6 +154,16 @@ createRoot(root).render(
   </KotenProvider>,
 );`,
     },
+    registry: {
+      title: "shadcn レジストリ",
+      meta: "URL でインストール",
+      body: "各アイテムは自己完結です。コンポーネント、`lib/koten`（cn・書式・i18n）、トークンと Tailwind ロールを含む `styles/koten.css` を同梱します。`predev`/`prebuild` が再生成し、npm には公開しません。",
+      code: `bun run registry   # apps/catalog/public/r/* を生成
+bun run dev        # http://localhost:5173/r/button.json を配信
+
+# 自分のプロジェクトで
+npx shadcn@latest add http://localhost:5173/r/button.json`,
+    },
     copyComponent: {
       title: "プリミティブをコピーする",
       meta: "AGENTS.md §9 の手順",
@@ -235,6 +255,16 @@ createRoot(root).render(
     <App />
   </KotenProvider>,
 );`,
+    },
+    registry: {
+      title: "shadcn registry",
+      meta: "Install by URL",
+      body: "Every item is self-contained: it ships the component, `lib/koten` (cn, formatting and i18n) and `styles/koten.css` with tokens and Tailwind roles. `predev` and `prebuild` regenerate the registry; it is not published to npm.",
+      code: `bun run registry   # writes apps/catalog/public/r/*
+bun run dev        # serves http://localhost:5173/r/button.json
+
+# in your project
+npx shadcn@latest add http://localhost:5173/r/button.json`,
     },
     copyComponent: {
       title: "Copying a primitive",

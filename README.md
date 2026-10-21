@@ -2,8 +2,8 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** **`v0.1.0-poc`** — fase 4 cerrada. 45 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe, con presupuestos de bundle y capturas archivadas.
-> **Siguiente:** fase 5 opcional (registry, tema Sumi, DatePicker, CommandPalette, virtualización, SSG/SSR).
+> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5). 45 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización y registry shadcn.
+> **Siguiente:** sin tareas abiertas; el roadmap deja la fase 5 como cierre opcional ya completada.
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación
@@ -50,7 +50,20 @@ bun run qa:overflow # desbordamiento/recorte/RTL en 1440, 1280, 1024 y 390 (requ
 bun run qa:a11y     # axe, 12 px mínimo y foco visible en navegador (requiere dev + Chromium)
 bun run qa:perf     # LCP/CLS sobre el build (requiere Chromium; hace su propio preview)
 bun run qa:visual   # capturas 1440/1280/1024 en docs/qa/<fecha>
+bun run registry    # genera el registry shadcn en apps/catalog/public/r
 ```
+
+## Registry shadcn
+
+```bash
+bun run registry   # genera apps/catalog/public/r/* (también corre en predev/prebuild)
+bun run dev        # sirve http://localhost:5173/r/button.json
+
+# en un proyecto con Tailwind 4 y alias @/*
+npx shadcn@latest add http://localhost:5173/r/button.json
+```
+
+Cada item es autocontenido: componente + `lib/koten` (cn, formato e i18n) + `styles/koten.css` con tokens y roles de Tailwind. El catálogo documenta el flujo en `/start`.
 
 ## Uso rápido
 
