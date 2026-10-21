@@ -2,62 +2,206 @@ import {
   Badge,
   buttonVariants,
   cn,
+  type KotenLocale,
   Panel,
   PanelActions,
   PanelBody,
   PanelHeader,
   PanelTitle,
+  useKoten,
 } from "@koten/ui";
 import { Link } from "react-router";
 import { IndexCard, PageHeader } from "../components/docs";
 
-const principles = [
-  "El marco es la unidad: panel, cabecera, regla, borde.",
-  "El color señala; no decora.",
-  "Tipografía del sistema y texto real, nunca texto en imágenes.",
-  "Densidad con ritmo: 4/8/12/16, no todo es una tarjeta.",
-  "Accesible por defecto: 12 px mínimo, AA, foco visible, teclado completo.",
-] as const;
+const copy = {
+  es: {
+    eyebrow: "Catálogo · 古典",
+    title: "Koten UI",
+    description:
+      "Sencillez de medios, densidad de información. Un sistema de componentes para el web japonés clásico, validado en un catálogo, un storefront y un ERP.",
+    meta: "Fases 1–3 cerradas · 42 primitivas · 20 patrones · 3 temas · 3 densidades",
+    principles: [
+      "El marco es la unidad: panel, cabecera, regla, borde.",
+      "El color señala; no decora.",
+      "Tipografía del sistema y texto real, nunca texto en imágenes.",
+      "Densidad con ritmo: 4/8/12/16, no todo es una tarjeta.",
+      "Accesible por defecto: 12 px mínimo, AA, foco visible, teclado completo.",
+    ],
+    cards: {
+      foundations: {
+        title: "Fundamentos",
+        jp: "基礎",
+        description:
+          "Color, tipografía, espaciado, forma, densidad y temas. El contrato visual del sistema.",
+      },
+      components: {
+        title: "Componentes",
+        jp: "部品",
+        description: "42 primitivas con previews, props, código y notas de accesibilidad.",
+      },
+      patterns: {
+        title: "Patrones",
+        jp: "応用",
+        description:
+          "Storefront y ERP: las composiciones que ensamblan las primitivas en pantallas reales.",
+      },
+      format: {
+        title: "Idioma y formato",
+        jp: "言語",
+        description: "ES/JA/EN, Intl, labels y la vista previa que responde al selector de idioma.",
+      },
+    },
+    demos: "Demos",
+    demosJp: "デモ",
+    principlesTitle: "Principios",
+    statusTitle: "Estado",
+    statusBadge: "Fases 1–3",
+    statusBody:
+      "Primitivas, storefront HIKARI y ERP KURA comparten tokens, componentes y reglas. Los selectores de tema, densidad e idioma modifican la interfaz; las muestras fijas comparan valores.",
+    themes: "Temas",
+    themesValue: "Chirashi · Daichō · Kanso",
+    densities: "Densidades",
+    densitiesValue: "Compacta · Default · Amplia",
+    languages: "Idiomas de UI",
+    languagesValue: "ES · JA · EN",
+    explore: "Explorar tokens",
+    noteStrong: "Cómo leer este catálogo.",
+    noteBody:
+      "La documentación está completa en ES/JA/EN: el selector de idioma cambia el cuerpo, la interfaz y los ejemplos. El tema y la densidad afectan toda la página, incluidas las tablas y el espaciado.",
+  },
+  ja: {
+    eyebrow: "カタログ · 古典",
+    title: "Koten UI",
+    description:
+      "手段の簡素さ、情報の密度。古典的な日本のウェブのためのコンポーネントシステム。カタログ、店舗、ERPで検証する。",
+    meta: "フェーズ1〜3完了 · 42プリミティブ · 20パターン · 3テーマ · 3密度",
+    principles: [
+      "枠が単位：パネル、見出し、罫線、境界。",
+      "色は意味を示し、装飾しない。",
+      "システムフォントと実テキスト。画像内テキストは使わない。",
+      "リズムのある密度：4/8/12/16、すべてをカードにしない。",
+      "既定でアクセシブル：最小12px、AA、可視フォーカス、完全なキーボード操作。",
+    ],
+    cards: {
+      foundations: {
+        title: "基礎",
+        jp: "基礎",
+        description: "色、タイポグラフィ、余白、形、密度、テーマ。システムの視覚的契約。",
+      },
+      components: {
+        title: "部品",
+        jp: "部品",
+        description: "42のプリミティブ。プレビュー、props、コード、アクセシビリティ注記付き。",
+      },
+      patterns: {
+        title: "応用",
+        jp: "応用",
+        description: "店舗とERP：プリミティブを実画面に組み上げる構成。",
+      },
+      format: {
+        title: "言語と書式",
+        jp: "言語",
+        description: "ES/JA/EN、Intl、ラベル、言語セレクタに反応するプレビュー。",
+      },
+    },
+    demos: "デモ",
+    demosJp: "デモ",
+    principlesTitle: "原則",
+    statusTitle: "状態",
+    statusBadge: "フェーズ1〜3",
+    statusBody:
+      "プリミティブ、店舗HIKARI、ERP KURAはトークン・コンポーネント・ルールを共有する。テーマ、密度、言語のセレクタはUIを変え、固定サンプルは値を比較する。",
+    themes: "テーマ",
+    themesValue: "Chirashi · Daichō · Kanso",
+    densities: "密度",
+    densitiesValue: "コンパクト · 標準 · ゆったり",
+    languages: "UI言語",
+    languagesValue: "ES · JA · EN",
+    explore: "トークンを見る",
+    noteStrong: "このカタログの読み方。",
+    noteBody:
+      "ドキュメントはES/JA/ENで完備され、言語セレクタで本文・UI・例が切り替わる。テーマと密度は表や余白を含むページ全体に影響する。",
+  },
+  en: {
+    eyebrow: "Catalog · 古典",
+    title: "Koten UI",
+    description:
+      "Simplicity of means, density of information. A component system for the classic Japanese web, validated in a catalog, a storefront and an ERP.",
+    meta: "Phases 1–3 complete · 42 primitives · 20 patterns · 3 themes · 3 densities",
+    principles: [
+      "The frame is the unit: panel, header, rule, border.",
+      "Color signals; it does not decorate.",
+      "System typography and real text, never text in images.",
+      "Density with rhythm: 4/8/12/16, not everything is a card.",
+      "Accessible by default: 12 px minimum, AA, visible focus, full keyboard.",
+    ],
+    cards: {
+      foundations: {
+        title: "Foundations",
+        jp: "基礎",
+        description: "Color, typography, spacing, shape, density and themes. The visual contract.",
+      },
+      components: {
+        title: "Components",
+        jp: "部品",
+        description: "42 primitives with previews, props, code and accessibility notes.",
+      },
+      patterns: {
+        title: "Patterns",
+        jp: "応用",
+        description:
+          "Storefront and ERP: the compositions that assemble primitives into real screens.",
+      },
+      format: {
+        title: "Language & format",
+        jp: "言語",
+        description: "ES/JA/EN, Intl, labels and the preview that follows the language selector.",
+      },
+    },
+    demos: "Demos",
+    demosJp: "デモ",
+    principlesTitle: "Principles",
+    statusTitle: "Status",
+    statusBadge: "Phases 1–3",
+    statusBody:
+      "Primitives, the HIKARI storefront and the KURA ERP share tokens, components and rules. Theme, density and language selectors change the UI; fixed samples compare values.",
+    themes: "Themes",
+    themesValue: "Chirashi · Daichō · Kanso",
+    densities: "Densities",
+    densitiesValue: "Compact · Default · Comfortable",
+    languages: "UI languages",
+    languagesValue: "ES · JA · EN",
+    explore: "Explore tokens",
+    noteStrong: "How to read this catalog.",
+    noteBody:
+      "Documentation is complete in ES/JA/EN: the language selector switches the body, the UI and the examples. Theme and density affect the whole page, including tables and spacing.",
+  },
+};
+type Copy = (typeof copy)["es"];
+const copyByLocale: Record<KotenLocale, Copy> = copy;
 
 export function OverviewPage() {
+  const { locale } = useKoten();
+  const t = copyByLocale[locale];
+
   return (
     <div>
       <PageHeader
-        eyebrow="Catálogo · 古典"
-        title="Koten UI"
+        eyebrow={t.eyebrow}
+        title={t.title}
         jp="古典"
-        description="Sencillez de medios, densidad de información. Un sistema de componentes para el web japonés clásico, validado en un catálogo, un storefront y un ERP."
-        meta="Fases 1–3 cerradas · 42 primitivas · 20 patrones · 3 temas · 3 densidades"
+        description={t.description}
+        meta={t.meta}
       />
 
       <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">
-        <IndexCard
-          to="/tokens"
-          title="Fundamentos"
-          jp="基礎"
-          description="Color, tipografía, espaciado, forma, densidad y temas. El contrato visual del sistema."
-        />
-        <IndexCard
-          to="/components"
-          title="Componentes"
-          jp="部品"
-          description="42 primitivas con previews, props, código y notas de accesibilidad."
-        />
-        <IndexCard
-          to="/patterns"
-          title="Patrones"
-          jp="応用"
-          description="Storefront y ERP: las composiciones que ensamblan las primitivas en pantallas reales."
-        />
-        <IndexCard
-          to="/tokens/format"
-          title="Idioma y formato"
-          jp="言語"
-          description="ES/JA/EN, Intl, labels y la vista previa que responde al selector de idioma."
-        />
+        <IndexCard to="/tokens" {...t.cards.foundations} />
+        <IndexCard to="/components" {...t.cards.components} />
+        <IndexCard to="/patterns" {...t.cards.patterns} />
+        <IndexCard to="/tokens/format" {...t.cards.format} />
         <div className="flex h-full flex-col border border-rule bg-surface">
           <div className="flex min-h-[var(--koten-row-h)] items-center justify-between border-b border-rule bg-tint px-[var(--koten-panel-p)] text-xs font-semibold">
-            Demos <span className="font-normal text-faint">デモ</span>
+            {t.demos} <span className="font-normal text-faint">{t.demosJp}</span>
           </div>
           <div className="flex flex-1 flex-col gap-1 p-[var(--koten-panel-p)] text-xs">
             <a
@@ -79,7 +223,7 @@ export function OverviewPage() {
       <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
         <Panel>
           <PanelHeader>
-            <PanelTitle as="h2">Principios</PanelTitle>
+            <PanelTitle as="h2">{t.principlesTitle}</PanelTitle>
             <PanelActions>
               <Badge tone="new" dot>
                 v0.1 POC
@@ -88,7 +232,7 @@ export function OverviewPage() {
           </PanelHeader>
           <PanelBody>
             <ul className="divide-y divide-rule border-y border-rule text-xs">
-              {principles.map((principle, index) => (
+              {t.principles.map((principle, index) => (
                 <li key={principle} className="flex min-h-[var(--koten-row-h)] items-center gap-3">
                   <span className="w-5 shrink-0 text-right font-mono text-2xs text-faint">
                     {String(index + 1).padStart(2, "0")}
@@ -102,26 +246,22 @@ export function OverviewPage() {
 
         <Panel tone="accent">
           <PanelHeader>
-            <PanelTitle as="h2">Estado</PanelTitle>
+            <PanelTitle as="h2">{t.statusTitle}</PanelTitle>
             <PanelActions>
               <Badge tone="success" dot>
-                Fases 1–3
+                {t.statusBadge}
               </Badge>
             </PanelActions>
           </PanelHeader>
           <PanelBody>
-            <p className="text-xs text-muted">
-              Primitivas, storefront HIKARI y ERP KURA comparten tokens, componentes y reglas. Los
-              selectores de tema, densidad e idioma modifican la interfaz; las muestras fijas
-              comparan valores.
-            </p>
+            <p className="text-xs text-muted">{t.statusBody}</p>
             <dl className="mt-[var(--koten-gap)] grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-2xs">
-              <dt className="text-faint">Temas</dt>
-              <dd className="text-right">Chirashi · Daichō · Kanso</dd>
-              <dt className="text-faint">Densidades</dt>
-              <dd className="text-right">Compacta · Default · Amplia</dd>
-              <dt className="text-faint">Idiomas de UI</dt>
-              <dd className="text-right">ES · JA · EN</dd>
+              <dt className="text-faint">{t.themes}</dt>
+              <dd className="text-right">{t.themesValue}</dd>
+              <dt className="text-faint">{t.densities}</dt>
+              <dd className="text-right">{t.densitiesValue}</dd>
+              <dt className="text-faint">{t.languages}</dt>
+              <dd className="text-right">{t.languagesValue}</dd>
             </dl>
             <Link
               to="/tokens"
@@ -130,16 +270,14 @@ export function OverviewPage() {
                 "mt-[var(--koten-gap)]",
               )}
             >
-              Explorar tokens
+              {t.explore}
             </Link>
           </PanelBody>
         </Panel>
       </div>
 
       <div className="mt-[calc(var(--koten-gap)*2)] border-l-2 border-primary bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
-        <strong className="text-ink">Cómo leer este catálogo.</strong> La documentación está en
-        español; la interfaz y los ejemplos de formato cambian con el selector de idioma. El tema y
-        la densidad afectan toda la página, incluidas las tablas y el espaciado.
+        <strong className="text-ink">{t.noteStrong}</strong> {t.noteBody}
       </div>
     </div>
   );
