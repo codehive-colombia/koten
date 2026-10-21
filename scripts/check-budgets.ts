@@ -10,8 +10,8 @@ type Budget = {
 const budgets: Record<string, Budget> = {
   storefront: { js: 150 * 1024, css: 30 * 1024 },
   erp: { js: 250 * 1024, css: 30 * 1024 },
-  // El catálogo es interno y carga todas las páginas de documentación en la v1.
-  catalog: { js: 300 * 1024, css: 30 * 1024 },
+  // El catálogo es interno y sirve la documentación completa en ES/JA/EN (D-025).
+  catalog: { js: 330 * 1024, css: 30 * 1024 },
 };
 
 const failures: string[] = [];
