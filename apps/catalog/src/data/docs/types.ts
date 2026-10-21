@@ -51,7 +51,7 @@ export type PrimitiveDoc = {
   /** Link to the Base UI primitive this component wraps, when it exists. */
   baseUi?: string;
   requirements?: readonly DocRequirement[];
-  /** Files copied by the registry item, relative to the installed project. */
+  /** Files copied by the registry item, shown with the canonical alias paths. */
   files: readonly string[];
   examples: readonly DocExample[];
   /** Form components document how they behave inside a real form. */
@@ -85,17 +85,16 @@ export type BlockDoc = {
   a11y: L10nList;
 };
 
-export const uiFile = (name: string) => `components/ui/${name}`;
-export const patternFile = (name: string) => `components/patterns/${name}`;
+export const uiFile = (name: string) => `@/components/ui/${name}`;
+export const patternFile = (name: string) => `@/components/patterns/${name}`;
 
 /** Core files every registry item carries so it can be copied on its own. */
 export const coreFiles = [
-  "lib/koten/cn.ts",
-  "lib/koten/format.ts",
-  "lib/koten/intl.ts",
-  "lib/koten/labels.ts",
-  "lib/koten/provider.tsx",
-  "styles/koten.css",
+  "@/lib/koten/cn.ts",
+  "@/lib/koten/format.ts",
+  "@/lib/koten/intl.ts",
+  "@/lib/koten/labels.ts",
+  "@/lib/koten/provider.tsx",
 ] as const;
 
 export const filesFor = (...files: string[]): readonly string[] => [...files, ...coreFiles];

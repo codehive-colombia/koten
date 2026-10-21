@@ -84,19 +84,20 @@ El workflow de GitHub Actions publica la imagen en GHCR en `main` y en tags `v*`
 En producción el registry vive en el mismo dominio que el catálogo:
 
 ```bash
-# en un proyecto con Tailwind 4 y alias @/*
+# en un proyecto con Tailwind 4 y components.json
+npx shadcn@latest add https://koten.codehive.com.co/r/koten-theme.json
 npx shadcn@latest add https://koten.codehive.com.co/r/button.json
 ```
 
 En local se sirve desde el catálogo de desarrollo:
 
 ```bash
-bun run registry   # genera apps/catalog/public/r/* (también corre en predev/prebuild)
-bun run dev        # sirve http://localhost:5173/r/button.json
+bun run dev        # sirve http://localhost:5173/r/button.json (predev regenera el registry con localhost)
+npx shadcn@latest add http://localhost:5173/r/koten-theme.json
 npx shadcn@latest add http://localhost:5173/r/button.json
 ```
 
-Cada item es autocontenido: componente + `lib/koten` (cn, formato e i18n) + `styles/koten.css` con tokens y roles de Tailwind. El catálogo documenta el flujo en `/start`.
+Cada item usa los **aliases de `components.json`**: los targets son `@ui`, `@components` y `@lib`, y los imports canónicos `@/...` se reescriben al prefijo del proyecto. El item `koten-theme` viaja como dependencia y escribe tokens, temas y densidad en el archivo `tailwind.css` declarado en `components.json`; no se crea ninguna carpeta `styles/`. Para un tema 100 % Koten, parte de un CSS con solo `@import "tailwindcss";`; si el proyecto ya tenía tokens de shadcn, instala `koten-theme` primero para reemplazar los valores existentes. El catálogo documenta el flujo en `/start`.
 
 ## Uso rápido
 

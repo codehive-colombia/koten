@@ -56,11 +56,14 @@ createRoot(root).render(
     registry: {
       title: "Registry shadcn",
       meta: "Instalar por URL",
-      body: "Cada item es autocontenido: trae el componente, `lib/koten` (cn, formato e i18n) y `styles/koten.css` con tokens y roles de Tailwind. `predev` y `prebuild` regeneran el registry; no se publica en npm.",
+      body: "Cada item usa los placeholders `@ui` y `@lib` de shadcn: los componentes van a `aliases.ui` y el núcleo a `aliases.lib/koten`. El tema `koten-theme` se instala como dependencia y escribe tokens, temas y densidad en el archivo `tailwind.css` de tu `components.json`; importa ese archivo una vez en tu app. No se crea una carpeta `styles/`.",
       code: `bun run registry   # genera apps/catalog/public/r/*
 bun run dev        # sirve http://localhost:5173/r/button.json
 
-# en tu proyecto
+# en tu proyecto: primero el tema (reemplaza tokens existentes)
+${registryCommand("koten-theme")}
+
+# después, el componente que necesites
 ${registryCommand("button")}`,
     },
     copyComponent: {
@@ -159,11 +162,14 @@ createRoot(root).render(
     registry: {
       title: "shadcn レジストリ",
       meta: "URL でインストール",
-      body: "各アイテムは自己完結です。コンポーネント、`lib/koten`（cn・書式・i18n）、トークンと Tailwind ロールを含む `styles/koten.css` を同梱します。`predev`/`prebuild` が再生成し、npm には公開しません。",
+      body: "各項目は shadcn の `@ui` と `@lib` プレースホルダーを使います。コンポーネントは `aliases.ui`、コアは `aliases.lib/koten` に配置されます。`koten-theme` は依存関係としてインストールされ、トークン・テーマ・密度を `components.json` の `tailwind.css` に書き込みます。その CSS をアプリで一度インポートしてください。`styles/` フォルダーは作成しません。",
       code: `bun run registry   # apps/catalog/public/r/* を生成
 bun run dev        # http://localhost:5173/r/button.json を配信
 
-# 自分のプロジェクトで
+# 自分のプロジェクト: まずテーマ（既存トークンを置き換え）
+${registryCommand("koten-theme")}
+
+# 次に必要なコンポーネント
 ${registryCommand("button")}`,
     },
     copyComponent: {
@@ -262,11 +268,14 @@ createRoot(root).render(
     registry: {
       title: "shadcn registry",
       meta: "Install by URL",
-      body: "Every item is self-contained: it ships the component, `lib/koten` (cn, formatting and i18n) and `styles/koten.css` with tokens and Tailwind roles. `predev` and `prebuild` regenerate the registry; it is not published to npm.",
+      body: "Every item uses shadcn's `@ui` and `@lib` placeholders: components go to `aliases.ui` and the core to `aliases.lib/koten`. `koten-theme` installs as a dependency and writes tokens, themes and density into the `tailwind.css` file from `components.json`; import that file once in your app. No `styles/` folder is created.",
       code: `bun run registry   # writes apps/catalog/public/r/*
 bun run dev        # serves http://localhost:5173/r/button.json
 
-# in your project
+# in your project: theme first (replaces existing tokens)
+${registryCommand("koten-theme")}
+
+# then the component you need
 ${registryCommand("button")}`,
     },
     copyComponent: {

@@ -39,9 +39,10 @@ const chrome: Record<KotenLocale, Chrome> = {
     code: "Código",
     install: "Instalación",
     installBody:
-      "El item del registry es autocontenido: incluye el componente, lib/koten y styles/koten.css con tokens.",
+      "El item usa los aliases de tu components.json: el componente va a ui, el núcleo a lib/koten y koten-theme escribe tokens, temas y densidad en el CSS de tailwind.css. No se crea una carpeta styles/.",
     files: "Archivos",
-    filesBody: "Rutas que escribe el comando dentro del proyecto.",
+    filesBody:
+      "Rutas resueltas con los aliases de components.json; koten-theme se instala como dependencia.",
     reference: "Referencia",
     native: "HTML nativo",
     nativeBody: "Sin primitiva de Base UI; el componente envuelve HTML y tokens del sistema.",
@@ -67,9 +68,10 @@ const chrome: Record<KotenLocale, Chrome> = {
     code: "コード",
     install: "インストール",
     installBody:
-      "レジストリの項目は自己完結型です。コンポーネント、lib/koten、トークンを含む styles/koten.css が入ります。",
+      "項目は components.json のエイリアスを使います。コンポーネントは ui、コアは lib/koten に配置され、koten-theme がトークン・テーマ・密度を tailwind.css の CSS に書き込みます。styles/ フォルダーは作成しません。",
     files: "ファイル",
-    filesBody: "コマンドがプロジェクト内に書き込むパス。",
+    filesBody:
+      "components.json のエイリアスで解決されるパス。koten-theme は依存関係としてインストールされます。",
     reference: "参照",
     native: "ネイティブHTML",
     nativeBody: "Base UI のプリミティブは使わず、HTML とシステムのトークンで構成します。",
@@ -95,9 +97,10 @@ const chrome: Record<KotenLocale, Chrome> = {
     code: "Code",
     install: "Installation",
     installBody:
-      "The registry item is self-contained: it ships the component, lib/koten and styles/koten.css with tokens.",
+      "The item uses your components.json aliases: the component goes to ui, the core to lib/koten, and koten-theme writes tokens, themes and density into the tailwind.css file. No styles/ folder is created.",
     files: "Files",
-    filesBody: "Paths the command writes inside the project.",
+    filesBody:
+      "Paths resolved with the components.json aliases; koten-theme installs as a dependency.",
     reference: "Reference",
     native: "Native HTML",
     nativeBody: "No Base UI primitive; the component wraps HTML and system tokens.",
