@@ -25,6 +25,12 @@ const components = [
     jp: "入力",
     description: "Field, Label, Input, Textarea y FormRow con errores y estados.",
   },
+  {
+    to: "/components/inputs",
+    title: "Inputs avanzados",
+    jp: "入力部品",
+    description: "Select, Combobox, Checkbox, RadioGroup, Switch y NumberField.",
+  },
 ] as const;
 
 export function ComponentsIndexPage() {
@@ -35,7 +41,7 @@ export function ComponentsIndexPage() {
         title="Componentes"
         jp="部品"
         description="La primera validación de la gramática: variantes CVA, roles semánticos y composición con render. Estos componentes fijan el tono del resto del sistema."
-        meta="4 páginas · preview, props, código y a11y"
+        meta="5 páginas · preview, props, código y a11y"
       />
 
       <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">

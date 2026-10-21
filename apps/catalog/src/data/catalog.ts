@@ -54,6 +54,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
         path: "/components/forms",
         label: { es: "Formularios", ja: "フォーム", en: "Forms" },
       },
+      {
+        path: "/components/inputs",
+        label: { es: "Inputs avanzados", ja: "入力部品", en: "Advanced inputs" },
+      },
     ],
   },
   {

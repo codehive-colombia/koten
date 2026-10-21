@@ -8,6 +8,7 @@ import { BadgePage } from "./components/badge";
 import { ButtonPage } from "./components/button";
 import { FormsPage } from "./components/forms";
 import { ComponentsIndexPage } from "./components/index";
+import { InputsPage } from "./components/inputs";
 import { PanelPage } from "./components/panel";
 import { NotFoundPage } from "./not-found";
 import { OverviewPage } from "./overview";
@@ -115,6 +116,14 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("textbox", { name: "Notas de entrega" })).toBeInTheDocument();
     expect(screen.getByText("El correo no es válido.")).toBeInTheDocument();
     expect(forms.container.querySelector('[data-orientation="horizontal"]')).toBeInTheDocument();
+    forms.unmount();
+
+    renderPage(<InputsPage />);
+    expect(screen.getByRole("combobox", { name: "Almacén de salida" })).toBeInTheDocument();
+    expect(screen.getByRole("checkbox", { name: "Recibir avisos de stock" })).toBeInTheDocument();
+    expect(screen.getByRole("radio", { name: "Estándar" })).toBeInTheDocument();
+    expect(screen.getByRole("switch", { name: "Notificaciones" })).toBeInTheDocument();
+    expect(screen.getByRole("textbox", { name: "Unidades" })).toBeInTheDocument();
   });
 
   it("muestra una página 404 traducida", () => {

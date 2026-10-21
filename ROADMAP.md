@@ -3,8 +3,8 @@
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-20**
 > Fase actual: **1 — Primitivas** (`in_progress`)
-> Tarea en curso: **ninguna** — próxima `F1-002`
-> Última tarea completada: **`F1-001`**
+> Tarea en curso: **ninguna** — próxima `F1-003`
+> Última tarea completada: **`F1-002`**
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -162,7 +162,7 @@ ISO 8601: `YYYY-MM-DD`.
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
 | `F1-001` | Formularios base: `Field`, `Label`, `Input`, `Textarea`, `FormRow`. | `F0-009` | `done` | Estados default/focus/error/disabled; labels y `aria-describedby`; catálogo. | `packages/ui/src/components/ui/{field,label,input,textarea,field-context}.tsx`; tests de asociación, error, required, disabled, textarea y FormRow; página `/components/forms` con previews, props, código y a11y. |
-| `F1-002` | Inputs avanzados: `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `NumberField`. | `F1-001` | `todo` | Base UI; teclado completo; integración con formularios; catálogo. | — |
+| `F1-002` | Inputs avanzados: `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `NumberField`. | `F1-001` | `done` | Base UI; teclado completo; integración con formularios; catálogo. | `packages/ui/src/components/ui/{select,combobox,checkbox,radio-group,switch,number-field}.tsx`; tests de selección, filtro, toggles, radios y steppers; página `/components/inputs`; exports en `index.ts`. |
 | `F1-003` | Superficies y decorativos: `SectionHeader`, `Rule`, `Hanko`, `Tategaki`, `Pattern`. | `F0-007` | `todo` | Variantes; uso decorativo con `aria-hidden`; responsive. | — |
 | `F1-004` | Feedback: `Alert`, `Toast`, `Progress`, `Meter`, `Skeleton`, `EmptyState`. | `F0-007` | `todo` | Tonos; `aria-live`; reduced motion; catálogo. | — |
 | `F1-005` | Navegación: `Link`, `Breadcrumb`, `Pagination`, `Tabs`, `Accordion`. | `F0-007` | `todo` | Foco y teclado; `aria-current`; labels configurables. | — |
@@ -276,12 +276,12 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-006` | Field | 1 | `done` | Wrapper de Base UI Field; label/description/error. |
 | `C-007` | Input | 1 | `done` | Tamaños; inválido; iconos pendientes. |
 | `C-008` | Textarea | 1 | `done` | Altura mínima; resize vertical; inválido. |
-| `C-009` | Select | 1 | `todo` | Base UI Select; grupos; tamaños. |
-| `C-010` | Combobox | 1 | `todo` | Base UI Combobox; preparado para async. |
-| `C-011` | Checkbox | 1 | `todo` | Indeterminate; label. |
-| `C-012` | RadioGroup | 1 | `todo` | Base UI RadioGroup. |
-| `C-013` | Switch | 1 | `todo` | Base UI Switch. |
-| `C-014` | NumberField | 1 | `todo` | Cantidad; steppers; teclado. |
+| `C-009` | Select | 1 | `done` | Base UI Select; lista simple; disabled. |
+| `C-010` | Combobox | 1 | `done` | Base UI Combobox; filtro local; labels i18n. |
+| `C-011` | Checkbox | 1 | `done` | Indeterminate; label y descripción. |
+| `C-012` | RadioGroup | 1 | `done` | Base UI RadioGroup; vertical/horizontal. |
+| `C-013` | Switch | 1 | `done` | Base UI Switch; label y descripción. |
+| `C-014` | NumberField | 1 | `done` | Cantidad; steppers; teclado; límites. |
 | `C-015` | FormRow | 1 | `done` | Horizontal/vertical; hint/error. |
 | `C-016` | SectionHeader | 1 | `todo` | Título/meta/acciones; regla. |
 | `C-017` | Rule / Separator | 1 | `todo` | Hairline/doble/dashed; con label. |
@@ -431,3 +431,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-20 | Cierre de fase 0: CI en GitHub Actions + `bun run ci`, `D-018`, `Q-007` cerrada, README y handoff validados. `F0-008`–`F0-009` → `done`; **fase 0 → `done`**. Próxima: `F1-001`. | Sesión 003 |
 | 2026-10-20 | Pulido pre-fase 1: selector de idioma ES/JA/EN, documentación sensible a tema/densidad y catálogo wiki con sidebar, menú móvil y pager. `F0-010`–`F0-012` → `done`; `D-019` y `D-020`; **fase 0 reconfirmada `done`**. | Sesión 004 |
 | 2026-10-20 | Fase 1 iniciada: `Field`, `Label`, `Input`, `Textarea` y `FormRow` con Base UI, estados, error accesible y página de catálogo. `F1-001` → `done`; `C-006`–`C-008`, `C-015` y `C-062` → `done`. | Sesión 005 |
+| 2026-10-20 | Inputs avanzados: `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch` y `NumberField` con Base UI, tests y página `/components/inputs`. `F1-002` → `done`; `C-009`–`C-014` → `done`. | Sesión 006 |

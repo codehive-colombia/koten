@@ -7,6 +7,7 @@ import { BadgePage } from "./pages/components/badge";
 import { ButtonPage } from "./pages/components/button";
 import { FormsPage } from "./pages/components/forms";
 import { ComponentsIndexPage } from "./pages/components/index";
+import { InputsPage } from "./pages/components/inputs";
 import { PanelPage } from "./pages/components/panel";
 import { NotFoundPage } from "./pages/not-found";
 import { OverviewPage } from "./pages/overview";
@@ -41,6 +42,7 @@ export function App() {
           <Route path="/components/panel" element={<PanelPage />} />
           <Route path="/components/badge" element={<BadgePage />} />
           <Route path="/components/forms" element={<FormsPage />} />
+          <Route path="/components/inputs" element={<InputsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </CatalogLayout>

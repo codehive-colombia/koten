@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-001` — formularios base |
-| Tarea en curso | ninguna — próxima `F1-002` |
+| Última tarea completada | `F1-002` — inputs avanzados |
+| Tarea en curso | ninguna — próxima `F1-003` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,25 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-20 · Sesión 006 — Inputs avanzados
+
+- **Objetivo:** completar `F1-002` con `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch` y `NumberField` sobre Base UI.
+- **Hecho:**
+  - `Select` con label, placeholder, lista, estados disabled y teclado de Base UI.
+  - `Combobox` con filtro local, empty state, trigger accesible y labels i18n obligatorios.
+  - `Checkbox` con estados checked/indeterminate, label y descripción; `Switch` con label y descripción.
+  - `RadioGroup` vertical/horizontal con label de grupo y opciones descriptas.
+  - `NumberField` con steppers accesibles, límites, step y estado disabled.
+  - Página `/components/inputs` con demos, props, código y a11y; entrada en sidebar e índice.
+- **Tareas tocadas:** `F1-002` → `done`; `C-009`–`C-014` → `done`.
+- **Decisiones:** Ninguna nueva; Base UI ya estaba aceptado en `D-003`.
+- **Evidencia:** `packages/ui/src/components/ui/{select,combobox,checkbox,radio-group,switch,number-field}.tsx` + `advanced-inputs.test.tsx`; `apps/catalog/src/pages/components/inputs.tsx`; exports en `index.ts`; `bun run check` verde (**14 archivos / 67 tests**).
+- **Sin validar:** axe real (`F1-010`), lector de pantalla y combinaciones async de Combobox.
+- **Próximo:** `F1-003` — `SectionHeader`, `Rule`, `Hanko`, `Tategaki` y `Pattern`.
+- **Bloqueos:** ninguno.
 
 ---
 
