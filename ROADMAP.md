@@ -305,7 +305,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-034` | Popover | 1 | `done` | Base UI Popover; título y cierre. |
 | `C-035` | Tooltip | 1 | `done` | Base UI Tooltip; delay; side. |
 | `C-036` | Toolbar | 1 | `done` | Base UI Toolbar; roving focus. |
-| `C-037` | Table | 1 | `done` | Semántica; densidad; header sticky. |
+| `C-037` | Table | 1 | `done` | Semántica; densidad; sticky header pendiente para el ERP. |
 | `C-038` | DataTable | 1 | `done` | TanStack; sort/selección/paginación; vacío/loading. |
 | `C-039` | StatCard | 1 | `done` | Label/valor/delta/sparkline. |
 | `C-040` | Sparkline / BarChart | 1 | `done` | SVG; fallback accesible. |
