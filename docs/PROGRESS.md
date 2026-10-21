@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-006` — overlays |
-| Tarea en curso | ninguna — próxima `F1-007` |
+| Última tarea completada | `F1-007` — datos |
+| Tarea en curso | ninguna — próxima `F1-008` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 011 — Datos
+
+- **Objetivo:** completar `F1-007` con `Table`, `DataTable`, `StatCard`, `Sparkline` y `BarChart`.
+- **Hecho:**
+  - `Table` semántica con caption, headers, celdas y densidad por variables.
+  - `DataTable` con **TanStack Table 8.21.3**: sorting, selección, paginación, `aria-live`, vacío y loading.
+  - `StatCard` con valor, delta y sparkline; `Sparkline` SVG con `aria-label`.
+  - `BarChart` con barras decorativas y tabla `sr-only` de respaldo.
+  - Página `/components/data` con tabla, DataTable real, KPIs y chart; sidebar e índice.
+- **Tareas tocadas:** `F1-007` → `done`; `C-037`–`C-040` → `done`.
+- **Decisiones:** Se usa TanStack Table, ya previsto en `D-013`; se fijó en `8.21.3`.
+- **Evidencia:** `packages/ui/src/components/ui/{table,data-table,stat-card,sparkline,bar-chart}.tsx` + `data-displays.test.tsx`; `apps/catalog/src/pages/components/data.tsx`; `bun run check` verde (**19 archivos / 97 tests**).
+- **Sin validar:** axe real (`F1-010`), lector de pantalla y virtualización (fase 5).
+- **Próximo:** `F1-008` — `Toolbar`, `ToggleGroup` e `IconButton`.
+- **Bloqueos:** ninguno.
 
 ---
 

@@ -4,6 +4,8 @@ export type { AlertProps, AlertTone } from "./components/ui/alert";
 export { Alert } from "./components/ui/alert";
 export type { BadgeProps } from "./components/ui/badge";
 export { Badge, badgeVariants } from "./components/ui/badge";
+export type { BarChartDatum, BarChartProps } from "./components/ui/bar-chart";
+export { BarChart } from "./components/ui/bar-chart";
 export type { BreadcrumbItem, BreadcrumbProps } from "./components/ui/breadcrumb";
 export { Breadcrumb } from "./components/ui/breadcrumb";
 export type { ButtonProps } from "./components/ui/button";
@@ -12,6 +14,8 @@ export type { CheckboxProps } from "./components/ui/checkbox";
 export { Checkbox } from "./components/ui/checkbox";
 export type { ComboboxProps } from "./components/ui/combobox";
 export { Combobox } from "./components/ui/combobox";
+export type { DataTableColumn, DataTableProps } from "./components/ui/data-table";
+export { DataTable } from "./components/ui/data-table";
 export type { DialogProps } from "./components/ui/dialog";
 export { Dialog } from "./components/ui/dialog";
 export type { DrawerProps } from "./components/ui/drawer";
@@ -66,8 +70,21 @@ export type { SelectItem, SelectProps } from "./components/ui/select";
 export { Select } from "./components/ui/select";
 export type { SkeletonProps } from "./components/ui/skeleton";
 export { Skeleton } from "./components/ui/skeleton";
+export type { SparklineProps } from "./components/ui/sparkline";
+export { Sparkline } from "./components/ui/sparkline";
+export type { StatCardProps, StatDelta } from "./components/ui/stat-card";
+export { StatCard } from "./components/ui/stat-card";
 export type { SwitchProps } from "./components/ui/switch";
 export { Switch } from "./components/ui/switch";
+export {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./components/ui/table";
 export type { TabItem, TabsProps } from "./components/ui/tabs";
 export { Tabs } from "./components/ui/tabs";
 export type { TategakiProps } from "./components/ui/tategaki";

@@ -6,6 +6,7 @@ import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
 import { BadgePage } from "./components/badge";
 import { ButtonPage } from "./components/button";
+import { DataPage } from "./components/data";
 import { FeedbackPage } from "./components/feedback";
 import { FormsPage } from "./components/forms";
 import { ComponentsIndexPage } from "./components/index";
@@ -154,12 +155,19 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("button", { name: "Envío y entrega" })).toBeInTheDocument();
     navigation.unmount();
 
-    renderPage(<OverlaysPage />);
+    const overlays = renderPage(<OverlaysPage />);
     expect(screen.getByRole("heading", { level: 1, name: /Overlays/ })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Abrir diálogo" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Abrir drawer" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Acciones" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Ver resumen" })).toBeInTheDocument();
+    overlays.unmount();
+
+    renderPage(<DataPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Datos/ })).toBeInTheDocument();
+    expect(screen.getByRole("table", { name: "Pedidos KURA" })).toBeInTheDocument();
+    expect(screen.getByText("Pedidos hoy")).toBeInTheDocument();
+    expect(screen.getByRole("table", { name: "Pedidos por día" })).toBeInTheDocument();
   });
 
   it("muestra una página 404 traducida", () => {
