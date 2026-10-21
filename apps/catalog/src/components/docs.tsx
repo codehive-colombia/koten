@@ -1,4 +1,4 @@
-// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: scroll regions kept keyboard accessible (F4-002).
 import { type KotenLocale, useKoten } from "@koten/ui";
 import { type ReactNode, useState } from "react";
 import { Link } from "react-router";

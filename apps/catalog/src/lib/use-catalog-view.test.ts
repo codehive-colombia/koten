@@ -63,7 +63,7 @@ describe("useCatalogView", () => {
     expect(new URL(window.location.href).searchParams.get("lang")).toBe("es");
   });
 
-  it("reacciona a popstate leyendo la URL", () => {
+  it("reacts to popstate by reading the URL", () => {
     const { result } = renderHook(() => useCatalogView());
 
     act(() => {

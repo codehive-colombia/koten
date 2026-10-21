@@ -6,8 +6,8 @@ import { ScrollManager } from "./components/scroll-manager";
 import { useCatalogView } from "./lib/use-catalog-view";
 import { OverviewPage } from "./pages/overview";
 
-// Code splitting por ruta (F4-003): la portada viaja en el entry y cada página
-// de documentación se descarga al navegar. Las páginas no comparten estado.
+// Route-based code splitting (F4-003): the landing page ships in the entry and each
+// documentation page loads on navigation. Pages do not share state.
 const StartPage = lazy(() =>
   import("./pages/start").then((module) => ({ default: module.StartPage })),
 );
@@ -97,8 +97,8 @@ const NotFoundPage = lazy(() =>
 );
 
 function RouteFallback() {
-  // Reserva la altura de una página de documentación para que el pager no salte
-  // cuando llega el chunk (CLS < 0.02, F4-003).
+  // Reserve the height of a documentation page so the pager does not jump
+  // when the chunk arrives (CLS < 0.02, F4-003).
   return <div aria-busy="true" className="min-h-[1400px]" data-slot="route-fallback" />;
 }
 

@@ -1,8 +1,8 @@
 import type { KotenLocale } from "@koten/ui";
 
 /**
- * Texto del catálogo por idioma. El español es la fuente y el fallback
- * documental; JA/EN son traducciones completas del cuerpo.
+ * Catalog text per locale. Spanish is the source and the documentation
+ * fallback; JA/EN are full translations of the body.
  */
 export type Localized<T = string> = Record<KotenLocale, T>;
 

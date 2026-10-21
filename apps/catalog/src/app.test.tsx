@@ -10,7 +10,7 @@ beforeEach(() => {
 });
 
 describe("App", () => {
-  it("navega a una página de componente y marca el enlace activo", async () => {
+  it("navigates to a component page and marks the active link", async () => {
     render(
       <MemoryRouter initialEntries={["/components/button"]}>
         <App />
@@ -26,7 +26,7 @@ describe("App", () => {
     expect(screen.getByText("Props y código")).toBeInTheDocument();
   });
 
-  it("cambia el idioma de la interfaz y el lang del documento", () => {
+  it("switches the UI language and the document lang", () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <App />
