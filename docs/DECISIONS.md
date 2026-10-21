@@ -440,8 +440,8 @@
 - **Decisión:**
   - El catálogo carga la portada en el entry y cada página de documentación con `React.lazy` + `Suspense`. El fallback reserva la altura de una página (`min-h-[1400px]`) para no mover el pager: CLS medido 0.
   - El ERP y el storefront mantienen imports estáticos: un solo bundle, navegación instantánea, sin estados de carga artificiales.
-  - `scripts/check-budgets.ts` distingue **JS inicial** (entry + assets referenciados por `index.html`) de **JS total** (todos los chunks). Presupuestos: storefront 150/150, ERP 250/250, catálogo 250/340 KB gzip; CSS 30 KB; 0 fuentes.
-- **Consecuencias:** El catálogo baja su JS inicial de 304,5 a **243,5 KB** (−20 %) y conserva LCP < 400 ms local y CLS 0 en rutas lazy. El ERP no gana con splitting mientras `@koten/ui` sea un barrel compartido; dividir el paquete queda para la fase 5 si el POC crece. `bun run qa:perf` mide LCP/CLS y `bun run budget` verifica inicial/total. El presupuesto total del catálogo sube 10 KB con la página Empezar trilingüe (`F4-005`).
+  - `scripts/check-budgets.ts` distingue **JS inicial** (entry + assets referenciados por `index.html`) de **JS total** (todos los chunks). Presupuestos: storefront 150/150, ERP 250/250, catálogo 260/360 KB gzip; CSS 30 KB; 0 fuentes.
+- **Consecuencias:** El catálogo baja su JS inicial de 304,5 a **243,5 KB** (−20 %) y conserva LCP < 400 ms local y CLS 0 en rutas lazy. El ERP no gana con splitting mientras `@koten/ui` sea un barrel compartido; dividir el paquete queda para la fase 5 si el POC crece. `bun run qa:perf` mide LCP/CLS y `bun run budget` verifica inicial/total. El presupuesto del catálogo sube con las páginas Empezar (`F4-005`) y DatePicker/CommandPalette (`F5-003`/`F5-004`).
 - **Alternativas:** Dividir todas las rutas (regresión de UX sin ahorro real en ERP); dividir el barrel de `@koten/ui` en subpaths (cambio de API grande, fuera de la v1); dejar todo en un bundle (catálogo 304,5 KB inicial, más lento en la primera visita).
 
 ---
@@ -536,3 +536,19 @@
   - El ERP reemplaza el input nativo por `DatePicker` con `min`/`max` y mantiene el estado como ISO (`YYYY-MM-DD`).
 - **Consecuencias:** El formato deja de depender del navegador y el rango es testeable. El panel inline puede quedar recortado por un ancestro con `overflow: hidden`; si aparece ese caso, se migra a portal en una tarea nueva. La semana empieza en lunes para `es` y en domingo para `ja`/`en` (`Intl.Locale.weekInfo` con fallback).
 - **Alternativas:** Librería de calendario (peso y API extra para 2 modos); `<input type="date">` (sin rango, formato del navegador); date-picker con portal (más piezas y foco más frágil en este tamaño).
+
+---
+
+<a id="d-037"></a>
+## D-037 · CommandPalette: combobox + listbox sobre el diálogo existente
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`F5-004`)
+- **Contexto:** Un ERP denso necesita saltar a cualquier módulo o acción sin recorrer menús. Un palette requiere tres cosas a la vez: filtrado inmediato, teclado completo (flechas, Enter, Escape, PageUp/PageDown) y foco atrapado con retorno al disparador. Base UI ya resuelve el diálogo y el foco; la lista y el combobox son nuestros.
+- **Decisión:**
+  - `CommandPalette` compone el **Dialog** de Base UI (controlado por `open`/`onOpenChange`, con `initialFocus` en el campo) y mantiene el foco dentro del diálogo.
+  - El campo es un **combobox** con `aria-controls` y `aria-activedescendant`; la lista es un **listbox** de `role="option"` con `tabIndex={-1}`. La selección se anuncia por el campo, no por foco real en las opciones.
+  - El filtro normaliza acentos y mayúsculas y busca en `label`, `description`, `group` y `keywords`.
+  - Los textos (`label`, `placeholder`, `emptyLabel`, `hint`) entran por props: el componente no hardcodea strings. Los items llevan icono y atajo opcionales.
+- **Consecuencias:** El patrón es reutilizable en cualquier app y no agrega dependencias. La página `/components/command` lo documenta con demo, props y notas; axe lo audita con el diálogo abierto (`qa:a11y` lo abre desde `article button`). El catálogo sube a 344,4 KB totales, dentro del nuevo presupuesto 260/360 KB.
+- **Alternativas:** `role="menu"` (semántica de acciones, no de búsqueda); opciones realmente enfocables (más saltos de tabulación y pierde el patrón combobox); una librería de command palette (peso y estilos ajenos).

@@ -58,6 +58,13 @@ const pages: readonly Page[] = [
   { app: "catalog", label: "empezar", path: "/start" },
   { app: "catalog", label: "formularios", path: "/components/forms" },
   { app: "catalog", label: "fecha", path: "/components/date" },
+  {
+    app: "catalog",
+    label: "command (abierta)",
+    path: "/components/command",
+    open: 'document.querySelector("article button").click()',
+    expect: '[role="dialog"]',
+  },
   { app: "catalog", label: "datos", path: "/components/data" },
   { app: "catalog", label: "overlays", path: "/components/overlays" },
   { app: "catalog", label: "patrones", path: "/patterns/storefront" },

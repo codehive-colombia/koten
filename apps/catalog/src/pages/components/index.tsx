@@ -25,6 +25,7 @@ const componentRoutes = {
   data: { to: "/components/data", jp: "データ" },
   controls: { to: "/components/controls", jp: "操作" },
   date: { to: "/components/date", jp: "日付" },
+  command: { to: "/components/command", jp: "命令" },
 } as const;
 
 type ComponentKey = keyof typeof componentRoutes;
@@ -42,6 +43,7 @@ const componentOrder: readonly ComponentKey[] = [
   "data",
   "controls",
   "date",
+  "command",
 ];
 
 const inventory: readonly { id: string; name: string; page: ComponentKey; to: string }[] = [
@@ -89,6 +91,7 @@ const inventory: readonly { id: string; name: string; page: ComponentKey; to: st
   { id: "C-062", name: "Label", page: "forms", to: "/components/forms" },
   { id: "C-063", name: "Calendar", page: "date", to: "/components/date" },
   { id: "C-064", name: "DatePicker", page: "date", to: "/components/date" },
+  { id: "C-065", name: "CommandPalette", page: "command", to: "/components/command" },
 ];
 
 const copy = {
@@ -97,7 +100,7 @@ const copy = {
     title: "Componentes",
     description:
       "La primera validación de la gramática: variantes CVA, roles semánticos y composición con render. Estos componentes fijan el tono del resto del sistema.",
-    meta: "12 páginas · 44 primitivas documentadas · preview, props, código y a11y",
+    meta: "13 páginas · 45 primitivas documentadas · preview, props, código y a11y",
     cards: {
       button: {
         title: "Button",
@@ -147,6 +150,10 @@ const copy = {
         title: "Fecha",
         description: "Calendar y DatePicker con teclado, rango y locale.",
       },
+      command: {
+        title: "CommandPalette",
+        description: "Búsqueda global con combobox, listbox y foco atrapado.",
+      },
     },
     pageLabels: {
       button: "Button",
@@ -161,6 +168,7 @@ const copy = {
       data: "Datos",
       controls: "Controles",
       date: "Fecha",
+      command: "CommandPalette",
     },
     inventory: {
       heading: "Inventario de primitivas",
@@ -180,7 +188,7 @@ const copy = {
     title: "コンポーネント",
     description:
       "文法の最初の検証：CVAのバリエーション、意味的役割、render による合成。これらのコンポーネントがシステム全体の調子を決める。",
-    meta: "12ページ · 44のプリミティブ · プレビュー、props、コード、a11y",
+    meta: "13ページ · 45のプリミティブ · プレビュー、props、コード、a11y",
     cards: {
       button: {
         title: "Button",
@@ -230,6 +238,10 @@ const copy = {
         title: "日付",
         description: "Calendar と DatePicker。キーボード、範囲、ロケール。",
       },
+      command: {
+        title: "CommandPalette",
+        description: "combobox・listbox・フォーカストラップ付きのグローバル検索。",
+      },
     },
     pageLabels: {
       button: "Button",
@@ -244,6 +256,7 @@ const copy = {
       data: "データ",
       controls: "コントロール",
       date: "日付",
+      command: "コマンド",
     },
     inventory: {
       heading: "プリミティブ一覧",
@@ -263,7 +276,7 @@ const copy = {
     title: "Components",
     description:
       "The first validation of the grammar: CVA variants, semantic roles and composition with render. These components set the tone for the rest of the system.",
-    meta: "12 pages · 44 documented primitives · preview, props, code and a11y",
+    meta: "13 pages · 45 documented primitives · preview, props, code and a11y",
     cards: {
       button: {
         title: "Button",
@@ -313,6 +326,10 @@ const copy = {
         title: "Date",
         description: "Calendar and DatePicker with keyboard, range and locale.",
       },
+      command: {
+        title: "CommandPalette",
+        description: "Global search with combobox, listbox and trapped focus.",
+      },
     },
     pageLabels: {
       button: "Button",
@@ -327,6 +344,7 @@ const copy = {
       data: "Data",
       controls: "Controls",
       date: "Date",
+      command: "Command palette",
     },
     inventory: {
       heading: "Primitive inventory",

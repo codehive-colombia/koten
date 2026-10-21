@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`in_progress`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `F5-003` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F5-004` (CommandPalette) |
+| Última tarea completada | `F5-004` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F5-005` (virtualización) |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
 
@@ -38,6 +38,25 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 028 — CommandPalette
+
+- **Objetivo:** cerrar `F5-004` con búsqueda global, teclado completo y foco atrapado.
+- **Hecho:**
+  - **`CommandPalette`** sobre el Dialog de Base UI: campo combobox con `aria-controls`/`aria-activedescendant`, lista `role="listbox"` con opciones `tabIndex={-1}`, filtro que ignora acentos y mayúsculas y busca también en descripción, grupo y keywords.
+  - Teclado: flechas, Home/End, PageUp/PageDown, Enter; Escape cierra y el foco vuelve al disparador. `initialFocus` en el campo, foco atrapado por el diálogo.
+  - Props sin strings internos: `label`, `placeholder`, `emptyLabel`, `hint`; items con icono, grupo y atajo opcionales.
+  - Página `/components/command` en ES/JA/EN con demo interactiva, props, código y notas; inventario `C-065`; el índice pasa a 45 primitivas y 13 páginas.
+  - `qa:a11y` abre el diálogo y audita el estado abierto. El input recupera el outline visible (se quita `outline-hidden`) para foco de teclado.
+  - Presupuesto del catálogo a 260/360 KB por las páginas de fase 5 (medido 247,3/344,4).
+- **Tareas tocadas:** `F5-004` → `done`.
+- **Decisiones:** `D-037`.
+- **Evidencia:** `packages/ui/src/components/ui/command-palette.tsx` + test (5), `apps/catalog/src/pages/components/command.tsx`, `App.tsx`, `data/catalog.ts`, `pages/components/index.tsx`, `scripts/qa-a11y.ts`; `bun run check` verde (**32 archivos / 196 tests**); `qa:a11y` catálogo 60 páginas sin serious/critical; `bun run budget` OK.
+- **Sin validar:** atajos globales (⌘K) en el ERP: el componente queda listo, la integración no se cableó en esta sesión.
+- **Próximo:** `F5-005` — virtualización de `DataTable`.
+- **Bloqueos:** ninguno.
 
 ---
 

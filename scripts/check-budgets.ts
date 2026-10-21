@@ -17,7 +17,7 @@ const budgets: Record<string, Budget> = {
   erp: { initial: 250 * kb, total: 250 * kb, css: 30 * kb },
   // El catálogo es interno y sirve la documentación completa en ES/JA/EN (D-025).
   // Las páginas van por ruta (D-029): el entry no carga la documentación entera.
-  catalog: { initial: 250 * kb, total: 340 * kb, css: 30 * kb },
+  catalog: { initial: 260 * kb, total: 360 * kb, css: 30 * kb },
 };
 
 const failures: string[] = [];

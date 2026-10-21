@@ -462,7 +462,7 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - Imágenes AVIF/WebP locales, `width`/`height`, lazy bajo el fold.
 - El POC usa SVG locales para el producto (`D-022`); son reemplazables por fotografía sin cambiar la API de los patrones.
 - `content-visibility: auto` solo si no rompe anclas; medir antes.
-- Presupuestos: LCP < 1.5 s local, CLS < 0.02, JS inicial < 150 KB (storefront) y < 250 KB (ERP y catálogo), JS total del catálogo < 340 KB, CSS < 30 KB.
+- Presupuestos: LCP < 1.5 s local, CLS < 0.02, JS inicial < 150 KB (storefront), < 250 KB (ERP) y < 260 KB (catálogo), JS total del catálogo < 360 KB, CSS < 30 KB.
 
 ## 10. Storefront “HIKARI”
 

@@ -87,6 +87,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
         label: { es: "Controles", ja: "操作", en: "Controls" },
       },
       { path: "/components/date", label: { es: "Fecha", ja: "日付", en: "Date" } },
+      {
+        path: "/components/command",
+        label: { es: "CommandPalette", ja: "コマンド", en: "Command palette" },
+      },
     ],
   },
   {

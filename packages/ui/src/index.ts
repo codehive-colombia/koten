@@ -69,6 +69,8 @@ export type { CheckboxProps } from "./components/ui/checkbox";
 export { Checkbox } from "./components/ui/checkbox";
 export type { ComboboxProps } from "./components/ui/combobox";
 export { Combobox } from "./components/ui/combobox";
+export type { CommandItem, CommandPaletteProps } from "./components/ui/command-palette";
+export { CommandPalette } from "./components/ui/command-palette";
 export type { DataTableColumn, DataTableProps } from "./components/ui/data-table";
 export { DataTable } from "./components/ui/data-table";
 export type {

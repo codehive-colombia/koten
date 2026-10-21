@@ -1,11 +1,12 @@
 import "@testing-library/jest-dom/vitest";
 import { KotenProvider } from "@koten/ui";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
 import { BadgePage } from "./components/badge";
 import { ButtonPage } from "./components/button";
+import { CommandPalettePage } from "./components/command";
 import { ControlsPage } from "./components/controls";
 import { DataPage } from "./components/data";
 import { DatePickerPage } from "./components/date";
@@ -109,6 +110,20 @@ describe("páginas del catálogo", () => {
     expect(themes.container.querySelectorAll("article[data-theme]")).toHaveLength(4);
   });
 
+  it("documenta CommandPalette", async () => {
+    renderPage(<CommandPalettePage />);
+
+    expect(screen.getByRole("heading", { level: 1, name: /CommandPalette/ })).toBeInTheDocument();
+
+    const trigger = screen.getByRole("button", { name: "Abrir paleta" });
+    fireEvent.click(trigger);
+
+    const input = await screen.findByRole("combobox", { name: /Comandos de KURA/ });
+    fireEvent.change(input, { target: { value: "pedidos" } });
+
+    expect(screen.getByRole("option", { name: /Ver pedidos/ })).toBeInTheDocument();
+  });
+
   it("documenta DatePicker y Calendar", () => {
     renderPage(<DatePickerPage />);
 
@@ -130,7 +145,7 @@ describe("páginas del catálogo", () => {
     expect(
       screen.getByRole("table", { name: "Inventario de primitivas de la fase 1" }),
     ).toBeInTheDocument();
-    expect(screen.getAllByRole("row")).toHaveLength(45);
+    expect(screen.getAllByRole("row")).toHaveLength(46);
     index.unmount();
 
     const button = renderPage(<ButtonPage />);

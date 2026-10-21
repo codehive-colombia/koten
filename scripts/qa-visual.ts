@@ -28,6 +28,7 @@ const shots: readonly Shot[] = [
   { app: "catalog", label: "empezar", path: "/start" },
   { app: "catalog", label: "formularios", path: "/components/forms" },
   { app: "catalog", label: "fecha", path: "/components/date" },
+  { app: "catalog", label: "command", path: "/components/command" },
   { app: "catalog", label: "patrones", path: "/patterns/storefront" },
   { app: "storefront", label: "producto", path: "/" },
   { app: "erp", label: "dashboard", path: "/" },

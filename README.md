@@ -2,7 +2,7 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** **`v0.1.0-poc`** — fase 4 cerrada. 44 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe, con presupuestos de bundle y capturas archivadas.
+> **Estado:** **`v0.1.0-poc`** — fase 4 cerrada. 45 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe, con presupuestos de bundle y capturas archivadas.
 > **Siguiente:** fase 5 opcional (registry, tema Sumi, DatePicker, CommandPalette, virtualización, SSG/SSR).
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
@@ -61,7 +61,7 @@ bun run qa:visual   # capturas 1440/1280/1024 en docs/qa/<fecha>
 
 ## Estructura
 
-La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas (44 con Label y el DatePicker de fase 5). Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas. La fase 4 sumó la guardia i18n, las auditorías de navegador (a11y, overflow/RTL, performance), el code splitting del catálogo y las capturas archivadas. El cuerpo del catálogo está localizado completo en ES/JA/EN (`D-025`).
+La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas (45 con Label, DatePicker y CommandPalette de fase 5). Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas. La fase 4 sumó la guardia i18n, las auditorías de navegador (a11y, overflow/RTL, performance), el code splitting del catálogo y las capturas archivadas. El cuerpo del catálogo está localizado completo en ES/JA/EN (`D-025`).
 
 ```txt
 apps/

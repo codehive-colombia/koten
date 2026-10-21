@@ -50,6 +50,7 @@ const pages: readonly Page[] = [
   { app: "catalog", label: "tokens", path: "/tokens/format" },
   { app: "catalog", label: "componentes", path: "/components/data" },
   { app: "catalog", label: "fecha", path: "/components/date" },
+  { app: "catalog", label: "command", path: "/components/command" },
   { app: "catalog", label: "patrones", path: "/patterns/storefront" },
   { app: "storefront", label: "producto", path: "/" },
   { app: "erp", label: "dashboard", path: "/" },
