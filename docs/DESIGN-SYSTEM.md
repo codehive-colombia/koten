@@ -273,7 +273,9 @@ Seigaiha o asanoha en SVG/CSS, `currentColor` al 6–10%, solo en bandas decorat
 - Header storefront: utility 28 px + main 72 px + nav 36 px.
 - Activo: subrayado 2 px primary o fondo tint.
 - ERP sidebar: item 32 px, activo con barra izquierda 2 px y fondo ai-tint.
-- Breadcrumb 12 px, separador `/` o `›`.
+- Breadcrumb 12 px, separador `/` o `›`; el último item usa `aria-current="page"`.
+- Pagination compacta, extremos deshabilitados y labels configurables.
+- Tabs y Accordion de Base UI; el panel activo conserva foco y estado.
 - Footer denso en 4 columnas, 12 px, banda sumi.
 
 ### Overlays

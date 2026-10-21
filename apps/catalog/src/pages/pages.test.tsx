@@ -10,6 +10,7 @@ import { FeedbackPage } from "./components/feedback";
 import { FormsPage } from "./components/forms";
 import { ComponentsIndexPage } from "./components/index";
 import { InputsPage } from "./components/inputs";
+import { NavigationPage } from "./components/navigation";
 import { PanelPage } from "./components/panel";
 import { SurfacesPage } from "./components/surfaces";
 import { NotFoundPage } from "./not-found";
@@ -134,7 +135,7 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("img", { name: "Sello Koten" })).toBeInTheDocument();
     surfaces.unmount();
 
-    renderPage(<FeedbackPage />);
+    const feedback = renderPage(<FeedbackPage />);
     expect(screen.getByRole("heading", { level: 1, name: /Feedback/ })).toBeInTheDocument();
     expect(screen.getAllByRole("status").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
@@ -142,6 +143,14 @@ describe("páginas del catálogo", () => {
     expect(screen.getAllByRole("meter").length).toBeGreaterThan(0);
     expect(screen.getByRole("button", { name: "Mostrar toast" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Sin pedidos" })).toBeInTheDocument();
+    feedback.unmount();
+
+    renderPage(<NavigationPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Navegación/ })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Migas de pan" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Paginación de pedidos" })).toBeInTheDocument();
+    expect(screen.getByRole("tablist", { name: "Vista del pedido" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Envío y entrega" })).toBeInTheDocument();
   });
 
   it("muestra una página 404 traducida", () => {

@@ -1,7 +1,11 @@
+export type { AccordionItem, AccordionProps } from "./components/ui/accordion";
+export { Accordion } from "./components/ui/accordion";
 export type { AlertProps, AlertTone } from "./components/ui/alert";
 export { Alert } from "./components/ui/alert";
 export type { BadgeProps } from "./components/ui/badge";
 export { Badge, badgeVariants } from "./components/ui/badge";
+export type { BreadcrumbItem, BreadcrumbProps } from "./components/ui/breadcrumb";
+export { Breadcrumb } from "./components/ui/breadcrumb";
 export type { ButtonProps } from "./components/ui/button";
 export { Button, buttonVariants } from "./components/ui/button";
 export type { CheckboxProps } from "./components/ui/checkbox";
@@ -18,10 +22,14 @@ export type { InputProps } from "./components/ui/input";
 export { Input, inputVariants } from "./components/ui/input";
 export type { LabelProps } from "./components/ui/label";
 export { Label } from "./components/ui/label";
+export type { LinkProps } from "./components/ui/link";
+export { Link } from "./components/ui/link";
 export type { MeterProps, MeterTone } from "./components/ui/meter";
 export { Meter } from "./components/ui/meter";
 export type { NumberFieldProps } from "./components/ui/number-field";
 export { NumberField } from "./components/ui/number-field";
+export type { PaginationProps } from "./components/ui/pagination";
+export { Pagination } from "./components/ui/pagination";
 export type {
   PanelBodyProps,
   PanelProps,
@@ -52,6 +60,8 @@ export type { SkeletonProps } from "./components/ui/skeleton";
 export { Skeleton } from "./components/ui/skeleton";
 export type { SwitchProps } from "./components/ui/switch";
 export { Switch } from "./components/ui/switch";
+export type { TabItem, TabsProps } from "./components/ui/tabs";
+export { Tabs } from "./components/ui/tabs";
 export type { TategakiProps } from "./components/ui/tategaki";
 export { Tategaki } from "./components/ui/tategaki";
 export type { TextareaProps } from "./components/ui/textarea";

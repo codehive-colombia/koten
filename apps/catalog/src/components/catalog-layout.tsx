@@ -238,7 +238,7 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
 
       <div className="koten-container grid gap-[calc(var(--koten-gap)*2)] py-[calc(var(--koten-gap)*2)] lg:grid-cols-[220px_minmax(0,1fr)]">
         <aside lang={view.locale} className="hidden min-w-0 lg:block">
-          <div className="sticky top-[var(--koten-gap)] max-h-[calc(100dvh-2*var(--koten-gap))] overflow-y-auto pe-1">
+          <div className="sticky top-[var(--koten-gap)] max-h-[calc(100dvh-2*var(--koten-gap))] overflow-y-auto pe-1 [scrollbar-color:var(--koten-rule-strong)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-rule-strong [&::-webkit-scrollbar-track]:bg-transparent">
             <CatalogNav locale={view.locale} />
             <LocalePreview locale={view.locale} />
           </div>

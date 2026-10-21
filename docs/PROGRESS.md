@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-004` — feedback |
-| Tarea en curso | ninguna — próxima `F1-005` |
+| Última tarea completada | `F1-005` — navegación |
+| Tarea en curso | ninguna — próxima `F1-006` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 009 — Navegación
+
+- **Objetivo:** completar `F1-005` con `Link`, `Breadcrumb`, `Pagination`, `Tabs` y `Accordion`.
+- **Hecho:**
+  - `Link` con subrayado, foco y detección de externos (`target`, `rel`, icono decorativo).
+  - `Breadcrumb` con `nav` + `ol`, separador y `aria-current="page"`.
+  - `Pagination` compacta, con elipsis, labels configurables y extremos deshabilitados.
+  - `Tabs` y `Accordion` sobre Base UI, con teclado y paneles accesibles.
+  - Página `/components/navigation` con demos, props, código y a11y; scrollbar de la sidebar suavizado.
+- **Tareas tocadas:** `F1-005` → `done`; `C-005` y `C-027`–`C-030` → `done`.
+- **Decisiones:** Ninguna nueva.
+- **Evidencia:** `packages/ui/src/components/ui/{link,breadcrumb,pagination,tabs,accordion}.tsx` + `navigation.test.tsx`; `apps/catalog/src/pages/components/navigation.tsx`; `bun run check` verde (**17 archivos / 87 tests**).
+- **Sin validar:** axe real (`F1-010`) y lector de pantalla.
+- **Próximo:** `F1-006` — `Dialog`, `Drawer`, `Menu`, `Popover` y `Tooltip`.
+- **Bloqueos:** ninguno.
 
 ---
 

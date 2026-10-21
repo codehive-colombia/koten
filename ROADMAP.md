@@ -3,8 +3,8 @@
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-20**
 > Fase actual: **1 — Primitivas** (`in_progress`)
-> Tarea en curso: **ninguna** — próxima `F1-005`
-> Última tarea completada: **`F1-004`**
+> Tarea en curso: **ninguna** — próxima `F1-006`
+> Última tarea completada: **`F1-005`**
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -165,7 +165,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `F1-002` | Inputs avanzados: `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `NumberField`. | `F1-001` | `done` | Base UI; teclado completo; integración con formularios; catálogo. | `packages/ui/src/components/ui/{select,combobox,checkbox,radio-group,switch,number-field}.tsx`; tests de selección, filtro, toggles, radios y steppers; página `/components/inputs`; exports en `index.ts`. |
 | `F1-003` | Superficies y decorativos: `SectionHeader`, `Rule`, `Hanko`, `Tategaki`, `Pattern`. | `F0-007` | `done` | Variantes; uso decorativo con `aria-hidden`; responsive. | `packages/ui/src/components/ui/{section-header,rule,hanko,tategaki,pattern}.tsx`; tests; página `/components/surfaces`; exports. |
 | `F1-004` | Feedback: `Alert`, `Toast`, `Progress`, `Meter`, `Skeleton`, `EmptyState`. | `F0-007` | `done` | Tonos; `aria-live`; reduced motion; catálogo. | `packages/ui/src/components/ui/{alert,toast,progress,meter,skeleton,empty-state}.tsx`; tests; página `/components/feedback`; exports. |
-| `F1-005` | Navegación: `Link`, `Breadcrumb`, `Pagination`, `Tabs`, `Accordion`. | `F0-007` | `todo` | Foco y teclado; `aria-current`; labels configurables. | — |
+| `F1-005` | Navegación: `Link`, `Breadcrumb`, `Pagination`, `Tabs`, `Accordion`. | `F0-007` | `done` | Foco y teclado; `aria-current`; labels configurables. | `packages/ui/src/components/ui/{link,breadcrumb,pagination,tabs,accordion}.tsx`; tests; página `/components/navigation`; exports. |
 | `F1-006` | Overlays: `Dialog`, `Drawer`, `Menu`, `Popover`, `Tooltip`. | `F1-005` | `todo` | Foco atrapado y devuelto; Escape; scroll lock; portales con `isolation: isolate`. | — |
 | `F1-007` | Datos: `Table`, `DataTable`, `StatCard`, `Sparkline`, `BarChart`. | `F1-005` | `todo` | Tabla semántica; sort/selección/paginación; estados vacío/loading; fallback accesible de charts. | — |
 | `F1-008` | Controles: `Toolbar`, `ToggleGroup`, `IconButton`. | `F1-002`, `F1-005` | `todo` | Roving tabindex; `aria-pressed`; grupos de vista/densidad. | — |
@@ -272,7 +272,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-002` | Panel | 0 | `done` | header/body/footer; tone; flush para tablas. |
 | `C-003` | Badge | 0 | `done` | tone + appearance; status dot; sale/new. |
 | `C-004` | IconButton | 1 | `todo` | `aria-label` obligatorio; ghost/outline; tamaños. |
-| `C-005` | Link | 1 | `todo` | Subrayado; externo; foco. |
+| `C-005` | Link | 1 | `done` | Subrayado; externo; foco. |
 | `C-006` | Field | 1 | `done` | Wrapper de Base UI Field; label/description/error. |
 | `C-007` | Input | 1 | `done` | Tamaños; inválido; iconos pendientes. |
 | `C-008` | Textarea | 1 | `done` | Altura mínima; resize vertical; inválido. |
@@ -294,10 +294,10 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-024` | Hanko | 1 | `done` | Sello; 1–4 caracteres; tamaños; decorativo. |
 | `C-025` | Tategaki | 1 | `done` | Texto vertical; oculto en mobile; decorativo. |
 | `C-026` | Pattern | 1 | `done` | Seigaiha/asanoha; SVG; `aria-hidden`. |
-| `C-027` | Breadcrumb | 1 | `todo` | `aria-current`; separadores. |
-| `C-028` | Pagination | 1 | `todo` | Labels; page size; compacta. |
-| `C-029` | Tabs | 1 | `todo` | Base UI Tabs; underline/boxed. |
-| `C-030` | Accordion | 1 | `todo` | Base UI Accordion; multiple. |
+| `C-027` | Breadcrumb | 1 | `done` | `aria-current`; separadores. |
+| `C-028` | Pagination | 1 | `done` | Labels; page size; compacta. |
+| `C-029` | Tabs | 1 | `done` | Base UI Tabs; underline. |
+| `C-030` | Accordion | 1 | `done` | Base UI Accordion; multiple. |
 | `C-031` | Dialog | 1 | `todo` | Base UI Dialog; tamaños; foco. |
 | `C-032` | Drawer | 1 | `todo` | Dialog lateral; izquierda/derecha. |
 | `C-033` | Menu | 1 | `todo` | Base UI Menu; items/separadores/shortcuts. |
@@ -434,3 +434,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-20 | Inputs avanzados: `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch` y `NumberField` con Base UI, tests y página `/components/inputs`. `F1-002` → `done`; `C-009`–`C-014` → `done`. | Sesión 006 |
 | 2026-10-20 | Superficies y decorativos: `SectionHeader`, `Rule`, `Hanko`, `Tategaki` y `Pattern` con página `/components/surfaces`. `F1-003` → `done`; `C-016`, `C-017`, `C-024`–`C-026` → `done`. | Sesión 007 |
 | 2026-10-20 | Feedback: `Alert`, `Toast`, `Progress`, `Meter`, `Skeleton` y `EmptyState` con página `/components/feedback`. `F1-004` → `done`; `C-018`–`C-023` → `done`. | Sesión 008 |
+| 2026-10-21 | Navegación: `Link`, `Breadcrumb`, `Pagination`, `Tabs` y `Accordion` con página `/components/navigation`. `F1-005` → `done`; `C-005`, `C-027`–`C-030` → `done`. | Sesión 009 |

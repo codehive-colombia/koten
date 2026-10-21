@@ -9,6 +9,7 @@ import { FeedbackPage } from "./pages/components/feedback";
 import { FormsPage } from "./pages/components/forms";
 import { ComponentsIndexPage } from "./pages/components/index";
 import { InputsPage } from "./pages/components/inputs";
+import { NavigationPage } from "./pages/components/navigation";
 import { PanelPage } from "./pages/components/panel";
 import { SurfacesPage } from "./pages/components/surfaces";
 import { NotFoundPage } from "./pages/not-found";
@@ -47,6 +48,7 @@ export function App() {
           <Route path="/components/inputs" element={<InputsPage />} />
           <Route path="/components/surfaces" element={<SurfacesPage />} />
           <Route path="/components/feedback" element={<FeedbackPage />} />
+          <Route path="/components/navigation" element={<NavigationPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </CatalogLayout>
