@@ -1,10 +1,17 @@
 /**
- * Koten UI shadcn registry build (`F5-001`).
+ * Koten UI shadcn registry build.
  *
- * Generates `apps/catalog/public/r/<item>.json` for every primitive and pattern, plus
- * `registry.json` with the index. Every item is self-contained: it includes the files
- * it depends on (cn, format, i18n), the token sheet and the npm
- * dependencies, so `npx shadcn add <url>` works without a remote registry.
+ * Generates `apps/catalog/public/r/<item>.json` for every primitive and pattern,
+ * plus `registry.json` with the index and a `koten-theme` item.
+ *
+ * Items respect the consumer's `components.json`:
+ * - Targets use shadcn placeholders (`@ui`, `@components`, `@lib`) so files land
+ *   in the aliases configured by the project.
+ * - Imports use the canonical `@/...` specifiers; the shadcn CLI rewrites them
+ *   to the project's aliases during installation.
+ * - Tokens, themes and density travel in `koten-theme` as `cssVars` + `css`, so
+ *   they are written into the project's Tailwind CSS entry instead of creating
+ *   a custom `styles/` folder.
  *
  * Usage: `bun scripts/build-registry.ts`
  */
@@ -18,6 +25,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
+import postcss, { type AtRule, type Rule } from "postcss";
 
 /** Repo root: walks up from the script until it finds the UI package. */
 function findRoot(): string {
@@ -42,23 +50,36 @@ const libRoot = join(root, "packages/ui/src/lib");
 const i18nRoot = join(root, "packages/ui/src/i18n");
 const stylesRoot = join(root, "packages/ui/src/styles");
 const outputRoot = join(root, "apps/catalog/public/r");
-const siteUrl = (process.env.KOTEN_SITE_URL ?? "https://koten.codehive.com.co").replace(/\/+$/, "");
+const siteUrl = (process.env.KOTEN_SITE_URL?.trim() || "https://koten.codehive.com.co").replace(
+  /\/+$/,
+  "",
+);
+
+const themeName = "koten-theme";
+
+type RegistryFileType = "registry:ui" | "registry:component" | "registry:lib";
 
 type RegistryFile = {
   path: string;
   target: string;
-  type: "registry:ui" | "registry:lib" | "registry:file";
+  type: RegistryFileType;
   content: string;
 };
+
+type RegistryItemType = "registry:ui" | "registry:block" | "registry:theme";
 
 type RegistryItem = {
   $schema: string;
   name: string;
-  type: "registry:ui";
+  type: RegistryItemType;
   title: string;
   description: string;
-  dependencies: string[];
-  files: RegistryFile[];
+  dependencies?: string[];
+  registryDependencies?: string[];
+  cssVars?: { theme: Record<string, string> };
+  css?: Record<string, unknown>;
+  docs?: string;
+  files?: RegistryFile[];
 };
 
 type RegistryIndex = {
@@ -67,10 +88,10 @@ type RegistryIndex = {
   homepage: string;
   items: Array<{
     name: string;
-    type: "registry:ui";
+    type: RegistryItemType;
     title: string;
     description: string;
-    files: Array<{ path: string; target: string; type: string }>;
+    files: Array<{ path: string; target: string; type: RegistryFileType }>;
   }>;
 };
 
@@ -82,6 +103,64 @@ const externalDependencies: Record<string, string> = {
   "lucide-react": "lucide-react",
   "tailwind-merge": "tailwind-merge",
 };
+
+/**
+ * Colors used by the shadcn base layer and by components installed from the
+ * official registry. Mapping them to Koten roles keeps a shadcn-initialized
+ * project compiling without shipping wildcard resets.
+ */
+const compatibilityColors: Record<string, string> = {
+  "color-background": "var(--koten-bg)",
+  "color-foreground": "var(--koten-fg)",
+  "color-card": "var(--koten-bg-raised)",
+  "color-card-foreground": "var(--koten-fg)",
+  "color-popover": "var(--koten-bg-raised)",
+  "color-popover-foreground": "var(--koten-fg)",
+  "color-secondary": "var(--koten-bg-tint)",
+  "color-secondary-foreground": "var(--koten-fg)",
+  "color-accent": "var(--koten-bg-tint)",
+  "color-accent-foreground": "var(--koten-fg)",
+  "color-destructive": "var(--koten-danger)",
+  "color-destructive-foreground": "var(--koten-solid-fg)",
+  "color-muted-foreground": "var(--koten-fg-muted)",
+  "color-border": "var(--koten-border)",
+  "color-input": "var(--koten-border)",
+  "color-ring": "var(--koten-focus)",
+};
+
+/**
+ * shadcn's base layer maps `--color-*` to unprefixed variables. Overriding
+ * those variables keeps a shadcn-initialized project on Koten values even when
+ * a component installs the theme as a dependency (without overwriting vars).
+ */
+const compatibilityRoot: Record<string, string> = {
+  "--background": "var(--koten-bg)",
+  "--foreground": "var(--koten-fg)",
+  "--card": "var(--koten-bg-raised)",
+  "--card-foreground": "var(--koten-fg)",
+  "--popover": "var(--koten-bg-raised)",
+  "--popover-foreground": "var(--koten-fg)",
+  "--primary": "var(--koten-primary)",
+  "--primary-foreground": "var(--koten-primary-fg)",
+  "--secondary": "var(--koten-bg-tint)",
+  "--secondary-foreground": "var(--koten-fg)",
+  "--muted": "var(--koten-fg-muted)",
+  "--muted-foreground": "var(--koten-fg-muted)",
+  "--accent": "var(--koten-bg-tint)",
+  "--accent-foreground": "var(--koten-fg)",
+  "--destructive": "var(--koten-danger)",
+  "--destructive-foreground": "var(--koten-solid-fg)",
+  "--border": "var(--koten-border)",
+  "--input": "var(--koten-border)",
+  "--ring": "var(--koten-focus)",
+};
+
+const defaultColorKeys = new Set([
+  "color-transparent",
+  "color-current",
+  "color-black",
+  "color-white",
+]);
 
 function walk(directory: string): string[] {
   return readdirSync(directory).flatMap((entry) => {
@@ -97,7 +176,8 @@ function componentFiles(): string[] {
   );
 }
 
-function toTarget(file: string): string {
+/** Path inside a consumer project, independent of its alias prefix. */
+function toRegistryPath(file: string): string {
   if (file.startsWith(uiRoot)) {
     return `components/ui/${relative(uiRoot, file)}`;
   }
@@ -111,11 +191,32 @@ function toTarget(file: string): string {
   throw new Error(`File outside the package: ${file}`);
 }
 
-function toType(target: string): RegistryFile["type"] {
-  if (target.startsWith("components/")) return "registry:ui";
-  if (target.startsWith("lib/")) return "registry:lib";
+/** shadcn target placeholder; the CLI resolves it against components.json. */
+function toTarget(file: string): string {
+  const path = toRegistryPath(file);
 
-  return "registry:file";
+  if (path.startsWith("components/ui/")) {
+    return `@ui/${path.slice("components/ui/".length)}`;
+  }
+  if (path.startsWith("components/patterns/")) {
+    return `@components/${path.slice("components/".length)}`;
+  }
+
+  return `@lib/${path.slice("lib/".length)}`;
+}
+
+function toType(file: string): RegistryFileType {
+  const path = toRegistryPath(file);
+
+  if (path.startsWith("components/ui/")) return "registry:ui";
+  if (path.startsWith("components/patterns/")) return "registry:component";
+
+  return "registry:lib";
+}
+
+/** Canonical import used in registry content; shadcn rewrites it to the project aliases. */
+function toImportPath(file: string): string {
+  return `@/${toRegistryPath(file).replace(/\.(tsx?|jsx?)$/, "")}`;
 }
 
 function resolveLocal(from: string, specifier: string): string {
@@ -125,7 +226,7 @@ function resolveLocal(from: string, specifier: string): string {
     try {
       if (statSync(candidate).isFile()) return candidate;
     } catch {
-      // Sigue buscando.
+      // Keep looking.
     }
   }
 
@@ -139,16 +240,10 @@ function importsOf(source: string): string[] {
 }
 
 function rewriteImports(source: string, file: string): string {
-  const currentTarget = toTarget(file);
-
   return source.replace(importPattern, (full, specifier: string) => {
     if (!specifier.startsWith(".")) return full;
 
-    const target = toTarget(resolveLocal(file, specifier));
-    const withoutExtension = target.replace(/\.(tsx?|jsx?)$/, "");
-    const specifierPath = relative(dirname(currentTarget), withoutExtension).split("\\").join("/");
-
-    return `from "${specifierPath.startsWith("..") ? specifierPath : `./${specifierPath}`}"`;
+    return `from "${toImportPath(resolveLocal(file, specifier))}"`;
   });
 }
 
@@ -172,19 +267,77 @@ function closure(entry: string): string[] {
   return [...seen];
 }
 
-function tokensCss(): string {
-  const tokens = readFileSync(join(stylesRoot, "tokens.css"), "utf8");
-  const globals = readFileSync(join(stylesRoot, "globals.css"), "utf8")
-    .split("\n")
-    .filter(
-      (line) =>
-        !line.startsWith('@import "tailwindcss"') &&
-        !line.startsWith('@import "./tokens.css"') &&
-        !line.startsWith("@source "),
-    )
-    .join("\n");
+function normalizeSelector(value: string): string {
+  return value.replace(/\s+/g, " ").trim();
+}
 
-  return `/* Koten UI · tokens, themes and Tailwind roles (D-039). */\n${tokens}\n${globals}`;
+/** Nested selector/at-rule map understood by shadcn's `css` updater. */
+function nodeMap(node: Rule | AtRule): Record<string, unknown> {
+  const map: Record<string, unknown> = {};
+
+  node.each((child) => {
+    if (child.type === "decl") {
+      map[child.prop] = child.value;
+    } else if (child.type === "rule") {
+      map[normalizeSelector(child.selector)] = nodeMap(child);
+    } else if (child.type === "atrule") {
+      map[`@${child.name}${child.params ? ` ${normalizeSelector(child.params)}` : ""}`] =
+        nodeMap(child);
+    }
+  });
+
+  return map;
+}
+
+function themeVariables(): Record<string, string> {
+  const variables: Record<string, string> = {};
+  const globals = postcss.parse(readFileSync(join(stylesRoot, "globals.css"), "utf8"));
+
+  globals.walkAtRules("theme", (atRule) => {
+    atRule.each((child) => {
+      if (child.type !== "decl" || !child.prop.startsWith("--")) return;
+
+      const key = child.prop.slice(2);
+
+      // Wildcard resets would wipe mappings that already exist in a
+      // shadcn-initialized project; the concrete Koten roles replace them.
+      if (key.endsWith("-*") || defaultColorKeys.has(key)) return;
+
+      variables[key] = child.value;
+    });
+  });
+
+  for (const [key, value] of Object.entries(compatibilityColors)) {
+    if (!(key in variables)) variables[key] = value;
+  }
+
+  return variables;
+}
+
+function cssBlocks(): Record<string, unknown> {
+  const css: Record<string, unknown> = {};
+  const tokens = postcss.parse(readFileSync(join(stylesRoot, "tokens.css"), "utf8"));
+  const globals = postcss.parse(readFileSync(join(stylesRoot, "globals.css"), "utf8"));
+
+  for (const sheet of [tokens, globals]) {
+    sheet.each((node) => {
+      if (node.type === "rule") {
+        css[normalizeSelector(node.selector)] = nodeMap(node);
+      } else if (node.type === "atrule" && !["import", "source", "theme"].includes(node.name)) {
+        css[`@${node.name}${node.params ? ` ${normalizeSelector(node.params)}` : ""}`] =
+          nodeMap(node);
+      }
+    });
+  }
+
+  const rootRule = css[":root"];
+
+  css[":root"] = {
+    ...(rootRule && typeof rootRule === "object" ? rootRule : {}),
+    ...compatibilityRoot,
+  };
+
+  return css;
 }
 
 function titleFor(name: string): string {
@@ -194,7 +347,20 @@ function titleFor(name: string): string {
   return title;
 }
 
-function buildItem(entry: string): RegistryItem {
+function buildThemeItem(): RegistryItem {
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: themeName,
+    type: "registry:theme",
+    title: "Koten Theme",
+    description: "Koten tokens, themes, density and Tailwind roles.",
+    cssVars: { theme: themeVariables() },
+    css: cssBlocks(),
+    docs: 'Koten writes its tokens into the CSS file declared as `tailwind.css` in components.json. Keep that file imported once by your app; no styles/ folder is created. For a Koten-only theme, start from a CSS file with only `@import "tailwindcss";`. If the project already uses shadcn tokens, install koten-theme before the components so existing values are replaced.',
+  };
+}
+
+function buildItem(entry: string, themeUrl: string): RegistryItem {
   const files = closure(entry);
   const name = basename(entry).replace(/\.tsx$/, "");
   const dependencies = new Set<string>();
@@ -213,16 +379,12 @@ function buildItem(entry: string): RegistryItem {
     }
   }
 
-  const registryFiles: RegistryFile[] = files.map((file) => {
-    const target = toTarget(file);
-
-    return {
-      path: target,
-      target,
-      type: toType(target),
-      content: rewriteImports(readFileSync(file, "utf8"), file),
-    };
-  });
+  const registryFiles: RegistryFile[] = files.map((file) => ({
+    path: toRegistryPath(file),
+    target: toTarget(file),
+    type: toType(file),
+    content: rewriteImports(readFileSync(file, "utf8"), file),
+  }));
 
   // The i18n core and `cn` always travel with the component.
   for (const file of [
@@ -237,33 +399,32 @@ function buildItem(entry: string): RegistryItem {
     if (registryFiles.some((item) => item.target === target)) continue;
 
     registryFiles.push({
-      path: target,
+      path: toRegistryPath(file),
       target,
       type: "registry:lib",
       content: rewriteImports(readFileSync(file, "utf8"), file),
     });
   }
 
-  registryFiles.push({
-    path: "styles/koten.css",
-    target: "styles/koten.css",
-    type: "registry:file",
-    content: tokensCss(),
-  });
-
   return {
     $schema: "https://ui.shadcn.com/schema/registry-item.json",
     name,
-    type: "registry:ui",
+    type: entry.startsWith(patternsRoot) ? "registry:block" : "registry:ui",
     title: titleFor(name),
     description: `Koten UI · ${titleFor(name)}. Editable copy with tokens and dependencies.`,
     dependencies: [...dependencies].sort(),
+    registryDependencies: [themeUrl],
     files: registryFiles.sort((first, second) => first.target.localeCompare(second.target)),
   };
 }
 
-export function buildItems(): RegistryItem[] {
-  const items = componentFiles().map(buildItem);
+export function buildItems(options: { siteUrl?: string } = {}): RegistryItem[] {
+  const site = (options.siteUrl?.trim() || siteUrl).replace(/\/+$/, "");
+  const theme = buildThemeItem();
+  const items = [
+    theme,
+    ...componentFiles().map((entry) => buildItem(entry, `${site}/r/${themeName}.json`)),
+  ];
   const names = new Set<string>();
 
   for (const item of items) {
@@ -293,7 +454,7 @@ export function writeRegistry(items: RegistryItem[]): void {
       type: item.type,
       title: item.title,
       description: item.description,
-      files: item.files.map((file) => ({
+      files: (item.files ?? []).map((file) => ({
         path: file.path,
         target: file.target,
         type: file.type,

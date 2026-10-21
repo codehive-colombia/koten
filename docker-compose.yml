@@ -8,6 +8,7 @@ services:
       dockerfile: Dockerfile
       args:
         VITE_SITE_URL: ${KOTEN_SITE_URL:-https://koten.codehive.com.co}
+        KOTEN_SITE_URL: ${KOTEN_SITE_URL:-https://koten.codehive.com.co}
     restart: unless-stopped
     # Traefik reaches the container over the Docker network, so nothing is
     # published on the host. Publishing 3000/3001/3002 would only collide with

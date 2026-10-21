@@ -26,7 +26,9 @@ COPY . .
 # Public origin used by the catalog links and the shadcn registry. Empty keeps
 # the production default (https://koten.codehive.com.co).
 ARG VITE_SITE_URL=
+ARG KOTEN_SITE_URL=
 ENV VITE_SITE_URL=${VITE_SITE_URL}
+ENV KOTEN_SITE_URL=${KOTEN_SITE_URL}
 
 RUN bun run build
 
