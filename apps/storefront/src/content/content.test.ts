@@ -57,6 +57,16 @@ describe("contenido del storefront", () => {
     expect(product.price).toBeGreaterThan(0);
   });
 
+  it("pluralea puntos y formatea valoraciones con Intl", () => {
+    expect(storeCopy.es.buy.points(1)).toBe("1 punto");
+    expect(storeCopy.en.buy.points(1)).toBe("1 point");
+    expect(storeCopy.en.buy.points(583)).toBe("583 points");
+    expect(storeCopy.es.reviews.rating(4.6)).toContain("4,6");
+    expect(storeCopy.en.reviews.rating(4.6)).toContain("4.6");
+    expect(storeCopy.es.buy.reviews(1)).toBe("1 valoración");
+    expect(storeCopy.es.buy.reviews(128)).toBe("128 valoraciones");
+  });
+
   it("publica avisos, ranking, campaña y relacionados con datos reales", () => {
     expect(notices.length).toBeGreaterThanOrEqual(5);
     expect(ranking.length).toBeGreaterThanOrEqual(4);

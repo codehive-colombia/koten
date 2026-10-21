@@ -244,7 +244,12 @@ export function ProductPage({ locale, onLocaleChange }: ProductPageProps) {
                       {"★".repeat(Math.round(product.rating))}
                     </span>
                     <span className="sr-only">{copy.buy.rating(product.rating)}</span>
-                    <span className="tabular-nums text-ink">{product.rating.toFixed(1)}</span>
+                    <span className="tabular-nums text-ink">
+                      {formatters.formatNumber(product.rating, {
+                        minimumFractionDigits: 1,
+                        maximumFractionDigits: 1,
+                      })}
+                    </span>
                     <a
                       href="#resenas"
                       className="text-link underline underline-offset-2 hover:decoration-link"

@@ -133,8 +133,9 @@ const spanish: StoreCopy = {
     panelTitle: "Compra",
     brandLine: "HIKARI · Cámara compacta 35 mm",
     tagline: "Una cámara silenciosa para la vida diaria.",
-    rating: (value) => `Valoración ${value.toFixed(1)} de 5`,
-    reviews: (count) => `${count} valoraciones`,
+    rating: (value) =>
+      `Valoración ${value.toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
+    reviews: (count) => `${count} ${count === 1 ? "valoración" : "valoraciones"}`,
     colorLabel: "Color",
     kitLabel: "Conjunto",
     quantityLabel: "Cantidad",
@@ -151,7 +152,7 @@ const spanish: StoreCopy = {
     warrantyValue: "1 año",
     taxIncluded: "IVA incluido",
     listPriceLabel: "Precio anterior",
-    points: (points) => `${points.toLocaleString("es-ES")} puntos`,
+    points: (points) => `${points.toLocaleString("es-ES")} punto${points === 1 ? "" : "s"}`,
     note: "Las imágenes son orientativas. Las especificaciones pueden cambiar sin previo aviso.",
     addedTitle: "Añadido al carrito",
     addedDescription: (name, quantity) => `${name} · ${quantity} unidad(es).`,
@@ -177,8 +178,9 @@ const spanish: StoreCopy = {
     campaign: { deadline: "Hasta el", cta: "Ver la campaña" },
   },
   reviews: {
-    rating: (value) => `Valoración ${value.toFixed(1)} de 5`,
-    count: (count) => `${count} valoraciones`,
+    rating: (value) =>
+      `Valoración ${value.toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
+    count: (count) => `${count} ${count === 1 ? "valoración" : "valoraciones"}`,
     distribution: "Distribución",
     verified: "Compra verificada",
     empty: "Aún no hay reseñas.",
@@ -285,7 +287,8 @@ const japanese: StoreCopy = {
     panelTitle: "ご購入",
     brandLine: "HIKARI · 35mmコンパクトカメラ",
     tagline: "日常に寄り添う、静かな一台。",
-    rating: (value) => `5点満点中${value.toFixed(1)}`,
+    rating: (value) =>
+      `5点満点中${value.toLocaleString("ja-JP", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
     reviews: (count) => `${count}件のレビュー`,
     colorLabel: "カラー",
     kitLabel: "セット",
@@ -325,7 +328,8 @@ const japanese: StoreCopy = {
     campaign: { deadline: "終了まで", cta: "キャンペーンを見る" },
   },
   reviews: {
-    rating: (value) => `5点満点中${value.toFixed(1)}`,
+    rating: (value) =>
+      `5点満点中${value.toLocaleString("ja-JP", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
     count: (count) => `${count}件のレビュー`,
     distribution: "評価の内訳",
     verified: "購入済み",
@@ -433,8 +437,9 @@ const english: StoreCopy = {
     panelTitle: "Purchase",
     brandLine: "HIKARI · 35 mm compact camera",
     tagline: "A quiet camera for everyday life.",
-    rating: (value) => `Rated ${value.toFixed(1)} out of 5`,
-    reviews: (count) => `${count} reviews`,
+    rating: (value) =>
+      `Rated ${value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
+    reviews: (count) => `${count} review${count === 1 ? "" : "s"}`,
     colorLabel: "Colour",
     kitLabel: "Kit",
     quantityLabel: "Quantity",
@@ -451,7 +456,7 @@ const english: StoreCopy = {
     warrantyValue: "1 year",
     taxIncluded: "Tax included",
     listPriceLabel: "List price",
-    points: (points) => `${points.toLocaleString("en-US")} points`,
+    points: (points) => `${points.toLocaleString("en-US")} point${points === 1 ? "" : "s"}`,
     note: "Images are for illustration. Specifications may change without notice.",
     addedTitle: "Added to cart",
     addedDescription: (name, quantity) => `${name} · ${quantity} item(s).`,
@@ -477,8 +482,9 @@ const english: StoreCopy = {
     campaign: { deadline: "Until", cta: "See the campaign" },
   },
   reviews: {
-    rating: (value) => `Rated ${value.toFixed(1)} out of 5`,
-    count: (count) => `${count} reviews`,
+    rating: (value) =>
+      `Rated ${value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
+    count: (count) => `${count} review${count === 1 ? "" : "s"}`,
     distribution: "Rating breakdown",
     verified: "Verified purchase",
     empty: "No reviews yet.",
