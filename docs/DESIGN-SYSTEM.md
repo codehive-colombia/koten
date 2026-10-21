@@ -259,6 +259,15 @@ Seigaiha o asanoha en SVG/CSS, `currentColor` al 6–10%, solo en bandas decorat
 - `Label` funciona dentro de `Field` y de forma independiente con `htmlFor`.
 - El error se anuncia con `aria-live="polite"`; no usar placeholders como label.
 
+### Feedback
+
+- `Alert`: borde izquierdo de 3 px según tono, icono y texto; info/success usan `status`, warning/danger usan `alert`.
+- `Toast`: región `aria-live`, cierre accesible al enfocar y tono con texto; sin depender solo del color.
+- `Progress`: valor determinado o `null` para indeterminado; label y valor visibles.
+- `Meter`: nivel de stock con tonos success/warning/danger; siempre con texto.
+- `Skeleton`: `aria-hidden`; el contenedor anuncia la carga por separado.
+- `EmptyState`: caja reglada, heading y una acción explícita.
+
 ### Navegación
 
 - Header storefront: utility 28 px + main 72 px + nav 36 px.

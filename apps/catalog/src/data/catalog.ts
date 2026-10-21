@@ -62,6 +62,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
         path: "/components/surfaces",
         label: { es: "Superficies", ja: "装飾", en: "Surfaces" },
       },
+      {
+        path: "/components/feedback",
+        label: { es: "Feedback", ja: "通知", en: "Feedback" },
+      },
     ],
   },
   {

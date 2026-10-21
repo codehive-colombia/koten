@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-003` — superficies y decorativos |
-| Tarea en curso | ninguna — próxima `F1-004` |
+| Última tarea completada | `F1-004` — feedback |
+| Tarea en curso | ninguna — próxima `F1-005` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-20 · Sesión 008 — Feedback
+
+- **Objetivo:** completar `F1-004` con `Alert`, `Toast`, `Progress`, `Meter`, `Skeleton` y `EmptyState`.
+- **Hecho:**
+  - `Alert` con tonos info/success/warning/danger, icono, acción y roles status/alert.
+  - `ToastProvider` + `useToast` sobre Base UI, con región accesible, cierre y tonos.
+  - `Progress` determinado/indeterminado y `Meter` con tonos de stock.
+  - `Skeleton` decorativo con `aria-hidden` y `EmptyState` con heading y acción.
+  - Página `/components/feedback` con demos, props, código y a11y; sidebar e índice.
+- **Tareas tocadas:** `F1-004` → `done`; `C-018`–`C-023` → `done`.
+- **Decisiones:** Ninguna nueva; Base UI Toast/Progress/Meter ya estaban en el stack.
+- **Evidencia:** `packages/ui/src/components/ui/{alert,toast,progress,meter,skeleton,empty-state}.tsx` + `feedback.test.tsx`; `apps/catalog/src/pages/components/feedback.tsx`; `bun run check` verde (**16 archivos / 81 tests**).
+- **Sin validar:** axe real (`F1-010`), lector de pantalla y swipe del toast.
+- **Próximo:** `F1-005` — `Link`, `Breadcrumb`, `Pagination`, `Tabs` y `Accordion`.
+- **Bloqueos:** ninguno.
 
 ---
 

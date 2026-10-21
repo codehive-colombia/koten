@@ -5,6 +5,7 @@ import { ScrollManager } from "./components/scroll-manager";
 import { useCatalogView } from "./lib/use-catalog-view";
 import { BadgePage } from "./pages/components/badge";
 import { ButtonPage } from "./pages/components/button";
+import { FeedbackPage } from "./pages/components/feedback";
 import { FormsPage } from "./pages/components/forms";
 import { ComponentsIndexPage } from "./pages/components/index";
 import { InputsPage } from "./pages/components/inputs";
@@ -45,6 +46,7 @@ export function App() {
           <Route path="/components/forms" element={<FormsPage />} />
           <Route path="/components/inputs" element={<InputsPage />} />
           <Route path="/components/surfaces" element={<SurfacesPage />} />
+          <Route path="/components/feedback" element={<FeedbackPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </CatalogLayout>

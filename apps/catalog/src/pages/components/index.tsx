@@ -37,6 +37,12 @@ const components = [
     jp: "装飾",
     description: "SectionHeader, Rule, Hanko, Tategaki y Pattern.",
   },
+  {
+    to: "/components/feedback",
+    title: "Feedback",
+    jp: "通知",
+    description: "Alert, Toast, Progress, Meter, Skeleton y EmptyState.",
+  },
 ] as const;
 
 export function ComponentsIndexPage() {
@@ -47,7 +53,7 @@ export function ComponentsIndexPage() {
         title="Componentes"
         jp="部品"
         description="La primera validación de la gramática: variantes CVA, roles semánticos y composición con render. Estos componentes fijan el tono del resto del sistema."
-        meta="6 páginas · preview, props, código y a11y"
+        meta="7 páginas · preview, props, código y a11y"
       />
 
       <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">

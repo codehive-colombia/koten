@@ -6,6 +6,7 @@ import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
 import { BadgePage } from "./components/badge";
 import { ButtonPage } from "./components/button";
+import { FeedbackPage } from "./components/feedback";
 import { FormsPage } from "./components/forms";
 import { ComponentsIndexPage } from "./components/index";
 import { InputsPage } from "./components/inputs";
@@ -127,10 +128,20 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("textbox", { name: "Unidades" })).toBeInTheDocument();
     inputs.unmount();
 
-    renderPage(<SurfacesPage />);
+    const surfaces = renderPage(<SurfacesPage />);
     expect(screen.getByRole("heading", { level: 1, name: /Superficies/ })).toBeInTheDocument();
     expect(screen.getAllByRole("separator").length).toBeGreaterThan(0);
     expect(screen.getByRole("img", { name: "Sello Koten" })).toBeInTheDocument();
+    surfaces.unmount();
+
+    renderPage(<FeedbackPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Feedback/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("status").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("progressbar").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("meter").length).toBeGreaterThan(0);
+    expect(screen.getByRole("button", { name: "Mostrar toast" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Sin pedidos" })).toBeInTheDocument();
   });
 
   it("muestra una página 404 traducida", () => {

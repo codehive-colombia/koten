@@ -2,8 +2,8 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fase 1 en curso. `F1-001` formularios, `F1-002` inputs avanzados y `F1-003` superficies/decorativos. Catálogo wiki con sidebar, ES/JA/EN y tema/densidad aplicados a la documentación.
-> **Tarea en curso:** ninguna — próxima `F1-004` (feedback).
+> **Estado:** fase 1 en curso. `F1-001` formularios, `F1-002` inputs avanzados, `F1-003` superficies y `F1-004` feedback. Catálogo wiki con sidebar, ES/JA/EN y tema/densidad aplicados a la documentación.
+> **Tarea en curso:** ninguna — próxima `F1-005` (navegación).
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación
