@@ -1,19 +1,19 @@
 /**
- * Guardia de i18n del POC (`F4-001`).
+ * POC i18n guard (`F4-001`).
  *
- * Revisa el código de `packages/ui` y de las tres apps para que la traducción no se
- * rompa en silencio:
+ * It reviews the code in `packages/ui` and the three apps so translations never
+ * break silently:
  *
- * 1. `jsx-text`: texto visible escrito directamente en el JSX de las demos.
- * 2. `literal-attribute`: `aria-label`, `placeholder`, `title`, `alt` o `label` como
- *    string literal en las demos.
- * 3. `intl-format`: `toLocaleString`, `toLocaleDateString`, `toLocaleTimeString` o
- *    `toFixed` en lugar de `formatNumber`, `formatCurrency` y `formatDate`.
- * 4. `physical-direction`: utilidades físicas (`text-left`, `border-l-2`, `pl-2`,
- *    `left-4`…) en lugar de lógicas (`text-start`, `border-s-2`, `ps-2`, `start-4`).
+ * 1. `jsx-text`: visible text written directly in the JSX of the demos.
+ * 2. `literal-attribute`: `aria-label`, `placeholder`, `title`, `alt` or `label` as a
+ *    string literal in the demos.
+ * 3. `intl-format`: `toLocaleString`, `toLocaleDateString`, `toLocaleTimeString` or
+ *    `toFixed` instead of `formatNumber`, `formatCurrency` and `formatDate`.
+ * 4. `physical-direction`: physical utilities (`text-left`, `border-l-2`, `pl-2`,
+ *    `left-4`…) instead of logical ones (`text-start`, `border-s-2`, `ps-2`, `start-4`).
  *
- * Para una excepción justificada, agregar `// i18n-allow: <regla> <motivo>` en la
- * misma línea o en la anterior.
+ * For a justified exception, add `// i18n-allow: <rule> <reason>` on the
+ * same line or the one above.
  */
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
@@ -32,10 +32,10 @@ const demoRoots = ["apps/storefront/src", "apps/erp/src"];
 const codeRoots = ["packages/ui/src", "apps/storefront/src", "apps/erp/src", "apps/catalog/src"];
 
 const hints: Record<I18nRule, string> = {
-  "jsx-text": "El texto visible sale de los diccionarios de copy (JA/ES/EN), no del JSX.",
-  "literal-attribute": "Los labels accesibles salen de copy; usa `aria-label={…}`.",
-  "intl-format": "Formatea con `formatNumber`, `formatCurrency` o `formatDate` de @koten/ui.",
-  "physical-direction": "Usa la utilidad lógica (start/end, ps/pe, ms/me, border-s/e).",
+  "jsx-text": "Visible text comes from the copy dictionaries (JA/ES/EN), not from the JSX.",
+  "literal-attribute": "Accessible labels come from copy; use `aria-label={…}`.",
+  "intl-format": "Format with `formatNumber`, `formatCurrency` or `formatDate` from @koten/ui.",
+  "physical-direction": "Use the logical utility (start/end, ps/pe, ms/me, border-s/e).",
 };
 
 const physicalDirection =
@@ -77,7 +77,7 @@ function isAllowed(source: string, index: number, rule: I18nRule): boolean {
   );
 }
 
-/** Quita entidades, espacios, signos y números: solo queda texto si hay letras. */
+/** Strips entities, spaces, signs and numbers: text only remains if it has letters. */
 function hasLetters(text: string): boolean {
   const cleaned = text.replace(/&[a-zA-Z#0-9]+;/g, "").replace(/[\s\p{P}\p{S}\p{N}]/gu, "");
 
@@ -113,7 +113,7 @@ function collect(
   return findings;
 }
 
-/** Audita un archivo ya leído; `file` es relativo a la raíz del repo. */
+/** Audits an already read file; `file` is relative to the repo root. */
 export function auditSource(file: string, source: string): I18nFinding[] {
   const findings: I18nFinding[] = [];
 
@@ -127,7 +127,7 @@ export function auditSource(file: string, source: string): I18nFinding[] {
       ...collect(file, source, "literal-attribute", literalAttribute, (match) => {
         const value = match[1] ?? "";
 
-        // `alt=""` es legítimo en imágenes decorativas.
+        // `alt=""` is legitimate on decorative images.
         return /\p{L}/u.test(value);
       }),
     );
@@ -186,9 +186,9 @@ if (import.meta.main) {
       console.error(`  ${finding.hint}`);
     }
 
-    console.error(`\ni18n: ${findings.length} hallazgo(s) en ${files} archivos revisados.`);
+    console.error(`\ni18n: ${findings.length} finding(s) across ${files} files reviewed.`);
     process.exit(1);
   }
 
-  console.log(`i18n: ${files} archivos revisados, sin hallazgos.`);
+  console.log(`i18n: ${files} files reviewed, no findings.`);
 }

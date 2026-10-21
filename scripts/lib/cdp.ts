@@ -1,6 +1,6 @@
 /**
- * Utilidades mínimas de Chrome DevTools Protocol para los scripts de QA.
- * Usa el `WebSocket` de Bun y el Chromium del sistema; sin dependencias nuevas.
+ * Minimal Chrome DevTools Protocol helpers for the QA scripts.
+ * Uses Bun's `WebSocket` and the system Chromium; no new dependencies.
  */
 import { spawn } from "node:child_process";
 import { mkdtempSync } from "node:fs";
@@ -52,7 +52,7 @@ export class Cdp {
     const socket = new WebSocket(url);
     await new Promise<void>((resolve, reject) => {
       socket.addEventListener("open", () => resolve(), { once: true });
-      socket.addEventListener("error", () => reject(new Error("No se pudo abrir CDP")), {
+      socket.addEventListener("error", () => reject(new Error("Could not open CDP")), {
         once: true,
       });
     });
@@ -124,12 +124,12 @@ export async function launchChromium(port = 9333): Promise<Chromium> {
         return { cdp: await Cdp.connect(version.webSocketDebuggerUrl), close };
       }
     } catch {
-      // Chromium todavía no escucha.
+      // Chromium is not listening yet.
     }
 
     await sleep(150);
   }
 
   close();
-  throw new Error(`Chromium no respondió en el puerto ${port}`);
+  throw new Error(`Chromium did not respond on port ${port}`);
 }

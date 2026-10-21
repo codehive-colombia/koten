@@ -1,15 +1,15 @@
 /**
- * QA de desbordamiento horizontal y recorte de texto (`F4-001`/`F4-004`).
+ * Horizontal overflow and text clipping QA (`F4-001`/`F4-004`).
  *
- * Levanta Chromium headless contra los servidores de desarrollo (`bun run dev`) y
- * mide, para cada app, ruta, idioma y ancho:
+ * Launches headless Chromium against the dev servers (`bun run dev`) and
+ * measures, for each app, route, language and width:
  *
- * - `pageOverflow`: píxeles de scroll horizontal del documento (> 0 es un fallo).
- * - `clipped`: elementos con `overflow: hidden|clip` cuyo contenido no cabe.
- * - `truncated`: elementos con elipsis (`text-overflow: ellipsis`), informativos.
+ * - `pageOverflow`: horizontal document scroll pixels (> 0 is a failure).
+ * - `clipped`: elements with `overflow: hidden|clip` whose content does not fit.
+ * - `truncated`: elements with ellipsis (`text-overflow: ellipsis`), informational.
  *
- * Uso: `bun scripts/qa-overflow.ts [--json] [--only storefront,erp]`
- * Requiere Chromium en `PATH` y `bun run dev` en marcha.
+ * Usage: `bun scripts/qa-overflow.ts [--json] [--only storefront,erp]`
+ * Requires Chromium on `PATH` and `bun run dev` running.
  */
 import { launchChromium, sleep } from "./lib/cdp";
 
@@ -79,7 +79,7 @@ const measure = `(() => {
     const clientWidth = element.clientWidth;
     const scrollWidth = element.scrollWidth;
     if (clientWidth <= 2 || scrollWidth <= clientWidth + 1) continue;
-    // Texto solo para lectores de pantalla (sr-only): 1px + clip, no es recorte visual.
+    // Screen-reader-only text (sr-only): 1px + clip, not visual clipping.
     if (style.clipPath !== "none" || style.clip !== "auto") continue;
     if (style.position === "absolute" && clientWidth <= 2) continue;
 
@@ -158,8 +158,8 @@ async function run() {
             lang: locale,
           };
 
-          // RTL best-effort (Q-010): el layout usa propiedades lógicas; comprobamos
-          // que espejar el documento no introduce scroll horizontal ni recortes.
+          // RTL best-effort (Q-010): the layout uses logical properties; we check
+          // that mirroring the document adds no horizontal scroll or clipping.
           await send("Runtime.evaluate", {
             expression: "document.documentElement.dir = 'rtl'",
           });
@@ -195,7 +195,7 @@ async function run() {
               measurement.clipped.length > 0 ||
               measurement.rtlOverflow > 0 ||
               measurement.rtlClipped > 0
-                ? "FALLA"
+                ? "FAIL"
                 : "ok";
             const detail = [
               `overflow ${measurement.pageOverflow}px`,
@@ -227,11 +227,11 @@ async function run() {
   }
 
   if (failures > 0) {
-    console.error(`\nqa: ${failures} combinaciones con desbordamiento o recorte.`);
+    console.error(`\nqa: ${failures} combinations with overflow or clipping.`);
     process.exit(1);
   }
 
-  console.log(`\nqa: ${results.length} combinaciones sin desbordamiento ni recorte.`);
+  console.log(`\nqa: ${results.length} combinations with no overflow or clipping.`);
 }
 
 await run();

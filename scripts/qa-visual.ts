@@ -1,12 +1,12 @@
 /**
- * Capturas de QA visual (`F4-004`).
+ * Visual QA captures (`F4-004`).
  *
- * Sirve el build con `vite preview`, abre cada ruta en Chromium headless a
- * 1440/1280/1024 y guarda un JPEG en `docs/qa/<fecha>/`. Genera además un
- * `index.md` con la matriz.
+ * Serves the build with `vite preview`, opens each route in headless Chromium at
+ * 1440/1280/1024 and saves a JPEG in `docs/qa/<date>/`. It also generates an
+ * `index.md` with the matrix.
  *
- * Uso: `bun run build && bun scripts/qa-visual.ts`
- * Requiere Chromium en `PATH`.
+ * Usage: `bun run build && bun scripts/qa-visual.ts`
+ * Requires Chromium on `PATH`.
  */
 import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -58,7 +58,7 @@ async function startPreview(app: AppId): Promise<() => void> {
       const response = await fetch(`http://localhost:${config.port}/`);
       if (response.ok) break;
     } catch {
-      // El preview todavía no escucha.
+      // The preview is not listening yet.
     }
 
     await sleep(150);
@@ -124,24 +124,24 @@ async function run() {
         rows.push(
           `| ${shot.app} | ${shot.label} | ${viewport.width}×${viewport.height} | \`${file}\` |`,
         );
-        console.log(`captura ${file}`);
+        console.log(`capture ${file}`);
       }
     }
 
     const index = [
       `# QA visual · ${date}`,
       "",
-      "Capturas generadas con `bun run qa:visual` sobre el build (Chromium headless, locale `es`).",
-      "Criterio: sin overflow horizontal, sin recortes, jerarquía y densidad estables.",
+      "Captures generated with `bun run qa:visual` against the build (headless Chromium, locale `es`).",
+      "Criterion: no horizontal overflow, no clipping, stable hierarchy and density.",
       "",
-      "| App | Página | Viewport | Archivo |",
+      "| App | Page | Viewport | File |",
       "| --- | --- | --- | --- |",
       ...rows,
       "",
     ].join("\n");
 
     writeFileSync(join(directory, "index.md"), index);
-    console.log(`\nqa:visual: ${rows.length} capturas en docs/qa/${date}`);
+    console.log(`\nqa:visual: ${rows.length} captures in docs/qa/${date}`);
   } finally {
     close();
 

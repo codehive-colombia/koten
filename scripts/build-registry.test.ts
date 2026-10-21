@@ -5,12 +5,12 @@ import { buildItems } from "./build-registry";
 const items = buildItems();
 
 describe("registry shadcn", () => {
-  it("genera un item por primitiva y patrón, sin nombres duplicados", () => {
+  it("generates one item per primitive and pattern, with no duplicate names", () => {
     expect(items.length).toBeGreaterThanOrEqual(60);
     expect(new Set(items.map((item) => item.name)).size).toBe(items.length);
   });
 
-  it("cada item es autocontenido y sus imports resuelven dentro del item", () => {
+  it("every item is self-contained and its imports resolve inside the item", () => {
     for (const item of items) {
       const targets = new Set(item.files.map((file) => file.target));
 
@@ -35,7 +35,7 @@ describe("registry shadcn", () => {
     }
   });
 
-  it("declara las dependencias npm y deja React fuera", () => {
+  it("declares the npm dependencies and leaves React out", () => {
     const button = items.find((item) => item.name === "button");
 
     expect(button?.dependencies).toContain("@base-ui/react");
@@ -43,7 +43,7 @@ describe("registry shadcn", () => {
     expect(button?.dependencies).not.toContain("react");
   });
 
-  it("reescribe los imports de i18n y lib al layout instalado", () => {
+  it("rewrites the i18n and lib imports to the installed layout", () => {
     const picker = items.find((item) => item.name === "date-picker");
     const content =
       picker?.files.find((file) => file.target.endsWith("date-picker.tsx"))?.content ?? "";

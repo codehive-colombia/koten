@@ -3,9 +3,9 @@ import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 
 type Budget = {
-  /** JS que se descarga para pintar la primera ruta (entry + modulepreload). */
+  /** JS downloaded to paint the first route (entry + modulepreload). */
   initial: number;
-  /** JS total del build, incluidos chunks de rutas. */
+  /** Total build JS, including route chunks. */
   total: number;
   css: number;
 };
@@ -15,8 +15,8 @@ const kb = 1024;
 const budgets: Record<string, Budget> = {
   storefront: { initial: 150 * kb, total: 150 * kb, css: 30 * kb },
   erp: { initial: 250 * kb, total: 250 * kb, css: 30 * kb },
-  // El catálogo es interno y sirve la documentación completa en ES/JA/EN (D-025).
-  // Las páginas van por ruta (D-029): el entry no carga la documentación entera.
+  // The catalog is internal and serves the full documentation in ES/JA/EN (D-025).
+  // Pages are split by route (D-029): the entry does not load the whole documentation.
   catalog: { initial: 260 * kb, total: 360 * kb, css: 30 * kb },
 };
 
@@ -30,7 +30,7 @@ function formatKb(bytes: number): string {
   return `${(bytes / kb).toFixed(1)} KB`;
 }
 
-/** Assets referenciados por `index.html`: lo que el navegador pide al abrir. */
+/** Assets referenced by `index.html`: what the browser requests on open. */
 function initialAssets(html: string): string[] {
   const matches = html.matchAll(/(?:src|href)="\/assets\/([^"]+\.(?:js|css))"/g);
 
@@ -42,7 +42,7 @@ for (const [app, budget] of Object.entries(budgets)) {
   const assets = join(dist, "assets");
 
   if (!existsSync(assets)) {
-    failures.push(`${app}: falta dist/assets; ejecuta bun run build`);
+    failures.push(`${app}: missing dist/assets; run bun run build`);
     continue;
   }
 
@@ -52,7 +52,7 @@ for (const [app, budget] of Object.entries(budgets)) {
   const fontFiles = files.filter((file) => /\.(woff2?|ttf|otf)$/i.test(file));
 
   if (jsFiles.length === 0) {
-    failures.push(`${app}: no se encontró JavaScript compilado`);
+    failures.push(`${app}: no compiled JavaScript found`);
   }
 
   const initial = initialAssets(readFileSync(join(dist, "index.html"), "utf8"));
@@ -63,11 +63,11 @@ for (const [app, budget] of Object.entries(budgets)) {
   const cssSize = cssFiles.reduce((total, file) => total + gzipSize(join(assets, file)), 0);
 
   if (initialJs === 0) {
-    failures.push(`${app}: index.html no referencia JS`);
+    failures.push(`${app}: index.html references no JS`);
   }
 
   if (initialJs > budget.initial) {
-    failures.push(`${app}: JS inicial ${formatKb(initialJs)} > ${formatKb(budget.initial)}`);
+    failures.push(`${app}: initial JS ${formatKb(initialJs)} > ${formatKb(budget.initial)}`);
   }
 
   if (totalJs > budget.total) {
@@ -79,17 +79,17 @@ for (const [app, budget] of Object.entries(budgets)) {
   }
 
   if (fontFiles.length > 0) {
-    failures.push(`${app}: fuentes locales ${fontFiles.join(", ")} (presupuesto 0 KB CJK)`);
+    failures.push(`${app}: local fonts ${fontFiles.join(", ")} (budget 0 KB CJK)`);
   }
 
   console.log(
-    `${app}: JS inicial ${formatKb(initialJs)} · JS total ${formatKb(totalJs)} · ` +
-      `CSS ${formatKb(cssSize)} · fuentes ${fontFiles.length} · ${jsFiles.length} chunks`,
+    `${app}: initial JS ${formatKb(initialJs)} · total JS ${formatKb(totalJs)} · ` +
+      `CSS ${formatKb(cssSize)} · fonts ${fontFiles.length} · ${jsFiles.length} chunks`,
   );
 }
 
 if (failures.length > 0) {
-  console.error("\nPresupuestos excedidos:");
+  console.error("\nBudgets exceeded:");
 
   for (const failure of failures) {
     console.error(`- ${failure}`);
@@ -98,4 +98,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("\nPresupuestos OK");
+console.log("\nBudgets OK");

@@ -1,16 +1,16 @@
 /**
- * Auditoría de accesibilidad en navegador real (`F4-002`).
+ * Accessibility audit in a real browser (`F4-002`).
  *
- * Sobre Chromium headless, vía CDP, para cada app, ruta e idioma:
+ * On headless Chromium, over CDP, for each app, route and language:
  *
- * - **axe-core** con las reglas WCAG 2.0/2.1 A y AA, incluido `color-contrast`
- *   calculado con los estilos computados (jsdom no puede).
- * - **Tipografía mínima**: ningún nodo de texto visible por debajo de 12 px.
- * - **Foco visible**: recorre con `Tab` los primeros elementos interactivos y exige
- *   `outline` o `box-shadow` en `:focus-visible`.
+ * - **axe-core** with the WCAG 2.0/2.1 A and AA rules, including `color-contrast`
+ *   computed from the actual styles (jsdom cannot).
+ * - **Minimum typography**: no visible text node below 12 px.
+ * - **Visible focus**: tabs through the first interactive elements and requires
+ *   `outline` or `box-shadow` on `:focus-visible`.
  *
- * Uso: `bun scripts/qa-a11y.ts [--json] [--only storefront,erp] [--tabs=15]`
- * Requiere Chromium en `PATH` y `bun run dev` en marcha.
+ * Usage: `bun scripts/qa-a11y.ts [--json] [--only storefront,erp] [--tabs=15]`
+ * Requires Chromium on `PATH` and `bun run dev` running.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -22,11 +22,11 @@ type Page = {
   app: AppId;
   label: string;
   path: string;
-  /** Acción previa a la auditoría para cubrir un estado (drawer, popup…). */
+  /** Action before the audit to cover a state (drawer, popup…). */
   open?: string;
-  /** Selector que debe existir tras `open`; si no, la medición no es válida. */
+  /** Selector that must exist after `open`; otherwise the measurement is invalid. */
   expect?: string;
-  /** Tema forzado en la URL (por ejemplo `sumi`). */
+  /** Theme forced in the URL (for example `sumi`). */
   theme?: string;
 };
 
@@ -104,12 +104,12 @@ const viewports = [
 
 const axeRun = `(async () => {
   if (typeof window.axe === "undefined") {
-    throw new Error("axe-core no está cargado");
+    throw new Error("axe-core is not loaded");
   }
 
-  // Base UI dibuja "focus guards" internos (span aria-hidden + tabindex=0) para
-  // detectar la salida del foco. Son plumbing del componente, no contenido:
-  // se excluyen de la regla estrecha en lugar de desactivarla (D-028).
+  // Base UI draws internal "focus guards" (aria-hidden span + tabindex=0) to
+  // detect focus leaving. They are component plumbing, not content:
+  // they are excluded from the narrow rule instead of disabling it (D-028).
   const results = await window.axe.run(
     { include: [document], exclude: [["[data-base-ui-focus-guard]"]] },
     {
@@ -164,8 +164,8 @@ const fontScan = `(() => {
 const focusInfo = `(() => {
   const element = document.activeElement;
   if (!element || element === document.body || element === document.documentElement) return null;
-  // Solo el foco de teclado dispara :focus-visible; el foco programático de un focus
-  // guard o del initialFocus de un popup no exige indicador (WCAG 2.4.7).
+  // Only keyboard focus triggers :focus-visible; programmatic focus from a focus
+  // guard or a popup initialFocus does not require an indicator (WCAG 2.4.7).
   if (!element.matches(":focus-visible")) return null;
 
   const style = getComputedStyle(element);
@@ -257,7 +257,7 @@ async function run() {
                 },
               );
 
-              if (!opened.value) scenarioError = `no se abrió ${page.expect}`;
+              if (!opened.value) scenarioError = `${page.expect} did not open`;
             }
           }
 
@@ -314,12 +314,12 @@ async function run() {
 
           if (!asJson) {
             const status =
-              serious.length > 0 || fonts.length > 0 || focusHidden.length > 0 ? "FALLA" : "ok";
+              serious.length > 0 || fonts.length > 0 || focusHidden.length > 0 ? "FAIL" : "ok";
             console.log(
-              `${status.padEnd(5)} ${key} ${locale} ${viewport.width}px · axe ${violations.length} (serious ${serious.length}) · <12px ${fonts.length} · foco ${focus.length - focusHidden.length}/${focus.length}`,
+              `${status.padEnd(5)} ${key} ${locale} ${viewport.width}px · axe ${violations.length} (serious ${serious.length}) · <12px ${fonts.length} · focus ${focus.length - focusHidden.length}/${focus.length}`,
             );
 
-            if (scenarioError) console.log(`      escenario: ${scenarioError}`);
+            if (scenarioError) console.log(`      scenario: ${scenarioError}`);
 
             for (const violation of violations) {
               console.log(`      axe ${violation.impact} ${violation.id}: ${violation.help}`);
@@ -331,11 +331,13 @@ async function run() {
             }
 
             for (const item of fonts.slice(0, 3)) {
-              console.log(`      fuente ${item.size}px ${item.selector} "${item.text}"`);
+              console.log(`      font ${item.size}px ${item.selector} "${item.text}"`);
             }
 
             for (const item of focusHidden.slice(0, 3)) {
-              console.log(`      foco sin indicador: ${item.tag} "${item.name}" ${item.indicator}`);
+              console.log(
+                `      focus without indicator: ${item.tag} "${item.name}" ${item.indicator}`,
+              );
               console.log(`        ${item.html}`);
             }
           }
@@ -355,10 +357,10 @@ async function run() {
     ).length;
 
   console.log(
-    `\na11y: ${report.length} páginas · ${totalSerious} violaciones serious/critical · ` +
-      `${report.flatMap((item) => item.fonts).length} textos < 12px · ` +
-      `${report.flatMap((item) => item.focusHidden).length} focos sin indicador · ` +
-      "focus guards de Base UI excluidos (D-028)",
+    `\na11y: ${report.length} pages · ${totalSerious} serious/critical violations · ` +
+      `${report.flatMap((item) => item.fonts).length} text nodes < 12px · ` +
+      `${report.flatMap((item) => item.focusHidden).length} focus targets without indicator · ` +
+      "Base UI focus guards excluded (D-028)",
   );
 
   if (failures > 0) {

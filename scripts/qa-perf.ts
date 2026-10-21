@@ -1,12 +1,12 @@
 /**
- * Auditoría de performance sobre el build (`F4-003`).
+ * Performance audit on the build (`F4-003`).
  *
- * Levanta `vite preview` para las tres apps y mide con Chromium headless:
- * LCP, CLS, FCP, peticiones JS y bytes transferidos. Cada ruta se mide tres
- * veces y se reporta la mediana de LCP y el peor CLS.
+ * Starts `vite preview` for the three apps and measures with headless Chromium:
+ * LCP, CLS, FCP, JS requests and transferred bytes. Each route is measured three
+ * times and the median LCP and worst CLS are reported.
  *
- * Uso: `bun run build && bun scripts/qa-perf.ts [--json]`
- * Requiere Chromium en `PATH`.
+ * Usage: `bun run build && bun scripts/qa-perf.ts [--json]`
+ * Requires Chromium on `PATH`.
  */
 import { spawn } from "node:child_process";
 import { join } from "node:path";
@@ -66,7 +66,7 @@ const observer = `(() => {
       }
     }).observe({ type: "paint", buffered: true });
   } catch {
-    // Navegadores sin soporte: los valores quedan en 0.
+    // Browsers without support: values stay at 0.
   }
 })()`;
 
@@ -97,7 +97,7 @@ async function startPreview(app: AppId): Promise<() => void> {
       const response = await fetch(`http://localhost:${config.port}/`);
       if (response.ok) break;
     } catch {
-      // El preview todavía no escucha.
+      // The preview is not listening yet.
     }
 
     await sleepPreview(150);
@@ -148,7 +148,7 @@ async function run() {
     await send("Page.enable");
     await send("Runtime.enable");
     await send("Network.enable");
-    // Sin caché, cada muestra mide bytes reales y no una respuesta 304.
+    // Without cache, each sample measures real bytes and not a 304 response.
     await send("Network.setCacheDisabled", { cacheDisabled: true });
     await send("Emulation.setDeviceMetricsOverride", {
       width: 1440,
@@ -192,8 +192,8 @@ async function run() {
 
       if (!asJson) {
         console.log(
-          `${(failed ? "FALLA" : "ok").padEnd(5)} ${key} · LCP ${lcp}ms · CLS ${cls.toFixed(3)} · ` +
-            `FCP ${fcp}ms · ${jsRequests} JS · ${(jsTransfer / 1024).toFixed(1)} KB transferidos`,
+          `${(failed ? "FAIL" : "ok").padEnd(5)} ${key} · LCP ${lcp}ms · CLS ${cls.toFixed(3)} · ` +
+            `FCP ${fcp}ms · ${jsRequests} JS · ${(jsTransfer / 1024).toFixed(1)} KB transferred`,
         );
       }
     }
@@ -208,7 +208,7 @@ async function run() {
   }
 
   console.log(
-    `\nperf: ${report.length} rutas · presupuesto LCP < ${thresholds.lcp}ms y CLS < ${thresholds.cls}`,
+    `\nperf: ${report.length} routes · budget LCP < ${thresholds.lcp}ms and CLS < ${thresholds.cls}`,
   );
 
   if (failures > 0) {

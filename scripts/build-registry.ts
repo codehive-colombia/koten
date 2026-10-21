@@ -1,12 +1,12 @@
 /**
- * Build del registry shadcn de Koten UI (`F5-001`).
+ * Koten UI shadcn registry build (`F5-001`).
  *
- * Genera `apps/catalog/public/r/<item>.json` para cada primitiva y patrón, más
- * `registry.json` con el índice. Cada item es autocontenido: incluye los archivos
- * de los que depende (cn, formato, i18n), la hoja de tokens y las dependencias
- * npm, de modo que `npx shadcn add <url>` funcione sin un registry remoto.
+ * Generates `apps/catalog/public/r/<item>.json` for every primitive and pattern, plus
+ * `registry.json` with the index. Every item is self-contained: it includes the files
+ * it depends on (cn, format, i18n), the token sheet and the npm
+ * dependencies, so `npx shadcn add <url>` works without a remote registry.
  *
- * Uso: `bun scripts/build-registry.ts`
+ * Usage: `bun scripts/build-registry.ts`
  */
 import {
   existsSync,
@@ -19,7 +19,7 @@ import {
 } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
-/** Raíz del repo: sube desde el script hasta encontrar el paquete UI. */
+/** Repo root: walks up from the script until it finds the UI package. */
 function findRoot(): string {
   let directory = (import.meta as { dir?: string }).dir ?? process.cwd();
 
@@ -107,7 +107,7 @@ function toTarget(file: string): string {
     return `lib/koten/${basename(file)}`;
   }
 
-  throw new Error(`Archivo fuera del paquete: ${file}`);
+  throw new Error(`File outside the package: ${file}`);
 }
 
 function toType(target: string): RegistryFile["type"] {
@@ -128,7 +128,7 @@ function resolveLocal(from: string, specifier: string): string {
     }
   }
 
-  throw new Error(`No se resolvió ${specifier} desde ${relative(root, from)}`);
+  throw new Error(`Could not resolve ${specifier} from ${relative(root, from)}`);
 }
 
 const importPattern = /from\s+"([^"]+)"/g;
@@ -183,7 +183,7 @@ function tokensCss(): string {
     )
     .join("\n");
 
-  return `/* Koten UI · tokens, temas y roles de Tailwind (D-039). */\n${tokens}\n${globals}`;
+  return `/* Koten UI · tokens, themes and Tailwind roles (D-039). */\n${tokens}\n${globals}`;
 }
 
 function titleFor(name: string): string {
@@ -223,7 +223,7 @@ function buildItem(entry: string): RegistryItem {
     };
   });
 
-  // El núcleo i18n y `cn` siempre viajan con el componente.
+  // The i18n core and `cn` always travel with the component.
   for (const file of [
     join(libRoot, "cn.ts"),
     join(libRoot, "format.ts"),
@@ -255,7 +255,7 @@ function buildItem(entry: string): RegistryItem {
     name,
     type: "registry:ui",
     title: titleFor(name),
-    description: `Koten UI · ${titleFor(name)}. Copia editable con tokens y dependencias.`,
+    description: `Koten UI · ${titleFor(name)}. Editable copy with tokens and dependencies.`,
     dependencies: [...dependencies].sort(),
     files: registryFiles.sort((first, second) => first.target.localeCompare(second.target)),
   };
@@ -267,7 +267,7 @@ export function buildItems(): RegistryItem[] {
 
   for (const item of items) {
     if (names.has(item.name)) {
-      throw new Error(`Item duplicado en el registry: ${item.name}`);
+      throw new Error(`Duplicate registry item: ${item.name}`);
     }
     names.add(item.name);
   }
@@ -307,5 +307,5 @@ if (import.meta.main) {
   const items = buildItems();
 
   writeRegistry(items);
-  console.log(`registry: ${items.length} items en apps/catalog/public/r`);
+  console.log(`registry: ${items.length} items in apps/catalog/public/r`);
 }
