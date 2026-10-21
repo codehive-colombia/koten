@@ -102,11 +102,16 @@ describe("páginas del catálogo", () => {
 
   it("indexa y documenta los tres componentes", () => {
     const index = renderPage(<ComponentsIndexPage />);
-    expect(screen.getByRole("link", { name: /^Button/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: /^Button/ }).length).toBeGreaterThan(0);
+    expect(
+      screen.getByRole("table", { name: "Inventario de primitivas de la fase 1" }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole("row")).toHaveLength(43);
     index.unmount();
 
     const button = renderPage(<ButtonPage />);
     expect(screen.getByRole("button", { name: "Guardando" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Copiar" })).toBeInTheDocument();
     button.unmount();
 
     const panel = renderPage(<PanelPage />);

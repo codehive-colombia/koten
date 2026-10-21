@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { Link } from "react-router";
 
 export function PageHeader({
@@ -49,11 +49,47 @@ export function Demo({
   );
 }
 
-export function Code({ children }: { children: string }) {
+export function Code({
+  children,
+  copyLabel = "Copiar",
+  copiedLabel = "Copiado",
+}: {
+  children: string;
+  copyLabel?: string;
+  copiedLabel?: string;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    if (!navigator.clipboard) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(children);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
   return (
-    <pre className="mt-[var(--koten-gap)] overflow-x-auto border border-rule bg-tint p-[var(--koten-panel-p)] font-mono text-2xs leading-relaxed">
-      <code>{children}</code>
-    </pre>
+    <div className="relative mt-[var(--koten-gap)]">
+      <button
+        type="button"
+        onClick={copy}
+        className="absolute end-2 top-2 border border-rule-strong bg-surface px-1.5 py-0.5 text-2xs font-semibold text-muted transition-colors hover:bg-tint hover:text-ink"
+      >
+        {copied ? copiedLabel : copyLabel}
+      </button>
+      <pre className="overflow-x-auto border border-rule bg-tint p-[var(--koten-panel-p)] pe-20 font-mono text-2xs leading-relaxed">
+        <code>{children}</code>
+      </pre>
+      <span aria-live="polite" className="sr-only">
+        {copied ? copiedLabel : ""}
+      </span>
+    </div>
   );
 }
 

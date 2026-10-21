@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-008` — controles |
-| Tarea en curso | ninguna — próxima `F1-009` |
+| Última tarea completada | `F1-009` — catálogo completo de primitivas |
+| Tarea en curso | ninguna — próxima `F1-010` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,23 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 013 — Catálogo completo de primitivas
+
+- **Objetivo:** cerrar `F1-009` con inventario, trazabilidad y copia de código.
+- **Hecho:**
+  - Inventario de 42 primitivas en `/components` con ID `C-*`, nombre y página de referencia.
+  - Enlaces desde el inventario a cada grupo documentado.
+  - Botón **Copiar** en los bloques de código del catálogo, con feedback accesible.
+  - Verificación de que las 11 páginas de grupo cubren preview, props, código y a11y.
+- **Tareas tocadas:** `F1-009` → `done`.
+- **Decisiones:** Ninguna nueva.
+- **Evidencia:** `apps/catalog/src/pages/components/index.tsx`, `components/docs.tsx`; `bun run check` verde (**20 archivos / 100 tests**).
+- **Sin validar:** axe real (siguiente tarea) y lector de pantalla.
+- **Próximo:** `F1-010` — pasada de a11y y performance de primitivas.
+- **Bloqueos:** ninguno.
 
 ---
 
