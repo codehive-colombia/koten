@@ -467,3 +467,39 @@
 - **Decisión:** El POC se entrega como **repositorio reproducible + CI**: `bun install`, `bun run dev`, `bun run ci` y los `qa:*` locales. No se publica en un hosting en la v1. El destino (estático con fallback SPA, CDN o plataforma con previews) se decide cuando exista un producto que lo necesite, junto con dominio, analítica y política de datos.
 - **Consecuencias:** El tag `v0.1.0-poc` marca un hito auditable, no un servicio. Cualquier deploy futuro reutiliza los builds de `apps/*/dist` y necesita fallback SPA para las rutas del ERP y el catálogo. `Q-004` se cierra.
 - **Alternativas:** Deploy estático inmediato (sin producto ni dominio, coste de mantenimiento sin valor); Vercel/Netlify con previews (útil más adelante, fuera del alcance del POC).
+
+---
+
+<a id="d-032"></a>
+## D-032 · SSG/SSR del storefront: Astro con islas, fuera del POC
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`F5-006`, evalúa `RISK-009`)
+- **Contexto:** El storefront es una SPA (`D-017`) y el POC prioriza validar la gramática visual, no el SEO. `RISK-009` deja abierto que una página de producto real necesita HTML renderizado, metadatos por producto y Core Web Vitals medibles en campo.
+- **Decisión:** Si el storefront pasa a producción, la opción recomendada es **Astro con islas React**: la página de producto se renderiza a HTML (specs, precio, breadcrumb, metas, JSON-LD) y solo los controles interactivos (galería, variantes, carrito, búsqueda) hidratan con `client:visible` o `client:idle`. Los componentes de `packages/ui` se reutilizan como islas; los patrones reciben los datos por props y no dependen del router. El ERP y el catálogo siguen siendo SPAs: son aplicaciones autenticadas o internas sin requisito de SEO.
+- **Consecuencias:** No se toca el POC ni su build; el tag `v0.1.0-poc` queda como referencia SPA. La migración futura exige separar los datos del storefront en un módulo serializable (ya tipado en `apps/storefront/src/content`), decidir hosting/ISR y medir LCP en campo. Next.js queda como alternativa si el equipo necesita RSC, pero pesa más para una página de producto.
+- **Alternativas:** Mantener SPA en producción (SEO y LCP en campo quedan en riesgo); Next.js App Router (más superficie de la necesaria); SSG casero con Vite (reimplementa lo que Astro ya resuelve).
+
+---
+
+<a id="d-033"></a>
+## D-033 · No publicar `@koten/ui` como paquete
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`F5-007`, cierra `Q-008`)
+- **Contexto:** La propuesta original era copiar la fuente, no consumir un paquete (`D-007`). Publicar exigiría API estable, semver, build de librería, peer deps, matriz de versiones de React/Tailwind, changelog y docs versionadas; nada de eso aporta al objetivo del POC y contradice el modelo “la fuente vive en el proyecto”.
+- **Decisión:** `@koten/ui` **no se publica** en npm. La distribución es por copia (hoy) y, si se habilita `F5-001`, por registry shadcn con URL. El paquete del workspace sigue siendo privado (`private: true`).
+- **Consecuencias:** Cada consumidor adapta los archivos y asume sus upgrades; no hay garantía semver. `Q-008` se cierra. Si en el futuro se publica, requiere una decisión nueva con build (`tsup`/`tsdown`), exports por subpath y política de breaking changes.
+- **Alternativas:** Publicar un paquete completo (compromiso de mantenimiento sin demanda); publicar solo tokens/utilidades (posible, pero el valor está en los componentes copiables).
+
+---
+
+<a id="d-034"></a>
+## D-034 · La v1 cierra sin Sumi ni registry
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (cierra `Q-001` y `Q-002`)
+- **Contexto:** `Q-001` y `Q-002` preguntaban si el tema oscuro Sumi y el registry/CLI entraban en la v1. La v1 quedó etiquetada como `v0.1.0-poc` sin ambas cosas, y el roadmap ya las ubica en la fase 5 opcional (`F5-002`, `F5-001`).
+- **Decisión:** La v1 no incluye Sumi ni registry. Ambas siguen disponibles como tareas post-v1 y, si se implementan, no reabren el alcance del tag: se documentan con su propia decisión y se validan con contraste AA y con una instalación real, respectivamente.
+- **Consecuencias:** `Q-001` y `Q-002` se cierran como “fuera de la v1”; el registro de decisiones deja de tener preguntas de alcance v1 abiertas. Quedan abiertas `Q-004` (cerrada por `D-031`), `Q-005` (licencia) y `Q-006` (matriz de navegadores), que no bloquean el POC.
+- **Alternativas:** Meterlas en la v1 (retrasa el tag sin demanda); borrar las preguntas (el registro es append-only; se cierran, no se borran).

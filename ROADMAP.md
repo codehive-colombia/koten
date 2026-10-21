@@ -256,7 +256,7 @@ ISO 8601: `YYYY-MM-DD`.
 
 ### Fase 5 — Opcional / posterior
 
-**Estado:** `todo` · **Objetivo:** ampliar sin comprometer la v1.
+**Estado:** `in_progress` · **Objetivo:** ampliar sin comprometer la v1.
 
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
@@ -265,8 +265,8 @@ ISO 8601: `YYYY-MM-DD`.
 | `F5-003` | DatePicker / Calendar. | `F4-006` | `todo` | Teclado, rango y locale. | — |
 | `F5-004` | CommandPalette. | `F4-006` | `todo` | Búsqueda, teclado y focus trap. | — |
 | `F5-005` | Virtualización de DataTable. | `F4-006` | `todo` | 10k filas sin degradación perceptible. | — |
-| `F5-006` | Evaluar SSG/SSR para el storefront (Astro/Next). | `F4-006` | `todo` | Decisión documentada con tradeoffs. | — |
-| `F5-007` | Evaluar publicación de `@koten/ui`. | `F4-006` | `todo` | Decisión documentada; build de librería si aplica. | — |
+| `F5-006` | Evaluar SSG/SSR para el storefront (Astro/Next). | `F4-006` | `done` | Decisión documentada con tradeoffs. | `D-032`: Astro con islas React para producción; el POC sigue SPA. |
+| `F5-007` | Evaluar publicación de `@koten/ui`. | `F4-006` | `done` | Decisión documentada; build de librería si aplica. | `D-033`: no se publica; distribución por copia/registry. `Q-008` cerrada. |
 
 ---
 
@@ -416,14 +416,14 @@ ISO 8601: `YYYY-MM-DD`.
 
 | ID | Pregunta | Estado | Se decide en |
 | --- | --- | --- | --- |
-| `Q-001` | ¿Modo oscuro Sumi dentro de la v1? | `open` (propuesta: no) | `F5-002` |
-| `Q-002` | ¿Registry/CLI dentro de la v1? | `open` (propuesta: no) | `F5-001` |
+| `Q-001` | ¿Modo oscuro Sumi dentro de la v1? | `decided` — `D-034` (no en v1) | `F5-002` |
+| `Q-002` | ¿Registry/CLI dentro de la v1? | `decided` — `D-034` (no en v1) | `F5-001` |
 | `Q-003` | ¿Producto y assets finales del storefront? | `decided` — `D-021`, `D-022` | `F2-001` |
-| `Q-004` | ¿Destino de deploy del POC? | `open` | `F4-006` |
+| `Q-004` | ¿Destino de deploy del POC? | `decided` — `D-031` | `F4-006` |
 | `Q-005` | ¿Licencia del repo? | `open` (propuesta: MIT) | `F0-001` |
 | `Q-006` | ¿Matriz exacta de navegadores? | `open` (propuesta: últimas 2 versiones) | `F0-002` |
 | `Q-007` | ¿Proveedor de CI? | `decided` — `D-018` | `F0-008` |
-| `Q-008` | ¿Publicar `@koten/ui`? | `open` (propuesta: no en v1) | `F5-007` |
+| `Q-008` | ¿Publicar `@koten/ui`? | `decided` — `D-033` (no) | `F5-007` |
 | `Q-009` | ¿Estilos de impresión para specs/facturas? | `decided` — `D-030` (no en v1) | `F4-005` |
 | `Q-010` | ¿Nivel de soporte RTL? | `decided` — `D-026` | `F4-001` |
 
@@ -469,6 +469,7 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | QA visual con capturas archivadas (21 en 1440/1280/1024), overflow/RTL en 96 combinaciones y corrección de IDs en la tabla. `F4-004` → `done`. Próxima: `F4-005`. | Sesión 022 |
 | 2026-10-21 | Documentación final: página Empezar trilingüe, `docs/RECIPES.md`, README actualizado y decisión de impresión. `F4-005` → `done`; `D-030`; `Q-009` cerrada. Próxima: `F4-006`. | Sesión 023 |
 | 2026-10-21 | Definition of Done revisado y cierre de fase 4: `D-031` (sin deploy en v1), presupuesto del catálogo a 340 KB total, tag `v0.1.0-poc`. `F4-006` → `done`; **fase 4 → `done`**. | Sesión 024 |
+| 2026-10-21 | Fase 5 iniciada con las dos evaluaciones: `D-032` (Astro con islas para el storefront productivo) y `D-033` (no publicar el paquete); `D-034` cierra `Q-001`/`Q-002`. `F5-006`, `F5-007` → `done`. | Sesión 025 |
 | 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |

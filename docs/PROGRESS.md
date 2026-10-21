@@ -9,11 +9,11 @@
 | Campo | Valor |
 | --- | --- |
 | Fecha | 2026-10-21 |
-| Fase | 4 — Cierre del POC (`done`) · tag `v0.1.0-poc` |
-| Última tarea completada | `F4-006` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — fase 5 opcional |
+| Fase | 5 — Opcional (`in_progress`) · v1 en tag `v0.1.0-poc` |
+| Última tarea completada | `F5-007` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F5-001` (registry) o `F5-002` (Sumi) |
 | Bloqueos | ninguno |
-| Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`, `Q-009`; `Q-003` cerrada por `D-021`/`D-022` y `Q-010` por `D-026` |
+| Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
 
 ## Cómo registrar una sesión
 
@@ -38,6 +38,23 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 025 — Fase 5: evaluaciones de SSG y publicación
+
+- **Objetivo:** arrancar la fase 5 por las dos tareas de evaluación, que no tocan código de producto.
+- **Hecho:**
+  - **`D-032` (F5-006):** para producción, el storefront va a Astro con islas React; la página de producto se renderiza a HTML y solo los controles hidratan. El POC sigue SPA; el ERP y el catálogo no necesitan SSG.
+  - **`D-033` (F5-007):** `@koten/ui` no se publica en npm; la distribución es por copia y, si se habilita `F5-001`, por registry. Cierra `Q-008`.
+  - **`D-034`:** la v1 cierra sin Sumi ni registry; ambas quedan como tareas opcionales (`F5-001`, `F5-002`). Cierra `Q-001` y `Q-002`.
+  - Roadmap: fase 5 → `in_progress`; `F5-006` y `F5-007` → `done`; tabla de decisiones pendientes saneada (solo `Q-005` y `Q-006`).
+- **Tareas tocadas:** `F5-006`, `F5-007` → `done`.
+- **Decisiones:** `D-032`, `D-033`, `D-034`.
+- **Evidencia:** `docs/DECISIONS.md`, `ROADMAP.md`; sin cambios de código ni de presupuestos.
+- **Sin validar:** ninguna de las dos evaluaciones se probó con una implementación real (Astro o publicación); son decisiones de rumbo con tradeoffs documentados.
+- **Próximo:** `F5-001` registry shadcn o `F5-002` tema Sumi, a elección; después `F5-003` DatePicker, `F5-004` CommandPalette y `F5-005` virtualización.
+- **Bloqueos:** ninguno.
 
 ---
 
