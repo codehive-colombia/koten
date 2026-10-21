@@ -26,6 +26,19 @@ describe("App", () => {
     expect(screen.getByText("Props y código")).toBeInTheDocument();
   });
 
+  it("uses the wide landing layout without the docs pager", async () => {
+    render(
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>,
+    );
+
+    expect(await screen.findByRole("heading", { level: 1, name: /Koten UI/ })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("navigation", { name: "Paginación del catálogo" }),
+    ).not.toBeInTheDocument();
+  });
+
   it("switches the UI language and the document lang", () => {
     render(
       <MemoryRouter initialEntries={["/"]}>

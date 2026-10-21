@@ -24,6 +24,9 @@ describe("catalog i18n", () => {
     const japanese = renderPage(<OverviewPage />, "ja");
     expect(screen.getByText(/手段の簡素さ/)).toBeInTheDocument();
     expect(screen.getByText("色は意味を示し、装飾しない。")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: /三つの様式、一つの文法/ }),
+    ).toBeInTheDocument();
     expect(screen.queryByText(/El color señala/)).not.toBeInTheDocument();
     japanese.unmount();
 

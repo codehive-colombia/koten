@@ -42,12 +42,25 @@ function renderPage(ui: ReactElement, locale: "es" | "ja" | "en" = "es") {
 }
 
 describe("catalog pages", () => {
-  it("renders the landing page with its entry points", () => {
-    renderPage(<OverviewPage />);
+  it("renders the landing page with its entry points and live plates", () => {
+    const landing = renderPage(<OverviewPage />);
 
     expect(screen.getByRole("heading", { level: 1, name: /Koten UI/ })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Fundamentos/ })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Componentes/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Explorar componentes/ })).toHaveAttribute(
+      "href",
+      "/components",
+    );
+    expect(screen.getAllByRole("link", { name: /^Fundamentos/ }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { level: 2, name: /Tres registros/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /Principios/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /En contexto/ })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: "Pedido · KURA-1042" }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("table", { name: "Pedido · KURA-1042" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: /Abrir demo/ })).toHaveLength(2);
+    expect(screen.getByText("data-theme")).toBeInTheDocument();
+    expect(landing.container.querySelectorAll("article[data-theme]")).toHaveLength(3);
   });
 
   it("explains how to start and copy a primitive", () => {

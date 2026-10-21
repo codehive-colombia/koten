@@ -150,6 +150,7 @@ function Pager({ locale, pathname }: { locale: KotenLocale; pathname: string }) 
 export function CatalogLayout({ view, children }: { view: CatalogViewState; children: ReactNode }) {
   const { pathname } = useLocation();
   const menuRef = useRef<HTMLDetailsElement>(null);
+  const isLanding = pathname === "/";
   const labels = shellLabels[view.locale];
   const themeLabel = themes.find((theme) => theme.id === view.theme)?.label ?? view.theme;
   const densityLabel = densityLabels[view.density][view.locale];
@@ -239,15 +240,24 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
         </div>
       </header>
 
-      <div className="koten-container grid gap-[calc(var(--koten-gap)*2)] py-[calc(var(--koten-gap)*2)] lg:grid-cols-[220px_minmax(0,1fr)]">
-        <aside lang={view.locale} className="hidden min-w-0 lg:block">
-          <div className="sticky top-[var(--koten-gap)] max-h-[calc(100dvh-2*var(--koten-gap))] overflow-y-auto pe-1 [scrollbar-color:var(--koten-rule-strong)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-rule-strong [&::-webkit-scrollbar-track]:bg-transparent">
-            <CatalogNav locale={view.locale} />
-            <LocalePreview locale={view.locale} />
-          </div>
-        </aside>
+      <div
+        className={cn(
+          "koten-container py-[calc(var(--koten-gap)*2)]",
+          isLanding
+            ? "min-w-0"
+            : "grid gap-[calc(var(--koten-gap)*2)] lg:grid-cols-[220px_minmax(0,1fr)]",
+        )}
+      >
+        {isLanding ? null : (
+          <aside lang={view.locale} className="hidden min-w-0 lg:block">
+            <div className="sticky top-[var(--koten-gap)] max-h-[calc(100dvh-2*var(--koten-gap))] overflow-y-auto pe-1 [scrollbar-color:var(--koten-rule-strong)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-thumb]:bg-rule-strong [&::-webkit-scrollbar-track]:bg-transparent">
+              <CatalogNav locale={view.locale} />
+              <LocalePreview locale={view.locale} />
+            </div>
+          </aside>
+        )}
 
-        <main id="contenido" className="min-w-0 max-w-[900px]">
+        <main id="contenido" className={cn("min-w-0", isLanding ? undefined : "max-w-[900px]")}>
           <details
             ref={menuRef}
             lang={view.locale}
@@ -265,7 +275,7 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
           </details>
 
           {children}
-          <Pager locale={view.locale} pathname={pathname} />
+          {isLanding ? null : <Pager locale={view.locale} pathname={pathname} />}
         </main>
       </div>
 
