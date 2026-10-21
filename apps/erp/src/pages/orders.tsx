@@ -381,7 +381,7 @@ export function OrdersPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocal
                   <dd className="text-right text-ink">
                     {customer ? pick(customer.company, locale) : order.customerId}
                   </dd>
-                  <dt className="text-faint">Email</dt>
+                  <dt className="text-faint">{copy.form.fields.email}</dt>
                   <dd className="min-w-0 break-all text-right text-ink">
                     {customer?.email ?? "—"}
                   </dd>

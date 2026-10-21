@@ -41,6 +41,15 @@ describe("ERP KURA", () => {
     expect(screen.getAllByText("最近の受注").length).toBeGreaterThan(0);
   });
 
+  it("actualiza el título del documento con el idioma", () => {
+    renderErp();
+    expect(document.title).toBe("KURA · ERP de distribución");
+
+    fireEvent.click(screen.getByRole("button", { name: "日本語" }));
+
+    expect(document.title).toBe("KURA · 流通ERP");
+  });
+
   it("navega a pedidos y aplica filtros en la URL", () => {
     renderErp();
 

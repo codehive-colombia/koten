@@ -217,7 +217,7 @@ const spanish: ErpCopy = {
     next: "Siguiente",
     selectAll: "Seleccionar todo",
     selectRow: (id) => `Seleccionar ${id}`,
-    selected: (count) => `${count} seleccionados`,
+    selected: (count) => `${count} seleccionado${count === 1 ? "" : "s"}`,
     empty: "Sin resultados",
     loading: "Cargando…",
     total: "Total",
@@ -293,7 +293,7 @@ const spanish: ErpCopy = {
       ranges: { today: "Hoy", week: "7 días", month: "30 días", all: "Todo" },
       submit: "Aplicar filtros",
       reset: "Limpiar",
-      results: (count) => `${count} pedidos`,
+      results: (count) => `${count} pedido${count === 1 ? "" : "s"}`,
     },
     table: {
       caption: "Pedidos de KURA",
@@ -312,7 +312,8 @@ const spanish: ErpCopy = {
     selection: {
       selectAll: "Seleccionar todos los pedidos de la página",
       selectRow: (id) => `Seleccionar ${id}`,
-      selected: (count) => `${count} pedidos seleccionados`,
+      selected: (count) =>
+        `${count} pedido${count === 1 ? "" : "s"} seleccionado${count === 1 ? "" : "s"}`,
     },
     bulk: {
       preparing: "Marcar preparando",
@@ -320,7 +321,8 @@ const spanish: ErpCopy = {
       export: "Exportar CSV",
       reset: "Limpiar selección",
       success: (count, status) => `${count} pedidos marcados como ${status}.`,
-      exportSuccess: (count) => `${count} pedidos exportados.`,
+      exportSuccess: (count) =>
+        `${count} pedido${count === 1 ? "" : "s"} exportado${count === 1 ? "" : "s"}.`,
     },
     detail: {
       title: (id) => `Pedido ${id}`,
@@ -347,7 +349,7 @@ const spanish: ErpCopy = {
       print: "Imprimir",
       tracking: "Seguimiento",
       total: "Total",
-      itemCount: (count) => `${count} artículos`,
+      itemCount: (count) => `${count} artículo${count === 1 ? "" : "s"}`,
     },
   },
   form: {
@@ -381,7 +383,8 @@ const spanish: ErpCopy = {
     },
     errors: {
       summaryTitle: "Revisa el formulario",
-      summary: (count) => `${count} campo(s) necesitan atención.`,
+      summary: (count) =>
+        `${count} campo${count === 1 ? "" : "s"} necesita${count === 1 ? "" : "n"} atención.`,
       customer: "Selecciona un cliente.",
       contact: "Escribe el nombre de contacto.",
       email: "Escribe un correo válido.",
@@ -749,7 +752,7 @@ const english: ErpCopy = {
       ranges: { today: "Today", week: "7 days", month: "30 days", all: "All" },
       submit: "Apply filters",
       reset: "Clear",
-      results: (count) => `${count} orders`,
+      results: (count) => `${count} order${count === 1 ? "" : "s"}`,
     },
     table: {
       caption: "KURA orders",
@@ -768,7 +771,7 @@ const english: ErpCopy = {
     selection: {
       selectAll: "Select all orders on this page",
       selectRow: (id) => `Select ${id}`,
-      selected: (count) => `${count} orders selected`,
+      selected: (count) => `${count} order${count === 1 ? "" : "s"} selected`,
     },
     bulk: {
       preparing: "Mark preparing",
@@ -776,7 +779,7 @@ const english: ErpCopy = {
       export: "Export CSV",
       reset: "Clear selection",
       success: (count, status) => `${count} orders marked as ${status}.`,
-      exportSuccess: (count) => `${count} orders exported.`,
+      exportSuccess: (count) => `${count} order${count === 1 ? "" : "s"} exported.`,
     },
     detail: {
       title: (id) => `Order ${id}`,
@@ -803,7 +806,7 @@ const english: ErpCopy = {
       print: "Print",
       tracking: "Tracking",
       total: "Total",
-      itemCount: (count) => `${count} items`,
+      itemCount: (count) => `${count} item${count === 1 ? "" : "s"}`,
     },
   },
   form: {
@@ -833,7 +836,8 @@ const english: ErpCopy = {
     },
     errors: {
       summaryTitle: "Check the form",
-      summary: (count) => `${count} field(s) need attention.`,
+      summary: (count) =>
+        `${count} field${count === 1 ? "" : "s"} need${count === 1 ? "s" : ""} attention.`,
       customer: "Select a customer.",
       contact: "Enter a contact name.",
       email: "Enter a valid email.",

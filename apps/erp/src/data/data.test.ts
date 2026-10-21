@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   customers,
   dailySeries,
+  erpCopy,
   kpis,
   lowStockProducts,
   orderDay,
@@ -63,6 +64,14 @@ describe("datos KURA", () => {
 
       expect(order.total).toBe(expected);
     }
+  });
+
+  it("pluraliza las etiquetas de cantidad por idioma", () => {
+    expect(erpCopy.es.orders.detail.itemCount(1)).toBe("1 artículo");
+    expect(erpCopy.es.orders.detail.itemCount(3)).toBe("3 artículos");
+    expect(erpCopy.en.orders.detail.itemCount(1)).toBe("1 item");
+    expect(erpCopy.en.orders.detail.itemCount(3)).toBe("3 items");
+    expect(erpCopy.ja.orders.detail.itemCount(1)).toBe("1点");
   });
 
   it("deriva KPIs, series y stock bajo", () => {

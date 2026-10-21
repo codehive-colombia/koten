@@ -283,6 +283,13 @@ export function ErpApp() {
     { path: "/settings", title: copy.shell.nav.settings },
   ];
 
+  useEffect(() => {
+    document.title = copy.meta.title;
+    document
+      .querySelector('meta[name="description"]')
+      ?.setAttribute("content", copy.meta.description);
+  }, [copy.meta.description, copy.meta.title]);
+
   return (
     <KotenProvider locale={locale}>
       <ToastProvider closeLabel={copy.toast.close} regionLabel={copy.toast.region}>
