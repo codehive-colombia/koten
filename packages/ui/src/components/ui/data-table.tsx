@@ -145,7 +145,10 @@ export function DataTable<T>({
   }, [columns, selectable, selectAllLabel, selectRowLabel]);
 
   const table = useReactTable({
-    data: [...data],
+    // Keep the caller's array identity. Spreading here creates a new array on
+    // every render, which makes TanStack treat the data as changed and
+    // auto-reset the page index, so pagination can never advance.
+    data: data as T[],
     columns: columnDefs,
     getRowId,
     state: { sorting, rowSelection },

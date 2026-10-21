@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { StrictMode, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { BarChart } from "./bar-chart";
 import { DataTable, type DataTableColumn } from "./data-table";
@@ -105,6 +106,47 @@ describe("DataTable", () => {
       "aria-sort",
       "ascending",
     );
+  });
+
+  it("keeps the current page after an unrelated parent re-render", () => {
+    function Harness() {
+      const [tick, setTick] = useState(0);
+
+      return (
+        <div>
+          <button type="button" onClick={() => setTick((value) => value + 1)}>
+            Rerender {tick}
+          </button>
+          <DataTable
+            data={orders}
+            columns={columns}
+            getRowId={(row) => row.id}
+            emptyLabel="Sin pedidos"
+            previousLabel="Anterior"
+            nextLabel="Siguiente"
+            paginationLabel="Paginación"
+            selectAllLabel="Todo"
+            selectRowLabel={(id) => id}
+            selectedLabel={(count) => String(count)}
+            pageSize={3}
+          />
+        </div>
+      );
+    }
+
+    render(
+      <StrictMode>
+        <Harness />
+      </StrictMode>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Siguiente" }));
+    expect(screen.getByText("D-004")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /Rerender/ }));
+
+    expect(screen.getByText("D-004")).toBeInTheDocument();
+    expect(screen.queryByText("A-001")).not.toBeInTheDocument();
   });
 
   it("renders empty and loading states", () => {
