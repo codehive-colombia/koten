@@ -2,6 +2,7 @@ import "@testing-library/jest-dom/vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { StrictMode, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
+import { KotenProvider } from "../../i18n/provider";
 import { BarChart } from "./bar-chart";
 import { DataTable, type DataTableColumn } from "./data-table";
 import { Sparkline } from "./sparkline";
@@ -221,5 +222,16 @@ describe("BarChart", () => {
     expect(screen.getByRole("table", { name: "Pedidos por día" })).toBeInTheDocument();
     expect(screen.getByRole("rowheader", { name: "Lun" })).toBeInTheDocument();
     expect(screen.getByRole("cell", { name: "18" })).toBeInTheDocument();
+  });
+
+  it("localiza la tabla de respaldo con el locale del provider", () => {
+    render(
+      <KotenProvider locale="ja">
+        <BarChart label="日別の注文" data={[{ label: "月", value: 12 }]} />
+      </KotenProvider>,
+    );
+
+    expect(screen.getByRole("columnheader", { name: "項目" })).toBeInTheDocument();
+    expect(screen.getByRole("columnheader", { name: "値" })).toBeInTheDocument();
   });
 });

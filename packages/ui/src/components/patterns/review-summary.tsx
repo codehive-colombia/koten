@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useKotenFormatters } from "../../i18n/provider";
 import { cn } from "../../lib/cn";
 import { Badge } from "../ui/badge";
 
@@ -56,6 +57,7 @@ export function ReviewSummary({
   emptyLabel,
   className,
 }: ReviewSummaryProps) {
+  const formatters = useKotenFormatters();
   const total = distribution.reduce((sum, item) => sum + item.count, 0) || 1;
 
   return (
@@ -68,7 +70,7 @@ export function ReviewSummary({
     >
       <div className="border border-rule bg-surface p-[var(--koten-panel-p)]">
         <p className="font-serif text-3xl font-semibold leading-none tabular-nums">
-          {rating.toFixed(1)}
+          {formatters.formatNumber(rating, { minimumFractionDigits: 1, maximumFractionDigits: 1 })}
         </p>
         <p className="mt-1">
           <Stars value={rating} label={ratingLabel(rating)} />

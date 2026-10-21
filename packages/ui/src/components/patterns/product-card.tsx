@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { useKotenFormatters } from "../../i18n/provider";
 import { cn } from "../../lib/cn";
 
 export type ProductCardProps = {
@@ -33,6 +34,8 @@ export function ProductCard({
   rating,
   className,
 }: ProductCardProps) {
+  const formatters = useKotenFormatters();
+
   return (
     <article
       data-slot="product-card"
@@ -63,8 +66,14 @@ export function ProductCard({
             <span aria-hidden="true" className="text-primary">
               {"★".repeat(Math.round(rating.value))}
             </span>{" "}
-            <span className="tabular-nums">{rating.value.toFixed(1)}</span> ·{" "}
-            <span className="tabular-nums">{rating.count}</span> {rating.label}
+            <span className="tabular-nums">
+              {formatters.formatNumber(rating.value, {
+                minimumFractionDigits: 1,
+                maximumFractionDigits: 1,
+              })}
+            </span>{" "}
+            · <span className="tabular-nums">{formatters.formatNumber(rating.count)}</span>{" "}
+            {rating.label}
           </p>
         ) : null}
         <p className="mt-1.5 text-sm font-semibold tabular-nums text-primary">{price}</p>

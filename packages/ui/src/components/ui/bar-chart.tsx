@@ -1,4 +1,11 @@
+import { useKoten } from "../../i18n/provider";
 import { cn } from "../../lib/cn";
+
+const tableHeaders = {
+  es: { label: "Etiqueta", value: "Valor" },
+  ja: { label: "項目", value: "値" },
+  en: { label: "Label", value: "Value" },
+} as const;
 
 export type BarChartDatum = {
   label: string;
@@ -20,6 +27,8 @@ export function BarChart({
   formatValue = (value) => String(value),
   className,
 }: BarChartProps) {
+  const { locale } = useKoten();
+  const headers = tableHeaders[locale];
   const max = Math.max(...data.map((item) => item.value), 1);
 
   return (
@@ -53,8 +62,8 @@ export function BarChart({
         <caption>{label}</caption>
         <thead>
           <tr>
-            <th scope="col">Etiqueta</th>
-            <th scope="col">Valor</th>
+            <th scope="col">{headers.label}</th>
+            <th scope="col">{headers.value}</th>
           </tr>
         </thead>
         <tbody>
