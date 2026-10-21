@@ -585,3 +585,20 @@
   - Sin `registryDependencies` por nombre: al instalar por URL, las dependencias por nombre podrían resolverse contra el registry por defecto. La autocontención evita ese riesgo a costa de repetir el núcleo.
 - **Consecuencias:** `npx shadcn@latest add http://localhost:5173/r/button.json` instala 7 archivos y `tsc --noEmit` pasa; lo mismo con `date-picker` y `detail-drawer`. Un cambio en un componente o en los tokens requiere regenerar (lo hacen `predev`/`prebuild`) y republicar. El JSON del registry no entra al presupuesto de JS: son assets estáticos. Sigue sin haber paquete npm (`D-033`).
 - **Alternativas:** Publicar en npm (descartado en `D-033`); registry con `registryDependencies` por nombre (frágil fuera del namespace); un único item con todo el sistema (instalaciones enormes y sin granularidad).
+
+---
+
+<a id="d-040"></a>
+## D-040 · Source en inglés y Fundamentos orientado al usuario
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`M-002`; complementa `D-008` y `D-025`)
+- **Contexto:** `D-008` fija la documentación de trabajo en español y `D-025` mantiene el cuerpo del catálogo en ES/JA/EN. El código había acumulado comentarios, JSDoc, mensajes de script y títulos de test en español, lo que mezcla el idioma de la documentación con el del fuente y dificulta reutilizar el paquete. Además, la portada de Fundamentos explicaba fases, IDs de tarea y decisiones internas, que no aportan a quien solo consume la UI.
+- **Decisión:**
+  - El **source se escribe en inglés**: comentarios, JSDoc, mensajes de consola y de error, y descripciones de tests. Los diccionarios de copy ES/JA/EN (catálogo, labels de `@koten/ui` y datos de las demos) se mantienen intactos porque son la documentación de muestra (`D-025`).
+  - Los `.md` internos (`AGENTS.md`, `ROADMAP.md`, `docs/**`) siguen en español (`D-008`); no se traducen.
+  - La portada de Fundamentos (`/tokens`) pasa a ser una **página de contrato visual**: un espécimen compuesto (`FoundationsSpecimen`) y tarjetas con previews en vivo (`FoundationPreview`) para color, tipografía, espaciado, forma, densidad, temas y formato.
+  - El copy visible de Fundamentos **no menciona fases, IDs `F*`/`C-*`/`D-*`, tareas ni decisiones**. El estado del shell deja de mostrar la fase y muestra la escala del sistema (primitivas, patrones, temas, densidades) y los idiomas.
+  - `apps/catalog/public/r` (registry generado e ignorado por git) se excluye también de Biome para que `bun run check` no dependa de si el registry fue regenerado.
+- **Consecuencias:** El fuente queda reutilizable en inglés sin perder la documentación trilingüe. Fundamentos se lee como un manual visual y no como un informe de proyecto. `bun run check` (201 tests) y `bun run budget` (catálogo 247,5/347,5 KB) pasan. Los tests de páginas y de shell se ajustan al nuevo copy.
+- **Alternativas:** Traducir también los diccionarios ES/JA/EN (rompe `D-025` y las demos trilingües); dejar el copy de Fundamentos con fases (mantiene ruido interno para el consumidor); documentar el source en español (rompe la reutilización del paquete fuera del equipo).

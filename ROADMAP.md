@@ -5,7 +5,7 @@
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
 > Última tarea completada: **`F5-001`** · v1 en tag `v0.1.0-poc`
-> Mejora puntual completada: **`M-001`** — i18n del catálogo
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo) y **`M-002`** (source en inglés y Fundamentos para el usuario)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -284,6 +284,7 @@ ISO 8601: `YYYY-MM-DD`.
 | ID | Mejora | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- |
 | `M-001` | i18n completo del catálogo y auditoría de las demos. | `done` | Cuerpo de las 25 páginas en ES/JA/EN; labels de `docs.tsx` y `specimen.tsx` localizados; `lang` del documento sigue al locale; demos sin strings hardcodeadas; `bun run check` verde. | Diccionarios por página en `apps/catalog/src/pages/**`; `lib/i18n.ts`; `data/{catalog,tokens}.ts`; `components/{docs,specimen,catalog-layout}.tsx`; `D-025`; test `pages/i18n.test.tsx`; `apps/erp/src/pages/orders.tsx` (label de email); `bun run budget` → catálogo 304,5 KB JS. |
+| `M-002` | Source en inglés y sección Fundamentos orientada al usuario. | `done` | Comentarios, JSDoc, mensajes y títulos de test de todo el source en inglés; diccionarios ES/JA/EN intactos; `/tokens` es una portada de Fundamentos con espécimen y previews; sin fases, IDs de tarea ni decisiones en el copy visible de Fundamentos; `bun run check` y `bun run budget` verdes. | `packages/ui/src/**`, `apps/**/src/**`, `scripts/**`; `apps/catalog/src/pages/tokens/index.tsx`; `components/specimen.tsx` (`FoundationsSpecimen`, `FoundationPreview`); `pages/{overview,start}.tsx`; `data/catalog.ts`; `D-040`; `biome.json` ignora `public/r`. |
 
 ---
 
@@ -489,3 +490,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |
 | 2026-10-21 | Mejora puntual `M-001`: cuerpo del catálogo localizado ES/JA/EN, labels de docs/espécimen, `lang` del documento y auditoría i18n de demos. `D-025`; `bun run check` verde. | Sesión 018 |
+| 2026-10-21 | Mejora puntual `M-002`: source 100% en inglés (comentarios, JSDoc, mensajes y tests) con la documentación intacta en ES/JA/EN; Fundamentos rediseñado como portada con espécimen y previews, sin fases ni IDs internos en el copy visible; `D-040`; `biome.json` ignora `public/r`; `bun run check` (202 tests) y `bun run budget` verdes. | Sesión 031 |

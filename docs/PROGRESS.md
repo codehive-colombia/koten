@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `F5-001` · mejora puntual `M-001` |
+| Última tarea completada | `F5-001` · mejoras puntuales `M-001` y `M-002` |
 | Tarea en curso | ninguna — roadmap completo |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 031 — Source en inglés y Fundamentos para el usuario (`M-002`)
+
+- **Objetivo:** dejar el source 100% en inglés sin tocar la documentación trilingüe, y convertir Fundamentos en una sección atractiva para quien consume la UI.
+- **Hecho:**
+  - **Source en inglés:** comentarios, JSDoc, mensajes de consola/error y títulos de test de `packages/ui/src`, `apps/**/src` y `scripts/**`. Los diccionarios de copy ES/JA/EN (catálogo, `labelsByLocale` y datos de las demos) quedan intactos por `D-025`.
+  - **Fundamentos (`/tokens`):** nueva portada con `FoundationsSpecimen` (hoja de muestras: tipografía, precio, estados y los cuatro temas) y tarjetas con previews en vivo (`FoundationPreview`) para color, tipografía, espaciado, forma, densidad, temas y formato. Título y navegación pasan de “Tokens” a “Fundamentos/Foundations”.
+  - **Copy sin ruido interno:** se eliminan fases, IDs `F*`/`C-*` y referencias a `AGENTS.md` del copy visible de Fundamentos, del shell y del inicio; el shell muestra la escala del sistema (45 primitivas · 20 patrones · 4 temas · 3 densidades) en vez de la fase. `Empezar` cambia “Verificar” por “Calidad incorporada” y “Recetas” por “Siguientes pasos”.
+  - **Tooling:** `biome.json` excluye `apps/catalog/public/r` para que `bun run check` no dependa del registry generado.
+  - **Tests:** se actualizan `pages.test.tsx` (título de Fundamentos y caption del inventario) e `i18n.test.tsx` (`tagline` en lugar de `phase`).
+- **Tareas tocadas:** `M-002` → `done`.
+- **Decisiones:** `D-040`.
+- **Evidencia:** `apps/catalog/src/pages/tokens/index.tsx`, `components/specimen.tsx`, `pages/{overview,start}.tsx`, `data/catalog.ts`, `components/catalog-layout.tsx`, `biome.json`, `scripts/**`, `packages/ui/src/**`; `bun run check` verde (**33 archivos / 202 tests**); `bun run build` OK; `bun run budget` → catálogo 247,5/347,5 KB.
+- **Sin validar:** lectura con lector de pantalla del espécimen compuesto; revisión visual en Safari/Firefox.
+- **Próximo:** ninguna tarea abierta; roadmap completo (fases 0–5) más `M-001` y `M-002`.
+- **Bloqueos:** ninguno.
 
 ---
 
