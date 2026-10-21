@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-21**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-004`** · páginas individuales de componentes y bloques
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial) y **`M-004`** (componentes y bloques individuales)
+> Última tarea completada: **`M-005`** · producción en un dominio, una imagen y tres puertos
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales) y **`M-005`** (despliegue de producción)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -289,6 +289,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-002` | Source en inglés y sección Fundamentos orientada al usuario. | `done` | Comentarios, JSDoc, mensajes y títulos de test de todo el source en inglés; diccionarios ES/JA/EN intactos; `/tokens` es una portada de Fundamentos con espécimen y previews; sin fases, IDs de tarea ni decisiones en el copy visible de Fundamentos; `bun run check` y `bun run budget` verdes. | `packages/ui/src/**`, `apps/**/src/**`, `scripts/**`; `apps/catalog/src/pages/tokens/index.tsx`; `components/specimen.tsx` (`FoundationsSpecimen`, `FoundationPreview`); `pages/{overview,start}.tsx`; `data/catalog.ts`; `D-040`; `biome.json` ignora `public/r`. |
 | `M-004` | Páginas individuales de componentes y bloques (`R-022`). | `done` | Cada primitiva en `/components/<slug>` con instalación, preview/código, props, a11y y referencia Base UI; sección de formulario en controles; requisitos de hooks/providers; 20 bloques en `/blocks/<categoría>/<slug>` con índice por categoría; rutas antiguas redirigidas y presupuesto actualizado (`D-042`). | `apps/catalog/src/data/docs/**` (46 documentos), `data/blocks/**` (20 documentos), `data/docs/{meta,index,all}.ts`, `components/doc-page.tsx`, `pages/components/{index,primitive}.tsx`, `pages/blocks/{index,block}.tsx`, `App.tsx`, `data/catalog.ts`, `scripts/check-budgets.ts`; `bun run check` (207 tests), `bun run build`, `bun run budget` (263,1/429,6 KB); `D-042`; `R-022`. |
 | `M-003` | Portada editorial del catálogo (`R-021`). | `done` | `/` como landing del sistema con masthead, placa viva, tres registros, índice de piezas, principios, demos e instalación; layout ancho sin sidebar; ES/JA/EN; mismos componentes y tokens; axe sin serious/critical; sin overflow a 1440/1280/1024/390; presupuesto dentro del límite. | `apps/catalog/src/pages/overview.tsx`; `components/landing.tsx` (`SystemPlate`, `RegisterCard`, `EntryCard`, `DemoCard`); `data/inventory.ts` (fuente única de los inventarios); `components/catalog-layout.tsx` (layout ancho y sin pager en `/`); `pages/{pages,i18n}.test.tsx`; `D-041`; `R-021`. |
+| `M-005` | Producción en `koten.codehive.com.co` con una imagen Docker, compose de tres puertos y CI (`R-023`). | `done` | Una imagen Bun + nginx sirve catálogo en `/` (3000), storefront en `/demos/store` (3001) y ERP en `/demos/erp` (3002); los tres routers de Traefik comparten dominio y conservan el prefijo; assets y deep links funcionan; el registry y los comandos shadcn usan el dominio de producción; GitHub Actions publica la imagen en GHCR. | `Dockerfile`; `docker-compose.yml`; `infra/nginx/default.conf`; `.dockerignore`; `.env.example`; `apps/catalog/src/lib/site.ts`; `apps/{storefront,erp}/vite.config.ts`; `apps/erp/src/App.tsx`; `scripts/{build-registry,check-budgets,qa-perf,qa-visual}.ts`; `.github/workflows/ci.yml`; `D-043`. Verificado con `docker build` y `docker compose`: `/`, `/demos/store/`, `/demos/erp/`, `/r/button.json` y deep links responden 200; navegador sin errores; `bun run check` (34 archivos / 209 tests) y `bun run budget` verdes. |
 
 ---
 
@@ -404,6 +405,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-020` | Trazabilidad entre sesiones. | `F0-000`, `AGENTS.md`, `docs/PROGRESS.md` | `done` |
 | `R-021` | Portada editorial del catálogo. | `M-003`, `D-041` | `done` |
 | `R-022` | Documentación individual por componente y bloque, con instalación, preview/código, props, a11y y referencia Base UI. | `M-004`, `D-042` | `done` |
+| `R-023` | Despliegue de producción en un dominio con catálogo, storefront y ERP bajo rutas distintas, imagen Docker y CI. | `M-005`, `D-043` | `done` |
 
 ---
 
@@ -426,6 +428,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `RISK-013` | Los datos mock de las demos divergen del futuro backend. | Medio | Tipos compartidos por app, generador determinista y adaptadores únicos; reemplazar módulos de datos sin tocar componentes. |
 | `RISK-014` | Las ilustraciones SVG no representan el producto final. | Bajo | Assets locales propios y reemplazables; `D-022`; sustituir por fotografía antes de producción sin cambiar la API de los patrones. |
 | `RISK-015` | Un overlay modal o una lista de datos inestable bloquea la interacción de la página. | Alto | `Select` no modal por defecto, dropdown estándar y `DataTable` con identidad estable; tests de regresión y `D-024`; stress en navegador antes de cerrar. |
+| `RISK-016` | El prefijo del proxy y el `base` de Vite se desincronizan y los assets de las demos caen en el catálogo. | Alto | nginx conserva el prefijo y hace fallback por app; `base` de producción probado con `vite preview`, `docker build`, curls a `/demos/{store,erp}/` y navegador; presupuesto acepta cualquier `base`; variables `VITE_*` para cambiar dominio sin tocar código. |
 
 ---
 
@@ -498,3 +501,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Mejora puntual `M-001`: cuerpo del catálogo localizado ES/JA/EN, labels de docs/espécimen, `lang` del documento y auditoría i18n de demos. `D-025`; `bun run check` verde. | Sesión 018 |
 | 2026-10-21 | Mejora puntual `M-002`: source 100% en inglés (comentarios, JSDoc, mensajes y tests) con la documentación intacta en ES/JA/EN; Fundamentos rediseñado como portada con espécimen y previews, sin fases ni IDs internos en el copy visible; `D-040`; `biome.json` ignora `public/r`; `bun run check` (202 tests) y `bun run budget` verdes. | Sesión 031 |
 | 2026-10-21 | Mejora puntual `M-003`: `/` pasa a landing editorial del sistema con placa viva, tres registros, índice de 45+20 piezas, principios, demos e instalación; layout ancho sin sidebar; inventarios compartidos; `D-041` y `R-021`; `bun run check`, `qa:a11y`, `qa:overflow` y `bun run budget` verdes. | Sesión 032 |
+| 2026-10-21 | Mejora puntual `M-005`: producción en `koten.codehive.com.co` con una imagen Bun + nginx, compose de tres puertos y routers de Traefik para `/`, `/demos/store` y `/demos/erp`; `base` de Vite por app, `basename` del ERP, URLs centralizadas, registry y comandos shadcn con el dominio de producción, CI que publica en GHCR. `D-043`, `R-023`, `RISK-016`. | Sesión 034 |

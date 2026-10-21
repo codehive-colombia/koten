@@ -2,7 +2,7 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización y registry shadcn.
+> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5), con despliegue de producción en <https://koten.codehive.com.co> (`M-005`, `D-043`). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización y registry shadcn.
 > **Siguiente:** sin tareas abiertas; el roadmap deja la fase 5 como cierre opcional ya completada.
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
@@ -53,13 +53,44 @@ bun run qa:visual   # capturas 1440/1280/1024 en docs/qa/<fecha>
 bun run registry    # genera el registry shadcn en apps/catalog/public/r
 ```
 
+## Producción
+
+Sitio: **<https://koten.codehive.com.co>**
+
+| Ruta | App | Puerto del contenedor |
+| --- | --- | --- |
+| `/` | catálogo y documentación | 3000 |
+| `/demos/store` | storefront HIKARI | 3001 |
+| `/demos/erp` | ERP KURA | 3002 |
+
+Una sola imagen multi-stage: Bun instala y construye las tres apps; nginx sin privilegios las sirve en los tres puertos. Traefik conserva el prefijo de cada demo, así que los assets viven bajo `/demos/store/` y `/demos/erp/` y no chocan con los del catálogo.
+
+```bash
+# construcción y arranque local
+docker compose up --build -d
+
+# imagen publicada por GitHub Actions (GHCR)
+KOTEN_IMAGE=ghcr.io/<owner>/<repo>:latest docker compose up -d
+```
+
+Variables principales en `.env` (ver `.env.example`): `KOTEN_IMAGE`, `KOTEN_SITE_URL`, `KOTEN_HOST`, los tres puertos de host y el entrypoint/certresolver de Traefik. `docker-compose.yml` incluye las reglas de Traefik para el dominio y las tres rutas; los enlaces públicos del catálogo y el registry se generan con `KOTEN_SITE_URL` (por defecto `https://koten.codehive.com.co`).
+
+El workflow de GitHub Actions publica la imagen en GHCR en `main` y en tags `v*`, y solo la construye en pull requests. El registry de shadcn se regenera dentro de la imagen (`prebuild`), por lo que `/r/*.json` viaja en el mismo contenedor.
+
 ## Registry shadcn
+
+En producción el registry vive en el mismo dominio que el catálogo:
+
+```bash
+# en un proyecto con Tailwind 4 y alias @/*
+npx shadcn@latest add https://koten.codehive.com.co/r/button.json
+```
+
+En local se sirve desde el catálogo de desarrollo:
 
 ```bash
 bun run registry   # genera apps/catalog/public/r/* (también corre en predev/prebuild)
 bun run dev        # sirve http://localhost:5173/r/button.json
-
-# en un proyecto con Tailwind 4 y alias @/*
 npx shadcn@latest add http://localhost:5173/r/button.json
 ```
 
@@ -89,6 +120,9 @@ packages/
     src/styles/tokens.css
     src/styles/globals.css
     src/lib/
+infra/nginx/    # runtime de la imagen de producción
+Dockerfile
+docker-compose.yml
 ```
 
 ## Cómo retomar

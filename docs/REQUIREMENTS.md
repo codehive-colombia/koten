@@ -105,6 +105,8 @@ Las referencias se usan para **extraer principios**, no para copiar píxeles. El
 | `R-019` | Could | Tema oscuro Sumi. | Tema conmutable en fase 5. |
 | `R-020` | Must | Trazabilidad entre sesiones. | Roadmap, bitácora, decisiones y protocolo en el FS. |
 | `R-021` | Should | Portada editorial del catálogo que muestre el sistema antes de navegarlo. | `/` con placa viva de componentes reales, tres registros con `data-theme`, índice de piezas, principios, demos e instalación; ES/JA/EN; sin capturas ni claims de marketing. |
+| `R-022` | Should | Documentación individual por componente y bloque. | Una página por primitiva en `/components/<slug>` y una por bloque en `/blocks/<categoría>/<slug>`, con instalación, preview/código, props, a11y y referencia Base UI. |
+| `R-023` | Must | Despliegue de producción en un dominio con rutas para catálogo, storefront y ERP. | Imagen Docker reproducible, compose de tres puertos, reglas de proxy que conservan el prefijo, URLs públicas y registry correctos, y CI que publica la imagen. |
 
 ## 6. Requisitos no funcionales
 
