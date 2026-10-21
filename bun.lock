@@ -23,6 +23,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@koten/ui": "workspace:*",
+        "lucide-react": "^1.60.0",
         "react": "^19.3.1",
         "react-dom": "^19.3.1",
         "react-router": "7",

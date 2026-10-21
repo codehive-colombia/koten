@@ -3,8 +3,8 @@
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-20**
 > Fase actual: **1 — Primitivas** (`in_progress`)
-> Tarea en curso: **ninguna** — próxima `F1-008`
-> Última tarea completada: **`F1-007`**
+> Tarea en curso: **ninguna** — próxima `F1-009`
+> Última tarea completada: **`F1-008`**
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -168,7 +168,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `F1-005` | Navegación: `Link`, `Breadcrumb`, `Pagination`, `Tabs`, `Accordion`. | `F0-007` | `done` | Foco y teclado; `aria-current`; labels configurables. | `packages/ui/src/components/ui/{link,breadcrumb,pagination,tabs,accordion}.tsx`; tests; página `/components/navigation`; exports. |
 | `F1-006` | Overlays: `Dialog`, `Drawer`, `Menu`, `Popover`, `Tooltip`. | `F1-005` | `done` | Foco atrapado y devuelto; Escape; scroll lock; portales con `isolation: isolate`. | `packages/ui/src/components/ui/{dialog,drawer,menu,popover,tooltip}.tsx`; tests; página `/components/overlays`; exports. |
 | `F1-007` | Datos: `Table`, `DataTable`, `StatCard`, `Sparkline`, `BarChart`. | `F1-005` | `done` | Tabla semántica; sort/selección/paginación; estados vacío/loading; fallback accesible de charts. | `packages/ui/src/components/ui/{table,data-table,stat-card,sparkline,bar-chart}.tsx`; TanStack Table 8.21.3; tests; página `/components/data`; exports. |
-| `F1-008` | Controles: `Toolbar`, `ToggleGroup`, `IconButton`. | `F1-002`, `F1-005` | `todo` | Roving tabindex; `aria-pressed`; grupos de vista/densidad. | — |
+| `F1-008` | Controles: `Toolbar`, `ToggleGroup`, `IconButton`. | `F1-002`, `F1-005` | `done` | Roving tabindex; `aria-pressed`; grupos de vista/densidad. | `packages/ui/src/components/ui/{icon-button,toggle-group,toolbar}.tsx`; tests; página `/components/controls`; exports. |
 | `F1-009` | Catálogo completo de primitivas. | `F1-001`–`F1-008` | `todo` | Cada componente tiene preview, variantes, props, código y notas de a11y. | — |
 | `F1-010` | Pasada de a11y y performance de primitivas. | `F1-009` | `todo` | axe sin serious/critical; foco visible; sin fuentes extra; bundle revisado. | — |
 
@@ -271,7 +271,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-001` | Button | 0 | `done` | primary/secondary/outline/ghost/danger/link; xs–lg; loading; `render`. |
 | `C-002` | Panel | 0 | `done` | header/body/footer; tone; flush para tablas. |
 | `C-003` | Badge | 0 | `done` | tone + appearance; status dot; sale/new. |
-| `C-004` | IconButton | 1 | `todo` | `aria-label` obligatorio; ghost/outline; tamaños. |
+| `C-004` | IconButton | 1 | `done` | `aria-label` obligatorio; ghost/outline; tamaños. |
 | `C-005` | Link | 1 | `done` | Subrayado; externo; foco. |
 | `C-006` | Field | 1 | `done` | Wrapper de Base UI Field; label/description/error. |
 | `C-007` | Input | 1 | `done` | Tamaños; inválido; iconos pendientes. |
@@ -303,12 +303,12 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-033` | Menu | 1 | `done` | Base UI Menu; items/separadores. |
 | `C-034` | Popover | 1 | `done` | Base UI Popover; título y cierre. |
 | `C-035` | Tooltip | 1 | `done` | Base UI Tooltip; delay; side. |
-| `C-036` | Toolbar | 1 | `todo` | Base UI Toolbar; roving focus. |
+| `C-036` | Toolbar | 1 | `done` | Base UI Toolbar; roving focus. |
 | `C-037` | Table | 1 | `done` | Semántica; densidad; header sticky. |
 | `C-038` | DataTable | 1 | `done` | TanStack; sort/selección/paginación; vacío/loading. |
 | `C-039` | StatCard | 1 | `done` | Label/valor/delta/sparkline. |
 | `C-040` | Sparkline / BarChart | 1 | `done` | SVG; fallback accesible. |
-| `C-041` | ToggleGroup | 1 | `todo` | Base UI ToggleGroup; vistas/densidad. |
+| `C-041` | ToggleGroup | 1 | `done` | Base UI ToggleGroup; vistas/densidad. |
 | `C-062` | Label | 1 | `done` | Base UI Label dentro de Field; `htmlFor` independiente; required visual. |
 
 ### Patrones de storefront
@@ -437,3 +437,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Navegación: `Link`, `Breadcrumb`, `Pagination`, `Tabs` y `Accordion` con página `/components/navigation`. `F1-005` → `done`; `C-005`, `C-027`–`C-030` → `done`. | Sesión 009 |
 | 2026-10-21 | Overlays: `Dialog`, `Drawer`, `Menu`, `Popover` y `Tooltip` con página `/components/overlays`. `F1-006` → `done`; `C-031`–`C-035` → `done`. | Sesión 010 |
 | 2026-10-21 | Datos: `Table`, `DataTable` con TanStack, `StatCard`, `Sparkline` y `BarChart` con página `/components/data`. `F1-007` → `done`; `C-037`–`C-040` → `done`. | Sesión 011 |
+| 2026-10-21 | Controles: `IconButton`, `ToggleGroup` y `Toolbar` con página `/components/controls`. `F1-008` → `done`; `C-004`, `C-036` y `C-041` → `done`. | Sesión 012 |

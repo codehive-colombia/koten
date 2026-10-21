@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-007` — datos |
-| Tarea en curso | ninguna — próxima `F1-008` |
+| Última tarea completada | `F1-008` — controles |
+| Tarea en curso | ninguna — próxima `F1-009` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,23 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 012 — Controles
+
+- **Objetivo:** completar `F1-008` con `IconButton`, `ToggleGroup` y `Toolbar`.
+- **Hecho:**
+  - `IconButton` con label accesible obligatorio, tamaños y variantes.
+  - `ToggleGroup` sobre Base UI con `aria-pressed`, múltiple/único y orientación.
+  - `Toolbar` con `ToolbarButton`, grupos y separadores; roving tabindex de Base UI.
+  - Página `/components/controls` con demos de vistas, densidad y acciones; props, código y a11y.
+- **Tareas tocadas:** `F1-008` → `done`; `C-004`, `C-036` y `C-041` → `done`.
+- **Decisiones:** Ninguna nueva. Se agregó `lucide-react` al workspace del catálogo (ya era dependencia de UI).
+- **Evidencia:** `packages/ui/src/components/ui/{icon-button,toggle-group,toolbar}.tsx` + `controls.test.tsx`; `apps/catalog/src/pages/components/controls.tsx`; `bun run check` verde (**20 archivos / 100 tests**).
+- **Sin validar:** axe real (`F1-010`) y lector de pantalla.
+- **Próximo:** `F1-009` — completar el catálogo de primitivas y la trazabilidad.
+- **Bloqueos:** ninguno.
 
 ---
 

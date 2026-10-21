@@ -6,6 +6,7 @@ import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
 import { BadgePage } from "./components/badge";
 import { ButtonPage } from "./components/button";
+import { ControlsPage } from "./components/controls";
 import { DataPage } from "./components/data";
 import { FeedbackPage } from "./components/feedback";
 import { FormsPage } from "./components/forms";
@@ -101,7 +102,7 @@ describe("páginas del catálogo", () => {
 
   it("indexa y documenta los tres componentes", () => {
     const index = renderPage(<ComponentsIndexPage />);
-    expect(screen.getByRole("link", { name: /Button/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Button/ })).toBeInTheDocument();
     index.unmount();
 
     const button = renderPage(<ButtonPage />);
@@ -163,11 +164,18 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("button", { name: "Ver resumen" })).toBeInTheDocument();
     overlays.unmount();
 
-    renderPage(<DataPage />);
+    const data = renderPage(<DataPage />);
     expect(screen.getByRole("heading", { level: 1, name: /Datos/ })).toBeInTheDocument();
     expect(screen.getByRole("table", { name: "Pedidos KURA" })).toBeInTheDocument();
     expect(screen.getByText("Pedidos hoy")).toBeInTheDocument();
     expect(screen.getByRole("table", { name: "Pedidos por día" })).toBeInTheDocument();
+    data.unmount();
+
+    renderPage(<ControlsPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Controles/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Descargar" }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("group", { name: "Vista de pedidos" })).toBeInTheDocument();
+    expect(screen.getByRole("toolbar", { name: "Acciones de pedidos" })).toBeInTheDocument();
   });
 
   it("muestra una página 404 traducida", () => {
