@@ -192,7 +192,7 @@ Las fases 0 a 3 están cerradas: workspace, catálogo wiki, tokens/temas/densida
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
 2. Empezar la fase 4 con `F4-001`: auditoría i18n de las demos y del catálogo.
 3. Seguir el patrón de `Button`/`Panel`/`Badge`, de los formularios y de `packages/ui/src/components/patterns`: CVA, roles semánticos, `data-slot`, tests y página propia en el catálogo.
-4. Mantener la documentación en español (`D-020`) y la UI del catálogo en ES/JA/EN; no traducir el cuerpo de los docs sin una decisión nueva.
+4. Mantener los documentos de trabajo en español (`D-008`) y el cuerpo del catálogo completo en ES/JA/EN (`D-025`); no traducir los `.md` internos sin una decisión nueva.
 5. No saltar a fase 5 sin cerrar la fase 4; registrar cualquier cambio de alcance con `D-*`.
 
 Versiones resueltas en el scaffold: Bun 1.4.3, React 19.3.1, Vite 8.3.4, TypeScript 7.0.2, Tailwind 4.3.3, Base UI 1.9.0, Biome 2.5.15, Vitest 5.0.5.

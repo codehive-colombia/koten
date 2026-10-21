@@ -6,6 +6,7 @@
 > Próxima fase: **4 — Cierre del POC**
 > Tarea en curso: **ninguna** — próxima `F4-001`
 > Última tarea completada: **`F3-009`**
+> Mejora puntual completada: **`M-001`** — i18n del catálogo
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -60,6 +61,7 @@ La prueba de concepto son **dos sitios** —una página de producto y un backoff
 | `D-<nnn>` | Decisión. | `D-003` |
 | `RISK-<nnn>` | Riesgo. | `RISK-001` |
 | `Q-<nnn>` | Decisión pendiente. | `Q-001` |
+| `M-<nnn>` | Mejora puntual fuera de la secuencia de fases. | `M-001` |
 
 **No se renumeran IDs.** Si una tarea se divide, se agregan `F0-001a`, `F0-001b`. Si una decisión se reemplaza, se agrega una nueva con `supersede a D-00x`.
 
@@ -262,6 +264,16 @@ ISO 8601: `YYYY-MM-DD`.
 
 ---
 
+### Mejoras puntuales
+
+> Trabajo fuera de la secuencia de fases. No reemplaza tareas del roadmap; se registra con `M-*` y una decisión si cambia alcance.
+
+| ID | Mejora | Estado | Criterio de aceptación | Evidencia |
+| --- | --- | --- | --- | --- |
+| `M-001` | i18n completo del catálogo y auditoría de las demos. | `done` | Cuerpo de las 25 páginas en ES/JA/EN; labels de `docs.tsx` y `specimen.tsx` localizados; `lang` del documento sigue al locale; demos sin strings hardcodeadas; `bun run check` verde. | Diccionarios por página en `apps/catalog/src/pages/**`; `lib/i18n.ts`; `data/{catalog,tokens}.ts`; `components/{docs,specimen,catalog-layout}.tsx`; `D-025`; test `pages/i18n.test.tsx`; `apps/erp/src/pages/orders.tsx` (label de email); `bun run budget` → catálogo 304,5 KB JS. |
+
+---
+
 ## 6. Inventario de componentes
 
 > Estado inicial: todo `todo`. La fase indica cuándo se implementa, no cuándo se documenta.
@@ -448,3 +460,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |
+| 2026-10-21 | Mejora puntual `M-001`: cuerpo del catálogo localizado ES/JA/EN, labels de docs/espécimen, `lang` del documento y auditoría i18n de demos. `D-025`; `bun run check` verde. | Sesión 018 |

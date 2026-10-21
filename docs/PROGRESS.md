@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 3 — ERP “KURA” (`done`) · próxima fase 4 |
-| Última tarea completada | `F3-009` — fix de interacción |
+| Última tarea completada | `F3-009` · mejora puntual `M-001` |
 | Tarea en curso | ninguna — próxima `F4-001` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`–`Q-010`; `Q-003` cerrada por `D-021`/`D-022` |
@@ -38,6 +38,31 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 018 — i18n completo del catálogo y auditoría de demos
+
+- **Objetivo:** cerrar la deuda de i18n antes de la fase 4: el catálogo traducía la interfaz pero el cuerpo de las páginas seguía en español, y las demos tenían restos de strings y de formato por locale.
+- **Hecho:**
+  - **Cuerpo del catálogo en ES/JA/EN.** Las 25 páginas de documentación (fundamentos, componentes, patrones, portada y 404) usan diccionarios tipados por página (`Record<KotenLocale, Copy>`); el español se conserva literal y JA/EN son traducciones completas. Se localizaron cabeceras, descripciones, secciones, demos, captions, props, listas de a11y y ejemplos.
+  - **Infraestructura:** `apps/catalog/src/lib/i18n.ts` (`Localized<T>`, `pickLocalized`); `data/tokens.ts` localiza `note`, `use`, `context` y `description`; `docs.tsx` traduce Copiar/Copiado y las columnas de props; `specimen.tsx` traduce roles, familias, escalas, densidad y las muestras de tema; `data/catalog.ts` agrega labels de catálogo, 404 y estado de fase 4.
+  - **Idioma del documento:** `syncViewToUrl` fija `document.documentElement.lang` y `CatalogLayout` actualiza `document.title` por página. Las demos ya lo hacían; ERP ahora también actualiza `title` y `meta[description]` al cambiar de idioma.
+  - **Auditoría de demos:** se eliminó el último label hardcodeado (`Email` en el drawer de pedidos) y se corrigió pluralización ES/EN (`artículo(s)`, `item(s)`, `pedido(s)`, `valoración/valoraciones`, `punto(s)`, `review(s)`).
+  - **Números y fechas:** `ProductCard` y `ReviewSummary` formatean rating con `Intl` (antes `toFixed`), y la tabla sr-only de `BarChart` traduce sus encabezados con el locale del provider (`Etiqueta/項目/Label`).
+  - **QA de navegador:** se corrigió un warning real de React (`Encountered two children with the same key`) en `ProductGallery`: las miniaturas aceptan un `id` opcional y el demo del catálogo pasa ids únicos cuando reutiliza el mismo SVG.
+  - **Presupuesto:** el catálogo pasa de 253,6 a 304,5 KB gzip por el contenido trilingüe; el presupuesto interno sube de 300 a 330 KB (`D-025`). Storefront y ERP no cambian.
+  - **Pruebas nuevas:** `apps/catalog/src/pages/i18n.test.tsx` (6 casos: cuerpo JA/EN, tokens, labels de docs, patrones, `lang` del documento y labels de shell); tests de pluralización en ERP/storefront y de la tabla accesible de `BarChart`.
+- **Tareas tocadas:** `M-001` → `done` (mejora puntual, fuera de fases). `F4-001` sigue `todo`: esta sesión resuelve el cuerpo del catálogo, pero la auditoría formal de expansión de texto y RTL corresponde a esa tarea.
+- **Decisiones:** `D-025` (cuerpo del catálogo en ES/JA/EN; los `.md` internos siguen en español).
+- **Evidencia:**
+  - Catálogo: `apps/catalog/src/lib/i18n.ts`, `pages/**` (25 páginas), `components/{docs,specimen,catalog-layout}.tsx`, `data/{catalog,tokens}.ts`, `lib/use-catalog-view.ts`.
+  - Demos/UI: `apps/erp/src/{App.tsx,pages/orders.tsx,data/copy.ts}`, `apps/storefront/src/{pages/product.tsx,content/copy.ts}`, `packages/ui/src/components/{ui/bar-chart.tsx,patterns/product-card.tsx,patterns/review-summary.tsx,patterns/product-gallery.tsx}`.
+  - `bun run check` verde (**29 archivos / 168 tests**); `bun run build` OK; `bun run budget` → storefront 122,3 KB JS · ERP 196,4 KB JS · catálogo 304,5 KB JS · CSS 9,2 KB · 0 fuentes.
+  - Navegador: catálogo ES/JA/EN en `/`, `/tokens/format`, `/patterns/storefront`, `/components/data`, `/components/inputs`; sin clipping a 1440, 768 y 390. Storefront y ERP en JA/EN con `lang`, `title` y drawer localizados.
+- **Sin validar:** lector de pantalla real, RTL y contraste calculado en navegador (quedan en `F4-002`); la traducción JA/EN es funcional y revisable, pero no pasó por hablante nativo.
+- **Próximo:** `F4-001` — auditoría i18n formal (expansión de texto, RTL best-effort); después `F4-002` — a11y.
+- **Bloqueos:** ninguno.
 
 ---
 

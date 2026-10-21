@@ -30,6 +30,7 @@
 - [D-022 · Assets SVG locales del POC](#d-022)
 - [D-023 · Rutas y estado en URL de las demos](#d-023)
 - [D-024 · Select no modal y paginación con identidad estable](#d-024)
+- [D-025 · Cuerpo del catálogo en ES/JA/EN](#d-025)
 
 ---
 
@@ -368,5 +369,22 @@
   - Se agregan tests de regresión para el scroll bloqueado y para conservar la página tras un re-render del padre.
 - **Consecuencias:** Abrir un select o un menú ya no secuestra la página ni el scroll; se puede seguir interactuando con filtros, paginación y navegación. La paginación avanza y conserva el estado. El modo modal sigue disponible para casos que lo necesiten.
 - **Alternativas:** Mantener el modal por defecto (bloquea la página), deshabilitar `Select`/`Menu` (pierde primitivas), copiar `data` pero memoizarla (más asignaciones y todavía frágil), parchear Base UI (dependencia externa).
+
+---
+
+<a id="d-025"></a>
+## D-025 · Cuerpo del catálogo en ES/JA/EN
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** `D-008` fija documentación en español y demos en JA/ES/EN; `D-020` agrega un selector de idioma al catálogo, pero solo traduce la interfaz. Al usar el selector, el cuerpo de las páginas seguía en español: la experiencia quedaba a medias y la propia documentación no probaba la expansión de texto ni los `Intl` en los tres idiomas.
+- **Decisión:** El cuerpo de las páginas del catálogo se localiza completo en **ES/JA/EN** con diccionarios tipados por página (`Localized<T>`); el español es la fuente y las traducciones mantienen la misma forma que el tipo de la versión española. Alcance:
+  - cabeceras, descripciones, metadatos, secciones y prosa;
+  - demos, captions, labels de tablas, listas de a11y y notas de props;
+  - datos de espécimen (`note`, `use`, `context`, `description`) y labels internos de `docs.tsx`/`specimen.tsx`;
+  - `document.documentElement.lang` sigue al locale del catálogo.
+  - Los documentos de trabajo (`README.md`, `ROADMAP.md`, `AGENTS.md`, `docs/*.md`) **siguen en español**: son documentación de mantenimiento, no producto.
+- **Consecuencias:** El catálogo pasa a tener ~3× contenido textual y hay que mantener tres versiones por página; `Record<KotenLocale, Copy>` obliga a que ninguna traducción quede incompleta. Los tests existentes en español siguen siendo la referencia funcional. El presupuesto interno del catálogo sube de 300 a 330 KB gzip (medido: 304,5 KB) por el contenido trilingüe; storefront (122,3 KB) y ERP (196,4 KB) no cambian. No cambia la API de componentes, patrones ni demos.
+- **Alternativas:** Traducir solo títulos y descripciones (insuficiente: el selector sigue pareciendo roto en el cuerpo); traducir también los `.md` internos (mantenimiento doble sin valor para el POC); i18n en runtime (peso y ceremonia innecesarios para tres locales).
 
 ---

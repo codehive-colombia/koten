@@ -47,7 +47,7 @@ bun run budget   # JS/CSS gzip y 0 fuentes locales
 
 ## Estructura
 
-La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas. Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas.
+La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas. Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas. El cuerpo del catálogo está localizado completo en ES/JA/EN (`D-025`).
 
 ```txt
 apps/
