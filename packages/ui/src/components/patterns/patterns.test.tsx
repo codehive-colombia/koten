@@ -81,6 +81,25 @@ describe("patrones de storefront", () => {
     expect(screen.getByRole("img", { name: "Vista superior" })).toBeInTheDocument();
   });
 
+  it("ProductGallery admite imágenes repetidas sin claves duplicadas", () => {
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    render(
+      <ProductGallery
+        label="Galería"
+        images={[
+          { id: "front", src: "/same.svg", alt: "Vista frontal" },
+          { id: "top", src: "/same.svg", alt: "Vista superior" },
+        ]}
+        thumbLabel={(index, alt) => `${index + 1}. ${alt}`}
+      />,
+    );
+
+    expect(screen.getAllByRole("button")).toHaveLength(2);
+    expect(consoleError).not.toHaveBeenCalled();
+    consoleError.mockRestore();
+  });
+
   it("ReviewSummary muestra la distribución y las reseñas", () => {
     render(
       <ReviewSummary

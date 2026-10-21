@@ -2,6 +2,7 @@ import { useState } from "react";
 import { cn } from "../../lib/cn";
 
 export type ProductGalleryImage = {
+  id?: string;
   src: string;
   alt: string;
   width?: number;
@@ -58,7 +59,7 @@ export function ProductGallery({
         <legend className="sr-only">{label}</legend>
         {images.map((item, index) => (
           <button
-            key={item.src}
+            key={item.id ?? item.src}
             type="button"
             aria-label={thumbLabel(index, item.alt)}
             aria-pressed={index === current}
