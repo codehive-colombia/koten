@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import { cn } from "../../lib/cn";
 
 export type BreadcrumbItem = {
@@ -11,10 +11,21 @@ export type BreadcrumbProps = {
   items: readonly BreadcrumbItem[];
   label: string;
   separator?: ReactNode;
+  onNavigate?: (href: string) => void;
   className?: string;
 };
 
-export function Breadcrumb({ items, label, separator = "/", className }: BreadcrumbProps) {
+function isPlainClick(event: ReactMouseEvent<HTMLAnchorElement>) {
+  return event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey;
+}
+
+export function Breadcrumb({
+  items,
+  label,
+  separator = "/",
+  onNavigate,
+  className,
+}: BreadcrumbProps) {
   return (
     <nav aria-label={label} data-slot="breadcrumb" className={cn("min-w-0", className)}>
       <ol className="flex flex-wrap items-center gap-1 text-xs">
@@ -35,6 +46,12 @@ export function Breadcrumb({ items, label, separator = "/", className }: Breadcr
               {item.href && !current ? (
                 <a
                   href={item.href}
+                  onClick={(event) => {
+                    if (onNavigate && isPlainClick(event)) {
+                      event.preventDefault();
+                      onNavigate(item.href as string);
+                    }
+                  }}
                   className="text-link underline decoration-rule-strong underline-offset-2 hover:decoration-link"
                 >
                   {item.label}
