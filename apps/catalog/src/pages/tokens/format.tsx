@@ -187,7 +187,7 @@ export function TokensFormatPage() {
 
         <Section id="comparacion" title={t.comparison.title} jp="比較" meta={t.comparison.meta}>
           <div className="overflow-x-auto border border-rule">
-            <table className="w-full min-w-[40rem] border-collapse text-left">
+            <table className="w-full min-w-[40rem] border-collapse text-start">
               <caption className="sr-only">{t.comparison.caption}</caption>
               <thead>
                 <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">
@@ -197,10 +197,10 @@ export function TokensFormatPage() {
                   <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
                     {t.comparison.date}
                   </th>
-                  <th scope="col" className="px-[var(--koten-control-px)] text-right font-semibold">
+                  <th scope="col" className="px-[var(--koten-control-px)] text-end font-semibold">
                     {t.comparison.currency}
                   </th>
-                  <th scope="col" className="px-[var(--koten-control-px)] text-right font-semibold">
+                  <th scope="col" className="px-[var(--koten-control-px)] text-end font-semibold">
                     {t.comparison.number}
                   </th>
                   <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
@@ -217,10 +217,10 @@ export function TokensFormatPage() {
                     <td className="whitespace-nowrap px-[var(--koten-control-px)] text-xs">
                       {formatDate(snapshotDate, { locale: item.id, timeZone: "UTC" })}
                     </td>
-                    <td className="whitespace-nowrap px-[var(--koten-control-px)] text-right text-xs tabular-nums">
+                    <td className="whitespace-nowrap px-[var(--koten-control-px)] text-end text-xs tabular-nums">
                       {formatCurrency(128000, { locale: item.id })}
                     </td>
-                    <td className="whitespace-nowrap px-[var(--koten-control-px)] text-right text-xs tabular-nums">
+                    <td className="whitespace-nowrap px-[var(--koten-control-px)] text-end text-xs tabular-nums">
                       {formatNumber(1234567, { locale: item.id })}
                     </td>
                     <td className="whitespace-nowrap px-[var(--koten-control-px)] text-xs">
@@ -237,7 +237,7 @@ export function TokensFormatPage() {
           <SubHeading>{t.rules.heading}</SubHeading>
           <ul className="mt-[var(--koten-gap)] grid gap-[var(--koten-gap)] text-xs text-muted sm:grid-cols-2">
             {t.rules.items.map((rule) => (
-              <li key={rule} className="border-l-2 border-primary pl-2">
+              <li key={rule} className="border-s-2 border-primary ps-2">
                 {rule}
               </li>
             ))}

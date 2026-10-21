@@ -140,7 +140,7 @@ export function PropsTable({
 
   return (
     <div className="mt-[var(--koten-gap)] overflow-x-auto border border-rule">
-      <table className="w-full min-w-[32rem] border-collapse text-left">
+      <table className="w-full min-w-[32rem] border-collapse text-start">
         <caption className="sr-only">{caption}</caption>
         <thead>
           <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">
@@ -187,7 +187,7 @@ export function List({ items, label }: { items: readonly string[]; label: string
       className="mt-[var(--koten-gap)] grid gap-[var(--koten-gap)] text-xs text-muted sm:grid-cols-2"
     >
       {items.map((item) => (
-        <li key={item} className="border-l-2 border-primary pl-2">
+        <li key={item} className="border-s-2 border-primary ps-2">
           {item}
         </li>
       ))}

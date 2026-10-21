@@ -2,10 +2,10 @@
 
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-21**
-> Fase actual: **3 — ERP “KURA”** (`done`)
-> Próxima fase: **4 — Cierre del POC**
-> Tarea en curso: **ninguna** — próxima `F4-001`
-> Última tarea completada: **`F3-009`**
+> Fase actual: **4 — Cierre del POC** (`in_progress`)
+> Próxima tarea: **`F4-002`** — auditoría a11y
+> Tarea en curso: **ninguna**
+> Última tarea completada: **`F4-001`**
 > Mejora puntual completada: **`M-001`** — i18n del catálogo
 > Bloqueos: **ninguno**
 
@@ -103,6 +103,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-018` | CI en GitHub Actions + `bun run ci` local. | accepted | [D-018](./docs/DECISIONS.md#d-018) |
 | `D-019` | Catálogo wiki multipágina con React Router 7 y sidebar. | accepted | [D-019](./docs/DECISIONS.md#d-019) |
 | `D-020` | UI del catálogo en ES/JA/EN; documentación en español. | accepted | [D-020](./docs/DECISIONS.md#d-020) |
+| `D-026` | RTL best-effort con propiedades lógicas y guardia de i18n. | accepted | [D-026](./docs/DECISIONS.md#d-026) |
 
 ---
 
@@ -235,11 +236,11 @@ ISO 8601: `YYYY-MM-DD`.
 
 ### Fase 4 — Cierre del POC
 
-**Estado:** `todo` · **Objetivo:** dejar el POC auditable, medible y retomable.
+**Estado:** `in_progress` · **Objetivo:** dejar el POC auditable, medible y retomable.
 
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
-| `F4-001` | Auditoría i18n: strings, labels, `Intl`, expansión de texto y RTL best-effort. | `F2-007`, `F3-008` | `todo` | Sin strings hardcodeadas; ES/EN sin clipping; fechas/moneda correctas. | — |
+| `F4-001` | Auditoría i18n: strings, labels, `Intl`, expansión de texto y RTL best-effort. | `F2-007`, `F3-008` | `done` | Sin strings hardcodeadas; ES/EN sin clipping; fechas/moneda correctas. | `scripts/check-i18n.ts` + test (30 archivos / 177 tests); badge `NEW` y ratings a `formatNumber`/`formatCurrency`; utilidades físicas → lógicas en 25 archivos; `scripts/qa-overflow.ts` → 72 combinaciones sin desbordamiento/recorte, RTL incluido; `D-026`; `Q-010` cerrada. |
 | `F4-002` | Auditoría a11y: axe, teclado, contraste y lector de pantalla. | `F4-001` | `todo` | AA; foco visible; 12 px mínimo; sin serious/critical. | — |
 | `F4-003` | Auditoría performance: bundles, fuentes, LCP/CLS y code splitting. | `F4-001` | `todo` | Presupuestos de la sección 4 cumplidos. | — |
 | `F4-004` | QA visual en 1440/1280/1024 para catálogo, storefront y ERP. | `F4-001` | `todo` | Capturas archivadas; diferencias corregidas. | — |
@@ -419,7 +420,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `Q-007` | ¿Proveedor de CI? | `decided` — `D-018` | `F0-008` |
 | `Q-008` | ¿Publicar `@koten/ui`? | `open` (propuesta: no en v1) | `F5-007` |
 | `Q-009` | ¿Estilos de impresión para specs/facturas? | `open` | `F4-005` |
-| `Q-010` | ¿Nivel de soporte RTL? | `open` (propuesta: best-effort con propiedades lógicas) | `F4-001` |
+| `Q-010` | ¿Nivel de soporte RTL? | `decided` — `D-026` | `F4-001` |
 
 ---
 
@@ -457,6 +458,7 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Controles: `IconButton`, `ToggleGroup` y `Toolbar` con página `/components/controls`. `F1-008` → `done`; `C-004`, `C-036` y `C-041` → `done`. | Sesión 012 |
 | 2026-10-21 | Catálogo completo de primitivas: inventario C-001–C-041 + C-062, enlaces, copiar código y trazabilidad. `F1-009` → `done`. | Sesión 013 |
 | 2026-10-21 | A11y/performance: axe en 11 páginas, `bun run budget` con presupuestos de JS/CSS/fuentes, foco visible y QA visual. `F1-010` → `done`; **fase 1 → `done`**. Próxima: `F2-001`. | Sesión 014 |
+| 2026-10-21 | Auditoría i18n: guardia automática (`check:i18n`) de strings, labels, `Intl` y utilidades físicas; ratings y badge localizados; migración a propiedades lógicas; QA de expansión y RTL en 72 combinaciones. `F4-001` → `done`; `D-026`; **fase 4 → `in_progress`**. Próxima: `F4-002`. | Sesión 019 |
 | 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |

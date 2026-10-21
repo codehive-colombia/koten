@@ -36,9 +36,7 @@ export function Meter({
       className={cn("grid w-full grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-1", className)}
     >
       <BaseMeter.Label className="text-xs font-semibold text-ink">{label}</BaseMeter.Label>
-      {showValue ? (
-        <BaseMeter.Value className="text-right text-2xs tabular-nums text-muted" />
-      ) : null}
+      {showValue ? <BaseMeter.Value className="text-end text-2xs tabular-nums text-muted" /> : null}
       <BaseMeter.Track className="col-span-2 h-2 overflow-hidden rounded-sm border border-rule bg-tint">
         <BaseMeter.Indicator
           className={cn("h-full transition-[width] duration-200", indicatorTones[tone])}

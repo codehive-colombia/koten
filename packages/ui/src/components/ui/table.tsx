@@ -6,7 +6,7 @@ export function Table({ className, ...props }: ComponentProps<"table">) {
     <div className="w-full min-w-0 overflow-x-auto border border-rule">
       <table
         data-slot="table"
-        className={cn("w-full min-w-[32rem] border-collapse text-left text-xs", className)}
+        className={cn("w-full min-w-[32rem] border-collapse text-start text-xs", className)}
         {...props}
       />
     </div>

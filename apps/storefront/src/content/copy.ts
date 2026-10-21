@@ -1,4 +1,4 @@
-import type { KotenLocale } from "@koten/ui";
+import { formatNumber, type KotenLocale } from "@koten/ui";
 
 export type StoreCopy = {
   meta: {
@@ -30,6 +30,7 @@ export type StoreCopy = {
   };
   buy: {
     panelTitle: string;
+    newBadge: string;
     brandLine: string;
     tagline: string;
     rating: (value: number) => string;
@@ -131,10 +132,11 @@ const spanish: StoreCopy = {
   },
   buy: {
     panelTitle: "Compra",
+    newBadge: "Novedad",
     brandLine: "HIKARI · Cámara compacta 35 mm",
     tagline: "Una cámara silenciosa para la vida diaria.",
     rating: (value) =>
-      `Valoración ${value.toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
+      `Valoración ${formatNumber(value, { locale: "es", minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
     reviews: (count) => `${count} ${count === 1 ? "valoración" : "valoraciones"}`,
     colorLabel: "Color",
     kitLabel: "Conjunto",
@@ -152,7 +154,7 @@ const spanish: StoreCopy = {
     warrantyValue: "1 año",
     taxIncluded: "IVA incluido",
     listPriceLabel: "Precio anterior",
-    points: (points) => `${points.toLocaleString("es-ES")} punto${points === 1 ? "" : "s"}`,
+    points: (points) => `${formatNumber(points, { locale: "es" })} punto${points === 1 ? "" : "s"}`,
     note: "Las imágenes son orientativas. Las especificaciones pueden cambiar sin previo aviso.",
     addedTitle: "Añadido al carrito",
     addedDescription: (name, quantity) => `${name} · ${quantity} unidad(es).`,
@@ -179,7 +181,7 @@ const spanish: StoreCopy = {
   },
   reviews: {
     rating: (value) =>
-      `Valoración ${value.toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
+      `Valoración ${formatNumber(value, { locale: "es", minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
     count: (count) => `${count} ${count === 1 ? "valoración" : "valoraciones"}`,
     distribution: "Distribución",
     verified: "Compra verificada",
@@ -285,10 +287,11 @@ const japanese: StoreCopy = {
   },
   buy: {
     panelTitle: "ご購入",
+    newBadge: "新着",
     brandLine: "HIKARI · 35mmコンパクトカメラ",
     tagline: "日常に寄り添う、静かな一台。",
     rating: (value) =>
-      `5点満点中${value.toLocaleString("ja-JP", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
+      `5点満点中${formatNumber(value, { locale: "ja", minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
     reviews: (count) => `${count}件のレビュー`,
     colorLabel: "カラー",
     kitLabel: "セット",
@@ -306,7 +309,7 @@ const japanese: StoreCopy = {
     warrantyValue: "1年間",
     taxIncluded: "税込",
     listPriceLabel: "通常価格",
-    points: (points) => `${points.toLocaleString("ja-JP")}ポイント`,
+    points: (points) => `${formatNumber(points, { locale: "ja" })}ポイント`,
     note: "※ 画像はイメージです。仕様は予告なく変更される場合があります。",
     addedTitle: "カートに追加しました",
     addedDescription: (name, quantity) => `${name} · ${quantity}点。`,
@@ -329,7 +332,7 @@ const japanese: StoreCopy = {
   },
   reviews: {
     rating: (value) =>
-      `5点満点中${value.toLocaleString("ja-JP", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
+      `5点満点中${formatNumber(value, { locale: "ja", minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
     count: (count) => `${count}件のレビュー`,
     distribution: "評価の内訳",
     verified: "購入済み",
@@ -435,10 +438,11 @@ const english: StoreCopy = {
   },
   buy: {
     panelTitle: "Purchase",
+    newBadge: "New",
     brandLine: "HIKARI · 35 mm compact camera",
     tagline: "A quiet camera for everyday life.",
     rating: (value) =>
-      `Rated ${value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
+      `Rated ${formatNumber(value, { locale: "en", minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
     reviews: (count) => `${count} review${count === 1 ? "" : "s"}`,
     colorLabel: "Colour",
     kitLabel: "Kit",
@@ -456,7 +460,7 @@ const english: StoreCopy = {
     warrantyValue: "1 year",
     taxIncluded: "Tax included",
     listPriceLabel: "List price",
-    points: (points) => `${points.toLocaleString("en-US")} point${points === 1 ? "" : "s"}`,
+    points: (points) => `${formatNumber(points, { locale: "en" })} point${points === 1 ? "" : "s"}`,
     note: "Images are for illustration. Specifications may change without notice.",
     addedTitle: "Added to cart",
     addedDescription: (name, quantity) => `${name} · ${quantity} item(s).`,
@@ -483,7 +487,7 @@ const english: StoreCopy = {
   },
   reviews: {
     rating: (value) =>
-      `Rated ${value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
+      `Rated ${formatNumber(value, { locale: "en", minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
     count: (count) => `${count} review${count === 1 ? "" : "s"}`,
     distribution: "Rating breakdown",
     verified: "Verified purchase",

@@ -9,11 +9,11 @@
 | Campo | Valor |
 | --- | --- |
 | Fecha | 2026-10-21 |
-| Fase | 3 — ERP “KURA” (`done`) · próxima fase 4 |
-| Última tarea completada | `F3-009` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F4-001` |
+| Fase | 4 — Cierre del POC (`in_progress`) |
+| Última tarea completada | `F4-001` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F4-002` |
 | Bloqueos | ninguno |
-| Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`–`Q-010`; `Q-003` cerrada por `D-021`/`D-022` |
+| Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`, `Q-009`; `Q-003` cerrada por `D-021`/`D-022` y `Q-010` por `D-026` |
 
 ## Cómo registrar una sesión
 
@@ -38,6 +38,27 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 019 — Auditoría i18n y RTL best-effort
+
+- **Objetivo:** cerrar `F4-001` con una guardia automática de i18n, la auditoría de las demos y del catálogo, y una prueba objetiva de expansión de texto y RTL.
+- **Hecho:**
+  - **Guardia `bun run check:i18n`** (`scripts/check-i18n.ts`): detecta texto visible hardcodeado en el JSX de las demos, labels accesibles literales (`aria-label`, `placeholder`, `title`, `alt`), formateo fuera de `Intl` del provider (`toLocaleString`, `toLocaleDateString`, `toLocaleTimeString`, `toFixed`) y utilidades/propiedades físicas. Tiene excepción explícita `// i18n-allow: <regla> <motivo>` y 9 tests propios. Integrada en `bun run check`.
+  - **Hallazgos corregidos:** el badge `NEW` del buy box estaba hardcodeado (ahora `copy.buy.newBadge` en JA/ES/EN); los ratings y puntos de `apps/storefront/src/content/copy.ts` usaban `toLocaleString("es-ES"|"ja-JP"|"en-US")` y pasaron a `formatNumber` con el locale del diccionario; el demo de datos del catálogo usaba `¥${value.toLocaleString(...)}` y pasó a `formatCurrency`; los ratings del demo de patrones usan `formatNumber`.
+  - **RTL best-effort (`D-026`, cierra `Q-010`):** 25 archivos migrados de utilidades físicas a lógicas (`text-start`/`text-end`, `ps`/`pe`, `border-s`, `start`); no quedan propiedades CSS físicas. La guardia evita regresiones.
+  - **QA de expansión y RTL** (`scripts/qa-overflow.ts`): Chromium headless vía CDP mide `scrollWidth`, elementos recortados (`overflow: hidden|clip`) y elipsis, y repite la medición con `dir="rtl"`. Resultado: **72 combinaciones** (catálogo 4 rutas, storefront 1, ERP 3 × 3 idiomas × 1440/1024/390) sin desbordamiento ni recorte, LTR y RTL.
+- **Tareas tocadas:** `F4-001` → `done`; **fase 4 → `in_progress`**.
+- **Decisiones:** `D-026` (RTL best-effort con propiedades lógicas); `Q-010` cerrada.
+- **Evidencia:**
+  - Guardia: `scripts/check-i18n.ts`, `scripts/check-i18n.test.ts`, `package.json` (`check:i18n` dentro de `check`), `vitest.config.ts`.
+  - QA: `scripts/qa-overflow.ts`; salida `qa: 72 combinaciones sin desbordamiento ni recorte`.
+  - Código: `apps/storefront/src/content/copy.ts`, `apps/storefront/src/pages/product.tsx`, `apps/catalog/src/pages/components/data.tsx`, `apps/catalog/src/pages/patterns/storefront.tsx`, `packages/ui/src/components/**`.
+  - `bun run check` verde (**30 archivos / 177 tests**); `bun scripts/check-i18n.ts` → `137 archivos revisados, sin hallazgos`.
+- **Sin validar:** hablante nativo JA/EN; RTL visual completo (iconos direccionales, gráficos, `Tategaki`) queda fuera de la v1.
+- **Próximo:** `F4-002` — auditoría a11y (axe en navegador, contraste calculado, teclado y lector de pantalla).
+- **Bloqueos:** ninguno.
 
 ---
 

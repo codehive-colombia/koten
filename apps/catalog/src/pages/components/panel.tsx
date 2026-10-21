@@ -217,9 +217,9 @@ export function PanelPage() {
                 <p className="text-xs text-muted">{t.orders.body}</p>
                 <dl className="mt-[var(--koten-gap)] grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-2xs">
                   <dt className="text-faint">{t.orders.pending}</dt>
-                  <dd className="text-right font-semibold tabular-nums">4</dd>
+                  <dd className="text-end font-semibold tabular-nums">4</dd>
                   <dt className="text-faint">{t.orders.shipped}</dt>
-                  <dd className="text-right font-semibold tabular-nums">8</dd>
+                  <dd className="text-end font-semibold tabular-nums">8</dd>
                 </dl>
               </PanelBody>
               <PanelFooter>
@@ -239,7 +239,7 @@ export function PanelPage() {
                 </PanelActions>
               </PanelHeader>
               <PanelBody flush>
-                <table className="w-full border-collapse text-left text-xs">
+                <table className="w-full border-collapse text-start text-xs">
                   <thead>
                     <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">
                       <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
@@ -247,7 +247,7 @@ export function PanelPage() {
                       </th>
                       <th
                         scope="col"
-                        className="px-[var(--koten-control-px)] text-right font-semibold"
+                        className="px-[var(--koten-control-px)] text-end font-semibold"
                       >
                         {t.stock.units}
                       </th>
@@ -266,7 +266,7 @@ export function PanelPage() {
                         >
                           {sku}
                         </th>
-                        <td className="px-[var(--koten-control-px)] text-right tabular-nums text-warning">
+                        <td className="px-[var(--koten-control-px)] text-end tabular-nums text-warning">
                           {units}
                         </td>
                       </tr>

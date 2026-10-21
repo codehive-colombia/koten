@@ -3,6 +3,7 @@ import {
   BarChart,
   DataTable,
   type DataTableColumn,
+  formatCurrency,
   type KotenLocale,
   Sparkline,
   StatCard,
@@ -486,7 +487,7 @@ const copyByLocale: Record<KotenLocale, Copy> = copy;
 export function DataPage() {
   const { locale } = useKoten();
   const t = copyByLocale[locale];
-  const formatYen = (value: number) => `¥${value.toLocaleString(t.numberLocale)}`;
+  const formatYen = (value: number) => formatCurrency(value, { maximumFractionDigits: 0 });
   const chartData = t.chart.days.map((label, index) => ({
     label,
     value: chartValues[index] ?? 0,
@@ -542,7 +543,7 @@ export function DataPage() {
               <TableRow>
                 <TableHead>{t.table.order}</TableHead>
                 <TableHead>{t.table.customer}</TableHead>
-                <TableHead className="text-right">{t.table.total}</TableHead>
+                <TableHead className="text-end">{t.table.total}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -550,9 +551,7 @@ export function DataPage() {
                 <TableRow key={order.id}>
                   <TableCell className="font-mono text-2xs">{order.id}</TableCell>
                   <TableCell>{order.customer}</TableCell>
-                  <TableCell className="text-right tabular-nums">
-                    {formatYen(order.total)}
-                  </TableCell>
+                  <TableCell className="text-end tabular-nums">{formatYen(order.total)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -483,11 +483,11 @@ export function OverlaysPage() {
             >
               <dl className="grid grid-cols-[1fr_auto] gap-x-3 gap-y-1">
                 <dt>{t.popover.tokyo}</dt>
-                <dd className="text-right tabular-nums">52</dd>
+                <dd className="text-end tabular-nums">52</dd>
                 <dt>{t.popover.osaka}</dt>
-                <dd className="text-right tabular-nums">18</dd>
+                <dd className="text-end tabular-nums">18</dd>
                 <dt>{t.popover.sapporo}</dt>
-                <dd className="text-right tabular-nums">4</dd>
+                <dd className="text-end tabular-nums">4</dd>
               </dl>
             </Popover>
           </Demo>

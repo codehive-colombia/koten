@@ -269,15 +269,15 @@ export function OrderFormPage({ copy, locale }: { copy: ErpCopy; locale: KotenLo
               <PanelBody>
                 <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 text-2xs">
                   <dt className="text-faint">{copy.form.fields.customer}</dt>
-                  <dd className="text-right text-ink">
+                  <dd className="text-end text-ink">
                     {customer ? pick(customer.company, locale) : "—"}
                   </dd>
                   <dt className="text-faint">{copy.form.fields.channel}</dt>
-                  <dd className="text-right text-ink">{copy.channel[values.channel]}</dd>
+                  <dd className="text-end text-ink">{copy.channel[values.channel]}</dd>
                   <dt className="text-faint">{copy.form.fields.warehouse}</dt>
-                  <dd className="text-right text-ink">{copy.warehouse[values.warehouse]}</dd>
+                  <dd className="text-end text-ink">{copy.warehouse[values.warehouse]}</dd>
                   <dt className="text-faint">{copy.form.fields.dueDate}</dt>
-                  <dd className="text-right tabular-nums text-ink">
+                  <dd className="text-end tabular-nums text-ink">
                     {values.dueDate
                       ? formatters.formatDate(`${values.dueDate}T00:00:00Z`, {
                           year: "numeric",
@@ -288,7 +288,7 @@ export function OrderFormPage({ copy, locale }: { copy: ErpCopy; locale: KotenLo
                       : "—"}
                   </dd>
                   <dt className="text-faint">{copy.form.fields.notify}</dt>
-                  <dd className="text-right text-ink">{values.notify ? "✓" : "—"}</dd>
+                  <dd className="text-end text-ink">{values.notify ? "✓" : "—"}</dd>
                 </dl>
                 <p className="mt-[var(--koten-gap)] border-t border-rule pt-2 text-2xs leading-relaxed text-muted">
                   {copy.form.summary.description}

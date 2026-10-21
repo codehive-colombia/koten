@@ -2,6 +2,7 @@ import {
   Badge,
   CampaignBanner,
   Footer,
+  formatNumber,
   type KotenLocale,
   NoticeList,
   PriceBlock,
@@ -153,7 +154,7 @@ const copy = {
     reviewsSectionMeta: "Promedio, distribución y reseñas",
     distributionLabel: "Distribución",
     ratingLabel: (value: number) =>
-      `Valoración ${value.toLocaleString("es-ES", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
+      `Valoración ${formatNumber(value, { locale: "es", minimumFractionDigits: 1, maximumFractionDigits: 1 })} de 5`,
     countLabel: (count: number) => `${count} valoraciones`,
     verifiedLabel: "Compra verificada",
     reviewsEmpty: "Sin reseñas",
@@ -425,7 +426,7 @@ const copy = {
     reviewsSectionMeta: "平均、分布、レビュー",
     distributionLabel: "分布",
     ratingLabel: (value: number) =>
-      `5 段階中 ${value.toLocaleString("ja-JP", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
+      `5 段階中 ${formatNumber(value, { locale: "ja", minimumFractionDigits: 1, maximumFractionDigits: 1 })}`,
     countLabel: (count: number) => `${count} 件のレビュー`,
     verifiedLabel: "購入済み",
     reviewsEmpty: "レビューはありません",
@@ -697,7 +698,7 @@ const copy = {
     reviewsSectionMeta: "Average, distribution and reviews",
     distributionLabel: "Distribution",
     ratingLabel: (value: number) =>
-      `${value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
+      `${formatNumber(value, { locale: "en", minimumFractionDigits: 1, maximumFractionDigits: 1 })} out of 5`,
     countLabel: (count: number) => `${count} reviews`,
     verifiedLabel: "Verified purchase",
     reviewsEmpty: "No reviews",

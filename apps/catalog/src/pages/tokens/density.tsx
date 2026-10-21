@@ -80,7 +80,7 @@ export function TokensDensityPage() {
       <div className="mt-[calc(var(--koten-gap)*2)] space-y-[calc(var(--koten-gap)*2)]">
         <Section id="valores" title={t.values.title} jp="値" meta={t.values.meta}>
           <div className="overflow-x-auto border border-rule">
-            <table className="w-full min-w-[36rem] border-collapse text-left">
+            <table className="w-full min-w-[36rem] border-collapse text-start">
               <caption className="sr-only">{t.values.caption}</caption>
               <thead>
                 <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">

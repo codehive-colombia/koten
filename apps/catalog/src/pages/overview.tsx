@@ -234,7 +234,7 @@ export function OverviewPage() {
             <ul className="divide-y divide-rule border-y border-rule text-xs">
               {t.principles.map((principle, index) => (
                 <li key={principle} className="flex min-h-[var(--koten-row-h)] items-center gap-3">
-                  <span className="w-5 shrink-0 text-right font-mono text-2xs text-faint">
+                  <span className="w-5 shrink-0 text-end font-mono text-2xs text-faint">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="text-muted">{principle}</span>
@@ -257,11 +257,11 @@ export function OverviewPage() {
             <p className="text-xs text-muted">{t.statusBody}</p>
             <dl className="mt-[var(--koten-gap)] grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-2xs">
               <dt className="text-faint">{t.themes}</dt>
-              <dd className="text-right">{t.themesValue}</dd>
+              <dd className="text-end">{t.themesValue}</dd>
               <dt className="text-faint">{t.densities}</dt>
-              <dd className="text-right">{t.densitiesValue}</dd>
+              <dd className="text-end">{t.densitiesValue}</dd>
               <dt className="text-faint">{t.languages}</dt>
-              <dd className="text-right">{t.languagesValue}</dd>
+              <dd className="text-end">{t.languagesValue}</dd>
             </dl>
             <Link
               to="/tokens"
@@ -276,7 +276,7 @@ export function OverviewPage() {
         </Panel>
       </div>
 
-      <div className="mt-[calc(var(--koten-gap)*2)] border-l-2 border-primary bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
+      <div className="mt-[calc(var(--koten-gap)*2)] border-s-2 border-primary bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
         <strong className="text-ink">{t.noteStrong}</strong> {t.noteBody}
       </div>
     </div>

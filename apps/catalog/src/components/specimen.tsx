@@ -200,7 +200,7 @@ export function RoleTable({ roles }: { roles: readonly SemanticRole[] }) {
 
   return (
     <div className="overflow-x-auto border border-rule">
-      <table className="w-full min-w-[40rem] border-collapse text-left">
+      <table className="w-full min-w-[40rem] border-collapse text-start">
         <caption className="sr-only">{labels.roleCaption}</caption>
         <thead>
           <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">
@@ -294,7 +294,7 @@ export function TypeScale({
           <span className="min-w-0 flex-1 leading-tight" style={{ fontSize: `var(${item.token})` }}>
             情報の密度 · {labels.densitySample}
           </span>
-          <span className="w-full shrink-0 text-right text-2xs text-muted sm:w-48">
+          <span className="w-full shrink-0 text-end text-2xs text-muted sm:w-48">
             {item.px} px · {pickLocalized(item.use, locale)}
           </span>
         </li>
@@ -314,7 +314,7 @@ export function ValueTable({
 }) {
   return (
     <div className="overflow-x-auto border border-rule">
-      <table className="w-full min-w-[28rem] border-collapse text-left">
+      <table className="w-full min-w-[28rem] border-collapse text-start">
         <caption className="sr-only">{caption}</caption>
         <thead>
           <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">
@@ -355,7 +355,7 @@ export function SpacingScale({ values }: { values: readonly number[] }) {
     <ul className="divide-y divide-rule border-y border-rule">
       {values.map((value) => (
         <li key={value} className="flex min-h-[var(--koten-row-h)] items-center gap-3 py-1">
-          <span className="w-10 shrink-0 text-right font-mono text-2xs text-muted">{value}</span>
+          <span className="w-10 shrink-0 text-end font-mono text-2xs text-muted">{value}</span>
           <span
             aria-hidden="true"
             className="h-2 shrink-0 bg-primary"
@@ -515,11 +515,11 @@ export function ThemeCard({
         </div>
         <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t border-rule pt-2 text-2xs">
           <dt className="text-faint">{labels.price}</dt>
-          <dd className="text-right font-semibold tabular-nums text-primary">¥128,000</dd>
+          <dd className="text-end font-semibold tabular-nums text-primary">¥128,000</dd>
           <dt className="text-faint">{labels.tax}</dt>
-          <dd className="text-right tabular-nums text-muted">{labels.taxIncluded}</dd>
+          <dd className="text-end tabular-nums text-muted">{labels.taxIncluded}</dd>
           <dt className="text-faint">{labels.stock}</dt>
-          <dd className="text-right text-success">{labels.inStock}</dd>
+          <dd className="text-end text-success">{labels.inStock}</dd>
         </dl>
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           <span className="border border-success bg-surface px-1.5 py-0.5 text-2xs text-success">

@@ -137,7 +137,7 @@ function Pager({ locale, pathname }: { locale: KotenLocale; pathname: string }) 
       {next ? (
         <NavLink
           to={next.path}
-          className="flex flex-col gap-0.5 border border-rule bg-surface p-[var(--koten-panel-p)] text-right no-underline transition-colors hover:bg-tint"
+          className="flex flex-col gap-0.5 border border-rule bg-surface p-[var(--koten-panel-p)] text-end no-underline transition-colors hover:bg-tint"
         >
           <span className="text-2xs text-faint">{labels.next} →</span>
           <span className="text-xs font-semibold text-ink">{next.label[locale]}</span>
@@ -189,7 +189,7 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
       <a
         href="#contenido"
         lang={view.locale}
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:border focus:border-primary focus:bg-surface focus:px-3 focus:py-2 focus:text-xs focus:font-semibold"
+        className="sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50 focus:border focus:border-primary focus:bg-surface focus:px-3 focus:py-2 focus:text-xs focus:font-semibold"
       >
         {labels.skipToContent}
       </a>

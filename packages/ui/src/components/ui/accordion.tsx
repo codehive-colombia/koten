@@ -44,7 +44,7 @@ export function Accordion({
           className="border-b border-rule last:border-b-0"
         >
           <BaseAccordion.Header>
-            <BaseAccordion.Trigger className="group flex min-h-[var(--koten-row-h)] w-full items-center justify-between gap-3 px-[var(--koten-panel-p)] text-left text-xs font-semibold text-ink transition-colors hover:bg-tint focus-visible:relative focus-visible:z-1 data-disabled:cursor-not-allowed data-disabled:text-faint data-panel-open:text-primary">
+            <BaseAccordion.Trigger className="group flex min-h-[var(--koten-row-h)] w-full items-center justify-between gap-3 px-[var(--koten-panel-p)] text-start text-xs font-semibold text-ink transition-colors hover:bg-tint focus-visible:relative focus-visible:z-1 data-disabled:cursor-not-allowed data-disabled:text-faint data-panel-open:text-primary">
               <span className="min-w-0">{item.title}</span>
               <ChevronDown
                 className="size-3.5 shrink-0 transition-transform group-data-[panel-open]:rotate-180"

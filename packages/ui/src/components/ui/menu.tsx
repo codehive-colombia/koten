@@ -53,7 +53,7 @@ export function Menu({ trigger, items, modal = false, className }: MenuProps) {
 
 function MenuItem({ item }: { item: MenuItem }) {
   const className =
-    "flex min-h-[var(--koten-row-h)] w-full items-center rounded-sm px-[var(--koten-control-px)] text-left text-xs text-ink outline-hidden select-none data-disabled:cursor-not-allowed data-disabled:text-faint data-highlighted:bg-tint data-highlighted:text-primary";
+    "flex min-h-[var(--koten-row-h)] w-full items-center rounded-sm px-[var(--koten-control-px)] text-start text-xs text-ink outline-hidden select-none data-disabled:cursor-not-allowed data-disabled:text-faint data-highlighted:bg-tint data-highlighted:text-primary";
 
   if (item.href) {
     return (

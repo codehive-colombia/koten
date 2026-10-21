@@ -37,7 +37,7 @@ export function Progress({
     >
       <BaseProgress.Label className="text-xs font-semibold text-ink">{label}</BaseProgress.Label>
       {showValue ? (
-        <BaseProgress.Value className="text-right text-2xs tabular-nums text-muted" />
+        <BaseProgress.Value className="text-end text-2xs tabular-nums text-muted" />
       ) : null}
       <BaseProgress.Track className="col-span-2 h-2 overflow-hidden rounded-sm border border-rule bg-tint">
         <BaseProgress.Indicator

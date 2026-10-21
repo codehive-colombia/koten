@@ -76,7 +76,7 @@ export function Select({
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy || undefined}
           aria-required={required || undefined}
-          className="flex h-[var(--koten-control-h)] w-full min-w-0 items-center justify-between gap-2 rounded-sm border border-rule-strong bg-surface px-[var(--koten-control-px)] text-left text-sm text-ink transition-colors select-none focus-visible:border-primary aria-invalid:border-danger data-disabled:cursor-not-allowed data-disabled:bg-tint data-disabled:text-muted data-popup-open:border-primary"
+          className="flex h-[var(--koten-control-h)] w-full min-w-0 items-center justify-between gap-2 rounded-sm border border-rule-strong bg-surface px-[var(--koten-control-px)] text-start text-sm text-ink transition-colors select-none focus-visible:border-primary aria-invalid:border-danger data-disabled:cursor-not-allowed data-disabled:bg-tint data-disabled:text-muted data-popup-open:border-primary"
         >
           <BaseSelect.Value
             data-slot="select-value"

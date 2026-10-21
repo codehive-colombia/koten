@@ -28,14 +28,14 @@ export function SpecTable({ groups, caption, className }: SpecTableProps) {
             {group.title}
           </h3>
           <div className="overflow-x-auto border border-t-0 border-rule">
-            <table className="w-full min-w-[24rem] border-collapse text-left">
+            <table className="w-full min-w-[24rem] border-collapse text-start">
               <caption className="sr-only">{`${caption}: ${String(group.title)}`}</caption>
               <tbody className="divide-y divide-rule">
                 {group.rows.map((row) => (
                   <tr key={row.id} className="min-h-[var(--koten-row-h)]">
                     <th
                       scope="row"
-                      className="w-[38%] bg-tint px-[var(--koten-control-px)] py-1 text-left text-2xs font-medium text-muted"
+                      className="w-[38%] bg-tint px-[var(--koten-control-px)] py-1 text-start text-2xs font-medium text-muted"
                     >
                       {row.label}
                     </th>

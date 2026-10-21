@@ -376,30 +376,28 @@ export function OrdersPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocal
               <DetailSection title={copy.orders.detail.customer}>
                 <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 text-2xs">
                   <dt className="text-faint">{copy.orders.detail.contact}</dt>
-                  <dd className="text-right text-ink">{customer?.contact ?? "—"}</dd>
+                  <dd className="text-end text-ink">{customer?.contact ?? "—"}</dd>
                   <dt className="text-faint">{copy.orders.detail.customer}</dt>
-                  <dd className="text-right text-ink">
+                  <dd className="text-end text-ink">
                     {customer ? pick(customer.company, locale) : order.customerId}
                   </dd>
                   <dt className="text-faint">{copy.form.fields.email}</dt>
-                  <dd className="min-w-0 break-all text-right text-ink">
-                    {customer?.email ?? "—"}
-                  </dd>
+                  <dd className="min-w-0 break-all text-end text-ink">{customer?.email ?? "—"}</dd>
                   <dt className="text-faint">{copy.form.fields.phone}</dt>
-                  <dd className="text-right tabular-nums text-ink">{customer?.phone ?? "—"}</dd>
+                  <dd className="text-end tabular-nums text-ink">{customer?.phone ?? "—"}</dd>
                 </dl>
               </DetailSection>
 
               <DetailSection title={copy.orders.detail.shipping}>
                 <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 text-2xs">
                   <dt className="text-faint">{copy.orders.detail.warehouse}</dt>
-                  <dd className="text-right text-ink">{copy.warehouse[order.warehouse]}</dd>
+                  <dd className="text-end text-ink">{copy.warehouse[order.warehouse]}</dd>
                   <dt className="text-faint">{copy.orders.detail.channel}</dt>
-                  <dd className="text-right text-ink">{copy.channel[order.channel]}</dd>
+                  <dd className="text-end text-ink">{copy.channel[order.channel]}</dd>
                   <dt className="text-faint">{copy.orders.detail.payment}</dt>
-                  <dd className="text-right text-ink">{copy.payment[order.payment]}</dd>
+                  <dd className="text-end text-ink">{copy.payment[order.payment]}</dd>
                   <dt className="text-faint">{copy.orders.detail.dueDate}</dt>
-                  <dd className="text-right tabular-nums text-ink">
+                  <dd className="text-end tabular-nums text-ink">
                     {formatters.formatDate(order.dueDate, {
                       year: "numeric",
                       month: "2-digit",
@@ -410,7 +408,7 @@ export function OrdersPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocal
                   {order.tracking ? (
                     <>
                       <dt className="text-faint">{copy.orders.detail.tracking}</dt>
-                      <dd className="text-right font-mono text-ink">{order.tracking}</dd>
+                      <dd className="text-end font-mono text-ink">{order.tracking}</dd>
                     </>
                   ) : null}
                 </dl>
@@ -424,13 +422,13 @@ export function OrdersPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocal
                   <table className="w-full min-w-[22rem] border-collapse text-2xs">
                     <thead>
                       <tr className="border-b border-rule-strong bg-tint text-faint">
-                        <th scope="col" className="px-2 py-1 text-left font-semibold">
+                        <th scope="col" className="px-2 py-1 text-start font-semibold">
                           {copy.orders.detail.product}
                         </th>
-                        <th scope="col" className="px-2 py-1 text-right font-semibold">
+                        <th scope="col" className="px-2 py-1 text-end font-semibold">
                           {copy.orders.detail.quantity}
                         </th>
-                        <th scope="col" className="px-2 py-1 text-right font-semibold">
+                        <th scope="col" className="px-2 py-1 text-end font-semibold">
                           {copy.orders.detail.lineTotal}
                         </th>
                       </tr>
@@ -438,14 +436,14 @@ export function OrdersPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocal
                     <tbody className="divide-y divide-rule">
                       {order.lines.map((line) => (
                         <tr key={`${order.id}-${line.productId}`}>
-                          <th scope="row" className="px-2 py-1 text-left font-normal">
+                          <th scope="row" className="px-2 py-1 text-start font-normal">
                             <span className="block font-semibold text-ink">
                               {pick(line.name, locale)}
                             </span>
                             <span className="block font-mono text-faint">{line.sku}</span>
                           </th>
-                          <td className="px-2 py-1 text-right tabular-nums">{line.quantity}</td>
-                          <td className="px-2 py-1 text-right tabular-nums">
+                          <td className="px-2 py-1 text-end tabular-nums">{line.quantity}</td>
+                          <td className="px-2 py-1 text-end tabular-nums">
                             {formatters.formatCurrency(line.unitPrice * line.quantity, {
                               maximumFractionDigits: 0,
                             })}
@@ -455,11 +453,11 @@ export function OrdersPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocal
                     </tbody>
                     <tfoot>
                       <tr className="border-t border-rule-strong bg-tint">
-                        <th scope="row" className="px-2 py-1 text-left font-semibold">
+                        <th scope="row" className="px-2 py-1 text-start font-semibold">
                           {copy.orders.detail.total}
                         </th>
-                        <td className="px-2 py-1 text-right tabular-nums">{order.itemCount}</td>
-                        <td className="px-2 py-1 text-right font-semibold tabular-nums">
+                        <td className="px-2 py-1 text-end tabular-nums">{order.itemCount}</td>
+                        <td className="px-2 py-1 text-end font-semibold tabular-nums">
                           {formatters.formatCurrency(order.total, { maximumFractionDigits: 0 })}
                         </td>
                       </tr>

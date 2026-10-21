@@ -198,13 +198,13 @@ export function DataTable<T>({
                   <TableHead
                     key={header.id}
                     aria-sort={ariaSort}
-                    className={column?.align === "right" ? "text-right" : undefined}
+                    className={column?.align === "right" ? "text-end" : undefined}
                   >
                     {header.isPlaceholder ? null : header.column.getCanSort() ? (
                       <button
                         type="button"
                         onClick={header.column.getToggleSortingHandler()}
-                        className="inline-flex items-center gap-1 text-left hover:text-ink"
+                        className="inline-flex items-center gap-1 text-start hover:text-ink"
                       >
                         {flexRender(header.column.columnDef.header, header.getContext())}
                         {sort === "asc" ? (
@@ -248,7 +248,7 @@ export function DataTable<T>({
                   return (
                     <TableCell
                       key={cell.id}
-                      className={column?.align === "right" ? "text-right tabular-nums" : undefined}
+                      className={column?.align === "right" ? "text-end tabular-nums" : undefined}
                     >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>

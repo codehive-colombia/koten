@@ -388,3 +388,19 @@
 - **Alternativas:** Traducir solo títulos y descripciones (insuficiente: el selector sigue pareciendo roto en el cuerpo); traducir también los `.md` internos (mantenimiento doble sin valor para el POC); i18n en runtime (peso y ceremonia innecesarios para tres locales).
 
 ---
+
+---
+
+<a id="d-026"></a>
+## D-026 · RTL best-effort con propiedades lógicas
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (cierra `Q-010`)
+- **Contexto:** El POC nace en JA/ES/EN, todos LTR, pero `R-004` promete que el sistema funciona en cualquier idioma. Un soporte RTL completo exige espejar iconos, orden de columnas, scrollbars y mapas, y no hay un locale RTL en las demos para validarlo. Al mismo tiempo, mezclar utilidades físicas (`text-left`, `pl-2`, `border-l-2`) con lógicas (`ms-auto`, `border-s-2`) hace que un futuro RTL se rompa en puntos imprevisibles.
+- **Decisión:** El soporte RTL es **best-effort**:
+  - Todo el código de `packages/ui`, storefront, ERP y catálogo usa **propiedades y utilidades lógicas** (`text-start`/`text-end`, `ps`/`pe`, `ms`/`me`, `border-s`/`border-e`, `start`/`end`) para espaciado, alineación, bordes y posicionamiento.
+  - No se espejan iconos ni se agrega un locale RTL a las demos en la v1 (`D-009`).
+  - La guardia `bun run check:i18n` falla si reaparece una utilidad física o una propiedad CSS física.
+  - `bun scripts/qa-overflow.ts` fuerza `dir="rtl"` en cada página medida y verifica que no aparezca scroll horizontal ni recorte; hoy pasa en las 72 combinaciones (3 apps, 3 idiomas, 1440/1024/390).
+- **Consecuencias:** El layout no se rompe al espejarse y el costo es cero en LTR (`text-start` equivale a `left`). Queda pendiente para una v2 la revisión visual RTL (iconos direccionales, `Tategaki`, gráficos y tablas congeladas). `Q-010` se cierra con esta decisión.
+- **Alternativas:** RTL completo en la v1 (sin presupuesto ni locale de prueba; se descarta); ignorar RTL y usar utilidades físicas (barato hoy, deuda cara después); mezclar ambos sin guardia (deriva silenciosa, descartado).

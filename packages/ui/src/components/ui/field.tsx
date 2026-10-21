@@ -50,7 +50,7 @@ export function Field({
           required={required}
           className={cn(
             horizontal && "sm:pt-[calc((var(--koten-control-h)-1.2em)/2)]",
-            horizontal && "sm:text-right",
+            horizontal && "sm:text-end",
             labelClassName,
           )}
         >

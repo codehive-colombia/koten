@@ -182,7 +182,7 @@ export function TokensIndexPage() {
         ))}
       </div>
 
-      <div className="mt-[calc(var(--koten-gap)*2)] border-l-2 border-primary bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
+      <div className="mt-[calc(var(--koten-gap)*2)] border-s-2 border-primary bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
         {t.note}
       </div>
     </div>

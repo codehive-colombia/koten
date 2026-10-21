@@ -188,8 +188,8 @@ export function DashboardPage({ copy, locale }: { copy: ErpCopy; locale: KotenLo
                 <TableHead>{copy.orders.table.date}</TableHead>
                 <TableHead>{copy.orders.table.channel}</TableHead>
                 <TableHead>{copy.orders.table.warehouse}</TableHead>
-                <TableHead className="text-right">{copy.orders.table.items}</TableHead>
-                <TableHead className="text-right">{copy.orders.table.total}</TableHead>
+                <TableHead className="text-end">{copy.orders.table.items}</TableHead>
+                <TableHead className="text-end">{copy.orders.table.total}</TableHead>
                 <TableHead>{copy.orders.table.status}</TableHead>
               </TableRow>
             </TableHeader>
@@ -220,8 +220,8 @@ export function DashboardPage({ copy, locale }: { copy: ErpCopy; locale: KotenLo
                     </TableCell>
                     <TableCell className="text-2xs">{copy.channel[order.channel]}</TableCell>
                     <TableCell className="text-2xs">{copy.warehouse[order.warehouse]}</TableCell>
-                    <TableCell className="text-right tabular-nums">{order.itemCount}</TableCell>
-                    <TableCell className="text-right tabular-nums">
+                    <TableCell className="text-end tabular-nums">{order.itemCount}</TableCell>
+                    <TableCell className="text-end tabular-nums">
                       {formatters.formatCurrency(order.total, { maximumFractionDigits: 0 })}
                     </TableCell>
                     <TableCell>

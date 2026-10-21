@@ -50,7 +50,7 @@ export function Combobox({
             id={id}
             data-slot="combobox-input"
             placeholder={placeholder}
-            className="h-[var(--koten-control-h)] w-full min-w-0 rounded-sm border border-rule-strong bg-surface px-[var(--koten-control-px)] pr-8 text-sm text-ink transition-colors placeholder:text-faint focus-visible:border-primary disabled:cursor-not-allowed disabled:bg-tint disabled:text-muted"
+            className="h-[var(--koten-control-h)] w-full min-w-0 rounded-sm border border-rule-strong bg-surface px-[var(--koten-control-px)] pe-8 text-sm text-ink transition-colors placeholder:text-faint focus-visible:border-primary disabled:cursor-not-allowed disabled:bg-tint disabled:text-muted"
           />
           <BaseCombobox.Trigger
             aria-label={triggerLabel}

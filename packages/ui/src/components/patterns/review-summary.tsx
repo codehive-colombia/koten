@@ -90,7 +90,7 @@ export function ReviewSummary({
                   style={{ width: `${Math.round((item.count / total) * 100)}%` }}
                 />
               </span>
-              <span className="w-8 shrink-0 text-right tabular-nums text-faint">{item.count}</span>
+              <span className="w-8 shrink-0 text-end tabular-nums text-faint">{item.count}</span>
             </li>
           ))}
         </ul>

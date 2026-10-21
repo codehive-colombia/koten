@@ -209,7 +209,7 @@ export function ProductPage({ locale, onLocaleChange }: ProductPageProps) {
                 <div className="flex items-center justify-between border-b border-rule bg-tint px-[var(--koten-panel-p)] py-1.5">
                   <h2 className="text-xs font-semibold">{product.name}</h2>
                   <Badge tone="new" appearance="solid">
-                    NEW
+                    {copy.buy.newBadge}
                   </Badge>
                 </div>
                 <div className="p-[var(--koten-panel-p)]">
@@ -384,11 +384,11 @@ export function ProductPage({ locale, onLocaleChange }: ProductPageProps) {
 
                   <dl className="mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-1 border-t border-rule pt-2 text-2xs">
                     <dt className="text-muted">{copy.buy.deliveryLabel}</dt>
-                    <dd className="text-right font-semibold text-ink">{copy.buy.deliveryValue}</dd>
+                    <dd className="text-end font-semibold text-ink">{copy.buy.deliveryValue}</dd>
                     <dt className="text-muted">{copy.buy.shippingLabel}</dt>
-                    <dd className="text-right text-success">{copy.buy.shippingValue}</dd>
+                    <dd className="text-end text-success">{copy.buy.shippingValue}</dd>
                     <dt className="text-muted">{copy.buy.warrantyLabel}</dt>
-                    <dd className="text-right text-ink">{copy.buy.warrantyValue}</dd>
+                    <dd className="text-end text-ink">{copy.buy.warrantyValue}</dd>
                   </dl>
                 </div>
               </section>
