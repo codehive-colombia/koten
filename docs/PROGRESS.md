@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-005` · mejoras puntuales `M-001`–`M-005` |
+| Última tarea completada | `M-006` · mejoras puntuales `M-001`–`M-006` |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,29 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 035 — Registry alineado con `components.json` (`M-006`)
+
+- **Objetivo:** dejar de instalar componentes con rutas e imports relativos y de crear `styles/koten.css`; usar los aliases del `components.json` del consumidor y dejar el tema de Koten en el CSS que shadcn ya conoce.
+- **Hecho:**
+  - **Targets con placeholders**: los archivos se declaran como `@ui/<archivo>`, `@components/patterns/<archivo>` y `@lib/koten/<archivo>`, que shadcn resuelve contra `aliases.ui`, `aliases.components` y `aliases.lib`. Funciona con prefijos `@/`, `~/`, `#` o los que declare el proyecto.
+  - **Imports canónicos**: el contenido del registry usa `@/components/ui/...`, `@/components/patterns/...` y `@/lib/koten/...`; el CLI los reescribe al alias real. Ya no quedan `../../lib/koten/...` ni `../ui/...` en los items.
+  - **Tema como item**: `koten-theme` (`registry:theme`) reúne `cssVars.theme` con los roles de `@theme inline` y `css` con `:root`, `[data-theme]`, `[data-density]`, `@layer base` y `@utility`. Cada componente lo declara como `registryDependencies` con URL absoluta.
+  - **Sin carpeta custom**: el tema se escribe en el archivo `tailwind.css` de `components.json`; no se crea `styles/`. La documentación pide importar ese CSS una vez y, si el proyecto ya usaba shadcn, instalar `koten-theme` primero para reemplazar sus tokens.
+  - **Compatibilidad**: se agregan alias `--color-background`, `--color-border`, `--color-ring`, `--color-primary`, etc. mapeados a roles de Koten para que `@layer base` de shadcn siga compilando. No se envían los resets `--color-*: initial` ni equivalentes, porque en un proyecto con tokens previos borrarían mappings que el CLI no vuelve a escribir.
+  - **Tooling**: `postcss` entra como devDependency de la raíz para convertir `tokens.css` y `globals.css` al objeto `css`. `predev` genera el registry con `KOTEN_SITE_URL=http://localhost:5173`; `prebuild` usa producción; Docker recibe `KOTEN_SITE_URL` además de `VITE_SITE_URL`.
+  - **Catálogo**: las listas de archivos usan rutas con alias (`@/components/ui/...`, `@/lib/koten/...`); la instalación y Empezar explican los placeholders, el tema y la importación del CSS en ES/JA/EN.
+- **Tareas tocadas:** `M-006` → `done`; `R-018` actualizado.
+- **Decisiones:** `D-044` (supersede parcialmente `D-039`).
+- **Evidencia:**
+  - `scripts/build-registry.ts` y `scripts/build-registry.test.ts`; `apps/catalog/src/{components/doc-page.tsx,pages/start.tsx,data/docs/types.ts}`; `README.md`; `Dockerfile`; `docker-compose.yml`; `apps/catalog/package.json`; `package.json` + `bun.lock` (`postcss`).
+  - `bun run check` verde (**34 archivos / 212 tests**), `bun run build` OK y `bun run budget` → storefront 122,3 KB, ERP 199,3 KB, catálogo 263,2/430,0 KB.
+  - Instalación real en un proyecto de prueba con `components.json` de aliases `~/...` y `tailwind.css: app/app.css`: `npx shadcn@latest add http://localhost:5173/r/button.json` creó `components/ui/button.tsx` y `lib/koten/*`, reescribió los imports a `~/lib/koten/*` y actualizó solo `app/app.css`; no apareció `styles/`. `detail-drawer` y `product-card` instalaron `components/patterns/*` con imports `~/components/ui/drawer`; `@tailwindcss/cli` compiló el CSS sin errores.
+- **Sin validar:** instalación en un proyecto Next.js con `rsc: true` y `src/`; actualización de tokens sin reinstalar `koten-theme`.
+- **Próximo:** ninguna tarea abierta; el registry queda alineado con `components.json`.
+- **Bloqueos:** ninguno.
 
 ---
 

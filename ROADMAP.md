@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-21**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-005`** · producción en un dominio, una imagen y tres puertos
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales) y **`M-005`** (despliegue de producción)
+> Última tarea completada: **`M-006`** · registry alineado con `components.json`
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción) y **`M-006`** (aliases y tema del registry)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -290,6 +290,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-004` | Páginas individuales de componentes y bloques (`R-022`). | `done` | Cada primitiva en `/components/<slug>` con instalación, preview/código, props, a11y y referencia Base UI; sección de formulario en controles; requisitos de hooks/providers; 20 bloques en `/blocks/<categoría>/<slug>` con índice por categoría; rutas antiguas redirigidas y presupuesto actualizado (`D-042`). | `apps/catalog/src/data/docs/**` (46 documentos), `data/blocks/**` (20 documentos), `data/docs/{meta,index,all}.ts`, `components/doc-page.tsx`, `pages/components/{index,primitive}.tsx`, `pages/blocks/{index,block}.tsx`, `App.tsx`, `data/catalog.ts`, `scripts/check-budgets.ts`; `bun run check` (207 tests), `bun run build`, `bun run budget` (263,1/429,6 KB); `D-042`; `R-022`. |
 | `M-003` | Portada editorial del catálogo (`R-021`). | `done` | `/` como landing del sistema con masthead, placa viva, tres registros, índice de piezas, principios, demos e instalación; layout ancho sin sidebar; ES/JA/EN; mismos componentes y tokens; axe sin serious/critical; sin overflow a 1440/1280/1024/390; presupuesto dentro del límite. | `apps/catalog/src/pages/overview.tsx`; `components/landing.tsx` (`SystemPlate`, `RegisterCard`, `EntryCard`, `DemoCard`); `data/inventory.ts` (fuente única de los inventarios); `components/catalog-layout.tsx` (layout ancho y sin pager en `/`); `pages/{pages,i18n}.test.tsx`; `D-041`; `R-021`. |
 | `M-005` | Producción en `koten.codehive.com.co` con una imagen Docker, compose de tres puertos y CI (`R-023`). | `done` | Una imagen Bun + nginx sirve catálogo en `/` (3000), storefront en `/demos/store` (3001) y ERP en `/demos/erp` (3002); los tres routers de Traefik comparten dominio y conservan el prefijo; assets y deep links funcionan; el registry y los comandos shadcn usan el dominio de producción; GitHub Actions publica la imagen en GHCR. | `Dockerfile`; `docker-compose.yml`; `infra/nginx/default.conf`; `.dockerignore`; `.env.example`; `apps/catalog/src/lib/site.ts`; `apps/{storefront,erp}/vite.config.ts`; `apps/erp/src/App.tsx`; `scripts/{build-registry,check-budgets,qa-perf,qa-visual}.ts`; `.github/workflows/ci.yml`; `D-043`. Verificado con `docker build` y `docker compose`: `/`, `/demos/store/`, `/demos/erp/`, `/r/button.json` y deep links responden 200; navegador sin errores; `bun run check` (34 archivos / 209 tests) y `bun run budget` verdes. |
+| `M-006` | Registry alineado con `components.json`: aliases de shadcn y tema en el CSS del proyecto (`R-018`). | `done` | Los targets usan `@ui`, `@components` y `@lib`; los imports se reescriben a los aliases del proyecto; `koten-theme` entrega tokens, temas y densidad en `tailwind.css` sin crear `styles/`; una instalación real con aliases `~/...` compila con Tailwind 4 y `bun run check` pasa. | `scripts/build-registry.ts` + `build-registry.test.ts`; `apps/catalog/src/{components/doc-page.tsx,pages/start.tsx,data/docs/types.ts}`; `README.md`; `Dockerfile` y `docker-compose.yml` (`KOTEN_SITE_URL`); `apps/catalog/package.json`; `postcss` en la raíz; `D-044`. Verificado con `npx shadcn add` en un proyecto con `tailwind.css: app/app.css` y aliases `~/...`: archivos en `components/ui`, `components/patterns` y `lib/koten`, imports `~/...`, sin `styles/`; `@tailwindcss/cli` compila; `bun run check` (212 tests), `bun run build` y `bun run budget` verdes. |
 
 ---
 
@@ -400,7 +401,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-015` | Demos en JA/ES/EN. | `F2-001`, `F2-006`, `F3-001`, `F3-007`, `F4-001` | `done` |
 | `R-016` | Referencias y análisis documentados. | `F0-000`, `docs/REQUIREMENTS.md`, `docs/DESIGN-SYSTEM.md` | `done` |
 | `R-017` | Sin clichés decorativos ni “cargo cult” japonés. | `D-002`, `docs/DESIGN-SYSTEM.md` | `done` |
-| `R-018` | Registry shadcn opcional. | `F5-001` | `done` |
+| `R-018` | Registry shadcn opcional. | `F5-001`, `M-006` | `done` |
 | `R-019` | Tema oscuro Sumi opcional. | `F5-002` | `todo` |
 | `R-020` | Trazabilidad entre sesiones. | `F0-000`, `AGENTS.md`, `docs/PROGRESS.md` | `done` |
 | `R-021` | Portada editorial del catálogo. | `M-003`, `D-041` | `done` |
@@ -502,3 +503,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Mejora puntual `M-002`: source 100% en inglés (comentarios, JSDoc, mensajes y tests) con la documentación intacta en ES/JA/EN; Fundamentos rediseñado como portada con espécimen y previews, sin fases ni IDs internos en el copy visible; `D-040`; `biome.json` ignora `public/r`; `bun run check` (202 tests) y `bun run budget` verdes. | Sesión 031 |
 | 2026-10-21 | Mejora puntual `M-003`: `/` pasa a landing editorial del sistema con placa viva, tres registros, índice de 45+20 piezas, principios, demos e instalación; layout ancho sin sidebar; inventarios compartidos; `D-041` y `R-021`; `bun run check`, `qa:a11y`, `qa:overflow` y `bun run budget` verdes. | Sesión 032 |
 | 2026-10-21 | Mejora puntual `M-005`: producción en `koten.codehive.com.co` con una imagen Bun + nginx, compose de tres puertos y routers de Traefik para `/`, `/demos/store` y `/demos/erp`; `base` de Vite por app, `basename` del ERP, URLs centralizadas, registry y comandos shadcn con el dominio de producción, CI que publica en GHCR. `D-043`, `R-023`, `RISK-016`. | Sesión 034 |
+| 2026-10-21 | Mejora puntual `M-006`: el registry usa los placeholders `@ui`/`@components`/`@lib` y los aliases de `components.json`, los imports se reescriben a `~/...`, y `koten-theme` escribe tokens, temas y densidad en el `tailwind.css` del proyecto sin crear `styles/`. Instalación real con aliases `~/...`, compilación Tailwind 4 y `bun run check` (212 tests) verdes. `D-044`, `R-018`. | Sesión 035 |
