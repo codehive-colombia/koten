@@ -16,6 +16,9 @@ import { NavigationPage } from "./components/navigation";
 import { OverlaysPage } from "./components/overlays";
 import { PanelPage } from "./components/panel";
 import { SurfacesPage } from "./components/surfaces";
+import { ErpPatternsPage } from "./patterns/erp";
+import { PatternsIndexPage } from "./patterns/index";
+import { StorefrontPatternsPage } from "./patterns/storefront";
 
 const pages: readonly [string, ComponentType][] = [
   ["Button", ButtonPage],
@@ -29,6 +32,9 @@ const pages: readonly [string, ComponentType][] = [
   ["Overlays", OverlaysPage],
   ["Datos", DataPage],
   ["Controles", ControlsPage],
+  ["Patrones", PatternsIndexPage],
+  ["Patrones de storefront", StorefrontPatternsPage],
+  ["Patrones de ERP", ErpPatternsPage],
 ];
 
 describe("accesibilidad de las páginas de componentes", () => {

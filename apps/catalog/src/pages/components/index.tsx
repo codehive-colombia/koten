@@ -178,7 +178,10 @@ export function ComponentsIndexPage() {
 
       <div className="mt-[calc(var(--koten-gap)*2)] border border-rule bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
         Cada página documenta anatomía, variantes, estados, props y notas de accesibilidad. Los
-        demos de storefront y ERP consumirán exactamente estos componentes.
+        demos de storefront y ERP consumen exactamente estos componentes.{" "}
+        <Link to="/patterns" className="font-semibold text-link underline-offset-2 hover:underline">
+          Ver los 20 patrones →
+        </Link>
       </div>
     </div>
   );

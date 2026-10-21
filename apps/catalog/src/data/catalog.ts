@@ -9,7 +9,7 @@ export type CatalogNavItem = {
 };
 
 export type CatalogNavGroup = {
-  id: "foundations" | "components" | "demos";
+  id: "foundations" | "components" | "patterns" | "demos";
   label: Localized;
   items: CatalogNavItem[];
 };
@@ -85,6 +85,21 @@ export const navGroups: readonly CatalogNavGroup[] = [
     ],
   },
   {
+    id: "patterns",
+    label: { es: "Patrones", ja: "応用", en: "Patterns" },
+    items: [
+      { path: "/patterns", label: { es: "Todos", ja: "一覧", en: "All" } },
+      {
+        path: "/patterns/storefront",
+        label: { es: "Storefront", ja: "店舗パターン", en: "Storefront" },
+      },
+      {
+        path: "/patterns/erp",
+        label: { es: "ERP", ja: "台帳パターン", en: "ERP" },
+      },
+    ],
+  },
+  {
     id: "demos",
     label: { es: "Demos", ja: "デモ", en: "Demos" },
     items: [
@@ -145,7 +160,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Tema",
     density: "Densidad",
     language: "Idioma",
-    phase: "Fase 0 · Fundación",
+    phase: "Fase 3 · POC completo",
     viewState: "Estado en URL",
     docsLanguage: "Documentación en español · interfaz y ejemplos cambian de idioma",
     preview: "Vista previa",
@@ -161,7 +176,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "テーマ",
     density: "密度",
     language: "言語",
-    phase: "フェーズ0 · 基盤",
+    phase: "フェーズ3 · デモ完成",
     viewState: "URLに状態を保存",
     docsLanguage: "ドキュメントはスペイン語 · UIと言語例は切り替わります",
     preview: "プレビュー",
@@ -177,7 +192,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Theme",
     density: "Density",
     language: "Language",
-    phase: "Phase 0 · Foundation",
+    phase: "Phase 3 · POC complete",
     viewState: "State in URL",
     docsLanguage: "Documentation in Spanish · UI and examples switch language",
     preview: "Preview",

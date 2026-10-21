@@ -160,6 +160,12 @@ export function InputsPage() {
                 default: "—",
                 note: "Se dispara al elegir una opción.",
               },
+              {
+                prop: "modal",
+                type: "boolean",
+                default: "false",
+                note: "Si es true, bloquea scroll e interacción fuera del popup. Koten usa false por defecto.",
+              },
             ]}
           />
           <PropsTable
@@ -222,6 +228,7 @@ export function InputsPage() {
             label="Notas de accesibilidad de inputs avanzados"
             items={[
               "Select y Combobox usan roles listbox/option y navegación por flechas.",
+              "Select es no modal por defecto: abrir el popup no bloquea el scroll ni el resto de la página.",
               "Checkbox y Switch conservan el estado checked y un nombre accesible desde el label.",
               "RadioGroup vive en un grupo etiquetado; cada opción es un radio real.",
               "NumberField expone inputmode numérico y botones con aria-label.",

@@ -17,6 +17,9 @@ import { PanelPage } from "./pages/components/panel";
 import { SurfacesPage } from "./pages/components/surfaces";
 import { NotFoundPage } from "./pages/not-found";
 import { OverviewPage } from "./pages/overview";
+import { ErpPatternsPage } from "./pages/patterns/erp";
+import { PatternsIndexPage } from "./pages/patterns/index";
+import { StorefrontPatternsPage } from "./pages/patterns/storefront";
 import { TokensColorPage } from "./pages/tokens/color";
 import { TokensDensityPage } from "./pages/tokens/density";
 import { TokensFormatPage } from "./pages/tokens/format";
@@ -55,6 +58,9 @@ export function App() {
           <Route path="/components/overlays" element={<OverlaysPage />} />
           <Route path="/components/data" element={<DataPage />} />
           <Route path="/components/controls" element={<ControlsPage />} />
+          <Route path="/patterns" element={<PatternsIndexPage />} />
+          <Route path="/patterns/storefront" element={<StorefrontPatternsPage />} />
+          <Route path="/patterns/erp" element={<ErpPatternsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </CatalogLayout>

@@ -139,6 +139,12 @@ export function OverlaysPage() {
                 note: "Acciones o enlaces; separador opcional.",
               },
               {
+                prop: "Menu modal",
+                type: "boolean",
+                default: "false",
+                note: "Koten lo mantiene no modal para no bloquear la página.",
+              },
+              {
                 prop: "Tooltip delay / side",
                 type: "number · top | right | bottom | left",
                 default: "200 · top",
@@ -166,6 +172,7 @@ export function OverlaysPage() {
               "Dialog y Drawer atrapan el foco, cierran con Escape y lo devuelven al trigger.",
               "Title y Description dan nombre y contexto al diálogo.",
               "Menu se recorre con flechas y Enter; los separadores no son focos.",
+              "Menu es no modal: abrirlo no bloquea scroll ni clics fuera del popup.",
               "Popover y Tooltip no deben contener acciones críticas que no estén en la página.",
               "Los portales viven fuera del flujo; el overlay usa solo la sombra permitida.",
             ]}

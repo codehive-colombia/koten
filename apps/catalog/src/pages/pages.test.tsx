@@ -18,6 +18,9 @@ import { PanelPage } from "./components/panel";
 import { SurfacesPage } from "./components/surfaces";
 import { NotFoundPage } from "./not-found";
 import { OverviewPage } from "./overview";
+import { ErpPatternsPage } from "./patterns/erp";
+import { PatternsIndexPage } from "./patterns/index";
+import { StorefrontPatternsPage } from "./patterns/storefront";
 import { TokensColorPage } from "./tokens/color";
 import { TokensDensityPage } from "./tokens/density";
 import { TokensFormatPage } from "./tokens/format";
@@ -181,6 +184,28 @@ describe("páginas del catálogo", () => {
     expect(screen.getAllByRole("button", { name: "Descargar" }).length).toBeGreaterThan(0);
     expect(screen.getByRole("group", { name: "Vista de pedidos" })).toBeInTheDocument();
     expect(screen.getByRole("toolbar", { name: "Acciones de pedidos" })).toBeInTheDocument();
+  });
+
+  it("documenta los patrones de storefront y ERP", () => {
+    const index = renderPage(<PatternsIndexPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Patrones/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("row")).toHaveLength(21);
+    index.unmount();
+
+    const storefront = renderPage(<StorefrontPatternsPage />);
+    expect(
+      screen.getByRole("heading", { level: 1, name: /Patrones de storefront/ }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("searchbox", { name: "Buscar productos" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "HIKARI K-1 de frente" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Distribución" })).toBeInTheDocument();
+    storefront.unmount();
+
+    const erp = renderPage(<ErpPatternsPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Patrones de ERP/ })).toBeInTheDocument();
+    expect(screen.getAllByText("Pendiente").length).toBeGreaterThan(0);
+    expect(screen.getByRole("button", { name: "Abrir detalle de pedido" })).toBeInTheDocument();
+    erp.unmount();
   });
 
   it("muestra una página 404 traducida", () => {

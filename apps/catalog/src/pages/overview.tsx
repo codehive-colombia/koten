@@ -27,7 +27,7 @@ export function OverviewPage() {
         title="Koten UI"
         jp="古典"
         description="Sencillez de medios, densidad de información. Un sistema de componentes para el web japonés clásico, validado en un catálogo, un storefront y un ERP."
-        meta="Fase 0 cerrada · 3 componentes · 3 temas · 3 densidades"
+        meta="Fases 1–3 cerradas · 42 primitivas · 20 patrones · 3 temas · 3 densidades"
       />
 
       <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">
@@ -41,7 +41,13 @@ export function OverviewPage() {
           to="/components"
           title="Componentes"
           jp="部品"
-          description="Button, Panel y Badge con previews, props, código y notas de accesibilidad."
+          description="42 primitivas con previews, props, código y notas de accesibilidad."
+        />
+        <IndexCard
+          to="/patterns"
+          title="Patrones"
+          jp="応用"
+          description="Storefront y ERP: las composiciones que ensamblan las primitivas en pantallas reales."
         />
         <IndexCard
           to="/tokens/format"
@@ -99,14 +105,15 @@ export function OverviewPage() {
             <PanelTitle as="h2">Estado</PanelTitle>
             <PanelActions>
               <Badge tone="success" dot>
-                Fase 0 cerrada
+                Fases 1–3
               </Badge>
             </PanelActions>
           </PanelHeader>
           <PanelBody>
             <p className="text-xs text-muted">
-              El catálogo es la herramienta de trabajo. Los selectores de tema, densidad e idioma
-              modifican la interfaz; las muestras fijas comparan valores.
+              Primitivas, storefront HIKARI y ERP KURA comparten tokens, componentes y reglas. Los
+              selectores de tema, densidad e idioma modifican la interfaz; las muestras fijas
+              comparan valores.
             </p>
             <dl className="mt-[var(--koten-gap)] grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-2xs">
               <dt className="text-faint">Temas</dt>

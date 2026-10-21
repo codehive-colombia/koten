@@ -256,6 +256,7 @@ export function DataPage() {
               "La selección se anuncia con aria-live y checkbox con label.",
               "Sparkline y BarChart incluyen texto alternativo; el chart visual es decorativo.",
               "Los números usan tabular-nums y se alinean a la derecha.",
+              "DataTable conserva la identidad de data: no la copies en cada render o la paginación se reinicia.",
             ]}
           />
         </Section>
