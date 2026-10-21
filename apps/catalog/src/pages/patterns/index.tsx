@@ -11,6 +11,7 @@ import {
 } from "@koten/ui";
 import { Link } from "react-router";
 import { IndexCard, PageHeader } from "../../components/docs";
+import { patternInventory } from "../../data/inventory";
 
 const copy = {
   es: {
@@ -81,29 +82,6 @@ const copy = {
 type Copy = (typeof copy)["es"];
 const copyByLocale: Record<KotenLocale, Copy> = copy;
 
-const inventory = [
-  { id: "C-042", name: "SearchBar", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-043", name: "NoticeList", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-044", name: "RankedList", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-045", name: "ProductCard", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-046", name: "PriceBlock", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-047", name: "SpecTable", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-048", name: "CampaignBanner", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-049", name: "StoreHeader", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-050", name: "Footer", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-051", name: "ProductGallery", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-052", name: "ReviewSummary", page: "storefront", to: "/patterns/storefront" },
-  { id: "C-053", name: "AppShell", page: "erp", to: "/patterns/erp" },
-  { id: "C-054", name: "SideNav", page: "erp", to: "/patterns/erp" },
-  { id: "C-055", name: "TopBar", page: "erp", to: "/patterns/erp" },
-  { id: "C-056", name: "PageHeader", page: "erp", to: "/patterns/erp" },
-  { id: "C-057", name: "FilterBar", page: "erp", to: "/patterns/erp" },
-  { id: "C-058", name: "DetailDrawer", page: "erp", to: "/patterns/erp" },
-  { id: "C-059", name: "StatusBadge", page: "erp", to: "/patterns/erp" },
-  { id: "C-060", name: "FormSection", page: "erp", to: "/patterns/erp" },
-  { id: "C-061", name: "Timeline", page: "erp", to: "/patterns/erp" },
-] as const;
-
 export function PatternsIndexPage() {
   const { locale } = useKoten();
   const t = copyByLocale[locale];
@@ -142,7 +120,7 @@ export function PatternsIndexPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {inventory.map((item) => (
+              {patternInventory.map((item) => (
                 <TableRow key={item.id}>
                   <TableCell className="font-mono text-2xs text-faint">{item.id}</TableCell>
                   <TableCell>
