@@ -20,6 +20,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
     label: { es: "Fundamentos", ja: "基礎", en: "Foundations" },
     items: [
       { path: "/", label: { es: "Inicio", ja: "ホーム", en: "Home" } },
+      {
+        path: "/start",
+        label: { es: "Empezar", ja: "はじめかた", en: "Getting started" },
+      },
       { path: "/tokens", label: { es: "Tokens", ja: "トークン", en: "Tokens" } },
       { path: "/tokens/color", label: { es: "Color", ja: "色", en: "Color" } },
       {

@@ -53,6 +53,7 @@ const apps: Record<AppId, { origin: string; locales: readonly string[] }> = {
 
 const pages: readonly Page[] = [
   { app: "catalog", label: "portada", path: "/" },
+  { app: "catalog", label: "empezar", path: "/start" },
   { app: "catalog", label: "formularios", path: "/components/forms" },
   { app: "catalog", label: "datos", path: "/components/data" },
   { app: "catalog", label: "overlays", path: "/components/overlays" },

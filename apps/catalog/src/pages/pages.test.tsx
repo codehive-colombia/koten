@@ -21,6 +21,7 @@ import { OverviewPage } from "./overview";
 import { ErpPatternsPage } from "./patterns/erp";
 import { PatternsIndexPage } from "./patterns/index";
 import { StorefrontPatternsPage } from "./patterns/storefront";
+import { StartPage } from "./start";
 import { TokensColorPage } from "./tokens/color";
 import { TokensDensityPage } from "./tokens/density";
 import { TokensFormatPage } from "./tokens/format";
@@ -45,6 +46,17 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("heading", { level: 1, name: /Koten UI/ })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Fundamentos/ })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Componentes/ })).toBeInTheDocument();
+  });
+
+  it("explica cómo empezar y copiar una primitiva", () => {
+    renderPage(<StartPage />);
+
+    expect(screen.getByRole("heading", { level: 1, name: /Empezar/ })).toBeInTheDocument();
+    expect(screen.getAllByText(/bun run check/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "Ver componentes" })).toHaveAttribute(
+      "href",
+      "/components",
+    );
   });
 
   it("indexa las siete páginas de fundamentos", () => {

@@ -8,6 +8,9 @@ Criterio: sin overflow horizontal, sin recortes, jerarquía y densidad estables.
 | catalog | portada | 1440×900 | `catalog-portada-1440.jpg` |
 | catalog | portada | 1280×800 | `catalog-portada-1280.jpg` |
 | catalog | portada | 1024×768 | `catalog-portada-1024.jpg` |
+| catalog | empezar | 1440×900 | `catalog-empezar-1440.jpg` |
+| catalog | empezar | 1280×800 | `catalog-empezar-1280.jpg` |
+| catalog | empezar | 1024×768 | `catalog-empezar-1024.jpg` |
 | catalog | formularios | 1440×900 | `catalog-formularios-1440.jpg` |
 | catalog | formularios | 1280×800 | `catalog-formularios-1280.jpg` |
 | catalog | formularios | 1024×768 | `catalog-formularios-1024.jpg` |

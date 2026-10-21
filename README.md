@@ -2,8 +2,8 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0–3 cerradas. 42 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe y con presupuestos de bundle.
-> **Tarea en curso:** ninguna — próxima `F4-001` (auditoría i18n).
+> **Estado:** fases 0–3 cerradas y fase 4 avanzada (i18n, a11y, performance y QA visual hechos). 42 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe, con presupuestos de bundle y capturas archivadas.
+> **Tarea en curso:** ninguna — próxima `F4-006` (Definition of Done y tag `v0.1.0-poc`).
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación
@@ -15,6 +15,8 @@ Sistema de componentes React inspirado en el web japonés clásico: densidad inf
 | [docs/DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) | Gramática visual, tokens, componentes, i18n, accesibilidad y performance. |
 | [docs/DECISIONS.md](./docs/DECISIONS.md) | Registro de decisiones (ADR ligero), con IDs estables. |
 | [docs/PROGRESS.md](./docs/PROGRESS.md) | Bitácora append-only de sesiones y handoff. |
+| [docs/RECIPES.md](./docs/RECIPES.md) | Recetas copiables: formulario, tabla, drawer, tarjeta, i18n y checklist. |
+| [docs/qa/](./docs/qa/) | Capturas de QA visual por fecha, con la matriz de viewports. |
 | [AGENTS.md](./AGENTS.md) | Protocolo para retomar el proyecto en otra sesión o con otro agente. |
 
 ## Principios en una línea
@@ -28,7 +30,7 @@ Sistema de componentes React inspirado en el web japonés clásico: densidad inf
 
 ## Stack objetivo
 
-Bun workspaces · React 19 · TypeScript 7 strict · Vite 8 · Tailwind CSS v4 · Base UI · CVA · TanStack Table (solo ERP) · Lucide · React Router 7.18 · Vitest + Testing Library + Playwright + axe · Biome.
+Bun workspaces · React 19 · TypeScript 7 strict · Vite 8 · Tailwind CSS v4 · Base UI · CVA · TanStack Table (solo ERP) · Lucide · React Router 7.18 · Vitest + Testing Library + axe-core · Chromium/CDP para las auditorías · Biome.
 
 Sin CSS-in-JS runtime, sin fuentes CJK completas, sin librería de charts, sin carousel ni date-picker pesado.
 
@@ -44,15 +46,22 @@ bun run ci       # check + build + presupuestos, equivalente local del workflow
 bun run build    # build de las tres apps
 bun run budget   # JS inicial/total y CSS gzip; 0 fuentes locales
 bun run check:i18n  # strings hardcodeadas y utilidades físicas
-bun run qa:overflow # desbordamiento/recorte/RTL en 1440, 1024 y 390 (requiere dev + Chromium)
+bun run qa:overflow # desbordamiento/recorte/RTL en 1440, 1280, 1024 y 390 (requiere dev + Chromium)
 bun run qa:a11y     # axe, 12 px mínimo y foco visible en navegador (requiere dev + Chromium)
 bun run qa:perf     # LCP/CLS sobre el build (requiere Chromium; hace su propio preview)
 bun run qa:visual   # capturas 1440/1280/1024 en docs/qa/<fecha>
 ```
 
+## Uso rápido
+
+1. `bun install && bun run dev` y abrir el catálogo en <http://localhost:5173>.
+2. Leer **Empezar** (`/start`) para copiar estilos, provider y primitivas.
+3. Seguir las recetas de [docs/RECIPES.md](./docs/RECIPES.md): formulario, tabla densa, drawer, tarjeta de producto.
+4. Verificar con `bun run check`, `bun run budget` y los `qa:*`.
+
 ## Estructura
 
-La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas. Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas. El cuerpo del catálogo está localizado completo en ES/JA/EN (`D-025`).
+La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas. Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas. La fase 4 sumó la guardia i18n, las auditorías de navegador (a11y, overflow/RTL, performance), el code splitting del catálogo y las capturas archivadas. El cuerpo del catálogo está localizado completo en ES/JA/EN (`D-025`).
 
 ```txt
 apps/

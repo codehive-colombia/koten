@@ -443,3 +443,15 @@
   - `scripts/check-budgets.ts` distingue **JS inicial** (entry + assets referenciados por `index.html`) de **JS total** (todos los chunks). Presupuestos: storefront 150/150, ERP 250/250, catálogo 250/330 KB gzip; CSS 30 KB; 0 fuentes.
 - **Consecuencias:** El catálogo baja su JS inicial de 304,5 a **243,4 KB** (−20 %) y conserva LCP < 400 ms local y CLS 0 en rutas lazy. El ERP no gana con splitting mientras `@koten/ui` sea un barrel compartido; dividir el paquete queda para la fase 5 si el POC crece. `bun run qa:perf` mide LCP/CLS y `bun run budget` verifica inicial/total.
 - **Alternativas:** Dividir todas las rutas (regresión de UX sin ahorro real en ERP); dividir el barrel de `@koten/ui` en subpaths (cambio de API grande, fuera de la v1); dejar todo en un bundle (catálogo 304,5 KB inicial, más lento en la primera visita).
+
+---
+
+<a id="d-030"></a>
+## D-030 · Sin estilos de impresión en la v1
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (cierra `Q-009`)
+- **Contexto:** `Q-009` preguntaba si hacían falta estilos de impresión para specs y facturas. El POC es una prueba de pantalla: no hay numeración fiscal, datos legales del emisor, formato de papel ni requisitos de archivo, y las demos usan datos ficticios. Un `@media print` genérico ocultaría la navegación, pero una factura imprimible exige decisiones de producto y legales que no están en `R-*`.
+- **Decisión:** La v1 **no** incluye estilos de impresión dedicados. `SpecTable` y el detalle de pedido se imprimen con el layout de pantalla; no se promete un formato de factura. Cuando el ERP pase a producción se define el documento (papel A4, cabecera legal, numeración, totales y pie) y se implementa como tarea nueva con su propia decisión.
+- **Consecuencias:** Se evita deuda de un formato que habría que rehacer; `Q-009` se cierra. La accesibilidad y la densidad en pantalla siguen cubiertas por `F4-002`.
+- **Alternativas:** `@media print` mínimo solo para specs (barato pero incompleto y sin uso real); factura imprimible completa (fuera del alcance del POC).

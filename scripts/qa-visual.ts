@@ -25,6 +25,7 @@ const apps: Record<AppId, { port: number; directory: string }> = {
 
 const shots: readonly Shot[] = [
   { app: "catalog", label: "portada", path: "/" },
+  { app: "catalog", label: "empezar", path: "/start" },
   { app: "catalog", label: "formularios", path: "/components/forms" },
   { app: "catalog", label: "patrones", path: "/patterns/storefront" },
   { app: "storefront", label: "producto", path: "/" },

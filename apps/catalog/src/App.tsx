@@ -8,6 +8,9 @@ import { OverviewPage } from "./pages/overview";
 
 // Code splitting por ruta (F4-003): la portada viaja en el entry y cada página
 // de documentación se descarga al navegar. Las páginas no comparten estado.
+const StartPage = lazy(() =>
+  import("./pages/start").then((module) => ({ default: module.StartPage })),
+);
 const TokensIndexPage = lazy(() =>
   import("./pages/tokens/index").then((module) => ({ default: module.TokensIndexPage })),
 );
@@ -101,6 +104,7 @@ export function App() {
         <Suspense fallback={<RouteFallback />}>
           <Routes>
             <Route path="/" element={<OverviewPage />} />
+            <Route path="/start" element={<StartPage />} />
             <Route path="/tokens" element={<TokensIndexPage />} />
             <Route path="/tokens/color" element={<TokensColorPage />} />
             <Route path="/tokens/typography" element={<TokensTypographyPage />} />

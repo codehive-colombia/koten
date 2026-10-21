@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 4 — Cierre del POC (`in_progress`) |
-| Última tarea completada | `F4-004` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F4-005` |
+| Última tarea completada | `F4-005` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F4-006` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`, `Q-009`; `Q-003` cerrada por `D-021`/`D-022` y `Q-010` por `D-026` |
 
@@ -38,6 +38,23 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 023 — Documentación final y recetas
+
+- **Objetivo:** cerrar `F4-005` para que alguien externo pueda copiar y usar el sistema sin leer el código.
+- **Hecho:**
+  - **Página Empezar** (`/start`, en las tres lenguas): requisitos, comandos del repo, instalación en un proyecto propio (dependencias, copia de `tokens.css`/`globals.css`, `@source`, provider), receta para copiar una primitiva, reglas que no se negocian, comandos de verificación y enlaces a componentes/patrones. Entra en la navegación de Fundamentos y en el pager.
+  - **`docs/RECIPES.md`**: ocho recetas copiables con la API real —base mínima, formulario con errores vinculados, tabla densa, `DataTable`, `DetailDrawer`, `ProductCard`/`PriceBlock`, i18n/formato y checklist de cierre— más anti-patrones.
+  - **README**: estado de fase 4, uso rápido, tabla de documentación con recetas y capturas, stack real (axe + Chromium/CDP en vez de Playwright) y comandos `qa:*` al día.
+  - **`D-030`**: la v1 no incluye estilos de impresión; una factura imprimible requiere decisiones legales y de producto que no están en el alcance. `Q-009` queda cerrada.
+- **Tareas tocadas:** `F4-005` → `done`; `Q-009` → `decided`.
+- **Decisiones:** `D-030`.
+- **Evidencia:** `apps/catalog/src/pages/start.tsx` (+ ruta y nav), `apps/catalog/src/pages/pages.test.tsx`, `docs/RECIPES.md`, `README.md`, `docs/DECISIONS.md`; `bun run check` verde (**30 archivos / 178 tests**); página verificada en navegador ES/JA/EN.
+- **Sin validar:** revisión por un tercero real; los ejemplos asumen React 19 + Tailwind 4 y no cubren otros bundlers.
+- **Próximo:** `F4-006` — revisión de Definition of Done y tag `v0.1.0-poc`.
+- **Bloqueos:** ninguno.
 
 ---
 

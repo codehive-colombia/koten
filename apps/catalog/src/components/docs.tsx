@@ -119,10 +119,7 @@ export function Code({
       >
         {copied ? copiedText : copyText}
       </button>
-      <pre
-        tabIndex={0}
-        className="overflow-x-auto border border-rule bg-tint p-[var(--koten-panel-p)] pe-20 font-mono text-2xs leading-relaxed"
-      >
+      <pre className="whitespace-pre-wrap break-words border border-rule bg-tint p-[var(--koten-panel-p)] pe-20 font-mono text-2xs leading-relaxed">
         <code>{children}</code>
       </pre>
       <span aria-live="polite" className="sr-only">
