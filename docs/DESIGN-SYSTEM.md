@@ -547,6 +547,8 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - **Portada (`/`)**: landing editorial del sistema, con layout ancho (sin sidebar de escritorio; header, toggles, menú móvil y footer se conservan). Orden: masthead con hanko, declaración y cifras; placa viva con piezas reales; tres registros con `data-theme` local; índice rápido; sistema en piezas e índice completo; principios y calidad; demos HIKARI y KURA; cierre con instalación por URL.
 - La portada usa datos y componentes reales: la placa responde a tema, densidad e idioma; no hay capturas ni texto en imágenes.
 - Rutas por fundamento (`/tokens/color`, `/tokens/typography`, …) y por componente (`/components/button`, …).
+- **Empezar** separa dos caminos: **usar el sistema** (registry de shadcn, sin clonar el repositorio ni instalar Bun) y **desarrollar el sistema** (monorepo, catálogo, demos, auditorías y registry). Cada camino tiene requisitos, pasos numerados y comandos propios.
+- Los comandos de shadcn tienen un selector **npx / bunx** persistente en `localStorage`; la preferencia se comparte entre Empezar, la portada y las páginas de componente y bloque.
 - Pager anterior/siguiente y enlaces profundos compartibles.
 - Cada componente: preview, variantes, estados, props, código, a11y, i18n.
 - Toggles de tema, densidad e idioma en el header; persistir en URL (`?theme=`, `?density=`, `?lang=`).
@@ -583,7 +585,56 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - Ocultar información en “Learn more” por defecto.
 - Copiar el clutter sin jerarquía.
 
-## 14. Checklist de revisión visual
+## 14. Documentación para agentes
+
+La documentación viva tiene una segunda salida, generada desde la misma fuente, para que un agente lea, instale y extienda el sistema sin adivinar la API. Se organiza en tres niveles.
+
+### 14.1 Lectura
+
+| Artefacto | Ruta | Contenido |
+| --- | --- | --- |
+| Índice | `/llms.txt` | Resumen del sistema, guías, 46 componentes, 20 bloques y skills. Formato [llmstxt.org](https://llmstxt.org/). |
+| Corpus | `/llms-full.txt` | Todo el sistema en un archivo, para una carga completa. |
+| Página de componente | `/md/components/<slug>.md` | Instalación, archivos, requisitos, ejemplos, props y a11y. |
+| Página de bloque | `/md/blocks/<categoría>/<slug>.md` | Lo mismo para las composiciones. |
+| Guías | `/md/guides/design-system.md`, `/md/guides/recipes.md` | Copia de los documentos internos. |
+
+El repositorio también publica un `llms.txt` en la raíz. Las páginas Markdown están en inglés porque las consumen agentes; el catálogo humano sigue en ES/JA/EN y los documentos internos siguen en español (`D-008`, `D-025`). Cada página del catálogo muestra un enlace **Markdown para agentes**.
+
+### 14.2 Skills
+
+Las skills siguen el estándar [Agent Skills](https://agentskills.io/specification) y viven en `skills/`, por lo que `npx skills add codehive-colombia/koten` las descubre sin configuración extra ([guía de creación](https://github.com/vercel-labs/skills/blob/main/docs/creating-skills.md)).
+
+| Skill | Para qué |
+| --- | --- |
+| `koten-ui` | Elegir, instalar, componer, tematizar y verificar una pantalla con las piezas existentes. |
+| `koten-design-system` | Agregar una primitiva o un bloque, crear tokens/temas/densidades y aplicar la gramática a un sistema nuevo. |
+
+Estructura:
+
+- `SKILL.md` corto, con el **qué** y el **cuándo** en `name`/`description`.
+- `references/` con el detalle que solo se carga cuando hace falta: inventario, composición, calidad, gramática, blueprint y extensión.
+- Referencias relativas, sin rutas absolutas ni secretos.
+- El inventario y los enlaces a guías se generan; no se editan a mano.
+
+La instalación típica es:
+
+```bash
+npx skills add codehive-colombia/koten --list
+npx skills add codehive-colombia/koten --skill koten-ui
+npx skills add codehive-colombia/koten --skill koten-design-system
+```
+
+### 14.3 Generación y control
+
+- `bun run ai:docs` regenera `apps/catalog/public/llms.txt`, `llms-full.txt`, `md/**` y los archivos rastreados (`llms.txt` raíz y `skills/koten-ui/references/{inventory,guides}.md`).
+- `bun run ai:check` falla si un archivo rastreado está desactualizado o si una skill rompe el frontmatter o una referencia relativa. Forma parte de `bun run check`.
+- `predev` y `prebuild` del catálogo generan la capa de agentes junto con el registry, así que el sitio y la imagen de producción nunca publican documentación vieja.
+- El catálogo tiene una página `/ai` con los tres niveles, los comandos y el enlace a los artefactos.
+
+---
+
+## 15. Checklist de revisión visual
 
 - [ ] ¿Se entiende la jerarquía en 3 segundos?
 - [ ] ¿Hay algún texto menor a 12 px?

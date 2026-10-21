@@ -32,6 +32,11 @@
 - [D-024 · Select no modal y paginación con identidad estable](#d-024)
 - [D-025 · Cuerpo del catálogo en ES/JA/EN](#d-025)
 - [D-042 · Una página por componente y una sección de bloques](#d-042)
+- [D-043 · Producción en un dominio, una imagen y tres puertos](#d-043)
+- [D-044 · El registry respeta los aliases de shadcn](#d-044)
+- [D-045 · Documentación para agentes y skills de consumo y diseño](#d-045)
+- [D-046 · Empezar se separa en usar y desarrollar el sistema](#d-046)
+- [D-047 · Runner de shadcn configurable: npx o bunx](#d-047)
 
 ---
 
@@ -679,3 +684,57 @@
   - `predev` del catálogo genera el registry con `KOTEN_SITE_URL=http://localhost:5173`; `prebuild` usa el origen de producción. Docker recibe `KOTEN_SITE_URL` además de `VITE_SITE_URL`.
 - **Consecuencias:** Una instalación real con `components.json` de aliases `~/...` y `tailwind.css: app/app.css` crea `components/ui/*` y `lib/koten/*`, reescribe imports a `~/lib/koten/*` y modifica solo `app/app.css`; no aparece `styles/`. El CSS compila con Tailwind 4 tanto si se instala `koten-theme` primero como si llega como dependencia. Actualizar tokens requiere volver a instalar `koten-theme`. Los items del registry siguen autocontenidos en código (componente + núcleo `lib/koten`), pero el CSS se comparte en un solo item. `D-039` queda vigente en la autocontención de archivos y superseded en targets relativos, imports relativos y `styles/koten.css`.
 - **Alternativas:** Mantener rutas e imports relativos (ignora `components.json` y sigue creando una carpeta custom); emitir `koten.css` con un target fijo junto a `app.css` (asume una ruta que el registry no puede conocer); sobrescribir `app/app.css` como `registry:file` (peligroso en proyectos ajenos); inyectar `@theme` con resets (rompe `@apply` de un proyecto inicializado con shadcn).
+
+---
+
+<a id="d-045"></a>
+## D-045 · Documentación para agentes y skills de consumo y diseño
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`M-007`; precisa `D-020`, `D-025` y `D-044`)
+- **Contexto:** Koten UI ya tenía catálogo trilingüe, páginas individuales y registry, pero un agente que llegaba al repositorio o al sitio no tenía un punto de entrada estable: debía leer TSX, inferir la API y reconstruir la instalación. Al mismo tiempo, el conocimiento para **usar** el sistema y el conocimiento para **extenderlo** son distintos y no debían mezclarse en un único documento. El ecosistema Agent Skills ([agentskills.io](https://agentskills.io/specification)) y el CLI de Vercel ([vercel-labs/skills](https://github.com/vercel-labs/skills)) ya ofrecen un formato y una ruta de instalación que conviene adoptar en lugar de inventar otro.
+- **Decisión:**
+  - Se agregan **tres niveles** de acceso para IA:
+    1. **Lectura**: `llms.txt` (índice, formato [llmstxt.org](https://llmstxt.org/)), `llms-full.txt` (corpus completo), una página Markdown por componente (`/md/components/<slug>.md`) y por bloque (`/md/blocks/<categoría>/<slug>.md`), más las guías internas en `/md/guides/`. Cada página del catálogo enlaza su Markdown.
+    2. **Consumo**: skill `koten-ui`, con el inventario generado, reglas de instalación, composición, temas, i18n y calidad.
+    3. **Extensión**: skill `koten-design-system`, con la gramática visual, el blueprint de componentes, tokens/temas/densidades y el checklist para sistemas nuevos.
+  - Las skills viven en `skills/<name>/SKILL.md` para que `npx skills add codehive-colombia/koten` las descubra. Siguen el estándar: `name` y `description` en el frontmatter, cuerpo corto, detalle en `references/`, referencias relativas y sin secretos.
+  - **Una sola fuente**: la capa de agentes se genera desde `apps/catalog/src/data/docs` y `docs/*.md` con `scripts/build-ai-docs.ts`. `bun run ai:docs` escribe el sitio y los archivos rastreados (raíz `llms.txt` y las referencias de `koten-ui`); `bun run ai:check` falla si están desactualizados o si una skill rompe el formato. `predev`/`prebuild` del catálogo la regeneran junto con el registry.
+  - Los artefactos para agentes se escriben en **inglés** (es el idioma de consumo de los agentes y de los ejemplos de código); el catálogo humano sigue en ES/JA/EN (`D-025`) y los documentos internos en español (`D-008`). No se traducen los `.md` internos.
+  - El sitio suma `/ai` con los tres niveles, comandos y enlaces; el README y `AGENTS.md` documentan la ruta.
+- **Consecuencias:** Un agente puede entrar por `/llms.txt`, leer una página concreta, instalar el registry y activar la skill correcta sin leer el catálogo entero. El inventario y las guías no pueden desincronizarse del código: la comprobación corre en `bun run check`. El build del catálogo produce 70 archivos de sitio adicionales (~250 KB para `llms-full.txt`) y tres archivos rastreados. La instalación por `npx skills` depende de que el repositorio sea accesible para el consumidor.
+- **Alternativas:** Publicar solo el catálogo humano (obliga al agente a inferir la API desde TSX); un MCP server (más infraestructura y estado que un repositorio de documentos estáticos); un único `SKILL.md` para consumo y diseño (mezcla dos tareas y dispara la skill equivocada); escribir los Markdown a mano (se desactualizan en la siguiente pieza); usar un generador de docs externo (dependencia y ceremonia nuevas, contra `D-042`).
+
+---
+
+<a id="d-046"></a>
+## D-046 · Empezar se separa en usar el sistema y desarrollar el sistema
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`M-008`; precisa `D-042`, `D-044` y `D-045`)
+- **Contexto:** La página **Empezar** (`/start`) había crecido mezclando dos audiencias: quien llega a instalar Koten UI en un proyecto React y quien llega a trabajar dentro del repositorio. La primera mitad explicaba `bun install` y las tres demos; la segunda pedía copiar `packages/ui` a mano, un flujo anterior al registry (`D-044`). El resultado era largo, desactualizado y poco amable: un consumidor leía requisitos de Bun que no necesita y un colaborador saltaba pasos de instalación que sí necesita.
+- **Decisión:**
+  - **Empezar** abre con dos tarjetas de camino: **Quiero usar Koten UI** (`#usar`) y **Quiero desarrollar Koten UI** (`#desarrollar`). La descripción de la página dice explícitamente que no son el mismo recorrido.
+  - **Usar** asume React 19 + Tailwind 4 + `components.json`; no requiere Bun ni clonar el repositorio. Pasos: instalar `koten-theme`, instalar el item, importar el CSS de Tailwind, envolver con `KotenProvider`, usar la pieza, elegir tema/densidad/idioma y, opcionalmente, instalar la skill `koten-ui`. Se elimina el flujo de `cp packages/ui/...`.
+  - **Desarrollar** asume Bun y Git; pasos: clonar, `bun install`, `bun run dev` con los tres puertos, `bun run check`/`build`/`budget`, leer `AGENTS.md` y el design system, auditorías opcionales y regeneración de registry/agentes. No repite la instalación por registry.
+  - El contenido sigue en ES/JA/EN; las listas y párrafos admiten código inline (`components.json`, `koten-theme`, rutas) con un renderer local, sin backticks literales.
+  - El README replica la separación en **Usar Koten UI en tu proyecto** y **Desarrollar Koten UI**. Los tests de la página comprueban los dos caminos y que el flujo obsoleto de copia manual ya no aparece.
+- **Consecuencias:** Un consumidor llega al comando que necesita sin leer requisitos del monorepo; un colaborador encuentra el arranque real, las verificaciones y el mapa del repositorio. La página queda más larga en total pero cada camino es lineal y autosuficiente. El README deja de mezclar `bun install` con la instalación por registry. Se actualizan `DESIGN-SYSTEM.md` §12, `REQUIREMENTS.md` (`R-025`) y el roadmap (`M-008`).
+- **Alternativas:** Mantener una sola guía lineal (obliga a cada audiencia a filtrar comandos); separar en dos rutas del catálogo (duplica navegación y rompe enlaces profundos existentes); dejar solo el camino de consumo y mover el desarrollo a `AGENTS.md` (el catálogo deja de explicar cómo se ejecuta); usar tabs sin URL (peor para compartir y para agentes).
+
+---
+
+<a id="d-047"></a>
+## D-047 · Runner de shadcn configurable y persistente: npx o bunx
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`M-009`; precisa `D-044` y `D-046`)
+- **Contexto:** El catálogo mostraba siempre `npx shadcn@latest add ...`, aunque Koten se desarrolla con Bun y muchos consumidores usan `bunx`. Cambiar el comando a mano en cada página es ruido, y el copy queda incorrecto para la mitad de los proyectos. La elección de runner no pertenece a la URL del catálogo (tema, densidad e idioma sí): es una preferencia de trabajo del usuario.
+- **Decisión:**
+  - Se agrega un selector segmentado **npx / bunx** (`PackageManagerTabs`) en la guía de uso de `/start`, en la portada y en la sección **Instalación** de cada componente y bloque.
+  - La preferencia vive en `localStorage` bajo `koten.package-manager`, con `npm` como valor inicial. Se comparte entre páginas mediante `useSyncExternalStore`; no viaja en la URL ni requiere provider.
+  - `registryCommand(item, packageManager)` devuelve `npx` o `bunx`; `packageRunner()` centraliza la etiqueta. El requisito de `shadcn init` en Empezar también se adapta.
+  - Los controles usan el patrón existente de toggles del catálogo (`fieldset` + `aria-pressed`), con el label localizado `Ejecutar con` / `実行` / `Run with`.
+  - La documentación generada para agentes incluye ambos comandos (`# Node` y `# Bun`), aunque el frontmatter conserva `npx` como forma canónica.
+- **Consecuencias:** Un proyecto Bun copia `bunx` en todas las páginas sin repetir la elección; un proyecto Node sigue viendo `npx`. La preferencia sobrevive a la navegación y a recargar la página. `site.test.ts` cubre ambos runners y `pages.test.tsx` comprueba el cambio, el `localStorage` y la persistencia entre páginas. No se escribe la preferencia en la URL, así que un enlace compartido no impone un runner.
+- **Alternativas:** Duplicar cada comando con dos líneas fijas (más ruido y copy desactualizado); usar la URL (contamina enlaces y `replaceState` con una preferencia personal); un provider nuevo (más ceremonia para un valor global simple); detectar Bun por heurística (frágil: el navegador no sabe qué runner usa el proyecto).

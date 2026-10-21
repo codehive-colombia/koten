@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-21**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-006`** · registry alineado con `components.json`
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción) y **`M-006`** (aliases y tema del registry)
+> Última tarea completada: **`M-009`** · selector npx/bunx persistente
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia) y **`M-009`** (runner npx/bunx)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -118,6 +118,11 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-039` | Registry shadcn autocontenido servido por el catálogo. | accepted | [D-039](./docs/DECISIONS.md#d-039) |
 | `D-041` | Portada editorial del catálogo, no landing de marketing. | accepted | [D-041](./docs/DECISIONS.md#d-041) |
 | `D-042` | Una página por componente y una sección de bloques. | accepted | [D-042](./docs/DECISIONS.md#d-042) |
+| `D-043` | Producción en un dominio, una imagen y tres puertos. | accepted | [D-043](./docs/DECISIONS.md#d-043) |
+| `D-044` | El registry respeta los aliases de shadcn y entrega el tema en el CSS del proyecto. | accepted | [D-044](./docs/DECISIONS.md#d-044) |
+| `D-045` | Documentación para agentes en tres niveles y skills de consumo y diseño. | accepted | [D-045](./docs/DECISIONS.md#d-045) |
+| `D-046` | Empezar se separa en usar el sistema y desarrollar el sistema. | accepted | [D-046](./docs/DECISIONS.md#d-046) |
+| `D-047` | Runner de shadcn configurable y persistente: npx o bunx. | accepted | [D-047](./docs/DECISIONS.md#d-047) |
 
 ---
 
@@ -291,6 +296,9 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-003` | Portada editorial del catálogo (`R-021`). | `done` | `/` como landing del sistema con masthead, placa viva, tres registros, índice de piezas, principios, demos e instalación; layout ancho sin sidebar; ES/JA/EN; mismos componentes y tokens; axe sin serious/critical; sin overflow a 1440/1280/1024/390; presupuesto dentro del límite. | `apps/catalog/src/pages/overview.tsx`; `components/landing.tsx` (`SystemPlate`, `RegisterCard`, `EntryCard`, `DemoCard`); `data/inventory.ts` (fuente única de los inventarios); `components/catalog-layout.tsx` (layout ancho y sin pager en `/`); `pages/{pages,i18n}.test.tsx`; `D-041`; `R-021`. |
 | `M-005` | Producción en `koten.codehive.com.co` con una imagen Docker, compose de tres puertos y CI (`R-023`). | `done` | Una imagen Bun + nginx sirve catálogo en `/` (3000), storefront en `/demos/store` (3001) y ERP en `/demos/erp` (3002); los tres routers de Traefik comparten dominio y conservan el prefijo; assets y deep links funcionan; el registry y los comandos shadcn usan el dominio de producción; GitHub Actions publica la imagen en GHCR. | `Dockerfile`; `docker-compose.yml`; `infra/nginx/default.conf`; `.dockerignore`; `.env.example`; `apps/catalog/src/lib/site.ts`; `apps/{storefront,erp}/vite.config.ts`; `apps/erp/src/App.tsx`; `scripts/{build-registry,check-budgets,qa-perf,qa-visual}.ts`; `.github/workflows/ci.yml`; `D-043`. Verificado con `docker build` y `docker compose`: `/`, `/demos/store/`, `/demos/erp/`, `/r/button.json` y deep links responden 200; navegador sin errores; `bun run check` (34 archivos / 209 tests) y `bun run budget` verdes. |
 | `M-006` | Registry alineado con `components.json`: aliases de shadcn y tema en el CSS del proyecto (`R-018`). | `done` | Los targets usan `@ui`, `@components` y `@lib`; los imports se reescriben a los aliases del proyecto; `koten-theme` entrega tokens, temas y densidad en `tailwind.css` sin crear `styles/`; una instalación real con aliases `~/...` compila con Tailwind 4 y `bun run check` pasa. | `scripts/build-registry.ts` + `build-registry.test.ts`; `apps/catalog/src/{components/doc-page.tsx,pages/start.tsx,data/docs/types.ts}`; `README.md`; `Dockerfile` y `docker-compose.yml` (`KOTEN_SITE_URL`); `apps/catalog/package.json`; `postcss` en la raíz; `D-044`. Verificado con `npx shadcn add` en un proyecto con `tailwind.css: app/app.css` y aliases `~/...`: archivos en `components/ui`, `components/patterns` y `lib/koten`, imports `~/...`, sin `styles/`; `@tailwindcss/cli` compila; `bun run check` (212 tests), `bun run build` y `bun run budget` verdes. |
+| `M-007` | Documentación para agentes y skills de consumo y diseño (`R-024`). | `done` | `llms.txt`, `llms-full.txt` y una página Markdown por componente y bloque; guías internas copiadas; skills `koten-ui` y `koten-design-system` en `skills/` compatibles con `npx skills`; página `/ai`; generación determinista y `bun run ai:check` dentro de `bun run check`. | `scripts/build-ai-docs.ts` + `build-ai-docs.test.ts`; `skills/{koten-ui,koten-design-system}/**`; `apps/catalog/src/pages/ai.tsx`; `App.tsx`; `data/catalog.ts`; `components/doc-page.tsx`; `apps/catalog/package.json`; `package.json`; `D-045`; `R-024`. |
+| `M-008` | Empezar separado por audiencia: usar el sistema vs desarrollar el sistema (`R-025`). | `done` | `/start` abre con dos caminos y tarjetas; el camino de uso instala `koten-theme` y componentes por registry, sin Bun ni clonar; el de desarrollo clona el monorepo, ejecuta las tres apps, verifica y audita; se elimina el flujo obsoleto de copiar `packages/ui`; README replica la separación; tests y a11y verdes. | `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `apps/catalog/src/pages/a11y.test.tsx`; `README.md`; `docs/DESIGN-SYSTEM.md` §12; `docs/REQUIREMENTS.md` (`R-025`); `D-046`. |
+| `M-009` | Selector `npx` / `bunx` persistente para los comandos de shadcn (`R-026`). | `done` | Empezar, portada e instalación de cada componente/bloque muestran tabs npx/bunx; la elección se guarda en `localStorage` y se comparte entre páginas; `registryCommand` y el `shadcn init` de Empezar respetan el runner; la documentación generada incluye ambos comandos. | `apps/catalog/src/lib/package-manager.ts`; `apps/catalog/src/lib/site.ts`; `apps/catalog/src/components/view-toggles.tsx`; `apps/catalog/src/components/doc-page.tsx`; `apps/catalog/src/pages/{start,overview}.tsx`; `apps/catalog/src/data/catalog.ts`; `scripts/build-ai-docs.ts`; tests de `site` y páginas; `D-047`. |
 
 ---
 
@@ -407,6 +415,9 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-021` | Portada editorial del catálogo. | `M-003`, `D-041` | `done` |
 | `R-022` | Documentación individual por componente y bloque, con instalación, preview/código, props, a11y y referencia Base UI. | `M-004`, `D-042` | `done` |
 | `R-023` | Despliegue de producción en un dominio con catálogo, storefront y ERP bajo rutas distintas, imagen Docker y CI. | `M-005`, `D-043` | `done` |
+| `R-024` | Documentación para agentes (`llms.txt`, Markdown por pieza) y skills `koten-ui`/`koten-design-system` compatibles con `npx skills`. | `M-007`, `D-045` | `done` |
+| `R-025` | Empezar separado en usar el sistema y desarrollar el sistema, con requisitos y comandos propios. | `M-008`, `D-046` | `done` |
+| `R-026` | Selector npx/bunx persistente para los comandos de shadcn. | `M-009`, `D-047` | `done` |
 
 ---
 
@@ -430,6 +441,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `RISK-014` | Las ilustraciones SVG no representan el producto final. | Bajo | Assets locales propios y reemplazables; `D-022`; sustituir por fotografía antes de producción sin cambiar la API de los patrones. |
 | `RISK-015` | Un overlay modal o una lista de datos inestable bloquea la interacción de la página. | Alto | `Select` no modal por defecto, dropdown estándar y `DataTable` con identidad estable; tests de regresión y `D-024`; stress en navegador antes de cerrar. |
 | `RISK-016` | El prefijo del proxy y el `base` de Vite se desincronizan y los assets de las demos caen en el catálogo. | Alto | nginx conserva el prefijo y hace fallback por app; `base` de producción probado con `vite preview`, `docker build`, curls a `/demos/{store,erp}/` y navegador; presupuesto acepta cualquier `base`; variables `VITE_*` para cambiar dominio sin tocar código. |
+| `RISK-017` | La capa de agentes se desactualiza o `npx skills` no puede acceder al repositorio si cambia de visibilidad. | Medio | Generación desde una sola fuente en `predev`/`prebuild`; `bun run ai:check` dentro de `bun run check`; el catálogo sigue funcionando sin skills; documentar el acceso requerido al instalar. |
 
 ---
 
@@ -504,3 +516,6 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Mejora puntual `M-003`: `/` pasa a landing editorial del sistema con placa viva, tres registros, índice de 45+20 piezas, principios, demos e instalación; layout ancho sin sidebar; inventarios compartidos; `D-041` y `R-021`; `bun run check`, `qa:a11y`, `qa:overflow` y `bun run budget` verdes. | Sesión 032 |
 | 2026-10-21 | Mejora puntual `M-005`: producción en `koten.codehive.com.co` con una imagen Bun + nginx, compose de tres puertos y routers de Traefik para `/`, `/demos/store` y `/demos/erp`; `base` de Vite por app, `basename` del ERP, URLs centralizadas, registry y comandos shadcn con el dominio de producción, CI que publica en GHCR. `D-043`, `R-023`, `RISK-016`. | Sesión 034 |
 | 2026-10-21 | Mejora puntual `M-006`: el registry usa los placeholders `@ui`/`@components`/`@lib` y los aliases de `components.json`, los imports se reescriben a `~/...`, y `koten-theme` escribe tokens, temas y densidad en el `tailwind.css` del proyecto sin crear `styles/`. Instalación real con aliases `~/...`, compilación Tailwind 4 y `bun run check` (212 tests) verdes. `D-044`, `R-018`. | Sesión 035 |
+| 2026-10-21 | Mejora puntual `M-007`: capa de documentación para agentes en tres niveles (`llms.txt`, Markdown por componente/bloque y guías), skills `koten-ui` y `koten-design-system` compatibles con `npx skills`, página `/ai`, generación desde una sola fuente y `bun run ai:check` en `bun run check`. `D-045`, `R-024`, `RISK-017`. | Sesión 036 |
+| 2026-10-21 | Mejora puntual `M-008`: **Empezar** se separa en dos caminos, usar Koten UI (registry, `KotenProvider`, sin Bun ni clonar) y desarrollar Koten UI (monorepo, `bun run dev`, `check`, auditorías); se elimina el flujo obsoleto de copiar `packages/ui`; README replica la separación. `D-046`, `R-025`. | Sesión 037 |
+| 2026-10-21 | Mejora puntual `M-009`: selector **npx / bunx** en Empezar, portada e instalación de cada componente/bloque, persistido en `localStorage` y compartido entre páginas; `registryCommand` respeta el runner y la documentación generada incluye ambos comandos. `D-047`, `R-026`. | Sesión 038 |

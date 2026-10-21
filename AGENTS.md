@@ -40,7 +40,7 @@ No empieces a escribir código sin leer al menos 1, 2 y 3.
 
 ## 4. Fin de sesión
 
-- [ ] Ejecutar `bun run check` (Biome + TypeScript + tests).
+- [ ] Ejecutar `bun run check` (Biome + TypeScript + tests + `ai:check`).
 - [ ] Ejecutar `bun run build` si se tocó configuración o rutas.
 - [ ] Actualizar el estado de la tarea en `ROADMAP.md`.
 - [ ] Registrar evidencia: rutas, comandos, commits, capturas o reportes.
@@ -137,6 +137,11 @@ docs/
   DESIGN-SYSTEM.md
   DECISIONS.md
   PROGRESS.md
+skills/
+  koten-ui/             # skill para consumir componentes
+  koten-design-system/  # skill para extender el sistema
+scripts/
+  build-ai-docs.ts      # llms.txt, Markdown por pieza e inventario de skills
 ROADMAP.md
 README.md
 AGENTS.md
@@ -151,7 +156,7 @@ AGENTS.md
 5. Usar `render`/`useRender` si necesita composición.
 6. Agregar tests de estados, teclado y ARIA.
 7. Agregar página al catálogo con preview, props, código y notas de a11y.
-8. Actualizar inventario y trazabilidad.
+8. Actualizar inventario, trazabilidad y capa de agentes (`bun run ai:docs`).
 9. Ejecutar `bun run check`.
 
 ## 10. Cómo agregar un patrón
@@ -161,11 +166,13 @@ AGENTS.md
 3. Documentar anatomía, estados y contenido mínimo.
 4. Usarlo en el demo correspondiente.
 5. Agregar página de patrón en el catálogo.
-6. Registrar en el roadmap.
+6. Regenerar la documentación de agentes (`bun run ai:docs`).
+7. Registrar en el roadmap.
 
 ## 11. Reglas de documentación
 
 - Documentación en **español**; identificadores de código en **inglés**.
+- Los artefactos para agentes (`llms.txt`, `/md/**`, `skills/**`) están en inglés por `D-045`; no traducirlos sin una decisión nueva.
 - Fechas ISO (`YYYY-MM-DD`).
 - No borrar decisiones ni entradas de bitácora.
 - No reescribir documentos completos si se puede hacer una edición puntual.
@@ -187,7 +194,7 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 45 primitivas, 20 patrones, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
+Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 45 primitivas, 20 patrones, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`), la capa de documentación y skills para agentes (`M-007`, `D-045`), la separación de **Empezar** en usar el sistema y desarrollar el sistema (`M-008`, `D-046`) y el selector persistente **npx / bunx** (`M-009`, `D-047`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
 2. No hay tareas abiertas: cualquier trabajo nuevo entra como `M-*` o una fase 6 con decisión `D-*`.

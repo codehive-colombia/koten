@@ -107,6 +107,9 @@ Las referencias se usan para **extraer principios**, no para copiar píxeles. El
 | `R-021` | Should | Portada editorial del catálogo que muestre el sistema antes de navegarlo. | `/` con placa viva de componentes reales, tres registros con `data-theme`, índice de piezas, principios, demos e instalación; ES/JA/EN; sin capturas ni claims de marketing. |
 | `R-022` | Should | Documentación individual por componente y bloque. | Una página por primitiva en `/components/<slug>` y una por bloque en `/blocks/<categoría>/<slug>`, con instalación, preview/código, props, a11y y referencia Base UI. |
 | `R-023` | Must | Despliegue de producción en un dominio con rutas para catálogo, storefront y ERP. | Imagen Docker reproducible, compose de tres puertos, reglas de proxy que conservan el prefijo, URLs públicas y registry correctos, y CI que publica la imagen. |
+| `R-024` | Should | Capa de documentación y skills para agentes. | `llms.txt` y `llms-full.txt` en el catálogo, Markdown por componente y bloque, skills `koten-ui` y `koten-design-system` compatibles con `npx skills`, generación determinista y `bun run ai:check` dentro de `bun run check`. |
+| `R-025` | Should | Empezar separado por audiencia. | Dos caminos explícitos: usar el sistema (registry, `KotenProvider`, sin Bun ni clonar) y desarrollar el sistema (monorepo, `bun run dev`, `check`, auditorías), con requisitos y comandos propios. |
+| `R-026` | Should | Runner de los comandos de shadcn configurable. | Selector `npx` / `bunx` en Empezar, portada y páginas de componente/bloque; la preferencia persiste en `localStorage` y todos los comandos copiados la respetan. |
 
 ## 6. Requisitos no funcionales
 
@@ -252,6 +255,8 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 - Do/Don’t.
 - Toggles de tema, densidad e idioma persistidos en URL.
 - Copiar código.
+- Documentación para agentes: `llms.txt`, `llms-full.txt`, Markdown por componente y bloque, y enlaces a las skills.
+- **Empezar** separa el camino de quien usa los componentes (registry, sin clonar) del de quien desarrolla el sistema (monorepo, demos, auditorías).
 
 ### Validaciones
 

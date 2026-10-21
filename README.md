@@ -2,7 +2,7 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5), con despliegue de producción en <https://koten.codehive.com.co> (`M-005`, `D-043`). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización y registry shadcn.
+> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5), con despliegue de producción en <https://koten.codehive.com.co> (`M-005`, `D-043`). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización, registry shadcn y una capa de documentación y skills para agentes (`M-007`, `D-045`).
 > **Siguiente:** sin tareas abiertas; el roadmap deja la fase 5 como cierre opcional ya completada.
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
@@ -16,6 +16,8 @@ Sistema de componentes React inspirado en el web japonés clásico: densidad inf
 | [docs/DECISIONS.md](./docs/DECISIONS.md) | Registro de decisiones (ADR ligero), con IDs estables. |
 | [docs/PROGRESS.md](./docs/PROGRESS.md) | Bitácora append-only de sesiones y handoff. |
 | [docs/RECIPES.md](./docs/RECIPES.md) | Recetas copiables: formulario, tabla, drawer, tarjeta, i18n y checklist. |
+| [llms.txt](./llms.txt) | Índice de documentación para agentes: componentes, bloques, guías y skills. |
+| [skills/](./skills) | Skills `koten-ui` y `koten-design-system` para consumir y extender el sistema. |
 | [docs/qa/](./docs/qa/) | Capturas de QA visual por fecha, con la matriz de viewports. |
 | [AGENTS.md](./AGENTS.md) | Protocolo para retomar el proyecto en otra sesión o con otro agente. |
 
@@ -51,6 +53,8 @@ bun run qa:a11y     # axe, 12 px mínimo y foco visible en navegador (requiere d
 bun run qa:perf     # LCP/CLS sobre el build (requiere Chromium; hace su propio preview)
 bun run qa:visual   # capturas 1440/1280/1024 en docs/qa/<fecha>
 bun run registry    # genera el registry shadcn en apps/catalog/public/r
+bun run ai:docs     # genera llms.txt, Markdown por pieza e inventario de la skill
+bun run ai:check    # falla si la capa de agentes o una skill está desactualizada
 ```
 
 ## Producción
@@ -77,7 +81,7 @@ docker compose -f docker-compose.yml -f docker-compose.local.yml up --build -d
 
 Variables principales en `.env` (ver `.env.example`): `KOTEN_IMAGE`, `KOTEN_SITE_URL`, `KOTEN_HOST`, el entrypoint/certresolver de Traefik y —solo para el override local— los tres puertos de host. `docker-compose.yml` incluye las reglas de Traefik para el dominio y las tres rutas; los enlaces públicos del catálogo y el registry se generan con `KOTEN_SITE_URL` (por defecto `https://koten.codehive.com.co`).
 
-El workflow de GitHub Actions publica la imagen en GHCR en `main` y en tags `v*`, y solo la construye en pull requests. El registry de shadcn se regenera dentro de la imagen (`prebuild`), por lo que `/r/*.json` viaja en el mismo contenedor.
+El workflow de GitHub Actions publica la imagen en GHCR en `main` y en tags `v*`, y solo la construye en pull requests. El registry de shadcn y la documentación para agentes se regeneran dentro de la imagen (`prebuild`), por lo que `/r/*.json`, `/llms.txt` y `/md/**` viajan en el mismo contenedor.
 
 ## Registry shadcn
 
@@ -92,20 +96,69 @@ npx shadcn@latest add https://koten.codehive.com.co/r/button.json
 En local se sirve desde el catálogo de desarrollo:
 
 ```bash
-bun run dev        # sirve http://localhost:5173/r/button.json (predev regenera el registry con localhost)
+bun run dev        # sirve http://localhost:5173/r/button.json (predev regenera registry y agent docs)
 npx shadcn@latest add http://localhost:5173/r/koten-theme.json
 npx shadcn@latest add http://localhost:5173/r/button.json
 ```
 
 Cada item usa los **aliases de `components.json`**: los targets son `@ui`, `@components` y `@lib`, y los imports canónicos `@/...` se reescriben al prefijo del proyecto. El item `koten-theme` viaja como dependencia y escribe tokens, temas y densidad en el archivo `tailwind.css` declarado en `components.json`; no se crea ninguna carpeta `styles/`. Para un tema 100 % Koten, parte de un CSS con solo `@import "tailwindcss";`; si el proyecto ya tenía tokens de shadcn, instala `koten-theme` primero para reemplazar los valores existentes. El catálogo documenta el flujo en `/start`.
 
-## Uso rápido
+## IA y agentes
 
-1. `bun install && bun run dev` y abrir el catálogo en <http://localhost:5173>. La portada (`/`) es una landing editorial que muestra las piezas en vivo y responde a tema, densidad e idioma.
-2. Leer **Empezar** (`/start`) para copiar estilos, provider y componentes.
-3. Recorrer **Componentes** (`/components`) para instalar una primitiva con su página propia y **Bloques** (`/blocks`) para las piezas pre-armadas de storefront y ERP.
-4. Seguir las recetas de [docs/RECIPES.md](./docs/RECIPES.md): formulario, tabla densa, drawer, tarjeta de producto.
-5. Verificar con `bun run check`, `bun run budget` y los `qa:*`.
+El sistema se puede leer, instalar y extender con un agente. Hay tres niveles, todos generados desde la misma fuente que el catálogo:
+
+| Nivel | Artefacto | Uso |
+| --- | --- | --- |
+| Lectura | `/llms.txt`, `/llms-full.txt`, `/md/components/<slug>.md`, `/md/blocks/<categoría>/<slug>.md` | Índice, corpus y una página por pieza. El catálogo muestra el enlace **Markdown para agentes** en cada página. |
+| Consumo | `skills/koten-ui` | Elegir, instalar, componer, tematizar y verificar una pantalla. |
+| Extensión | `skills/koten-design-system` | Agregar primitivas o bloques, tokens, temas, densidades y aplicar la gramática a un sistema nuevo. |
+
+```bash
+npx skills add codehive-colombia/koten --list
+npx skills add codehive-colombia/koten --skill koten-ui
+npx skills add codehive-colombia/koten --skill koten-design-system
+```
+
+En producción, el sitio publica <https://koten.codehive.com.co/llms.txt> y <https://koten.codehive.com.co/llms-full.txt>. La página `/ai` explica los tres niveles y los comandos. `predev` y `prebuild` regeneran la capa de agentes junto con el registry; `bun run ai:check` corre dentro de `bun run check`. Las skills siguen el estándar [Agent Skills](https://agentskills.io/specification) y se instalan con [`npx skills`](https://github.com/vercel-labs/skills).
+
+## Usar Koten UI en tu proyecto
+
+No necesitas clonar este repositorio ni instalar Bun. Necesitas React 19, Tailwind CSS 4 y un `components.json` de shadcn. La guía completa está en **Empezar** (`/start#usar`).
+
+```bash
+# 1. el tema, una sola vez
+npx shadcn@latest add https://koten.codehive.com.co/r/koten-theme.json
+
+# 2. el componente o bloque que necesites
+npx shadcn@latest add https://koten.codehive.com.co/r/button.json
+npx shadcn@latest add https://koten.codehive.com.co/r/product-card.json
+```
+
+Si usas Bun, cambia `npx` por `bunx`. El catálogo muestra un selector **npx / bunx** y recuerda la elección en `localStorage`; los comandos de cada componente y bloque se copian con ese runner.
+
+Después:
+
+1. Importa el CSS de Tailwind que declara tu `components.json`; el tema se escribe ahí, sin carpeta `styles/`.
+2. Envuelve la app con `KotenProvider` (`@/lib/koten/provider` o tu alias).
+3. Elige tema y densidad en el elemento raíz (`data-theme`, `data-density`).
+4. Recorre **Componentes** (`/components`) y **Bloques** (`/blocks`) para instalación, props, código y accesibilidad.
+5. Para agentes: `/ai`, `llms.txt` y las skills.
+
+## Desarrollar Koten UI
+
+Este camino es para trabajar dentro del repositorio: catálogo, primitivas, bloques, demos, auditorías y registry.
+
+```bash
+git clone https://github.com/codehive-colombia/koten.git
+cd koten
+bun install
+bun run dev      # catálogo 5173 · storefront 5174 · ERP 5175
+bun run check    # Biome + TypeScript + i18n + ai:check + tests
+bun run build    # build de las tres apps
+bun run budget   # presupuestos de JS/CSS
+```
+
+Antes de tocar una pieza, lee [AGENTS.md](./AGENTS.md), [docs/DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) y [docs/RECIPES.md](./docs/RECIPES.md). Las auditorías (`bun run qa:*`) son opcionales y requieren Chromium. La guía completa está en **Empezar** (`/start#desarrollar`).
 
 ## Estructura
 
@@ -124,6 +177,8 @@ packages/
     src/styles/globals.css
     src/lib/
 infra/nginx/    # runtime de la imagen de producción
+skills/         # skills para agentes (koten-ui, koten-design-system)
+scripts/        # registry, documentación para agentes y QA
 Dockerfile
 docker-compose.yml
 ```

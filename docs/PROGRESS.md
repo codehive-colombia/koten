@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-006` · mejoras puntuales `M-001`–`M-006` |
+| Última tarea completada | `M-009` · selector npx/bunx persistente |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,71 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 038 — Runner npx/bunx persistente (`M-009`)
+
+- **Objetivo:** que los comandos de shadcn se copien con `npx` o `bunx` según el runner del proyecto, con una elección recordada entre páginas.
+- **Hecho:**
+  - **Estado compartido**: `lib/package-manager.ts` guarda la preferencia en `localStorage` (`koten.package-manager`) y la comparte con `useSyncExternalStore`; no toca la URL ni necesita provider.
+  - **Tabs**: `PackageManagerTabs` reutiliza el patrón de toggles del catálogo (`fieldset` + `aria-pressed`) con `npx` / `bunx` y el label `Ejecutar con` / `実行` / `Run with`.
+  - **Superficies**: el selector aparece en la guía de uso de `/start`, en la portada y en la sección **Instalación** de cada componente y bloque. `registryCommand(item, packageManager)` genera el comando correcto; el `shadcn init` de los requisitos de Empezar también cambia.
+  - **Agentes**: la documentación generada muestra `# Node` y `# Bun`; `llms.txt` explica que la elección se recuerda en `localStorage`. El frontmatter conserva `npx` como forma canónica.
+  - **Docs**: README, `DESIGN-SYSTEM.md` §12, `REQUIREMENTS.md` (`R-026`), `ROADMAP.md` (`M-009`, `R-026`), `DECISIONS.md` (`D-047`) y `AGENTS.md`.
+- **Tareas tocadas:** `M-009` → `done`; `R-026` → `done`.
+- **Decisiones:** `D-047`.
+- **Evidencia:**
+  - `apps/catalog/src/lib/package-manager.ts`; `apps/catalog/src/lib/site.ts`; `apps/catalog/src/components/view-toggles.tsx`; `apps/catalog/src/components/doc-page.tsx`; `apps/catalog/src/pages/{start,overview}.tsx`; `apps/catalog/src/data/catalog.ts`; `scripts/build-ai-docs.ts`.
+  - Tests: `site.test.ts` cubre `npx` y `bunx`; `pages.test.tsx` comprueba el cambio, el valor en `localStorage` y la persistencia entre la página de Button y la de ProductCard. `bun run check` verde: **35 archivos / 225 tests**, Biome, TypeScript, i18n y `ai:check`.
+  - `bun run build` OK; `bun run budget` → catálogo **263,6/440,1 KB**, storefront 122,3 KB, ERP 199,3 KB.
+  - Navegador: en `/start` se elige `bunx` y los comandos pasan a `bunx shadcn@latest add …`; al navegar a `/components/button`, la sección Instalación sigue mostrando `bunx`. El selector también aparece en la portada.
+- **Sin validar:** lectura con lector de pantalla del selector en las tres páginas.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-21 · Sesión 037 — Empezar por audiencia (`M-008`)
+
+- **Objetivo:** dejar de mezclar en **Empezar** el camino de quien usa los componentes con el de quien desarrolla el repositorio, eliminar el flujo obsoleto de copiar `packages/ui` a mano y hacer la página más fácil de recorrer.
+- **Hecho:**
+  - `/start` abre con **dos tarjetas de camino**: “Quiero usar Koten UI” (`#usar`) y “Quiero desarrollar Koten UI” (`#desarrollar`). La descripción y el bloque “Elige tu camino” explican que son recorridos distintos.
+  - **Usar**: React 19 + Tailwind 4 + `components.json`, sin Bun ni clonar. Pasos numerados para `koten-theme`, componente o bloque, CSS de Tailwind, `KotenProvider`, uso, tema/densidad/idioma y skill `koten-ui`. Se elimina `cp packages/ui/...`.
+  - **Desarrollar**: Bun + Git, clonar, `bun install`, `bun run dev` con los tres puertos, `check`/`build`/`budget`, protocolo y design system, auditorías opcionales, registry/agentes y mapa del repositorio.
+  - **Legibilidad**: párrafos y listas interpretan código inline (`components.json`, `koten-theme`, rutas) con un renderer local; ya no se muestran backticks literales. Las tarjetas usan tokens, borde de 1 px y foco visible.
+  - **README**: “Uso rápido” se reemplaza por **Usar Koten UI en tu proyecto** y **Desarrollar Koten UI**, con los comandos de cada audiencia.
+  - **Docs**: `DESIGN-SYSTEM.md` §12, `REQUIREMENTS.md` (`R-025`), `ROADMAP.md` (`M-008`, `R-025`), `DECISIONS.md` (`D-046`) y `AGENTS.md`.
+- **Tareas tocadas:** `M-008` → `done`; `R-025` → `done`.
+- **Decisiones:** `D-046`.
+- **Evidencia:**
+  - `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `apps/catalog/src/pages/a11y.test.tsx`; `README.md`; `docs/DESIGN-SYSTEM.md`; `docs/REQUIREMENTS.md`; `ROADMAP.md`; `DECISIONS.md`; `AGENTS.md`.
+  - `bun run check` verde (**35 archivos / 223 tests**, Biome, TypeScript, i18n y `ai:check`); `bun run build` OK; `bun run budget` → catálogo **263,3/439,4 KB**, storefront 122,3 KB, ERP 199,3 KB.
+  - Navegador: `/start` en Kanso/ES a 1440 y 390; las dos tarjetas enlazan a `#usar` y `#desarrollar`; `main` mide 343 px a 390 y el contenido se apila; axe de la página sin `serious`/`critical` en jsdom.
+- **Sin validar:** lectura con lector de pantalla de la página completa y QA de overflow en navegador real (el script requiere el dev server en 5173, ocupado por otro proceso en esta sesión).
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-21 · Sesión 036 — Documentación para agentes y skills (`M-007`)
+
+- **Objetivo:** dar a un agente tres niveles de acceso —leer, consumir y extender— sin crear una segunda documentación que se desincronice del catálogo, y publicar skills instalables con `npx skills` (Vercel).
+- **Hecho:**
+  - **Lectura**: `scripts/build-ai-docs.ts` genera desde `apps/catalog/src/data/docs` el `llms.txt` del sitio y del repositorio, `llms-full.txt`, una página Markdown por componente (`/md/components/<slug>.md`) y por bloque (`/md/blocks/<categoría>/<slug>.md`), más copias de `DESIGN-SYSTEM.md` y `RECIPES.md` en `/md/guides/`. El Markdown va en inglés para agentes; el catálogo humano sigue en ES/JA/EN y los documentos internos en español.
+  - **Consumo**: `skills/koten-ui` con inventario generado (registry y URL de cada pieza), reglas de instalación, composición, tema/densidad, i18n, calidad y troubleshooting.
+  - **Extensión**: `skills/koten-design-system` con gramática visual, blueprint de componentes (CVA, `data-slot`, Base UI `render`, tests), reglas de tokens/temas/densidades y checklist para sistemas nuevos.
+  - **Superficie**: página `/ai` en ES/JA/EN con los tres niveles y comandos; enlace **Markdown para agentes** en cada página de componente y bloque; el `README`, `AGENTS.md`, `DESIGN-SYSTEM.md`, `REQUIREMENTS.md` y el roadmap documentan la capa.
+  - **Sincronía**: `bun run ai:docs`, `bun run ai:check` (frontmatter, nombre de skill, referencias relativas y archivos rastreados) dentro de `bun run check`; `predev`/`prebuild` del catálogo regeneran la capa junto con el registry. nginx sirve `/llms.txt`, `/llms-full.txt` y `/md/` con `Cache-Control` y declara `text/markdown` para gzip.
+- **Tareas tocadas:** `M-007` → `done`; `R-024` → `done`.
+- **Decisiones:** `D-045`; `RISK-017`.
+- **Evidencia:**
+  - Generación: `scripts/build-ai-docs.ts` + `build-ai-docs.test.ts` (8 tests); `skills/**`; `apps/catalog/src/pages/ai.tsx`; `App.tsx`; `data/catalog.ts`; `components/doc-page.tsx`; `apps/catalog/package.json`; `package.json`; `biome.json`; `.gitignore`; `infra/nginx/default.conf`.
+  - `bun run check` verde: Biome 218 archivos, TypeScript, i18n 149 archivos, `ai:check` y **35 archivos / 222 tests**. `bun run build` OK. `bun run budget`: storefront 122,3 KB, ERP 199,3 KB, catálogo 263,3/435,9 KB.
+  - `npx skills add ./skills --list` detecta las dos skills: `koten-ui` y `koten-design-system`. En el preview de producción, `/llms.txt` (16 983 B), `/md/components/button.md` (3 139 B), `/md/blocks/erp/app-shell.md` (3 551 B), `/md/guides/design-system.md` (26 755 B) y `/llms-full.txt` (252 684 B) responden 200 con `text/plain`/`text/markdown`; `/ai` renderiza en Kanso/ES sin errores de consola.
+- **Sin validar:** instalación remota `npx skills add codehive-colombia/koten` (solo se comprobó el descubrimiento por ruta local) y lectura con lector de pantalla de la nueva página.
+- **Próximo:** ninguna tarea abierta; si se agrega una primitiva o un bloque, `bun run ai:docs` actualiza la capa de agentes.
+- **Bloqueos:** ninguno.
 
 ---
 
