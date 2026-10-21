@@ -602,3 +602,21 @@
   - `apps/catalog/public/r` (registry generado e ignorado por git) se excluye también de Biome para que `bun run check` no dependa de si el registry fue regenerado.
 - **Consecuencias:** El fuente queda reutilizable en inglés sin perder la documentación trilingüe. Fundamentos se lee como un manual visual y no como un informe de proyecto. `bun run check` (201 tests) y `bun run budget` (catálogo 247,5/347,5 KB) pasan. Los tests de páginas y de shell se ajustan al nuevo copy.
 - **Alternativas:** Traducir también los diccionarios ES/JA/EN (rompe `D-025` y las demos trilingües); dejar el copy de Fundamentos con fases (mantiene ruido interno para el consumidor); documentar el source en español (rompe la reutilización del paquete fuera del equipo).
+
+---
+
+<a id="d-041"></a>
+## D-041 · Portada editorial del catálogo, no landing de marketing
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`M-003`; precisa `D-019`, `D-020`, `D-025` y `D-040`)
+- **Contexto:** La portada del catálogo (`/`) era un índice wiki: cabecera, cuatro tarjetas, principios y accesos. Servía para navegar, pero no mostraba el sistema: quien llegaba no veía las piezas, los temas ni la escala real antes de entrar en una página. `DESIGN-SYSTEM.md` §12 y `REQUIREMENTS.md` §9 decían “no es una landing de marketing”, una regla pensada para evitar testimonios, precios y claims, no para prohibir una portada que presente el sistema.
+- **Decisión:**
+  - `/` pasa a ser una **portada editorial del catálogo**: masthead con hanko, declaración y cifras; una **placa viva** con pedido, tabla, precio, estado y estadística; la comparación de los tres registros; el índice de piezas; los principios y la calidad; las dos demos; el cierre con la instalación por URL. Todo con piezas documentadas, datos reales del catálogo y copy ES/JA/EN.
+  - La portada usa el **layout ancho** del catálogo: sin sidebar de escritorio y con el ancho del contenedor (1200 px). Conserva header, toggles de tema/densidad/idioma, menú móvil, skip link y footer. El pager anterior/siguiente se oculta solo en `/`.
+  - Se componen primitivas y patrones existentes: `Panel`, `Table`, `PriceBlock`, `StatCard`, `Sparkline`, `StatusBadge`, `Badge`, `Meter`, `SectionHeader`, `Pattern`, `Hanko`, `Tategaki`, `Code` y `buttonVariants`. Las estructuras puramente editoriales (`SystemPlate`, `RegisterCard`, `EntryCard`, `DemoCard`) son custom, pero usan tokens, roles, densidad y reglas del sistema; no agregan dependencias ni primitivas nuevas.
+  - Los tres registros mantienen su `data-theme` local para poder compararse, igual que las tarjetas de `/tokens/themes`. El resto de la portada responde al selector del encabezado.
+  - Los conteos de la portada salen de `apps/catalog/src/data/inventory.ts`, la misma fuente que usan los inventarios de Componentes y Patrones.
+  - La regla “no es una landing de marketing” se **precisa**: la portada puede ser editorial y ambiciosa, pero no puede usar testimonios, precios inventados, carruseles infinitos, gradientes decorativos ni capturas con texto. No se duplica el catálogo: enlaza a sus páginas.
+- **Consecuencias:** La primera pantalla demuestra el sistema completo (tipografía, marcos, color, densidad, datos y temas) antes de leer una sola página. La portada no tiene sidebar en escritorio; los accesos principales viven en el índice rápido, las tarjetas y el cierre. `bun run check`, `qa:a11y` (catálogo sin serious/critical, 0 textos < 12 px), `qa:overflow` (84 combinaciones) y `bun run budget` pasan. Se actualizan `DESIGN-SYSTEM.md` §12 y `REQUIREMENTS.md` §9, y se agrega `R-021`.
+- **Alternativas:** Mantener el índice wiki (correcto pero opaco: no muestra el sistema); una landing de marketing con hero, testimonios y “features” (fuera de la tesis y de los guardrails); una app aparte solo para la portada (duplica shell, toggles y tokens); capturas estáticas (prohibidas por `D-010` y no responden a tema/densidad/idioma).

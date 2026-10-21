@@ -104,6 +104,7 @@ Las referencias se usan para **extraer principios**, no para copiar píxeles. El
 | `R-018` | Could | Registry shadcn. | `registry.json` + instalación por URL en fase 5. |
 | `R-019` | Could | Tema oscuro Sumi. | Tema conmutable en fase 5. |
 | `R-020` | Must | Trazabilidad entre sesiones. | Roadmap, bitácora, decisiones y protocolo en el FS. |
+| `R-021` | Should | Portada editorial del catálogo que muestre el sistema antes de navegarlo. | `/` con placa viva de componentes reales, tres registros con `data-theme`, índice de piezas, principios, demos e instalación; ES/JA/EN; sin capturas ni claims de marketing. |
 
 ## 6. Requisitos no funcionales
 
@@ -253,7 +254,7 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 ### Validaciones
 
 - Usa los mismos componentes que los demos.
-- No es una landing de marketing.
+- La portada es una landing editorial del sistema: piezas reales y enlaces a la documentación, sin testimonios, precios inventados ni claims de marketing.
 - Se puede navegar con teclado.
 - Documentación en español; demos en JA/ES/EN.
 

@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-21**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`F5-001`** · v1 en tag `v0.1.0-poc`
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo) y **`M-002`** (source en inglés y Fundamentos para el usuario)
+> Última tarea completada: **`M-003`** · portada editorial del catálogo
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario) y **`M-003`** (portada editorial)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -116,6 +116,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-037` | CommandPalette con combobox, listbox y foco atrapado. | accepted | [D-037](./docs/DECISIONS.md#d-037) |
 | `D-038` | Virtualización manual de DataTable. | accepted | [D-038](./docs/DECISIONS.md#d-038) |
 | `D-039` | Registry shadcn autocontenido servido por el catálogo. | accepted | [D-039](./docs/DECISIONS.md#d-039) |
+| `D-041` | Portada editorial del catálogo, no landing de marketing. | accepted | [D-041](./docs/DECISIONS.md#d-041) |
 
 ---
 
@@ -285,6 +286,7 @@ ISO 8601: `YYYY-MM-DD`.
 | --- | --- | --- | --- | --- |
 | `M-001` | i18n completo del catálogo y auditoría de las demos. | `done` | Cuerpo de las 25 páginas en ES/JA/EN; labels de `docs.tsx` y `specimen.tsx` localizados; `lang` del documento sigue al locale; demos sin strings hardcodeadas; `bun run check` verde. | Diccionarios por página en `apps/catalog/src/pages/**`; `lib/i18n.ts`; `data/{catalog,tokens}.ts`; `components/{docs,specimen,catalog-layout}.tsx`; `D-025`; test `pages/i18n.test.tsx`; `apps/erp/src/pages/orders.tsx` (label de email); `bun run budget` → catálogo 304,5 KB JS. |
 | `M-002` | Source en inglés y sección Fundamentos orientada al usuario. | `done` | Comentarios, JSDoc, mensajes y títulos de test de todo el source en inglés; diccionarios ES/JA/EN intactos; `/tokens` es una portada de Fundamentos con espécimen y previews; sin fases, IDs de tarea ni decisiones en el copy visible de Fundamentos; `bun run check` y `bun run budget` verdes. | `packages/ui/src/**`, `apps/**/src/**`, `scripts/**`; `apps/catalog/src/pages/tokens/index.tsx`; `components/specimen.tsx` (`FoundationsSpecimen`, `FoundationPreview`); `pages/{overview,start}.tsx`; `data/catalog.ts`; `D-040`; `biome.json` ignora `public/r`. |
+| `M-003` | Portada editorial del catálogo (`R-021`). | `done` | `/` como landing del sistema con masthead, placa viva, tres registros, índice de piezas, principios, demos e instalación; layout ancho sin sidebar; ES/JA/EN; mismos componentes y tokens; axe sin serious/critical; sin overflow a 1440/1280/1024/390; presupuesto dentro del límite. | `apps/catalog/src/pages/overview.tsx`; `components/landing.tsx` (`SystemPlate`, `RegisterCard`, `EntryCard`, `DemoCard`); `data/inventory.ts` (fuente única de los inventarios); `components/catalog-layout.tsx` (layout ancho y sin pager en `/`); `pages/{pages,i18n}.test.tsx`; `D-041`; `R-021`. |
 
 ---
 
@@ -398,6 +400,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-018` | Registry shadcn opcional. | `F5-001` | `done` |
 | `R-019` | Tema oscuro Sumi opcional. | `F5-002` | `todo` |
 | `R-020` | Trazabilidad entre sesiones. | `F0-000`, `AGENTS.md`, `docs/PROGRESS.md` | `done` |
+| `R-021` | Portada editorial del catálogo. | `M-003`, `D-041` | `done` |
 
 ---
 
@@ -491,3 +494,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |
 | 2026-10-21 | Mejora puntual `M-001`: cuerpo del catálogo localizado ES/JA/EN, labels de docs/espécimen, `lang` del documento y auditoría i18n de demos. `D-025`; `bun run check` verde. | Sesión 018 |
 | 2026-10-21 | Mejora puntual `M-002`: source 100% en inglés (comentarios, JSDoc, mensajes y tests) con la documentación intacta en ES/JA/EN; Fundamentos rediseñado como portada con espécimen y previews, sin fases ni IDs internos en el copy visible; `D-040`; `biome.json` ignora `public/r`; `bun run check` (202 tests) y `bun run budget` verdes. | Sesión 031 |
+| 2026-10-21 | Mejora puntual `M-003`: `/` pasa a landing editorial del sistema con placa viva, tres registros, índice de 45+20 piezas, principios, demos e instalación; layout ancho sin sidebar; inventarios compartidos; `D-041` y `R-021`; `bun run check`, `qa:a11y`, `qa:overflow` y `bun run budget` verdes. | Sesión 032 |

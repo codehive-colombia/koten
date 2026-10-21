@@ -67,7 +67,7 @@ Cada item es autocontenido: componente + `lib/koten` (cn, formato e i18n) + `sty
 
 ## Uso rápido
 
-1. `bun install && bun run dev` y abrir el catálogo en <http://localhost:5173>.
+1. `bun install && bun run dev` y abrir el catálogo en <http://localhost:5173>. La portada (`/`) es una landing editorial que muestra las piezas en vivo y responde a tema, densidad e idioma.
 2. Leer **Empezar** (`/start`) para copiar estilos, provider y primitivas.
 3. Seguir las recetas de [docs/RECIPES.md](./docs/RECIPES.md): formulario, tabla densa, drawer, tarjeta de producto.
 4. Verificar con `bun run check`, `bun run budget` y los `qa:*`.

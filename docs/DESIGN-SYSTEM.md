@@ -544,7 +544,8 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 ## 12. Catálogo
 
 - Formato wiki: sidebar sticky de 220 px + contenido max 900; menú plegable en mobile.
-- Home: tesis, principios, accesos a fundamentos, componentes y demos.
+- **Portada (`/`)**: landing editorial del sistema, con layout ancho (sin sidebar de escritorio; header, toggles, menú móvil y footer se conservan). Orden: masthead con hanko, declaración y cifras; placa viva con piezas reales; tres registros con `data-theme` local; índice rápido; sistema en piezas e índice completo; principios y calidad; demos HIKARI y KURA; cierre con instalación por URL.
+- La portada usa datos y componentes reales: la placa responde a tema, densidad e idioma; no hay capturas ni texto en imágenes.
 - Rutas por fundamento (`/tokens/color`, `/tokens/typography`, …) y por componente (`/components/button`, …).
 - Pager anterior/siguiente y enlaces profundos compartibles.
 - Cada componente: preview, variantes, estados, props, código, a11y, i18n.
@@ -553,7 +554,7 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - La densidad y el tema afectan el layout, las tablas y el espaciado del catálogo; las muestras comparativas mantienen su valor fijo.
 - Botón de copiar código.
 - Do/Don’t con ejemplos reales.
-- No es una landing de marketing.
+- La portada es una landing editorial del sistema, no una página de marketing: sin testimonios, precios inventados, carruseles infinitos, gradientes decorativos ni claims. Las piezas son reales y el copy enlaza a la documentación.
 
 ## 13. Do / Don’t
 

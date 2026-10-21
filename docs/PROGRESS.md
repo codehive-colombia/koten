@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `F5-001` · mejoras puntuales `M-001` y `M-002` |
+| Última tarea completada | `M-003` · mejoras puntuales `M-001`, `M-002` y `M-003` |
 | Tarea en curso | ninguna — roadmap completo |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 032 — Portada editorial del catálogo (`M-003`)
+
+- **Objetivo:** dar al catálogo una portada que muestre el sistema antes de navegarlo, usando los mismos componentes y un layout de landing editorial.
+- **Hecho:**
+  - **`/` es una landing:** masthead con hanko, declaración y cifras; placa viva con pedido KURA, tabla, precio, estado y estadística; los tres registros con `data-theme` local; índice rápido; sistema en piezas; índice completo de 45 primitivas y 20 patrones; principios y calidad; demos HIKARI/KURA; cierre con instalación por URL.
+  - **Layout ancho:** en `/` se oculta la sidebar de escritorio y el pager; se conservan header, toggles, menú móvil, skip link y footer. El contenido usa el ancho del contenedor (1200 px), con dos columnas en el hero y grids de 3/4 columnas según sección.
+  - **Composición:** `Panel`, `Table`, `PriceBlock`, `StatCard`, `Sparkline`, `StatusBadge`, `Badge`, `Meter`, `SectionHeader`, `Pattern`, `Hanko`, `Tategaki`, `Code` y `buttonVariants`. Las estructuras editoriales nuevas viven en `components/landing.tsx` (`SystemPlate`, `RegisterCard`, `EntryCard`, `DemoCard`) y usan solo tokens y roles; no hay dependencias nuevas.
+  - **Fuente única de inventarios:** `data/inventory.ts` reúne rutas, IDs y nombres de primitivas y patrones; lo consumen la portada, `/components` y `/patterns`, y se elimina la duplicación anterior.
+  - **Copy trilingüe:** todo el texto de la portada está en ES/JA/EN, incluida la placa viva y los ejemplos de tema. El copy no menciona fases ni IDs internos.
+- **Tareas tocadas:** `M-003` → `done`; `R-021` → `done`.
+- **Decisiones:** `D-041` (precisa la regla “no es una landing de marketing” de `DESIGN-SYSTEM.md` §12 y `REQUIREMENTS.md` §9).
+- **Evidencia:** `apps/catalog/src/pages/overview.tsx`; `components/landing.tsx`; `components/catalog-layout.tsx`; `data/inventory.ts`; `pages/{pages,i18n}.test.tsx`; `app.test.tsx`; `bun run check` verde (**33 archivos / 203 tests**); `qa:a11y --only=catalog` → 60 páginas, 0 serious/critical, 0 textos < 12 px; `qa:overflow --only=catalog` → 84 combinaciones sin overflow ni clipping; `bun run budget` → catálogo 256,3/354,9 KB; capturas 1440/1024/390 en Kanso, Sumi/JA y Chirashi/EN.
+- **Sin validar:** lectura con lector de pantalla de la placa compuesta; comportamiento en Safari/Firefox; medición de LCP específica de la nueva portada (el presupuesto global sigue verde).
+- **Próximo:** ninguna tarea abierta; roadmap completo (fases 0–5) más `M-001`, `M-002` y `M-003`.
+- **Bloqueos:** ninguno.
 
 ---
 
