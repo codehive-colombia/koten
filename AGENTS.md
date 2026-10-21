@@ -187,10 +187,10 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-La fase 0 está cerrada (`F0-001`–`F0-012`) y la fase 1 está casi cerrada: formularios, inputs avanzados, superficies, feedback, navegación, overlays, datos, controles y catálogo completo. El catálogo es wiki con React Router, selector ES/JA/EN y documentación sensible a tema/densidad. **No repitas `git init`, el workspace ni `bun install`.** El repo sigue sin commit inicial; que `git status` muestre archivos sin versionar es esperado.
+Las fases 0 y 1 están cerradas: workspace, catálogo wiki, tokens/temas/densidad y las 42 primitivas documentadas y auditadas. La próxima es la fase 2 (storefront HIKARI). **No repitas `git init`, el workspace ni `bun install`.** El repo sigue sin commit inicial; que `git status` muestre archivos sin versionar es esperado.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
-2. Cerrar `F1-010`: pasada de a11y (axe/teclado/foco), presupuesto de bundle y revisión de fuentes.
+2. Empezar la fase 2 con `F2-001`: contenido, datos mock y diccionarios JA/ES/EN del storefront.
 3. Seguir el patrón de `Button`/`Panel`/`Badge` y de los formularios: CVA, roles semánticos, `data-slot`, tests y página propia en el catálogo.
 4. Mantener la documentación en español (`D-020`) y la UI del catálogo en ES/JA/EN; no traducir el cuerpo de los docs sin una decisión nueva.
 5. No saltar a fases 2/3 sin cerrar la fase 1; registrar cualquier cambio de alcance con `D-*`.

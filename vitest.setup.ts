@@ -9,3 +9,8 @@ Object.defineProperty(Element.prototype, "scrollIntoView", {
   value: () => undefined,
   writable: true,
 });
+
+Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+  value: () => null,
+  writable: true,
+});

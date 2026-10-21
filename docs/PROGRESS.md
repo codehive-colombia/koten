@@ -9,9 +9,9 @@
 | Campo | Valor |
 | --- | --- |
 | Fecha | 2026-10-20 |
-| Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-009` — catálogo completo de primitivas |
-| Tarea en curso | ninguna — próxima `F1-010` |
+| Fase | 1 — Primitivas (`done`) · próxima fase 2 |
+| Última tarea completada | `F1-010` — a11y y performance |
+| Tarea en curso | ninguna — próxima `F2-001` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,23 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 014 — A11y, performance y cierre de fase 1
+
+- **Objetivo:** cerrar `F1-010` y la fase 1 con auditoría de accesibilidad y presupuestos.
+- **Hecho:**
+  - Auditoría **axe-core 4.14** sobre 11 páginas de componentes: sin violaciones `serious`/`critical`. El contraste se mantiene cubierto por el test de tokens; axe en jsdom no calcula color.
+  - Script `bun run budget` que mide gzip de JS/CSS y verifica 0 fuentes locales; integrado en `bun run ci` y en GitHub Actions.
+  - Presupuestos: storefront 69,3 KB JS, ERP 68,9 KB JS, catálogo 253,6 KB JS interno; CSS 8,6 KB; fuentes 0.
+  - Foco visible revisado en formularios, overlays y controles; sin fuentes CJK.
+- **Tareas tocadas:** `F1-010` → `done`; **fase 1 → `done`**.
+- **Decisiones:** Ninguna nueva. `axe-core` entra como dev dependency dentro de `D-005`.
+- **Evidencia:** `apps/catalog/src/pages/a11y.test.tsx`, `scripts/check-budgets.ts`, `.github/workflows/ci.yml`, `package.json`; `bun run check` verde (**21 archivos / 111 tests**); `bun run ci` verde con presupuestos.
+- **Sin validar:** lector de pantalla real y auditoría axe con contraste calculado en navegador (se hará en `F4-002`).
+- **Próximo:** fase 2 — `F2-001` contenido, datos mock y diccionarios JA/ES/EN del storefront.
+- **Bloqueos:** ninguno.
 
 ---
 

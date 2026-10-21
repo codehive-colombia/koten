@@ -2,8 +2,8 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fase 1 casi cerrada. Todas las primitivas y su catálogo están completos; falta la pasada de accesibilidad y performance.
-> **Tarea en curso:** ninguna — próxima `F1-010` (a11y y performance).
+> **Estado:** fases 0 y 1 cerradas. 42 primitivas documentadas, auditadas con axe y con presupuestos de bundle.
+> **Tarea en curso:** ninguna — próxima `F2-001` (contenido y datos del storefront).
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación
@@ -40,8 +40,9 @@ Versiones resueltas en el scaffold: Bun 1.4.3, React 19.3.1, Vite 8.3.4, TypeScr
 bun install
 bun run dev      # 5173 catálogo · 5174 storefront · 5175 ERP
 bun run check    # Biome + TypeScript + Vitest
-bun run ci       # check + build, equivalente local del workflow
+bun run ci       # check + build + presupuestos, equivalente local del workflow
 bun run build    # build de las tres apps
+bun run budget   # JS/CSS gzip y 0 fuentes locales
 ```
 
 ## Estructura

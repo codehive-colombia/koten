@@ -2,9 +2,10 @@
 
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-20**
-> Fase actual: **1 — Primitivas** (`in_progress`)
-> Tarea en curso: **ninguna** — próxima `F1-010`
-> Última tarea completada: **`F1-009`**
+> Fase actual: **1 — Primitivas** (`done`)
+> Próxima fase: **2 — Storefront “HIKARI”**
+> Tarea en curso: **ninguna** — próxima `F2-001`
+> Última tarea completada: **`F1-010`**
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -157,7 +158,7 @@ ISO 8601: `YYYY-MM-DD`.
 
 ### Fase 1 — Primitivas
 
-**Estado:** `in_progress` · **Objetivo:** cubrir formularios, superficies, feedback, navegación, overlays y datos con componentes copiables y documentados.
+**Estado:** `done` · **Objetivo:** cubrir formularios, superficies, feedback, navegación, overlays y datos con componentes copiables y documentados.
 
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
@@ -170,7 +171,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `F1-007` | Datos: `Table`, `DataTable`, `StatCard`, `Sparkline`, `BarChart`. | `F1-005` | `done` | Tabla semántica; sort/selección/paginación; estados vacío/loading; fallback accesible de charts. | `packages/ui/src/components/ui/{table,data-table,stat-card,sparkline,bar-chart}.tsx`; TanStack Table 8.21.3; tests; página `/components/data`; exports. |
 | `F1-008` | Controles: `Toolbar`, `ToggleGroup`, `IconButton`. | `F1-002`, `F1-005` | `done` | Roving tabindex; `aria-pressed`; grupos de vista/densidad. | `packages/ui/src/components/ui/{icon-button,toggle-group,toolbar}.tsx`; tests; página `/components/controls`; exports. |
 | `F1-009` | Catálogo completo de primitivas. | `F1-001`–`F1-008` | `done` | Cada componente tiene preview, variantes, props, código y notas de a11y. | Inventario de 42 primitivas en `/components`; 11 páginas de grupo; botón de copiar código; trazabilidad por `C-*`; tests del índice. |
-| `F1-010` | Pasada de a11y y performance de primitivas. | `F1-009` | `todo` | axe sin serious/critical; foco visible; sin fuentes extra; bundle revisado. | — |
+| `F1-010` | Pasada de a11y y performance de primitivas. | `F1-009` | `done` | axe sin serious/critical; foco visible; sin fuentes extra; bundle revisado. | `apps/catalog/src/pages/a11y.test.tsx` (axe-core 4.14, 11 páginas); `scripts/check-budgets.ts` + `bun run budget`; QA de foco; presupuestos verdes. |
 
 **Criterios de aceptación de la fase**
 
@@ -439,3 +440,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Datos: `Table`, `DataTable` con TanStack, `StatCard`, `Sparkline` y `BarChart` con página `/components/data`. `F1-007` → `done`; `C-037`–`C-040` → `done`. | Sesión 011 |
 | 2026-10-21 | Controles: `IconButton`, `ToggleGroup` y `Toolbar` con página `/components/controls`. `F1-008` → `done`; `C-004`, `C-036` y `C-041` → `done`. | Sesión 012 |
 | 2026-10-21 | Catálogo completo de primitivas: inventario C-001–C-041 + C-062, enlaces, copiar código y trazabilidad. `F1-009` → `done`. | Sesión 013 |
+| 2026-10-21 | A11y/performance: axe en 11 páginas, `bun run budget` con presupuestos de JS/CSS/fuentes, foco visible y QA visual. `F1-010` → `done`; **fase 1 → `done`**. Próxima: `F2-001`. | Sesión 014 |
