@@ -1,6 +1,120 @@
-import { cn } from "@koten/ui";
+import { cn, type KotenLocale, useKoten } from "@koten/ui";
 import type { ReactNode } from "react";
 import type { ColorToken, DensityId, SemanticRole, ThemeId } from "../data/tokens";
+import { type Localized, pickLocalized } from "../lib/i18n";
+
+const specimenLabels: Record<
+  KotenLocale,
+  {
+    roleCaption: string;
+    role: string;
+    token: string;
+    utility: string;
+    sans: string;
+    serif: string;
+    mono: string;
+    straight: string;
+    avatarOnly: string;
+    overlayOnly: string;
+    focus: string;
+    price: string;
+    tax: string;
+    taxIncluded: string;
+    stock: string;
+    inStock: string;
+    densitySample: string;
+    buy: string;
+    details: string;
+    stockAvailable: string;
+    stockLow: string;
+    stockOut: string;
+    order: string;
+    filter: string;
+    apply: string;
+  }
+> = {
+  es: {
+    roleCaption: "Roles semánticos resueltos en los temas Chirashi, Daichō y Kanso",
+    role: "Rol",
+    token: "Token",
+    utility: "Utilidad",
+    sans: "Sans · UI y body",
+    serif: "Serif · titulares",
+    mono: "Mono · código y datos",
+    straight: "recto",
+    avatarOnly: "solo avatar",
+    overlayOnly: "única sombra",
+    focus: "Foco",
+    price: "Precio",
+    tax: "Impuestos",
+    taxIncluded: "incluidos",
+    stock: "Stock",
+    inStock: "En stock",
+    densitySample: "Densidad",
+    buy: "Comprar",
+    details: "Ver detalles",
+    stockAvailable: "En stock",
+    stockLow: "Quedan pocas",
+    stockOut: "Agotado",
+    order: "Pedido",
+    filter: "Filtrar",
+    apply: "Aplicar",
+  },
+  ja: {
+    roleCaption: "チラシ・台帳・簡素の各テーマで解決される意味的役割",
+    role: "役割",
+    token: "トークン",
+    utility: "ユーティリティ",
+    sans: "Sans · UIと本文",
+    serif: "Serif · 見出し",
+    mono: "Mono · コードと数値",
+    straight: "直角",
+    avatarOnly: "アバターのみ",
+    overlayOnly: "唯一の影",
+    focus: "フォーカス",
+    price: "価格",
+    tax: "税",
+    taxIncluded: "込み",
+    stock: "在庫",
+    inStock: "在庫あり",
+    densitySample: "密度",
+    buy: "購入する",
+    details: "詳細を見る",
+    stockAvailable: "在庫あり",
+    stockLow: "残りわずか",
+    stockOut: "売り切れ",
+    order: "注文",
+    filter: "フィルタ",
+    apply: "適用",
+  },
+  en: {
+    roleCaption: "Semantic roles resolved across the Chirashi, Daichō and Kanso themes",
+    role: "Role",
+    token: "Token",
+    utility: "Utility",
+    sans: "Sans · UI and body",
+    serif: "Serif · headlines",
+    mono: "Mono · code and data",
+    straight: "square",
+    avatarOnly: "avatar only",
+    overlayOnly: "only shadow",
+    focus: "Focus",
+    price: "Price",
+    tax: "Tax",
+    taxIncluded: "included",
+    stock: "Stock",
+    inStock: "In stock",
+    densitySample: "Density",
+    buy: "Buy",
+    details: "View details",
+    stockAvailable: "In stock",
+    stockLow: "Low stock",
+    stockOut: "Sold out",
+    order: "Order",
+    filter: "Filter",
+    apply: "Apply",
+  },
+};
 
 export function Section({
   id,
@@ -43,6 +157,8 @@ export function SubHeading({ children, meta }: { children: ReactNode; meta?: str
 }
 
 export function ColorGrid({ colors }: { colors: readonly ColorToken[] }) {
+  const { locale } = useKoten();
+
   return (
     <ul className="grid grid-cols-1 gap-[var(--koten-gap)] sm:grid-cols-2 lg:grid-cols-3">
       {colors.map((color) => (
@@ -58,7 +174,7 @@ export function ColorGrid({ colors }: { colors: readonly ColorToken[] }) {
             </p>
             <p className="mt-0.5 break-all font-mono text-2xs text-muted">{color.token}</p>
             <p className="text-2xs text-faint">
-              {color.hex} · {color.note}
+              {color.hex} · {pickLocalized(color.note, locale)}
             </p>
           </div>
         </li>
@@ -79,22 +195,23 @@ function RoleChip({ theme, token }: { theme: ThemeId; token: string }) {
 }
 
 export function RoleTable({ roles }: { roles: readonly SemanticRole[] }) {
+  const { locale } = useKoten();
+  const labels = specimenLabels[locale];
+
   return (
     <div className="overflow-x-auto border border-rule">
       <table className="w-full min-w-[40rem] border-collapse text-left">
-        <caption className="sr-only">
-          Roles semánticos resueltos en los temas Chirashi, Daichō y Kanso
-        </caption>
+        <caption className="sr-only">{labels.roleCaption}</caption>
         <thead>
           <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">
             <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
-              Rol
+              {labels.role}
             </th>
             <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
-              Token
+              {labels.token}
             </th>
             <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
-              Utilidad
+              {labels.utility}
             </th>
             <th scope="col" className="px-[var(--koten-control-px)] text-center font-semibold">
               Chirashi
@@ -111,7 +228,7 @@ export function RoleTable({ roles }: { roles: readonly SemanticRole[] }) {
           {roles.map((role) => (
             <tr key={role.token} className="h-[var(--koten-row-h)]">
               <th scope="row" className="px-[var(--koten-control-px)] text-xs font-medium">
-                {role.note}
+                {pickLocalized(role.note, locale)}
               </th>
               <td className="px-[var(--koten-control-px)] font-mono text-2xs text-muted">
                 {role.token}
@@ -137,10 +254,12 @@ export function RoleTable({ roles }: { roles: readonly SemanticRole[] }) {
 }
 
 export function TypeFamilies() {
+  const { locale } = useKoten();
+  const labels = specimenLabels[locale];
   const families = [
-    { label: "Sans · UI y body", token: "--koten-font-sans", className: "font-sans" },
-    { label: "Serif · titulares", token: "--koten-font-serif", className: "font-serif" },
-    { label: "Mono · código y datos", token: "--koten-font-mono", className: "font-mono" },
+    { label: labels.sans, token: "--koten-font-sans", className: "font-sans" },
+    { label: labels.serif, token: "--koten-font-serif", className: "font-serif" },
+    { label: labels.mono, token: "--koten-font-mono", className: "font-mono" },
   ] as const;
 
   return (
@@ -159,8 +278,11 @@ export function TypeFamilies() {
 export function TypeScale({
   items,
 }: {
-  items: readonly { token: string; utility: string; px: number; use: string }[];
+  items: readonly { token: string; utility: string; px: number; use: Localized }[];
 }) {
+  const { locale } = useKoten();
+  const labels = specimenLabels[locale];
+
   return (
     <ol className="divide-y divide-rule border-y border-rule">
       {items.map((item) => (
@@ -170,10 +292,10 @@ export function TypeScale({
         >
           <span className="w-24 shrink-0 font-mono text-2xs text-faint">{item.utility}</span>
           <span className="min-w-0 flex-1 leading-tight" style={{ fontSize: `var(${item.token})` }}>
-            情報の密度 · Densidad
+            情報の密度 · {labels.densitySample}
           </span>
           <span className="w-full shrink-0 text-right text-2xs text-muted sm:w-48">
-            {item.px} px · {item.use}
+            {item.px} px · {pickLocalized(item.use, locale)}
           </span>
         </li>
       ))}
@@ -251,12 +373,15 @@ export function ShapeSpecimen({
 }: {
   radii: readonly { token: string; utility: string; px: number }[];
 }) {
+  const { locale } = useKoten();
+  const labels = specimenLabels[locale];
+
   return (
     <div className="flex flex-wrap items-end gap-[var(--koten-gap)]">
       <figure className="w-24">
         <div aria-hidden="true" className="size-12 border border-rule-strong bg-tint" />
         <figcaption className="mt-1 text-2xs text-muted">
-          0 px <span className="block text-faint">recto</span>
+          0 px <span className="block text-faint">{labels.straight}</span>
         </figcaption>
       </figure>
       {radii.map((radius) => (
@@ -277,41 +402,40 @@ export function ShapeSpecimen({
           className="size-12 rounded-full border border-rule-strong bg-tint"
         />
         <figcaption className="mt-1 text-2xs text-muted">
-          50% <span className="block text-faint">solo avatar</span>
+          50% <span className="block text-faint">{labels.avatarOnly}</span>
         </figcaption>
       </figure>
       <figure className="w-32">
         <div aria-hidden="true" className="h-12 border border-rule bg-surface shadow-overlay" />
         <figcaption className="mt-1 text-2xs text-muted">
-          Overlay <span className="block text-faint">única sombra</span>
+          Overlay <span className="block text-faint">{labels.overlayOnly}</span>
         </figcaption>
       </figure>
     </div>
   );
 }
 
-function DensityDemo({ density }: { density: DensityId }) {
-  const labels: Record<DensityId, string> = {
-    compact: "Compacta",
-    default: "Default",
-    comfortable: "Amplia",
-  };
+function DensityDemo({ density, label }: { density: DensityId; label: string }) {
+  const { locale } = useKoten();
+  const labels = specimenLabels[locale];
 
   return (
     <div data-density={density} className="border border-rule bg-surface">
       <div className="flex items-center justify-between border-b border-rule bg-tint px-[var(--koten-panel-p)] py-1.5">
-        <p className="text-xs font-semibold">{labels[density]}</p>
+        <p className="text-xs font-semibold">{label}</p>
         <code className="text-2xs text-faint">{density}</code>
       </div>
       <div className="p-[var(--koten-panel-p)]">
         <ul className="divide-y divide-rule border-y border-rule">
-          {["注文 #1024", "注文 #1025", "注文 #1026"].map((row, index) => (
+          {[1024, 1025, 1026].map((order, index) => (
             <li
-              key={row}
+              key={order}
               className="flex items-center justify-between gap-2 text-2xs"
               style={{ height: "var(--koten-row-h)" }}
             >
-              <span className="truncate">{row}</span>
+              <span className="truncate">
+                {labels.order} #{order}
+              </span>
               <span className="shrink-0 tabular-nums text-muted">¥{(index + 1) * 4800}</span>
             </li>
           ))}
@@ -321,13 +445,13 @@ function DensityDemo({ density }: { density: DensityId }) {
             className="inline-flex items-center border border-rule-strong bg-surface px-[var(--koten-control-px)] text-2xs"
             style={{ height: "var(--koten-control-h)" }}
           >
-            フィルタ
+            {labels.filter}
           </span>
           <span
             className="inline-flex items-center border border-primary-strong bg-primary px-[var(--koten-control-px)] text-2xs text-primary-foreground"
             style={{ height: "var(--koten-control-h)" }}
           >
-            適用
+            {labels.apply}
           </span>
         </div>
       </div>
@@ -338,15 +462,17 @@ function DensityDemo({ density }: { density: DensityId }) {
 export function DensityGrid({
   densities,
 }: {
-  densities: readonly { id: DensityId; label: string; context: string }[];
+  densities: readonly { id: DensityId; label: Localized; context: Localized }[];
 }) {
+  const { locale } = useKoten();
+
   return (
     <div className="grid gap-[var(--koten-gap)] lg:grid-cols-3">
       {densities.map((density) => (
         <div key={density.id}>
-          <DensityDemo density={density.id} />
+          <DensityDemo density={density.id} label={pickLocalized(density.label, locale)} />
           <p className="mt-1 text-2xs text-faint">
-            {density.label} · {density.context}
+            {pickLocalized(density.label, locale)} · {pickLocalized(density.context, locale)}
           </p>
         </div>
       ))}
@@ -357,8 +483,11 @@ export function DensityGrid({
 export function ThemeCard({
   theme,
 }: {
-  theme: { id: ThemeId; label: string; jp: string; description: string };
+  theme: { id: ThemeId; label: string; jp: string; description: Localized };
 }) {
+  const { locale } = useKoten();
+  const labels = specimenLabels[locale];
+
   return (
     <article
       data-theme={theme.id}
@@ -372,38 +501,38 @@ export function ThemeCard({
       </header>
       <div className="flex-1 p-[var(--koten-panel-p)]">
         <p className="font-serif text-xl leading-tight">情報の密度</p>
-        <p className="mt-1 text-xs text-muted">{theme.description}</p>
+        <p className="mt-1 text-xs text-muted">{pickLocalized(theme.description, locale)}</p>
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <span
             className="inline-flex items-center border border-primary-strong bg-primary px-[var(--koten-control-px)] text-xs font-semibold text-primary-foreground"
             style={{ height: "var(--koten-control-h)" }}
           >
-            購入する
+            {labels.buy}
           </span>
           <span className="text-xs font-semibold text-link underline underline-offset-2">
-            詳細を見る
+            {labels.details}
           </span>
         </div>
         <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t border-rule pt-2 text-2xs">
-          <dt className="text-faint">Precio</dt>
+          <dt className="text-faint">{labels.price}</dt>
           <dd className="text-right font-semibold tabular-nums text-primary">¥128,000</dd>
-          <dt className="text-faint">Impuestos</dt>
-          <dd className="text-right tabular-nums text-muted">incluidos</dd>
-          <dt className="text-faint">Stock</dt>
-          <dd className="text-right text-success">En stock</dd>
+          <dt className="text-faint">{labels.tax}</dt>
+          <dd className="text-right tabular-nums text-muted">{labels.taxIncluded}</dd>
+          <dt className="text-faint">{labels.stock}</dt>
+          <dd className="text-right text-success">{labels.inStock}</dd>
         </dl>
         <div className="mt-3 flex flex-wrap items-center gap-1.5">
           <span className="border border-success bg-surface px-1.5 py-0.5 text-2xs text-success">
-            在庫あり
+            {labels.stockAvailable}
           </span>
           <span className="border border-warning bg-surface px-1.5 py-0.5 text-2xs text-warning">
-            残りわずか
+            {labels.stockLow}
           </span>
           <span className="border border-danger bg-surface px-1.5 py-0.5 text-2xs text-danger">
-            売り切れ
+            {labels.stockOut}
           </span>
           <span className="inline-flex items-center border border-rule-strong bg-surface px-1.5 py-0.5 text-2xs outline-2 outline-offset-1 outline-focus">
-            Foco
+            {labels.focus}
           </span>
         </div>
       </div>

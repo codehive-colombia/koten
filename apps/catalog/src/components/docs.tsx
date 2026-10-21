@@ -1,5 +1,36 @@
+import { type KotenLocale, useKoten } from "@koten/ui";
 import { type ReactNode, useState } from "react";
 import { Link } from "react-router";
+
+const docsLabels: Record<
+  KotenLocale,
+  { copy: string; copied: string; prop: string; type: string; fallback: string; note: string }
+> = {
+  es: {
+    copy: "Copiar",
+    copied: "Copiado",
+    prop: "Prop",
+    type: "Tipo",
+    fallback: "Default",
+    note: "Nota",
+  },
+  ja: {
+    copy: "コピー",
+    copied: "コピー済み",
+    prop: "プロパティ",
+    type: "型",
+    fallback: "既定値",
+    note: "説明",
+  },
+  en: {
+    copy: "Copy",
+    copied: "Copied",
+    prop: "Prop",
+    type: "Type",
+    fallback: "Default",
+    note: "Note",
+  },
+};
 
 export function PageHeader({
   eyebrow,
@@ -51,14 +82,18 @@ export function Demo({
 
 export function Code({
   children,
-  copyLabel = "Copiar",
-  copiedLabel = "Copiado",
+  copyLabel,
+  copiedLabel,
 }: {
   children: string;
   copyLabel?: string;
   copiedLabel?: string;
 }) {
+  const { locale } = useKoten();
+  const labels = docsLabels[locale];
   const [copied, setCopied] = useState(false);
+  const copyText = copyLabel ?? labels.copy;
+  const copiedText = copiedLabel ?? labels.copied;
 
   const copy = async () => {
     if (!navigator.clipboard) {
@@ -81,13 +116,13 @@ export function Code({
         onClick={copy}
         className="absolute end-2 top-2 border border-rule-strong bg-surface px-1.5 py-0.5 text-2xs font-semibold text-muted transition-colors hover:bg-tint hover:text-ink"
       >
-        {copied ? copiedLabel : copyLabel}
+        {copied ? copiedText : copyText}
       </button>
       <pre className="overflow-x-auto border border-rule bg-tint p-[var(--koten-panel-p)] pe-20 font-mono text-2xs leading-relaxed">
         <code>{children}</code>
       </pre>
       <span aria-live="polite" className="sr-only">
-        {copied ? copiedLabel : ""}
+        {copied ? copiedText : ""}
       </span>
     </div>
   );
@@ -100,6 +135,9 @@ export function PropsTable({
   caption: string;
   rows: readonly { prop: string; type: string; default: string; note: string }[];
 }) {
+  const { locale } = useKoten();
+  const headers = docsLabels[locale];
+
   return (
     <div className="mt-[var(--koten-gap)] overflow-x-auto border border-rule">
       <table className="w-full min-w-[32rem] border-collapse text-left">
@@ -107,16 +145,16 @@ export function PropsTable({
         <thead>
           <tr className="h-[var(--koten-row-h)] border-b border-rule-strong bg-tint text-2xs text-muted">
             <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
-              Prop
+              {headers.prop}
             </th>
             <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
-              Tipo
+              {headers.type}
             </th>
             <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
-              Default
+              {headers.fallback}
             </th>
             <th scope="col" className="px-[var(--koten-control-px)] font-semibold">
-              Nota
+              {headers.note}
             </th>
           </tr>
         </thead>

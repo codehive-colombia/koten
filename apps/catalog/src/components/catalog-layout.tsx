@@ -175,6 +175,11 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
     }
   }, [pathname]);
 
+  useEffect(() => {
+    const label = pageLabel(pathname, view.locale);
+    document.title = label ? `${label} · Koten UI` : "Koten UI";
+  }, [pathname, view.locale]);
+
   const closeMobileMenu = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     event.currentTarget.closest("details")?.removeAttribute("open");
   };
@@ -197,7 +202,7 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
             </span>
             <span>
               <span className="block text-xs font-semibold">Koten UI</span>
-              <span className="block text-2xs text-faint">Catálogo · 古典</span>
+              <span className="block text-2xs text-faint">{labels.catalog} · 古典</span>
             </span>
           </NavLink>
           <div

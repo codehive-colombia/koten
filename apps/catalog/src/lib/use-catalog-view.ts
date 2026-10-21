@@ -46,6 +46,7 @@ export function readViewFromUrl(search = window.location.search): CatalogView {
 export function syncViewToUrl(view: CatalogView) {
   document.documentElement.dataset.theme = view.theme;
   document.documentElement.dataset.density = view.density;
+  document.documentElement.lang = view.locale;
 
   const url = new URL(window.location.href);
   url.searchParams.set("theme", view.theme);

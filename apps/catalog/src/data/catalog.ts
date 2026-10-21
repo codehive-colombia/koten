@@ -148,8 +148,10 @@ export type ShellLabels = {
   preview: string;
   openDemo: string;
   notFound: string;
+  notFoundBody: string;
   backHome: string;
   pagerLabel: string;
+  catalog: string;
 };
 
 export const shellLabels: Record<KotenLocale, ShellLabels> = {
@@ -160,14 +162,17 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Tema",
     density: "Densidad",
     language: "Idioma",
-    phase: "Fase 3 · POC completo",
+    phase: "Fase 4 · Cierre del POC",
     viewState: "Estado en URL",
-    docsLanguage: "Documentación en español · interfaz y ejemplos cambian de idioma",
+    docsLanguage:
+      "Documentación completa en ES/JA/EN · interfaz, cuerpo y ejemplos cambian de idioma",
     preview: "Vista previa",
     openDemo: "Abrir demo",
     notFound: "Página no encontrada",
+    notFoundBody: "La ruta no existe o todavía no está documentada.",
     backHome: "Volver al inicio",
     pagerLabel: "Paginación del catálogo",
+    catalog: "Catálogo",
   },
   ja: {
     skipToContent: "本文へ移動",
@@ -176,14 +181,16 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "テーマ",
     density: "密度",
     language: "言語",
-    phase: "フェーズ3 · デモ完成",
+    phase: "フェーズ4 · デモ仕上げ",
     viewState: "URLに状態を保存",
-    docsLanguage: "ドキュメントはスペイン語 · UIと言語例は切り替わります",
+    docsLanguage: "ドキュメントはES/JA/ENで完備 · UI・本文・例が言語に追従します",
     preview: "プレビュー",
     openDemo: "デモを開く",
     notFound: "ページが見つかりません",
+    notFoundBody: "このルートは存在しないか、まだドキュメント化されていません。",
     backHome: "ホームへ戻る",
     pagerLabel: "カタログのページ送り",
+    catalog: "カタログ",
   },
   en: {
     skipToContent: "Skip to content",
@@ -192,13 +199,15 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Theme",
     density: "Density",
     language: "Language",
-    phase: "Phase 3 · POC complete",
+    phase: "Phase 4 · POC wrap-up",
     viewState: "State in URL",
-    docsLanguage: "Documentation in Spanish · UI and examples switch language",
+    docsLanguage: "Full documentation in ES/JA/EN · UI, body and examples follow the language",
     preview: "Preview",
     openDemo: "Open demo",
     notFound: "Page not found",
+    notFoundBody: "This route does not exist or is not documented yet.",
     backHome: "Back to home",
     pagerLabel: "Catalog pagination",
+    catalog: "Catalog",
   },
 };
