@@ -31,6 +31,7 @@
 - [D-023 · Rutas y estado en URL de las demos](#d-023)
 - [D-024 · Select no modal y paginación con identidad estable](#d-024)
 - [D-025 · Cuerpo del catálogo en ES/JA/EN](#d-025)
+- [D-042 · Una página por componente y una sección de bloques](#d-042)
 
 ---
 
@@ -620,3 +621,22 @@
   - La regla “no es una landing de marketing” se **precisa**: la portada puede ser editorial y ambiciosa, pero no puede usar testimonios, precios inventados, carruseles infinitos, gradientes decorativos ni capturas con texto. No se duplica el catálogo: enlaza a sus páginas.
 - **Consecuencias:** La primera pantalla demuestra el sistema completo (tipografía, marcos, color, densidad, datos y temas) antes de leer una sola página. La portada no tiene sidebar en escritorio; los accesos principales viven en el índice rápido, las tarjetas y el cierre. `bun run check`, `qa:a11y` (catálogo sin serious/critical, 0 textos < 12 px), `qa:overflow` (84 combinaciones) y `bun run budget` pasan. Se actualizan `DESIGN-SYSTEM.md` §12 y `REQUIREMENTS.md` §9, y se agrega `R-021`.
 - **Alternativas:** Mantener el índice wiki (correcto pero opaco: no muestra el sistema); una landing de marketing con hero, testimonios y “features” (fuera de la tesis y de los guardrails); una app aparte solo para la portada (duplica shell, toggles y tokens); capturas estáticas (prohibidas por `D-010` y no responden a tema/densidad/idioma).
+
+---
+
+<a id="d-042"></a>
+## D-042 · Una página por componente y una sección de bloques
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`M-004`; precisa `D-019`, `D-029` y `D-039`)
+- **Contexto:** El catálogo agrupaba 46 primitivas en 13 páginas y 20 patrones en 3 páginas. Funcionaba para recorrer el sistema, pero no para instalarlo: la instalación, el código, las props y la accesibilidad de cada pieza quedaban mezclados con las de sus vecinas. Además, los patrones se llamaban “patrones” aunque en la práctica son bloques pre-armados que pueden crecer en nuevas categorías.
+- **Decisión:**
+  - Cada primitiva vive en `/components/<slug>` con su propia página: instalación por registry, ejemplos con **vista previa / código**, props, accesibilidad y referencia a Base UI cuando envuelve una primitiva.
+  - Los controles de formulario (`Field`, `Label`, `Input`, `Textarea`, `FormRow`, `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `NumberField`) agregan una sección **Uso en un formulario** con un formulario mínimo completo.
+  - Los componentes que necesitan `KotenProvider`, un hook (`useToast`), estado controlado, portal o una dependencia (`@tanstack/react-table`) lo declaran en **Requisitos de uso**.
+  - Los 20 bloques de storefront y ERP viven en `/blocks/<categoría>/<slug>`, con índice por categoría. La sección se llama **Bloques** y admite categorías nuevas sin mezclarse con las primitivas.
+  - Las rutas antiguas (`/components/forms`, `/patterns/storefront`, etc.) redirigen para no romper enlaces.
+  - Los metadatos de navegación se separan del contenido: el entry importa solo nombres, rutas y descripciones cortas; cada página carga su módulo con `import()` bajo demanda.
+  - `BarChart` recibe `C-066` para tener ID propio; `Sparkline` conserva `C-040`.
+- **Consecuencias:** El catálogo pasa de 13 + 3 páginas a **46 páginas de componentes + 20 páginas de bloques**. El JS inicial queda en **263,1 KB gzip** y el total en **429,6 KB**; el presupuesto del catálogo sube de 260/360 a **290/470 KB** por el contenido trilingüe individual. La navegación lateral lista las 46 primitivas y las tres entradas de bloques. `bun run check` cubre 207 tests y la integridad de las 66 páginas.
+- **Alternativas:** Mantener las páginas por grupo (menos rutas, peor instalación); un único módulo de datos con todo el contenido (infla el entry o impide el code splitting); MDX o un generador de docs (dependencia y ceremonia nuevas); llamar “patrones” a los bloques (mezcla piezas pre-armadas con primitivas).

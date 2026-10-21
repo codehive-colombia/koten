@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-003` · mejoras puntuales `M-001`, `M-002` y `M-003` |
+| Última tarea completada | `M-004` · mejoras puntuales `M-001`, `M-002`, `M-003` y `M-004` |
 | Tarea en curso | ninguna — roadmap completo |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,31 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 033 — Páginas individuales de componentes y bloques (`M-004`)
+
+- **Objetivo:** separar el catálogo en una página por componente y una página por bloque, con el copy necesario para instalarlo y usarlo sin leer el código.
+- **Hecho:**
+  - **46 páginas de componentes** (`/components/<slug>`): cada una con instalación por registry (`npx shadcn@latest add …/r/<item>.json`), archivos que copia, ejemplos con conmutador **Vista previa / Código**, props, accesibilidad y referencia a Base UI cuando envuelve una primitiva. `BarChart` recibe `C-066`; `Sparkline` conserva `C-040`.
+  - **Sección de formulario:** `Field`, `Label`, `Input`, `Textarea`, `FormRow`, `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch` y `NumberField` incluyen **Uso en un formulario** con un formulario mínimo completo (label, ayuda, error y envío).
+  - **Requisitos de uso:** `Toast` declara `ToastProvider` y `useToast`; `ProductCard`/`ReviewSummary`/`BarChart`/`DatePicker`/`Calendar` declaran `KotenProvider`; `DataTable` declara `@tanstack/react-table` y estado de cliente; overlays y `DetailDrawer` declaran portal; `CommandPalette` y `DatePicker` declaran estado controlado.
+  - **20 páginas de bloques** (`/blocks/<categoría>/<slug>`) con índice por categoría (`/blocks`, `/blocks/storefront`, `/blocks/erp`). La sección se llama **Bloques** y queda preparada para nuevas categorías.
+  - **Navegación y rutas:** la sidebar lista las 46 primitivas; las rutas antiguas (`/components/forms`, `/components/inputs`, `/patterns/*`, etc.) redirigen. La portada y Empezar hablan de componentes y bloques.
+  - **Rendimiento:** los metadatos se separan del contenido y cada página carga su módulo con `import()`; el entry no incluye más de 12 000 líneas de demos. Presupuesto del catálogo a **290/470 KB** (`D-042`); medido **263,1/429,6 KB**.
+  - **Tests:** `pages.test.tsx` verifica 46 documentos con IDs únicos, copy completo ES/JA/EN, los 11 formularios y los 20 bloques; `a11y.test.tsx` audita páginas representativas; los tests de ruta comprueban el enlace activo y el cambio de título.
+- **Tareas tocadas:** `M-004` → `done`; `R-022` → `done`.
+- **Decisiones:** `D-042`.
+- **Evidencia:**
+  - Datos: `apps/catalog/src/data/docs/{button,forms,inputs,surfaces,navigation,feedback,overlays,data}.tsx` (46 documentos), `data/blocks/{storefront,erp}.tsx` (20), `data/docs/{types,meta,index,all}.ts`, `data/blocks/meta.ts`.
+  - UI: `components/doc-page.tsx`, `pages/components/{index,primitive}.tsx`, `pages/blocks/{index,block}.tsx`, `App.tsx`, `data/catalog.ts`, `data/inventory.ts`.
+  - Comprobaciones: `bun run check` verde (**33 archivos / 207 tests**); `bun run build` OK; `bun run budget` → catálogo **263,1/429,6 KB**, CSS 10,3 KB, 0 fuentes.
+  - QA: `qa:a11y --only=catalog` → 60 páginas, 0 serious/critical, 0 textos < 12 px, 0 focos sin indicador; `qa:overflow --only=catalog` → 84 combinaciones sin overflow ni recorte; `qa:perf` → LCP 136–456 ms y CLS 0 en las rutas medidas.
+  - Navegador: `/components/field` (formulario y conmutador código), `/blocks/storefront/product-card` (requisitos, instalación y props) en Kanso/ES.
+- **Sin validar:** lectura con lector de pantalla de las 66 páginas; los datos de algunas demos de bloques conservan unidades en inglés.
+- **Próximo:** ninguna tarea abierta; `M-004` cierra el trabajo solicitado.
+- **Bloqueos:** ninguno.
 
 ---
 

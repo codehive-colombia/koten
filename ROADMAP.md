@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-21**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-003`** · portada editorial del catálogo
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario) y **`M-003`** (portada editorial)
+> Última tarea completada: **`M-004`** · páginas individuales de componentes y bloques
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial) y **`M-004`** (componentes y bloques individuales)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -117,6 +117,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-038` | Virtualización manual de DataTable. | accepted | [D-038](./docs/DECISIONS.md#d-038) |
 | `D-039` | Registry shadcn autocontenido servido por el catálogo. | accepted | [D-039](./docs/DECISIONS.md#d-039) |
 | `D-041` | Portada editorial del catálogo, no landing de marketing. | accepted | [D-041](./docs/DECISIONS.md#d-041) |
+| `D-042` | Una página por componente y una sección de bloques. | accepted | [D-042](./docs/DECISIONS.md#d-042) |
 
 ---
 
@@ -272,7 +273,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `F5-002` | Tema Sumi (dark) con contraste AA. | `F4-006` | `done` | Tema conmutable; sin flash; componentes existentes sin cambios. | `[data-theme="sumi"]` + roles `*-solid`/`solid-fg` e `inverse-bg`/`inverse-fg` (`D-035`); selector del catálogo y `?theme=sumi` en demos; script inline pre-paint; contraste AA en 4 temas; axe Sumi en catálogo/storefront/ERP → 0 serious/critical; capturas `*-sumi` a 1440/1280/1024. |
 | `F5-003` | DatePicker / Calendar. | `F4-006` | `done` | Teclado, rango y locale. | `Calendar` + `DatePicker` (`D-036`): tabla con roving focus, flechas/Home/End/PageUp/PageDown, Enter, single/range, min/max, panel anclado y `Intl`; 9 tests; ERP usa el componente; página `/components/date` en ES/JA/EN; axe 0 serious/critical. |
 | `F5-004` | CommandPalette. | `F4-006` | `done` | Búsqueda, teclado y focus trap. | `CommandPalette` sobre Dialog de Base UI (`D-037`): combobox + listbox, `aria-activedescendant`, filtro sin acentos, flechas/Home/End/PageUp/PageDown/Enter, Escape y foco devuelto; 5 tests; página `/components/command`; `C-065`; axe con el diálogo abierto → 0 serious/critical. |
-| `F5-005` | Virtualización de DataTable. | `F4-006` | `done` | 10k filas sin degradación perceptible. | `DataTable virtualized/height/rowHeight/overscan` (`D-038`): ventana manual sin dependencias, header sticky, `aria-rowcount`/`aria-rowindex`, contenedor enfocable; demo de 10 000 filas en `/components/data`; test (≈29 filas en DOM, salto a la 5 000); LCP 416 ms/CLS 0 con 10k. |
+| `F5-005` | Virtualización de DataTable. | `F4-006` | `done` | 10k filas sin degradación perceptible. | `DataTable virtualized/height/rowHeight/overscan` (`D-038`): ventana manual sin dependencias, header sticky, `aria-rowcount`/`aria-rowindex`, contenedor enfocable; demo de 10 000 filas en `/components/data-table`; test (≈29 filas en DOM, salto a la 5 000); LCP 416 ms/CLS 0 con 10k. |
 | `F5-006` | Evaluar SSG/SSR para el storefront (Astro/Next). | `F4-006` | `done` | Decisión documentada con tradeoffs. | `D-032`: Astro con islas React para producción; el POC sigue SPA. |
 | `F5-007` | Evaluar publicación de `@koten/ui`. | `F4-006` | `done` | Decisión documentada; build de librería si aplica. | `D-033`: no se publica; distribución por copia/registry. `Q-008` cerrada. |
 
@@ -286,6 +287,7 @@ ISO 8601: `YYYY-MM-DD`.
 | --- | --- | --- | --- | --- |
 | `M-001` | i18n completo del catálogo y auditoría de las demos. | `done` | Cuerpo de las 25 páginas en ES/JA/EN; labels de `docs.tsx` y `specimen.tsx` localizados; `lang` del documento sigue al locale; demos sin strings hardcodeadas; `bun run check` verde. | Diccionarios por página en `apps/catalog/src/pages/**`; `lib/i18n.ts`; `data/{catalog,tokens}.ts`; `components/{docs,specimen,catalog-layout}.tsx`; `D-025`; test `pages/i18n.test.tsx`; `apps/erp/src/pages/orders.tsx` (label de email); `bun run budget` → catálogo 304,5 KB JS. |
 | `M-002` | Source en inglés y sección Fundamentos orientada al usuario. | `done` | Comentarios, JSDoc, mensajes y títulos de test de todo el source en inglés; diccionarios ES/JA/EN intactos; `/tokens` es una portada de Fundamentos con espécimen y previews; sin fases, IDs de tarea ni decisiones en el copy visible de Fundamentos; `bun run check` y `bun run budget` verdes. | `packages/ui/src/**`, `apps/**/src/**`, `scripts/**`; `apps/catalog/src/pages/tokens/index.tsx`; `components/specimen.tsx` (`FoundationsSpecimen`, `FoundationPreview`); `pages/{overview,start}.tsx`; `data/catalog.ts`; `D-040`; `biome.json` ignora `public/r`. |
+| `M-004` | Páginas individuales de componentes y bloques (`R-022`). | `done` | Cada primitiva en `/components/<slug>` con instalación, preview/código, props, a11y y referencia Base UI; sección de formulario en controles; requisitos de hooks/providers; 20 bloques en `/blocks/<categoría>/<slug>` con índice por categoría; rutas antiguas redirigidas y presupuesto actualizado (`D-042`). | `apps/catalog/src/data/docs/**` (46 documentos), `data/blocks/**` (20 documentos), `data/docs/{meta,index,all}.ts`, `components/doc-page.tsx`, `pages/components/{index,primitive}.tsx`, `pages/blocks/{index,block}.tsx`, `App.tsx`, `data/catalog.ts`, `scripts/check-budgets.ts`; `bun run check` (207 tests), `bun run build`, `bun run budget` (263,1/429,6 KB); `D-042`; `R-022`. |
 | `M-003` | Portada editorial del catálogo (`R-021`). | `done` | `/` como landing del sistema con masthead, placa viva, tres registros, índice de piezas, principios, demos e instalación; layout ancho sin sidebar; ES/JA/EN; mismos componentes y tokens; axe sin serious/critical; sin overflow a 1440/1280/1024/390; presupuesto dentro del límite. | `apps/catalog/src/pages/overview.tsx`; `components/landing.tsx` (`SystemPlate`, `RegisterCard`, `EntryCard`, `DemoCard`); `data/inventory.ts` (fuente única de los inventarios); `components/catalog-layout.tsx` (layout ancho y sin pager en `/`); `pages/{pages,i18n}.test.tsx`; `D-041`; `R-021`. |
 
 ---
@@ -401,6 +403,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-019` | Tema oscuro Sumi opcional. | `F5-002` | `todo` |
 | `R-020` | Trazabilidad entre sesiones. | `F0-000`, `AGENTS.md`, `docs/PROGRESS.md` | `done` |
 | `R-021` | Portada editorial del catálogo. | `M-003`, `D-041` | `done` |
+| `R-022` | Documentación individual por componente y bloque, con instalación, preview/código, props, a11y y referencia Base UI. | `M-004`, `D-042` | `done` |
 
 ---
 

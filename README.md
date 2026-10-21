@@ -2,7 +2,7 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5). 45 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización y registry shadcn.
+> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización y registry shadcn.
 > **Siguiente:** sin tareas abiertas; el roadmap deja la fase 5 como cierre opcional ya completada.
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
@@ -68,13 +68,14 @@ Cada item es autocontenido: componente + `lib/koten` (cn, formato e i18n) + `sty
 ## Uso rápido
 
 1. `bun install && bun run dev` y abrir el catálogo en <http://localhost:5173>. La portada (`/`) es una landing editorial que muestra las piezas en vivo y responde a tema, densidad e idioma.
-2. Leer **Empezar** (`/start`) para copiar estilos, provider y primitivas.
-3. Seguir las recetas de [docs/RECIPES.md](./docs/RECIPES.md): formulario, tabla densa, drawer, tarjeta de producto.
-4. Verificar con `bun run check`, `bun run budget` y los `qa:*`.
+2. Leer **Empezar** (`/start`) para copiar estilos, provider y componentes.
+3. Recorrer **Componentes** (`/components`) para instalar una primitiva con su página propia y **Bloques** (`/blocks`) para las piezas pre-armadas de storefront y ERP.
+4. Seguir las recetas de [docs/RECIPES.md](./docs/RECIPES.md): formulario, tabla densa, drawer, tarjeta de producto.
+5. Verificar con `bun run check`, `bun run budget` y los `qa:*`.
 
 ## Estructura
 
-La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas (45 con Label, DatePicker y CommandPalette de fase 5). Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas. La fase 4 sumó la guardia i18n, las auditorías de navegador (a11y, overflow/RTL, performance), el code splitting del catálogo y las capturas archivadas. El cuerpo del catálogo está localizado completo en ES/JA/EN (`D-025`).
+La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó las primitivas base; la fase 5 completó 46 componentes con Label, DatePicker, CommandPalette y BarChart. Las fases 2 y 3 añadieron 20 bloques en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas. La fase 4 sumó la guardia i18n, las auditorías de navegador (a11y, overflow/RTL, performance), el code splitting del catálogo y las capturas archivadas. La mejora `M-004` separó el catálogo en una página por componente (`/components/<slug>`) y una página por bloque (`/blocks/<categoría>/<slug>`), con instalación, preview/código, props, a11y y requisitos (`D-042`). El cuerpo del catálogo está localizado completo en ES/JA/EN (`D-025`).
 
 ```txt
 apps/
