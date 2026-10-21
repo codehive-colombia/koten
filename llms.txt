@@ -1,0 +1,108 @@
+# Koten UI
+
+> Koten UI is a copy-in React component system for dense, editorial interfaces inspired by classical Japanese web design. It ships 46 primitives, 20 blocks, four themes, three densities and ES/JA/EN support through a shadcn registry.
+
+Koten UI is not an npm package. Components are copied into the project with the shadcn CLI, so the source stays editable. The grammar is built from 1 px frames, warm paper, semantic color roles, system fonts and a 12 px typographic floor. Tokens, theme and density travel in the `koten-theme` registry item.
+
+## Start
+
+- [Getting started](https://koten.codehive.com.co/start): install the theme, copy primitives and wire KotenProvider.
+- [AI and agents](https://koten.codehive.com.co/ai): the three access levels, commands and generated artifacts.
+- [Design system](https://koten.codehive.com.co/md/guides/design-system.md): visual grammar, tokens, components, i18n, accessibility and performance.
+- [Recipes](https://koten.codehive.com.co/md/guides/recipes.md): form, dense table, drawer, product card and i18n recipes.
+- [Full documentation](https://koten.codehive.com.co/llms-full.txt): every component, block and guide in one file.
+
+## Components (46)
+
+- [Accordion](https://koten.codehive.com.co/md/components/accordion.md): Groups secondary content into sections that open and close. It can keep a single section open or several at once.
+- [Alert](https://koten.codehive.com.co/md/components/alert.md): Communicates the outcome of an action or a system risk. The tone declares urgency; the text explains what happened and, when needed, what to do next.
+- [Badge](https://koten.codehive.com.co/md/components/badge.md): A short metadata label for states, counts and tags. Tone supplies color and appearance controls weight; the text always carries the meaning.
+- [BarChart](https://koten.codehive.com.co/md/components/bar-chart.md): A decorative bar chart with labels and an sr-only table that repeats the data. Each bar's height is proportional to the maximum; color and weight come from tokens.
+- [Breadcrumb](https://koten.codehive.com.co/md/components/breadcrumb.md): Shows the hierarchical path to the current page. The last item is marked as current while the earlier ones stay navigable.
+- [Button](https://koten.codehive.com.co/md/components/button.md): The primary action of the system. The theme decides the color; the button only declares a semantic variant and a size.
+- [Calendar](https://koten.codehive.com.co/md/components/calendar.md): A dependency-free monthly date grid. It uses a table with weekday headers, roving tabindex and full keyboard navigation; the KotenProvider locale decides the week start and the Intl names.
+- [Checkbox](https://koten.codehive.com.co/md/components/checkbox.md): A binary state with partial-selection support. The label and description stay separate from the accessible name.
+- [Combobox](https://koten.codehive.com.co/md/components/combobox.md): A text input with incremental filtering and single-option selection. Items are strings, and the empty and trigger labels are required.
+- [CommandPalette](https://koten.codehive.com.co/md/components/command-palette.md): Keyboard-first global search: type to filter, arrows to move, Enter to run and Escape to close. Focus always returns to the trigger.
+- [DataTable](https://koten.codehive.com.co/md/components/data-table.md): A data table on TanStack Table with sorting, selection and pagination in client state. It keeps the identity of data, accepts custom-rendered columns and can virtualize thousands of rows without changing the table semantics.
+- [DatePicker](https://koten.codehive.com.co/md/components/date-picker.md): A date field with an anchored panel, not portalled. It covers single dates and ranges, formats with Intl and returns Date through onValueChange; the application stores ISO 8601 and converts it at render time.
+- [Dialog](https://koten.codehive.com.co/md/components/dialog.md): A modal dialog for confirming or editing without leaving the page. It traps focus, closes with Escape and returns focus to the trigger.
+- [Drawer](https://koten.codehive.com.co/md/components/drawer.md): A side panel for editing or filtering without losing the table behind it. It keeps context, enters from one side and returns focus on close.
+- [EmptyState](https://koten.codehive.com.co/md/components/empty-state.md): Explains why there is no data and offers a way out. The title names the absence; the description and action show how to continue.
+- [Field](https://koten.codehive.com.co/md/components/field.md): A form unit that groups label, control, description and error. Field does not draw the control: it wraps it so state, help text and accessible validation are inherited.
+- [FormRow](https://koten.codehive.com.co/md/components/form-row.md): Field in a horizontal layout: label on the left and control on the right from sm up. On mobile it returns to vertical so the text is not squeezed.
+- [Hanko](https://koten.codehive.com.co/md/components/hanko.md): A square seal inspired by Japanese stamps for brands and editorial accents. It takes one to four characters, tilts −2° and uses the theme's primary color.
+- [IconButton](https://koten.codehive.com.co/md/components/icon-button.md): Square button for an action represented by an icon. It requires an accessible name because the icon alone does not explain the action.
+- [Input](https://koten.codehive.com.co/md/components/input.md): A single-line text field built on the native control. Base UI adds the link to Field and the invalid state without changing browser behavior.
+- [Label](https://koten.codehive.com.co/md/components/label.md): The visible label of a control. Inside Field it connects itself; outside Field it uses htmlFor and keeps the same look and focus.
+- [Link](https://koten.codehive.com.co/md/components/link.md): The link is the basic unit of navigation. It declares an href and decides whether the destination is external so it can open a new tab, add rel and show a decorative icon.
+- [Menu](https://koten.codehive.com.co/md/components/menu.md): A contextual action menu for a row or record. It is non-modal, navigated with arrows, and supports actions, links and separators.
+- [Meter](https://koten.codehive.com.co/md/components/meter.md): Shows a level within a range rather than progress: stock, temperature or resource load. The tone describes the state of that level.
+- [NumberField](https://koten.codehive.com.co/md/components/number-field.md): A numeric field with steppers, limits and step size. The input accepts a numeric keypad and the buttons carry aria-label.
+- [Pagination](https://koten.codehive.com.co/md/components/pagination.md): Controlled navigation between numbered pages. It compresses the range with an ellipsis, announces the current page and disables the ends.
+- [Panel](https://koten.codehive.com.co/md/components/panel.md): The basic unit of composition in Koten: a bordered section with a tinted header, a body using density padding and a footer for actions. It replaces the decorative card and needs neither shadow nor large radii.
+- [Pattern](https://koten.codehive.com.co/md/components/pattern.md): A decorative background with two traditional patterns, seigaiha and asanoha, drawn in SVG with currentColor at 8%. It is always aria-hidden and lives behind non-critical content.
+- [Popover](https://koten.codehive.com.co/md/components/popover.md): Brief content anchored to a trigger: a summary, a definition or a few data points. It has a title, an optional description and its own close control.
+- [Progress](https://koten.codehive.com.co/md/components/progress.md): Measures how much is left of a task with a known end. A numeric value is determinate; null communicates ongoing work without a percentage.
+- [RadioGroup](https://koten.codehive.com.co/md/components/radio-group.md): A radio group where only one option can be chosen. It supports per-option descriptions and vertical or horizontal orientation.
+- [Rule](https://koten.codehive.com.co/md/components/rule.md): A horizontal separator with four weights and a labelled variant that centers the text. It divides sections and groups content; it does not draw boxes.
+- [SectionHeader](https://koten.codehive.com.co/md/components/section-header.md): A section header with a primary bar, title, optional Japanese label, meta and actions, closed by a rule. It organizes the page without adding containers.
+- [Select](https://koten.codehive.com.co/md/components/select.md): An option list with built-in label, description and error. The popup is non-modal by default and Base UI handles the keyboard.
+- [Skeleton](https://koten.codehive.com.co/md/components/skeleton.md): Holds the space of content while it loads so the layout does not jump. It is decorative and never replaces the text that communicates status.
+- [Sparkline](https://koten.codehive.com.co/md/components/sparkline.md): A small SVG chart for a short series. It normalizes values to the visible range and exposes an accessible name; it does not replace the KPI's textual value.
+- [StatCard](https://koten.codehive.com.co/md/components/stat-card.md): A KPI card: label, tabular value, semantic delta, context and an optional sparkline. Color reinforces the reading, but the sign and the text explain the change.
+- [Switch](https://koten.codehive.com.co/md/components/switch.md): An on/off switch for settings that apply instantly. The state is announced as checked.
+- [Table](https://koten.codehive.com.co/md/components/table.md): The system's native table. It supplies the semantics —caption, thead, th with scope and cells— and leaves density, borders and horizontal scroll to the tokens. It does not sort or paginate: that is DataTable's job.
+- [Tabs](https://koten.codehive.com.co/md/components/tabs.md): Switches between views of the same context without reloading. Base UI manages the tablist, the panels and keyboard focus.
+- [Tategaki](https://koten.codehive.com.co/md/components/tategaki.md): Vertical text (vertical-rl) for editorial labels. It is hidden on mobile and from screen readers by default, because it is an accent rather than essential content.
+- [Textarea](https://koten.codehive.com.co/md/components/textarea.md): A multi-line field for free text. It grows vertically, keeps the density minimum height and shares Input's states.
+- [Toast](https://koten.codehive.com.co/md/components/toast.md): A temporary notification that confirms an action without cutting the flow. It stacks in its own region, closes on its own and keeps the text of the operation.
+- [ToggleGroup](https://koten.codehive.com.co/md/components/toggle-group.md): A set of options that stay pressed, such as view or density. It supports single or multiple selection and keeps focus inside the group.
+- [Toolbar](https://koten.codehive.com.co/md/components/toolbar.md): Groups related actions in a row or column. Base UI applies roving tabindex so the keyboard moves through the bar with the arrow keys.
+- [Tooltip](https://koten.codehive.com.co/md/components/tooltip.md): A short label that appears on hover or keyboard focus. It explains a control; it never holds essential information.
+
+## Blocks (20)
+
+- [AppShell](https://koten.codehive.com.co/md/blocks/erp/app-shell.md): The back office frame: a 232 px sidebar, a sticky topbar and a flexible main. The skip link comes first and the content changes routes without remounting the frame.
+- [CampaignBanner](https://koten.codehive.com.co/md/blocks/storefront/campaign-banner.md): A campaign notice with eyebrow, title, description, deadline and call to action. Three layouts and three semantic tones.
+- [DetailDrawer](https://koten.codehive.com.co/md/blocks/erp/detail-drawer.md): A side panel for row details: status, summary, sections and fixed actions. Base UI traps focus, closes on Escape and returns focus to the trigger.
+- [FilterBar](https://koten.codehive.com.co/md/blocks/erp/filter-bar.md): A filter form inside a search landmark: fields on top and the result with actions (clear, apply) in the bottom bar. Filters should be reflected in the URL.
+- [Footer](https://koten.codehive.com.co/md/blocks/storefront/footer.md): A four-column footer on the inverse surface, with a company block, legal links and a closing note.
+- [FormSection](https://koten.codehive.com.co/md/blocks/erp/form-section.md): A form section with fieldset, legend and a one- or two-column grid. It groups related fields so reading and validation have a clear boundary.
+- [NoticeList](https://koten.codehive.com.co/md/blocks/storefront/notice-list.md): A compact announcement list with dates, optional links, tags and a closing link to view everything. It ships an explicit empty state.
+- [PageHeader](https://koten.codehive.com.co/md/blocks/erp/page-header.md): The page header: breadcrumbs, eyebrow, serif title, description, meta and actions. The title is the h1, so use it once per view.
+- [PriceBlock](https://koten.codehive.com.co/md/blocks/storefront/price-block.md): Price hierarchy: current amount, tax, previous price, points, stock and a note. Two sizes for product pages and listings.
+- [ProductCard](https://koten.codehive.com.co/md/blocks/storefront/product-card.md): A product tile with image, linked title, optional rating, price, points and badges. The rating is formatted through the provider.
+- [ProductGallery](https://koten.codehive.com.co/md/blocks/storefront/product-gallery.md): A main image with four-column thumbnails. It can own its index or receive it controlled from the page.
+- [RankedList](https://koten.codehive.com.co/md/blocks/storefront/ranked-list.md): An ordered ranking with position, optional thumbnail, link, price and category. The top three are highlighted without relying on colour alone.
+- [ReviewSummary](https://koten.codehive.com.co/md/blocks/storefront/review-summary.md): A review summary with average, star distribution and the review list. It includes an empty state and a verified-purchase label.
+- [SearchBar](https://koten.codehive.com.co/md/blocks/storefront/search-bar.md): Catalogue search with a category select, a search field and a real submit button. Value and category can be controlled or left to the component.
+- [SideNav](https://koten.codehive.com.co/md/blocks/erp/side-nav.md): Grouped side navigation with an active state, counts and an optional footer. A plain click is intercepted to navigate without a reload; modified clicks still open new tabs.
+- [SpecTable](https://koten.codehive.com.co/md/blocks/storefront/spec-table.md): Specification tables grouped by section, with row headers and a keyboard-accessible horizontal scroll region.
+- [StatusBadge](https://koten.codehive.com.co/md/blocks/erp/status-badge.md): Maps an order status to a Badge tone with a decorative dot. The caller supplies the text: colour is never the only signal.
+- [StoreHeader](https://koten.codehive.com.co/md/blocks/storefront/store-header.md): A two-tier header: utility strip, brand with Hanko, search as a slot, actions and navigation with an active state.
+- [Timeline](https://koten.codehive.com.co/md/blocks/erp/timeline.md): An ordered list of events with date, tone and an optional description. It fits order histories, audits or recent activity, and shows its own text when empty.
+- [TopBar](https://koten.codehive.com.co/md/blocks/erp/top-bar.md): The route's sticky header: context on the left, search in the middle and actions at the end. On narrow screens the search drops to its own row.
+
+## Skills
+
+- [koten-ui](https://github.com/codehive-colombia/koten/tree/main/skills/koten-ui): consume the components, choose the right primitive and install it with the registry.
+- [koten-design-system](https://github.com/codehive-colombia/koten/tree/main/skills/koten-design-system): add primitives or blocks and extend the system under Koten's grammar.
+- Install with `npx skills add codehive-colombia/koten --skill koten-ui` (or `koten-design-system`).
+
+## Repository
+
+- [README](https://github.com/codehive-colombia/koten/blob/main/README.md)
+- [Requirements](https://github.com/codehive-colombia/koten/blob/main/docs/REQUIREMENTS.md)
+- [Design system](https://github.com/codehive-colombia/koten/blob/main/docs/DESIGN-SYSTEM.md)
+- [Decisions](https://github.com/codehive-colombia/koten/blob/main/docs/DECISIONS.md)
+- [Recipes](https://github.com/codehive-colombia/koten/blob/main/docs/RECIPES.md)
+- [Primitive source](https://github.com/codehive-colombia/koten/tree/main/packages/ui/src/components/ui)
+- [Block source](https://github.com/codehive-colombia/koten/tree/main/packages/ui/src/components/patterns)
+- [Catalog data](https://github.com/codehive-colombia/koten/tree/main/apps/catalog/src/data/docs)
+
+## Notes
+
+- shadcn commands accept `npx` (Node) or `bunx` (Bun); the catalog remembers the runner choice in localStorage.
+- Generated Markdown is English because it targets coding agents; the human catalog body is ES/JA/EN and the internal working docs are Spanish (D-008, D-025).
+- Every page is generated from `apps/catalog/src/data/docs`; do not edit `llms.txt` or the inventory by hand. Run `bun run ai:docs`.

@@ -11,6 +11,7 @@ import { OverviewPage } from "./pages/overview";
 const StartPage = lazy(() =>
   import("./pages/start").then((module) => ({ default: module.StartPage })),
 );
+const AIPage = lazy(() => import("./pages/ai").then((module) => ({ default: module.AIPage })));
 const TokensIndexPage = lazy(() =>
   import("./pages/tokens/index").then((module) => ({ default: module.TokensIndexPage })),
 );
@@ -81,6 +82,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<OverviewPage />} />
             <Route path="/start" element={<StartPage />} />
+            <Route path="/ai" element={<AIPage />} />
             <Route path="/tokens" element={<TokensIndexPage />} />
             <Route path="/tokens/color" element={<TokensColorPage />} />
             <Route path="/tokens/typography" element={<TokensTypographyPage />} />

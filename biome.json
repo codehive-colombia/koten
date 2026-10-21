@@ -7,6 +7,9 @@
       "!**/dist",
       "!**/coverage",
       "!**/public/r",
+      "!**/public/llms.txt",
+      "!**/public/llms-full.txt",
+      "!**/public/md",
       "!**/.openchamber",
       "!**/playwright-report",
       "!**/test-results"

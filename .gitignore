@@ -19,3 +19,8 @@ test-results/
 
 # Registry generado por scripts/build-registry.ts
 apps/catalog/public/r/
+
+# Documentación para agentes generada por scripts/build-ai-docs.ts
+apps/catalog/public/llms.txt
+apps/catalog/public/llms-full.txt
+apps/catalog/public/md/
