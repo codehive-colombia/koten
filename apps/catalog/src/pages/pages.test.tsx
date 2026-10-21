@@ -10,6 +10,7 @@ import { FormsPage } from "./components/forms";
 import { ComponentsIndexPage } from "./components/index";
 import { InputsPage } from "./components/inputs";
 import { PanelPage } from "./components/panel";
+import { SurfacesPage } from "./components/surfaces";
 import { NotFoundPage } from "./not-found";
 import { OverviewPage } from "./overview";
 import { TokensColorPage } from "./tokens/color";
@@ -118,12 +119,18 @@ describe("páginas del catálogo", () => {
     expect(forms.container.querySelector('[data-orientation="horizontal"]')).toBeInTheDocument();
     forms.unmount();
 
-    renderPage(<InputsPage />);
+    const inputs = renderPage(<InputsPage />);
     expect(screen.getByRole("combobox", { name: "Almacén de salida" })).toBeInTheDocument();
     expect(screen.getByRole("checkbox", { name: "Recibir avisos de stock" })).toBeInTheDocument();
     expect(screen.getByRole("radio", { name: "Estándar" })).toBeInTheDocument();
     expect(screen.getByRole("switch", { name: "Notificaciones" })).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "Unidades" })).toBeInTheDocument();
+    inputs.unmount();
+
+    renderPage(<SurfacesPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /Superficies/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("separator").length).toBeGreaterThan(0);
+    expect(screen.getByRole("img", { name: "Sello Koten" })).toBeInTheDocument();
   });
 
   it("muestra una página 404 traducida", () => {

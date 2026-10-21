@@ -9,6 +9,7 @@ import { FormsPage } from "./pages/components/forms";
 import { ComponentsIndexPage } from "./pages/components/index";
 import { InputsPage } from "./pages/components/inputs";
 import { PanelPage } from "./pages/components/panel";
+import { SurfacesPage } from "./pages/components/surfaces";
 import { NotFoundPage } from "./pages/not-found";
 import { OverviewPage } from "./pages/overview";
 import { TokensColorPage } from "./pages/tokens/color";
@@ -43,6 +44,7 @@ export function App() {
           <Route path="/components/badge" element={<BadgePage />} />
           <Route path="/components/forms" element={<FormsPage />} />
           <Route path="/components/inputs" element={<InputsPage />} />
+          <Route path="/components/surfaces" element={<SurfacesPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </CatalogLayout>

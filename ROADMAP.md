@@ -3,8 +3,8 @@
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-20**
 > Fase actual: **1 — Primitivas** (`in_progress`)
-> Tarea en curso: **ninguna** — próxima `F1-003`
-> Última tarea completada: **`F1-002`**
+> Tarea en curso: **ninguna** — próxima `F1-004`
+> Última tarea completada: **`F1-003`**
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -163,7 +163,7 @@ ISO 8601: `YYYY-MM-DD`.
 | --- | --- | --- | --- | --- | --- |
 | `F1-001` | Formularios base: `Field`, `Label`, `Input`, `Textarea`, `FormRow`. | `F0-009` | `done` | Estados default/focus/error/disabled; labels y `aria-describedby`; catálogo. | `packages/ui/src/components/ui/{field,label,input,textarea,field-context}.tsx`; tests de asociación, error, required, disabled, textarea y FormRow; página `/components/forms` con previews, props, código y a11y. |
 | `F1-002` | Inputs avanzados: `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch`, `NumberField`. | `F1-001` | `done` | Base UI; teclado completo; integración con formularios; catálogo. | `packages/ui/src/components/ui/{select,combobox,checkbox,radio-group,switch,number-field}.tsx`; tests de selección, filtro, toggles, radios y steppers; página `/components/inputs`; exports en `index.ts`. |
-| `F1-003` | Superficies y decorativos: `SectionHeader`, `Rule`, `Hanko`, `Tategaki`, `Pattern`. | `F0-007` | `todo` | Variantes; uso decorativo con `aria-hidden`; responsive. | — |
+| `F1-003` | Superficies y decorativos: `SectionHeader`, `Rule`, `Hanko`, `Tategaki`, `Pattern`. | `F0-007` | `done` | Variantes; uso decorativo con `aria-hidden`; responsive. | `packages/ui/src/components/ui/{section-header,rule,hanko,tategaki,pattern}.tsx`; tests; página `/components/surfaces`; exports. |
 | `F1-004` | Feedback: `Alert`, `Toast`, `Progress`, `Meter`, `Skeleton`, `EmptyState`. | `F0-007` | `todo` | Tonos; `aria-live`; reduced motion; catálogo. | — |
 | `F1-005` | Navegación: `Link`, `Breadcrumb`, `Pagination`, `Tabs`, `Accordion`. | `F0-007` | `todo` | Foco y teclado; `aria-current`; labels configurables. | — |
 | `F1-006` | Overlays: `Dialog`, `Drawer`, `Menu`, `Popover`, `Tooltip`. | `F1-005` | `todo` | Foco atrapado y devuelto; Escape; scroll lock; portales con `isolation: isolate`. | — |
@@ -283,17 +283,17 @@ ISO 8601: `YYYY-MM-DD`.
 | `C-013` | Switch | 1 | `done` | Base UI Switch; label y descripción. |
 | `C-014` | NumberField | 1 | `done` | Cantidad; steppers; teclado; límites. |
 | `C-015` | FormRow | 1 | `done` | Horizontal/vertical; hint/error. |
-| `C-016` | SectionHeader | 1 | `todo` | Título/meta/acciones; regla. |
-| `C-017` | Rule / Separator | 1 | `todo` | Hairline/doble/dashed; con label. |
+| `C-016` | SectionHeader | 1 | `done` | Título/meta/acciones; regla. |
+| `C-017` | Rule / Separator | 1 | `done` | Hairline/doble/dashed; con label. |
 | `C-018` | Alert | 1 | `todo` | Tonos; icono; acción. |
 | `C-019` | Toast | 1 | `todo` | Base UI Toast; labels; reduced motion. |
 | `C-020` | Progress | 1 | `todo` | Determinado/indeterminado; label. |
 | `C-021` | Meter | 1 | `todo` | Niveles de stock; thresholds. |
 | `C-022` | Skeleton | 1 | `todo` | Filas/texto; reduced motion. |
 | `C-023` | EmptyState | 1 | `todo` | Caja reglada; acción. |
-| `C-024` | Hanko | 1 | `todo` | Sello; 1–4 caracteres; tamaños; decorativo. |
-| `C-025` | Tategaki | 1 | `todo` | Texto vertical; oculto en mobile; decorativo. |
-| `C-026` | Pattern | 1 | `todo` | Seigaiha/asanoha; SVG/CSS; `aria-hidden`. |
+| `C-024` | Hanko | 1 | `done` | Sello; 1–4 caracteres; tamaños; decorativo. |
+| `C-025` | Tategaki | 1 | `done` | Texto vertical; oculto en mobile; decorativo. |
+| `C-026` | Pattern | 1 | `done` | Seigaiha/asanoha; SVG; `aria-hidden`. |
 | `C-027` | Breadcrumb | 1 | `todo` | `aria-current`; separadores. |
 | `C-028` | Pagination | 1 | `todo` | Labels; page size; compacta. |
 | `C-029` | Tabs | 1 | `todo` | Base UI Tabs; underline/boxed. |
@@ -432,3 +432,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-20 | Pulido pre-fase 1: selector de idioma ES/JA/EN, documentación sensible a tema/densidad y catálogo wiki con sidebar, menú móvil y pager. `F0-010`–`F0-012` → `done`; `D-019` y `D-020`; **fase 0 reconfirmada `done`**. | Sesión 004 |
 | 2026-10-20 | Fase 1 iniciada: `Field`, `Label`, `Input`, `Textarea` y `FormRow` con Base UI, estados, error accesible y página de catálogo. `F1-001` → `done`; `C-006`–`C-008`, `C-015` y `C-062` → `done`. | Sesión 005 |
 | 2026-10-20 | Inputs avanzados: `Select`, `Combobox`, `Checkbox`, `RadioGroup`, `Switch` y `NumberField` con Base UI, tests y página `/components/inputs`. `F1-002` → `done`; `C-009`–`C-014` → `done`. | Sesión 006 |
+| 2026-10-20 | Superficies y decorativos: `SectionHeader`, `Rule`, `Hanko`, `Tategaki` y `Pattern` con página `/components/surfaces`. `F1-003` → `done`; `C-016`, `C-017`, `C-024`–`C-026` → `done`. | Sesión 007 |

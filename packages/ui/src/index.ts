@@ -8,6 +8,8 @@ export type { ComboboxProps } from "./components/ui/combobox";
 export { Combobox } from "./components/ui/combobox";
 export type { FieldProps } from "./components/ui/field";
 export { Field, FormRow } from "./components/ui/field";
+export type { HankoProps } from "./components/ui/hanko";
+export { Hanko } from "./components/ui/hanko";
 export type { InputProps } from "./components/ui/input";
 export { Input, inputVariants } from "./components/ui/input";
 export type { LabelProps } from "./components/ui/label";
@@ -28,12 +30,20 @@ export {
   PanelHeader,
   PanelTitle,
 } from "./components/ui/panel";
+export type { PatternProps, PatternVariant } from "./components/ui/pattern";
+export { Pattern } from "./components/ui/pattern";
 export type { RadioGroupProps, RadioOption } from "./components/ui/radio-group";
 export { RadioGroup } from "./components/ui/radio-group";
+export type { RuleProps } from "./components/ui/rule";
+export { Rule } from "./components/ui/rule";
+export type { SectionHeaderProps } from "./components/ui/section-header";
+export { SectionHeader } from "./components/ui/section-header";
 export type { SelectItem, SelectProps } from "./components/ui/select";
 export { Select } from "./components/ui/select";
 export type { SwitchProps } from "./components/ui/switch";
 export { Switch } from "./components/ui/switch";
+export type { TategakiProps } from "./components/ui/tategaki";
+export { Tategaki } from "./components/ui/tategaki";
 export type { TextareaProps } from "./components/ui/textarea";
 export { Textarea, textareaVariants } from "./components/ui/textarea";
 export { type KotenLabels, type KotenLocale, labelsByLocale } from "./i18n/labels";

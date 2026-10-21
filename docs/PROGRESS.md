@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-20 |
 | Fase | 1 — Primitivas (`in_progress`) |
-| Última tarea completada | `F1-002` — inputs avanzados |
-| Tarea en curso | ninguna — próxima `F1-003` |
+| Última tarea completada | `F1-003` — superficies y decorativos |
+| Tarea en curso | ninguna — próxima `F1-004` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
 
@@ -38,6 +38,25 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-20 · Sesión 007 — Superficies y decorativos
+
+- **Objetivo:** completar `F1-003` con `SectionHeader`, `Rule`, `Hanko`, `Tategaki` y `Pattern`.
+- **Hecho:**
+  - `SectionHeader` con título, jp, meta, acciones y regla configurable.
+  - `Rule` hairline/strong/double/dashed, con o sin label; sin label usa `<hr>`.
+  - `Hanko` de 1–4 caracteres, tamaños, rotación y modo decorativo/etiquetado.
+  - `Tategaki` vertical, oculto en mobile y por defecto `aria-hidden`.
+  - `Pattern` seigaiha/asanoha en SVG con `currentColor` al 8%, siempre decorativo.
+  - Página `/components/surfaces` con demos, props, código y a11y; sidebar e índice actualizados.
+- **Tareas tocadas:** `F1-003` → `done`; `C-016`, `C-017`, `C-024`, `C-025` y `C-026` → `done`.
+- **Decisiones:** Ninguna nueva.
+- **Evidencia:** `packages/ui/src/components/ui/{section-header,rule,hanko,tategaki,pattern}.tsx` + `surfaces.test.tsx`; `apps/catalog/src/pages/components/surfaces.tsx`; `bun run check` verde (**15 archivos / 75 tests**).
+- **Sin validar:** axe real (`F1-010`) y lector de pantalla.
+- **Próximo:** `F1-004` — `Alert`, `Toast`, `Progress`, `Meter`, `Skeleton` y `EmptyState`.
+- **Bloqueos:** ninguno.
 
 ---
 
