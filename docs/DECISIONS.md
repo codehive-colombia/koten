@@ -428,3 +428,18 @@
 - **Decisión:** La auditoría `scripts/qa-a11y.ts` ejecuta axe con `exclude: [["[data-base-ui-focus-guard]"]]`. La regla `aria-hidden-focus` sigue activa para el resto del documento: no se desactiva ni se silencia. El alcance excluido se limita a ese atributo interno y se imprime en el resumen de la auditoría.
 - **Consecuencias:** El POC queda sin violaciones serious/critical reales en el contenido y los componentes propios. Si Base UI deja de usar focus guards o cambia el atributo, la exclusión deja de aplicar sin romper la auditoría. Cualquier otro elemento `aria-hidden` con foco sigue fallando. La decisión se revisa al actualizar Base UI (`RISK-001`).
 - **Alternativas:** Desactivar `aria-hidden-focus` (oculta problemas propios, descartado); parchear el DOM con un `MutationObserver` (frágil y ajeno a React); usar `modal` en todos los popups (reintroduce el bloqueo de página de `D-024`).
+
+---
+
+<a id="d-029"></a>
+## D-029 · Code splitting por ruta solo en el catálogo
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted`
+- **Contexto:** `F4-003` pidió auditar code splitting. El catálogo servía las 25 páginas de documentación en un único bundle de 304,5 KB gzip. El ERP, en cambio, comparte `@koten/ui` (incluido TanStack Table) en el entry: al dividir `/orders` y `/orders/new` el ahorro medido fue de **3,5 KB** y se pagaba con un skeleton de navegación en cada cambio de ruta.
+- **Decisión:**
+  - El catálogo carga la portada en el entry y cada página de documentación con `React.lazy` + `Suspense`. El fallback reserva la altura de una página (`min-h-[1400px]`) para no mover el pager: CLS medido 0.
+  - El ERP y el storefront mantienen imports estáticos: un solo bundle, navegación instantánea, sin estados de carga artificiales.
+  - `scripts/check-budgets.ts` distingue **JS inicial** (entry + assets referenciados por `index.html`) de **JS total** (todos los chunks). Presupuestos: storefront 150/150, ERP 250/250, catálogo 250/330 KB gzip; CSS 30 KB; 0 fuentes.
+- **Consecuencias:** El catálogo baja su JS inicial de 304,5 a **243,4 KB** (−20 %) y conserva LCP < 400 ms local y CLS 0 en rutas lazy. El ERP no gana con splitting mientras `@koten/ui` sea un barrel compartido; dividir el paquete queda para la fase 5 si el POC crece. `bun run qa:perf` mide LCP/CLS y `bun run budget` verifica inicial/total.
+- **Alternativas:** Dividir todas las rutas (regresión de UX sin ahorro real en ERP); dividir el barrel de `@koten/ui` en subpaths (cambio de API grande, fuera de la v1); dejar todo en un bundle (catálogo 304,5 KB inicial, más lento en la primera visita).

@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 4 — Cierre del POC (`in_progress`) |
-| Última tarea completada | `F4-002` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F4-003` |
+| Última tarea completada | `F4-003` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F4-004` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`, `Q-009`; `Q-003` cerrada por `D-021`/`D-022` y `Q-010` por `D-026` |
 
@@ -38,6 +38,27 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 021 — Performance, presupuestos y code splitting
+
+- **Objetivo:** cerrar `F4-003` midiendo el build real y ajustando lo que haga falta para cumplir los presupuestos de la sección 4.
+- **Hecho:**
+  - **Medición nueva** (`scripts/qa-perf.ts`): levanta `vite preview` de las tres apps y mide con Chromium headless LCP, CLS, FCP, peticiones JS y bytes transferidos; 3 muestras por ruta (6 rutas), caché desactivada. Resultado: **LCP 84–396 ms, CLS 0, FCP 40–136 ms**.
+  - **Presupuestos con inicial/total** (`scripts/check-budgets.ts`): ahora distingue el JS que pide `index.html` (entry + modulepreload) del total de chunks. Storefront **122,3/122,3 KB**, ERP **196,4/196,4 KB**, catálogo **243,4/327,7 KB**, CSS 9,2 KB, 0 fuentes.
+  - **Code splitting** (`D-029`): el catálogo carga la portada en el entry y cada página con `React.lazy` + `Suspense`; el fallback reserva altura para no mover el pager (CLS 0). El JS inicial baja de 304,5 a 243,4 KB (−20 %). En el ERP se probó el mismo split: ahorraba 3,5 KB porque `@koten/ui`/TanStack viven en el entry, así que se revirtió y la navegación sigue instantánea.
+  - Tests del catálogo y del ERP ajustados donde la ruta pasa a ser asíncrona; `asyncUtilTimeout` de Testing Library a 3 s para el primer chunk en CI.
+- **Tareas tocadas:** `F4-003` → `done`; `R-012` → `done`.
+- **Decisiones:** `D-029` (code splitting solo en el catálogo).
+- **Evidencia:**
+  - `scripts/qa-perf.ts`, `scripts/check-budgets.ts`, `scripts/lib/cdp.ts`, `apps/catalog/src/App.tsx`, `apps/catalog/src/app.test.tsx`, `vitest.setup.ts`, `package.json`.
+  - `bun run qa:perf` → `perf: 6 rutas · presupuesto LCP < 1500ms y CLS < 0.02`.
+  - `bun run budget` → `Presupuestos OK` con los valores de arriba.
+  - `bun run check` verde (**30 archivos / 177 tests**).
+- **Sin validar:** throttling de red/CPU real, Lighthouse y deploy CDN; las métricas son locales (criterio del POC) y sin compresión del preview.
+- **Próximo:** `F4-004` — QA visual en 1440/1280/1024 con capturas archivadas.
+- **Bloqueos:** ninguno.
 
 ---
 

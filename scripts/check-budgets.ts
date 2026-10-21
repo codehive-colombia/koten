@@ -3,15 +3,21 @@ import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 
 type Budget = {
-  js: number;
+  /** JS que se descarga para pintar la primera ruta (entry + modulepreload). */
+  initial: number;
+  /** JS total del build, incluidos chunks de rutas. */
+  total: number;
   css: number;
 };
 
+const kb = 1024;
+
 const budgets: Record<string, Budget> = {
-  storefront: { js: 150 * 1024, css: 30 * 1024 },
-  erp: { js: 250 * 1024, css: 30 * 1024 },
+  storefront: { initial: 150 * kb, total: 150 * kb, css: 30 * kb },
+  erp: { initial: 250 * kb, total: 250 * kb, css: 30 * kb },
   // El catálogo es interno y sirve la documentación completa en ES/JA/EN (D-025).
-  catalog: { js: 330 * 1024, css: 30 * 1024 },
+  // Las páginas van por ruta (D-029): el entry no carga la documentación entera.
+  catalog: { initial: 250 * kb, total: 330 * kb, css: 30 * kb },
 };
 
 const failures: string[] = [];
@@ -21,11 +27,19 @@ function gzipSize(path: string): number {
 }
 
 function formatKb(bytes: number): string {
-  return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / kb).toFixed(1)} KB`;
+}
+
+/** Assets referenciados por `index.html`: lo que el navegador pide al abrir. */
+function initialAssets(html: string): string[] {
+  const matches = html.matchAll(/(?:src|href)="\/assets\/([^"]+\.(?:js|css))"/g);
+
+  return [...new Set([...matches].map((match) => match[1] as string))];
 }
 
 for (const [app, budget] of Object.entries(budgets)) {
-  const assets = join(process.cwd(), "apps", app, "dist", "assets");
+  const dist = join(process.cwd(), "apps", app, "dist");
+  const assets = join(dist, "assets");
 
   if (!existsSync(assets)) {
     failures.push(`${app}: falta dist/assets; ejecuta bun run build`);
@@ -41,11 +55,23 @@ for (const [app, budget] of Object.entries(budgets)) {
     failures.push(`${app}: no se encontró JavaScript compilado`);
   }
 
-  const jsSize = jsFiles.reduce((total, file) => total + gzipSize(join(assets, file)), 0);
+  const initial = initialAssets(readFileSync(join(dist, "index.html"), "utf8"));
+  const initialJs = initial
+    .filter((file) => file.endsWith(".js"))
+    .reduce((total, file) => total + gzipSize(join(assets, file)), 0);
+  const totalJs = jsFiles.reduce((total, file) => total + gzipSize(join(assets, file)), 0);
   const cssSize = cssFiles.reduce((total, file) => total + gzipSize(join(assets, file)), 0);
 
-  if (jsSize > budget.js) {
-    failures.push(`${app}: JS ${formatKb(jsSize)} > ${formatKb(budget.js)}`);
+  if (initialJs === 0) {
+    failures.push(`${app}: index.html no referencia JS`);
+  }
+
+  if (initialJs > budget.initial) {
+    failures.push(`${app}: JS inicial ${formatKb(initialJs)} > ${formatKb(budget.initial)}`);
+  }
+
+  if (totalJs > budget.total) {
+    failures.push(`${app}: JS total ${formatKb(totalJs)} > ${formatKb(budget.total)}`);
   }
 
   if (cssSize > budget.css) {
@@ -57,15 +83,18 @@ for (const [app, budget] of Object.entries(budgets)) {
   }
 
   console.log(
-    `${app}: JS ${formatKb(jsSize)} · CSS ${formatKb(cssSize)} · fuentes ${fontFiles.length}`,
+    `${app}: JS inicial ${formatKb(initialJs)} · JS total ${formatKb(totalJs)} · ` +
+      `CSS ${formatKb(cssSize)} · fuentes ${fontFiles.length} · ${jsFiles.length} chunks`,
   );
 }
 
 if (failures.length > 0) {
-  console.error("\nPresupuestos incumplidos:");
+  console.error("\nPresupuestos excedidos:");
+
   for (const failure of failures) {
     console.error(`- ${failure}`);
   }
+
   process.exit(1);
 }
 

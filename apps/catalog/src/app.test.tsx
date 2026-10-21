@@ -10,14 +10,14 @@ beforeEach(() => {
 });
 
 describe("App", () => {
-  it("navega a una página de componente y marca el enlace activo", () => {
+  it("navega a una página de componente y marca el enlace activo", async () => {
     render(
       <MemoryRouter initialEntries={["/components/button"]}>
         <App />
       </MemoryRouter>,
     );
 
-    expect(screen.getByRole("heading", { level: 1, name: /Button/ })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { level: 1, name: /Button/ })).toBeInTheDocument();
     expect(
       screen
         .getAllByRole("link", { name: "Button" })

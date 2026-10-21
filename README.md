@@ -42,10 +42,11 @@ bun run dev      # 5173 catálogo · 5174 storefront · 5175 ERP
 bun run check    # Biome + TypeScript + guardia i18n + Vitest
 bun run ci       # check + build + presupuestos, equivalente local del workflow
 bun run build    # build de las tres apps
-bun run budget   # JS/CSS gzip y 0 fuentes locales
+bun run budget   # JS inicial/total y CSS gzip; 0 fuentes locales
 bun run check:i18n  # strings hardcodeadas y utilidades físicas
 bun run qa:overflow # desbordamiento/recorte/RTL en 1440, 1024 y 390 (requiere dev + Chromium)
 bun run qa:a11y     # axe, 12 px mínimo y foco visible en navegador (requiere dev + Chromium)
+bun run qa:perf     # LCP/CLS sobre el build (requiere Chromium; hace su propio preview)
 ```
 
 ## Estructura
