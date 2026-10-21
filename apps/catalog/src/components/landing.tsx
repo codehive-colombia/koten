@@ -129,7 +129,7 @@ export function SystemPlate({ copy }: { copy: SystemPlateCopy }) {
         </PanelBody>
         <PanelFooter className="justify-start">
           <Link
-            to="/patterns/erp"
+            to="/blocks/erp"
             className="text-2xs font-semibold text-link underline-offset-2 hover:underline"
           >
             {copy.patternLink} →

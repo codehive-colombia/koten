@@ -1,4 +1,5 @@
 import {
+  Input,
   type KotenLocale,
   Table,
   TableBody,
@@ -9,282 +10,97 @@ import {
   TableRow,
   useKoten,
 } from "@koten/ui";
+import { useState } from "react";
 import { Link } from "react-router";
-import { IndexCard, PageHeader } from "../../components/docs";
-import { componentInventory, componentOrder, componentRoutes } from "../../data/inventory";
+import { PageHeader } from "../../components/docs";
+import { primitiveDocs } from "../../data/docs";
 
 const copy = {
   es: {
     eyebrow: "Componentes · 部品",
     title: "Componentes",
     description:
-      "La primera validación de la gramática: variantes CVA, roles semánticos y composición con render. Estos componentes fijan el tono del resto del sistema.",
-    meta: "13 páginas · 45 primitivas documentadas · preview, props, código y a11y",
-    cards: {
-      button: {
-        title: "Button",
-        description: "Seis variantes, cuatro tamaños, loading y composición con render.",
-      },
-      panel: {
-        title: "Panel",
-        description: "Cabecera, cuerpo y pie; tonos plain, tinted y accent; flush para tablas.",
-      },
-      badge: {
-        title: "Badge",
-        description: "Siete tonos, tres apariencias y punto decorativo de estado.",
-      },
-      forms: {
-        title: "Formularios base",
-        description: "Field, Label, Input, Textarea y FormRow con errores y estados.",
-      },
-      inputs: {
-        title: "Inputs avanzados",
-        description: "Select, Combobox, Checkbox, RadioGroup, Switch y NumberField.",
-      },
-      surfaces: {
-        title: "Superficies y decorativos",
-        description: "SectionHeader, Rule, Hanko, Tategaki y Pattern.",
-      },
-      feedback: {
-        title: "Feedback",
-        description: "Alert, Toast, Progress, Meter, Skeleton y EmptyState.",
-      },
-      navigation: {
-        title: "Navegación",
-        description: "Link, Breadcrumb, Pagination, Tabs y Accordion.",
-      },
-      overlays: {
-        title: "Overlays",
-        description: "Dialog, Drawer, Menu, Popover y Tooltip.",
-      },
-      data: {
-        title: "Datos",
-        description: "Table, DataTable, StatCard, Sparkline y BarChart.",
-      },
-      controls: {
-        title: "Controles",
-        description: "IconButton, ToggleGroup y Toolbar.",
-      },
-      date: {
-        title: "Fecha",
-        description: "Calendar y DatePicker con teclado, rango y locale.",
-      },
-      command: {
-        title: "CommandPalette",
-        description: "Búsqueda global con combobox, listbox y foco atrapado.",
-      },
-    },
-    pageLabels: {
-      button: "Button",
-      panel: "Panel",
-      badge: "Badge",
-      forms: "Formularios",
-      inputs: "Inputs avanzados",
-      surfaces: "Superficies",
-      feedback: "Feedback",
-      navigation: "Navegación",
-      overlays: "Overlays",
-      data: "Datos",
-      controls: "Controles",
-      date: "Fecha",
-      command: "CommandPalette",
-    },
-    inventory: {
-      heading: "Inventario de primitivas",
-      description: "Todas las primitivas, con su página de referencia y su ID estable.",
-      caption: "Inventario de primitivas",
-      id: "ID",
-      component: "Componente",
-      page: "Página",
-    },
-    note: {
-      body: "Cada página documenta anatomía, variantes, estados, props y notas de accesibilidad. Los demos de storefront y ERP consumen exactamente estos componentes.",
-      link: "Ver los 20 patrones →",
-    },
+      "Cada primitiva vive en su propia página: instalación, ejemplos con preview y código, props, accesibilidad y la referencia a Base UI cuando corresponde. Las piezas de formulario incluyen una muestra de uso dentro de un formulario.",
+    meta: "46 componentes individuales · ES/JA/EN",
+    search: "Buscar componente",
+    placeholder: "Nombre o ID (Button, C-001…)",
+    count: (value: number) => `${value} componentes`,
+    empty: "No hay componentes que coincidan con la búsqueda.",
+    id: "ID",
+    component: "Componente",
+    jp: "日本語",
+    reference: "Referencia",
+    baseUi: "Base UI",
+    tanstack: "TanStack Table",
+    native: "HTML nativo",
+    blocksTitle: "¿Buscas piezas pre-armadas?",
+    blocksBody:
+      "Los bloques de storefront y ERP también viven en páginas individuales, dentro de su propia sección.",
+    blocksLink: "Ir a Bloques →",
+    tableCaption: "Componentes del sistema",
   },
   ja: {
     eyebrow: "コンポーネント · 部品",
     title: "コンポーネント",
     description:
-      "文法の最初の検証：CVAのバリエーション、意味的役割、render による合成。これらのコンポーネントがシステム全体の調子を決める。",
-    meta: "13ページ · 45のプリミティブ · プレビュー、props、コード、a11y",
-    cards: {
-      button: {
-        title: "Button",
-        description: "6つのバリエーション、4つのサイズ、ローディング、render による合成。",
-      },
-      panel: {
-        title: "Panel",
-        description: "ヘッダー、本文、フッター。plain・tinted・accent のトーン、表向けの flush。",
-      },
-      badge: {
-        title: "Badge",
-        description: "7つのトーン、3つの外観、状態を示す装飾ドット。",
-      },
-      forms: {
-        title: "基本フォーム",
-        description: "Field、Label、Input、Textarea、FormRow。エラーと状態付き。",
-      },
-      inputs: {
-        title: "応用インプット",
-        description: "Select、Combobox、Checkbox、RadioGroup、Switch、NumberField。",
-      },
-      surfaces: {
-        title: "面と装飾",
-        description: "SectionHeader、Rule、Hanko、Tategaki、Pattern。",
-      },
-      feedback: {
-        title: "Feedback",
-        description: "Alert、Toast、Progress、Meter、Skeleton、EmptyState。",
-      },
-      navigation: {
-        title: "ナビゲーション",
-        description: "Link、Breadcrumb、Pagination、Tabs、Accordion。",
-      },
-      overlays: {
-        title: "Overlays",
-        description: "Dialog、Drawer、Menu、Popover、Tooltip。",
-      },
-      data: {
-        title: "データ",
-        description: "Table、DataTable、StatCard、Sparkline、BarChart。",
-      },
-      controls: {
-        title: "コントロール",
-        description: "IconButton、ToggleGroup、Toolbar。",
-      },
-      date: {
-        title: "日付",
-        description: "Calendar と DatePicker。キーボード、範囲、ロケール。",
-      },
-      command: {
-        title: "CommandPalette",
-        description: "combobox・listbox・フォーカストラップ付きのグローバル検索。",
-      },
-    },
-    pageLabels: {
-      button: "Button",
-      panel: "Panel",
-      badge: "Badge",
-      forms: "フォーム",
-      inputs: "応用インプット",
-      surfaces: "面",
-      feedback: "Feedback",
-      navigation: "ナビゲーション",
-      overlays: "Overlays",
-      data: "データ",
-      controls: "コントロール",
-      date: "日付",
-      command: "コマンド",
-    },
-    inventory: {
-      heading: "プリミティブ一覧",
-      description: "すべてのプリミティブ。参照ページと安定したID付き。",
-      caption: "プリミティブ一覧",
-      id: "ID",
-      component: "コンポーネント",
-      page: "ページ",
-    },
-    note: {
-      body: "各ページは構造、バリエーション、状態、props、アクセシビリティ注記を扱う。店舗とERPのデモはまさにこれらのコンポーネントを使う。",
-      link: "20のパターンを見る →",
-    },
+      "各プリミティブは独立したページを持ちます。インストール、プレビューとコード付きの例、props、アクセシビリティ、該当する場合は Base UI への参照を掲載します。フォーム部品にはフォーム内での使用例があります。",
+    meta: "46 個の独立ページ · ES/JA/EN",
+    search: "コンポーネントを検索",
+    placeholder: "名前または ID（Button、C-001…）",
+    count: (value: number) => `${value} 件`,
+    empty: "検索に一致するコンポーネントはありません。",
+    id: "ID",
+    component: "コンポーネント",
+    jp: "日本語",
+    reference: "参照",
+    baseUi: "Base UI",
+    tanstack: "TanStack Table",
+    native: "ネイティブHTML",
+    blocksTitle: "組み合わせ済みの部品をお探しですか？",
+    blocksBody: "ストアフロントと ERP のブロックも、専用セクション内の独立したページにあります。",
+    blocksLink: "ブロックへ →",
+    tableCaption: "システムのコンポーネント",
   },
   en: {
     eyebrow: "Components · 部品",
     title: "Components",
     description:
-      "The first validation of the grammar: CVA variants, semantic roles and composition with render. These components set the tone for the rest of the system.",
-    meta: "13 pages · 45 documented primitives · preview, props, code and a11y",
-    cards: {
-      button: {
-        title: "Button",
-        description: "Six variants, four sizes, loading and composition with render.",
-      },
-      panel: {
-        title: "Panel",
-        description: "Header, body and footer; plain, tinted and accent tones; flush for tables.",
-      },
-      badge: {
-        title: "Badge",
-        description: "Seven tones, three appearances and a decorative state dot.",
-      },
-      forms: {
-        title: "Base forms",
-        description: "Field, Label, Input, Textarea and FormRow with errors and states.",
-      },
-      inputs: {
-        title: "Advanced inputs",
-        description: "Select, Combobox, Checkbox, RadioGroup, Switch and NumberField.",
-      },
-      surfaces: {
-        title: "Surfaces & decoration",
-        description: "SectionHeader, Rule, Hanko, Tategaki and Pattern.",
-      },
-      feedback: {
-        title: "Feedback",
-        description: "Alert, Toast, Progress, Meter, Skeleton and EmptyState.",
-      },
-      navigation: {
-        title: "Navigation",
-        description: "Link, Breadcrumb, Pagination, Tabs and Accordion.",
-      },
-      overlays: {
-        title: "Overlays",
-        description: "Dialog, Drawer, Menu, Popover and Tooltip.",
-      },
-      data: {
-        title: "Data",
-        description: "Table, DataTable, StatCard, Sparkline and BarChart.",
-      },
-      controls: {
-        title: "Controls",
-        description: "IconButton, ToggleGroup and Toolbar.",
-      },
-      date: {
-        title: "Date",
-        description: "Calendar and DatePicker with keyboard, range and locale.",
-      },
-      command: {
-        title: "CommandPalette",
-        description: "Global search with combobox, listbox and trapped focus.",
-      },
-    },
-    pageLabels: {
-      button: "Button",
-      panel: "Panel",
-      badge: "Badge",
-      forms: "Forms",
-      inputs: "Advanced inputs",
-      surfaces: "Surfaces",
-      feedback: "Feedback",
-      navigation: "Navigation",
-      overlays: "Overlays",
-      data: "Data",
-      controls: "Controls",
-      date: "Date",
-      command: "Command palette",
-    },
-    inventory: {
-      heading: "Primitive inventory",
-      description: "Every primitive, with its reference page and stable ID.",
-      caption: "Primitive inventory",
-      id: "ID",
-      component: "Component",
-      page: "Page",
-    },
-    note: {
-      body: "Each page documents anatomy, variants, states, props and accessibility notes. The storefront and ERP demos consume exactly these components.",
-      link: "See the 20 patterns →",
-    },
+      "Every primitive lives on its own page: installation, preview and code examples, props, accessibility and the Base UI reference when it applies. Form pieces include a sample of their use inside a form.",
+    meta: "46 individual components · ES/JA/EN",
+    search: "Search components",
+    placeholder: "Name or ID (Button, C-001…)",
+    count: (value: number) => `${value} components`,
+    empty: "No components match the search.",
+    id: "ID",
+    component: "Component",
+    jp: "日本語",
+    reference: "Reference",
+    baseUi: "Base UI",
+    tanstack: "TanStack Table",
+    native: "Native HTML",
+    blocksTitle: "Looking for pre-assembled pieces?",
+    blocksBody:
+      "Storefront and ERP blocks also live on individual pages, inside their own section.",
+    blocksLink: "Go to Blocks →",
+    tableCaption: "System components",
   },
 };
+
 type Copy = (typeof copy)["es"];
 const copyByLocale: Record<KotenLocale, Copy> = copy;
 
 export function ComponentsIndexPage() {
   const { locale } = useKoten();
   const t = copyByLocale[locale];
+  const [query, setQuery] = useState("");
+  const needle = query.trim().toLowerCase();
+  const visible = primitiveDocs.filter(
+    (doc) =>
+      needle.length === 0 ||
+      doc.name.toLowerCase().includes(needle) ||
+      doc.id.toLowerCase().includes(needle) ||
+      doc.slug.includes(needle),
+  );
 
   return (
     <div>
@@ -296,55 +112,79 @@ export function ComponentsIndexPage() {
         meta={t.meta}
       />
 
-      <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">
-        {componentOrder.map((key) => (
-          <IndexCard
-            key={key}
-            to={componentRoutes[key].to}
-            jp={componentRoutes[key].jp}
-            title={t.cards[key].title}
-            description={t.cards[key].description}
-          />
-        ))}
-      </div>
-
       <div className="mt-[calc(var(--koten-gap)*2)]">
-        <h2 className="text-lg font-semibold">{t.inventory.heading}</h2>
-        <p className="mt-1 text-2xs text-faint">{t.inventory.description}</p>
+        <div className="flex flex-wrap items-end justify-between gap-[var(--koten-gap)]">
+          <div className="grid w-full max-w-sm gap-1">
+            <span
+              id="component-search-label"
+              className="text-2xs font-semibold uppercase tracking-[0.12em] text-faint"
+            >
+              {t.search}
+            </span>
+            <Input
+              aria-labelledby="component-search-label"
+              type="search"
+              value={query}
+              placeholder={t.placeholder}
+              onChange={(event) => setQuery(event.currentTarget.value)}
+            />
+          </div>
+          <p aria-live="polite" className="text-2xs text-muted">
+            {t.count(visible.length)}
+          </p>
+        </div>
+
         <div className="mt-[var(--koten-gap)]">
           <Table>
-            <TableCaption>{t.inventory.caption}</TableCaption>
+            <TableCaption>{t.tableCaption}</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead>{t.inventory.id}</TableHead>
-                <TableHead>{t.inventory.component}</TableHead>
-                <TableHead>{t.inventory.page}</TableHead>
+                <TableHead>{t.id}</TableHead>
+                <TableHead>{t.component}</TableHead>
+                <TableHead>{t.jp}</TableHead>
+                <TableHead>{t.reference}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {componentInventory.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className="font-mono text-2xs text-faint">{item.id}</TableCell>
+              {visible.map((doc) => (
+                <TableRow key={doc.slug}>
+                  <TableCell className="font-mono text-2xs text-faint">{doc.id}</TableCell>
                   <TableCell>
                     <Link
-                      to={item.to}
+                      to={`/components/${doc.slug}`}
                       className="font-medium text-link underline-offset-2 hover:underline"
                     >
-                      {item.name}
+                      {doc.name}
                     </Link>
                   </TableCell>
-                  <TableCell className="text-2xs text-muted">{t.pageLabels[item.page]}</TableCell>
+                  <TableCell className="text-2xs text-muted">{doc.jp}</TableCell>
+                  <TableCell className="text-2xs text-muted">
+                    {doc.baseUi
+                      ? doc.baseUi.includes("tanstack")
+                        ? t.tanstack
+                        : t.baseUi
+                      : t.native}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
+          {visible.length === 0 ? (
+            <p className="border border-t-0 border-rule p-[var(--koten-panel-p)] text-xs text-muted">
+              {t.empty}
+            </p>
+          ) : null}
         </div>
       </div>
 
       <div className="mt-[calc(var(--koten-gap)*2)] border border-rule bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
-        {t.note.body}{" "}
-        <Link to="/patterns" className="font-semibold text-link underline-offset-2 hover:underline">
-          {t.note.link}
+        <p className="font-semibold text-ink">{t.blocksTitle}</p>
+        <p className="mt-1">{t.blocksBody}</p>
+        <Link
+          to="/blocks"
+          className="mt-2 inline-block font-semibold text-link underline-offset-2 hover:underline"
+        >
+          {t.blocksLink}
         </Link>
       </div>
     </div>

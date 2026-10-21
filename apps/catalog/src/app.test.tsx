@@ -23,7 +23,7 @@ describe("App", () => {
         .getAllByRole("link", { name: "Button" })
         .some((link) => link.getAttribute("aria-current") === "page"),
     ).toBe(true);
-    expect(screen.getByText("Props y código")).toBeInTheDocument();
+    expect(screen.getAllByText("Instalación").length).toBeGreaterThan(0);
   });
 
   it("uses the wide landing layout without the docs pager", async () => {

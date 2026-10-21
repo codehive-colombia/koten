@@ -46,12 +46,12 @@ const copy = {
     quick: [
       { index: "01", label: "Fundamentos", to: "/tokens" },
       { index: "02", label: "Componentes", to: "/components" },
-      { index: "03", label: "Patrones", to: "/patterns" },
+      { index: "03", label: "Bloques", to: "/blocks" },
       { index: "04", label: "Empezar", to: "/start" },
     ],
     stats: [
-      { value: "45", label: "primitivas" },
-      { value: "20", label: "patrones" },
+      { value: "46", label: "componentes" },
+      { value: "20", label: "bloques" },
       { value: "4", label: "temas" },
       { value: "3", label: "densidades" },
     ],
@@ -73,7 +73,7 @@ const copy = {
       shipping: "Envío",
       shippingValue: "Tokio · 23 oct",
       total: "Total",
-      patternLink: "Ver el patrón de ERP",
+      patternLink: "Ver el bloque de ERP",
       productLabel: "Producto",
       tax: "IVA incluido",
       points: "+583 puntos",
@@ -120,7 +120,7 @@ const copy = {
         quote: "El marco es la unidad.",
         body: "Panel, cabecera, regla y borde construyen la jerarquía sin adornos.",
         badge: "Documentación",
-        note: "45 primitivas · 20 patrones",
+        note: "46 componentes · 20 bloques",
       },
     },
     pieces: {
@@ -142,17 +142,17 @@ const copy = {
           index: "02",
           title: "Componentes",
           jp: "部品",
-          description: "45 primitivas con preview, props, código y notas de accesibilidad.",
+          description: "46 componentes con preview, props, código y notas de accesibilidad.",
           action: "Abrir componentes",
           kind: "components" as const,
         },
         {
-          to: "/patterns",
+          to: "/blocks",
           index: "03",
-          title: "Patrones",
+          title: "Bloques",
           jp: "応用",
           description: "20 composiciones para storefront, ERP y documentación.",
-          action: "Abrir patrones",
+          action: "Abrir bloques",
           kind: "patterns" as const,
         },
         {
@@ -167,8 +167,8 @@ const copy = {
       ],
       indexTitle: "Índice de piezas",
       indexMeta: "Todo lo que hay dentro, sin buscar en el menú",
-      primitives: "Primitivas",
-      patterns: "Patrones",
+      primitives: "Componentes",
+      patterns: "Bloques",
       open: "Abrir el inventario",
       formatSample: { currency: "Moneda", date: "Fecha" },
     },
@@ -232,7 +232,7 @@ const copy = {
       panelTitle: "Instalación por URL",
       panelMeta: "shadcn · registry",
       command: "npx shadcn@latest add http://localhost:5173/r/button.json",
-      note: "El catálogo genera 64 items autocontenidos: primitivas, patrones, núcleo y estilos.",
+      note: "El catálogo genera 64 items autocontenidos: componentes, bloques, núcleo y estilos.",
       start: "Empezar",
       components: "Ver componentes",
       foundations: "Leer fundamentos",
@@ -250,12 +250,12 @@ const copy = {
     quick: [
       { index: "01", label: "基礎", to: "/tokens" },
       { index: "02", label: "部品", to: "/components" },
-      { index: "03", label: "応用", to: "/patterns" },
+      { index: "03", label: "応用", to: "/blocks" },
       { index: "04", label: "はじめかた", to: "/start" },
     ],
     stats: [
-      { value: "45", label: "プリミティブ" },
-      { value: "20", label: "パターン" },
+      { value: "46", label: "コンポーネント" },
+      { value: "20", label: "ブロック" },
       { value: "4", label: "テーマ" },
       { value: "3", label: "密度" },
     ],
@@ -276,7 +276,7 @@ const copy = {
       shipping: "配送",
       shippingValue: "東京 · 10月23日",
       total: "合計",
-      patternLink: "ERPパターンを見る",
+      patternLink: "ERPブロックを見る",
       productLabel: "商品",
       tax: "税込",
       points: "+583ポイント",
@@ -323,7 +323,7 @@ const copy = {
         quote: "枠が単位。",
         body: "パネル、見出し、罫線、境界が装飾なしで階層をつくる。",
         badge: "ドキュメント",
-        note: "45プリミティブ · 20パターン",
+        note: "46コンポーネント · 20ブロック",
       },
     },
     pieces: {
@@ -345,17 +345,17 @@ const copy = {
           index: "02",
           title: "部品",
           jp: "部品",
-          description: "45のプリミティブ。プレビュー、props、コード、アクセシビリティ注記。",
+          description: "46のコンポーネント。プレビュー、props、コード、アクセシビリティ注記。",
           action: "部品を開く",
           kind: "components" as const,
         },
         {
-          to: "/patterns",
+          to: "/blocks",
           index: "03",
-          title: "応用",
+          title: "ブロック",
           jp: "応用",
           description: "ストアフロント、ERP、ドキュメントのための20の構成。",
-          action: "応用を開く",
+          action: "ブロックを開く",
           kind: "patterns" as const,
         },
         {
@@ -370,8 +370,8 @@ const copy = {
       ],
       indexTitle: "部品索引",
       indexMeta: "メニューを探さずに全体を見る",
-      primitives: "プリミティブ",
-      patterns: "パターン",
+      primitives: "コンポーネント",
+      patterns: "ブロック",
       open: "一覧を開く",
       formatSample: { currency: "通貨", date: "日付" },
     },
@@ -405,7 +405,7 @@ const copy = {
       meta: "二つの画面、同じトークン",
       live: "ローカルデモ",
       open: "デモを開く",
-      pattern: "パターンを見る",
+      pattern: "ブロックを見る",
       reviewsLabel: "件のレビュー",
       storefront: {
         eyebrow: "ストアフロント · 光",
@@ -435,7 +435,7 @@ const copy = {
       panelTitle: "URLからインストール",
       panelMeta: "shadcn · registry",
       command: "npx shadcn@latest add http://localhost:5173/r/button.json",
-      note: "カタログは64の自己完結アイテムを生成する：プリミティブ、パターン、コア、スタイル。",
+      note: "カタログは64の自己完結アイテムを生成する：コンポーネント、ブロック、コア、スタイル。",
       start: "はじめる",
       components: "部品を見る",
       foundations: "基礎を読む",
@@ -453,12 +453,12 @@ const copy = {
     quick: [
       { index: "01", label: "Foundations", to: "/tokens" },
       { index: "02", label: "Components", to: "/components" },
-      { index: "03", label: "Patterns", to: "/patterns" },
+      { index: "03", label: "Blocks", to: "/blocks" },
       { index: "04", label: "Get started", to: "/start" },
     ],
     stats: [
-      { value: "45", label: "primitives" },
-      { value: "20", label: "patterns" },
+      { value: "46", label: "components" },
+      { value: "20", label: "blocks" },
       { value: "4", label: "themes" },
       { value: "3", label: "densities" },
     ],
@@ -480,7 +480,7 @@ const copy = {
       shipping: "Shipping",
       shippingValue: "Tokyo · Oct 23",
       total: "Total",
-      patternLink: "See the ERP pattern",
+      patternLink: "See the ERP block",
       productLabel: "Product",
       tax: "Tax included",
       points: "+583 points",
@@ -527,7 +527,7 @@ const copy = {
         quote: "The frame is the unit.",
         body: "Panel, header, rule and border build the hierarchy without ornament.",
         badge: "Documentation",
-        note: "45 primitives · 20 patterns",
+        note: "46 components · 20 blocks",
       },
     },
     pieces: {
@@ -549,17 +549,17 @@ const copy = {
           index: "02",
           title: "Components",
           jp: "部品",
-          description: "45 primitives with preview, props, code and accessibility notes.",
+          description: "46 components with preview, props, code and accessibility notes.",
           action: "Open components",
           kind: "components" as const,
         },
         {
-          to: "/patterns",
+          to: "/blocks",
           index: "03",
-          title: "Patterns",
+          title: "Blocks",
           jp: "応用",
           description: "20 compositions for storefront, ERP and documentation.",
-          action: "Open patterns",
+          action: "Open blocks",
           kind: "patterns" as const,
         },
         {
@@ -574,8 +574,8 @@ const copy = {
       ],
       indexTitle: "Piece index",
       indexMeta: "Everything inside, without digging through the menu",
-      primitives: "Primitives",
-      patterns: "Patterns",
+      primitives: "Components",
+      patterns: "Blocks",
       open: "Open the inventory",
       formatSample: { currency: "Currency", date: "Date" },
     },
@@ -638,7 +638,7 @@ const copy = {
       panelTitle: "Install by URL",
       panelMeta: "shadcn · registry",
       command: "npx shadcn@latest add http://localhost:5173/r/button.json",
-      note: "The catalog generates 64 self-contained items: primitives, patterns, core and styles.",
+      note: "The catalog generates 64 self-contained items: components, blocks, core and styles.",
       start: "Get started",
       components: "Browse components",
       foundations: "Read foundations",
@@ -877,7 +877,7 @@ export function OverviewPage() {
           meta={t.pieces.meta}
           actions={
             <Badge tone="neutral">
-              {formatters.formatNumber(45)} · {formatters.formatNumber(20)}
+              {formatters.formatNumber(46)} · {formatters.formatNumber(20)}
             </Badge>
           }
         />
@@ -1024,7 +1024,7 @@ export function OverviewPage() {
             description={t.demos.storefront.description}
             tags={t.demos.storefront.tags}
             demoHref="http://localhost:5174"
-            patternTo="/patterns/storefront"
+            patternTo="/blocks/storefront"
             openLabel={t.demos.open}
             patternLabel={t.demos.pattern}
           >
@@ -1068,7 +1068,7 @@ export function OverviewPage() {
             description={t.demos.erp.description}
             tags={t.demos.erp.tags}
             demoHref="http://localhost:5175"
-            patternTo="/patterns/erp"
+            patternTo="/blocks/erp"
             openLabel={t.demos.open}
             patternLabel={t.demos.pattern}
           >

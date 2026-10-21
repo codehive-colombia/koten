@@ -1,4 +1,5 @@
 import type { KotenLocale } from "@koten/ui";
+import { blockDocs, primitiveDocs } from "./docs";
 
 export type Localized = Record<KotenLocale, string>;
 
@@ -9,10 +10,12 @@ export type CatalogNavItem = {
 };
 
 export type CatalogNavGroup = {
-  id: "foundations" | "components" | "patterns" | "demos";
+  id: "foundations" | "components" | "blocks" | "demos";
   label: Localized;
   items: CatalogNavItem[];
 };
+
+const sameLabel = (label: string): Localized => ({ es: label, ja: label, en: label });
 
 export const navGroups: readonly CatalogNavGroup[] = [
   {
@@ -51,63 +54,24 @@ export const navGroups: readonly CatalogNavGroup[] = [
     label: { es: "Componentes", ja: "部品", en: "Components" },
     items: [
       { path: "/components", label: { es: "Todos", ja: "一覧", en: "All" } },
-      {
-        path: "/components/button",
-        label: { es: "Button", ja: "Button · ボタン", en: "Button" },
-      },
-      { path: "/components/panel", label: { es: "Panel", ja: "Panel · 枠", en: "Panel" } },
-      { path: "/components/badge", label: { es: "Badge", ja: "Badge · 印", en: "Badge" } },
-      {
-        path: "/components/forms",
-        label: { es: "Formularios", ja: "フォーム", en: "Forms" },
-      },
-      {
-        path: "/components/inputs",
-        label: { es: "Inputs avanzados", ja: "入力部品", en: "Advanced inputs" },
-      },
-      {
-        path: "/components/surfaces",
-        label: { es: "Superficies", ja: "装飾", en: "Surfaces" },
-      },
-      {
-        path: "/components/feedback",
-        label: { es: "Feedback", ja: "通知", en: "Feedback" },
-      },
-      {
-        path: "/components/navigation",
-        label: { es: "Navegación", ja: "導線", en: "Navigation" },
-      },
-      {
-        path: "/components/overlays",
-        label: { es: "Overlays", ja: "重なり", en: "Overlays" },
-      },
-      {
-        path: "/components/data",
-        label: { es: "Datos", ja: "データ", en: "Data" },
-      },
-      {
-        path: "/components/controls",
-        label: { es: "Controles", ja: "操作", en: "Controls" },
-      },
-      { path: "/components/date", label: { es: "Fecha", ja: "日付", en: "Date" } },
-      {
-        path: "/components/command",
-        label: { es: "CommandPalette", ja: "コマンド", en: "Command palette" },
-      },
+      ...primitiveDocs.map((doc) => ({
+        path: `/components/${doc.slug}`,
+        label: sameLabel(doc.name),
+      })),
     ],
   },
   {
-    id: "patterns",
-    label: { es: "Patrones", ja: "応用", en: "Patterns" },
+    id: "blocks",
+    label: { es: "Bloques", ja: "応用", en: "Blocks" },
     items: [
-      { path: "/patterns", label: { es: "Todos", ja: "一覧", en: "All" } },
+      { path: "/blocks", label: { es: "Todos", ja: "一覧", en: "All" } },
       {
-        path: "/patterns/storefront",
-        label: { es: "Storefront", ja: "店舗パターン", en: "Storefront" },
+        path: "/blocks/storefront",
+        label: { es: "Storefront", ja: "ストアフロント", en: "Storefront" },
       },
       {
-        path: "/patterns/erp",
-        label: { es: "ERP", ja: "台帳パターン", en: "ERP" },
+        path: "/blocks/erp",
+        label: { es: "ERP", ja: "ERP", en: "ERP" },
       },
     ],
   },
@@ -138,7 +102,29 @@ export function navLabel(item: CatalogNavItem, locale: KotenLocale): string {
 }
 
 export function pageLabel(path: string, locale: KotenLocale): string | undefined {
-  return internalNavItems.find((item) => item.path === path)?.label[locale];
+  if (path === "/components") {
+    return { es: "Componentes", ja: "コンポーネント", en: "Components" }[locale];
+  }
+
+  if (path === "/blocks") {
+    return { es: "Bloques", ja: "ブロック", en: "Blocks" }[locale];
+  }
+
+  const item = internalNavItems.find((entry) => entry.path === path);
+
+  if (item) {
+    return item.label[locale];
+  }
+
+  const primitive = primitiveDocs.find((doc) => path === `/components/${doc.slug}`);
+
+  if (primitive) {
+    return primitive.name;
+  }
+
+  const block = blockDocs.find((doc) => path === `/blocks/${doc.category}/${doc.slug}`);
+
+  return block?.name;
 }
 
 export const densityLabels: Record<"compact" | "default" | "comfortable", Localized> = {
@@ -173,7 +159,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Tema",
     density: "Densidad",
     language: "Idioma",
-    tagline: "45 primitivas · 20 patrones · 4 temas · 3 densidades",
+    tagline: "46 componentes · 20 bloques · 4 temas · 3 densidades",
     docsLanguage:
       "Documentación completa en ES/JA/EN · interfaz, cuerpo y ejemplos cambian de idioma",
     preview: "Vista previa",
@@ -191,7 +177,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "テーマ",
     density: "密度",
     language: "言語",
-    tagline: "45プリミティブ · 20パターン · 4テーマ · 3密度",
+    tagline: "46 コンポーネント · 20 ブロック · 4 テーマ · 3 密度",
     docsLanguage: "ドキュメントはES/JA/ENで完備 · UI・本文・例が言語に追従します",
     preview: "プレビュー",
     openDemo: "デモを開く",
@@ -208,7 +194,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Theme",
     density: "Density",
     language: "Language",
-    tagline: "45 primitives · 20 patterns · 4 themes · 3 densities",
+    tagline: "46 components · 20 blocks · 4 themes · 3 densities",
     docsLanguage: "Full documentation in ES/JA/EN · UI, body and examples follow the language",
     preview: "Preview",
     openDemo: "Open demo",

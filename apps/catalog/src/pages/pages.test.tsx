@@ -2,27 +2,16 @@ import "@testing-library/jest-dom/vitest";
 import { KotenProvider } from "@koten/ui";
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { ReactElement } from "react";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, Route, Routes } from "react-router";
 import { describe, expect, it } from "vitest";
-import { BadgePage } from "./components/badge";
-import { ButtonPage } from "./components/button";
-import { CommandPalettePage } from "./components/command";
-import { ControlsPage } from "./components/controls";
-import { DataPage } from "./components/data";
-import { DatePickerPage } from "./components/date";
-import { FeedbackPage } from "./components/feedback";
-import { FormsPage } from "./components/forms";
+import { BlockDocPage, PrimitiveDocPage } from "../components/doc-page";
+import { blockCategories, blockDocs, primitiveDocs } from "../data/docs";
+import { allBlockDoc, allBlockDocs, allPrimitiveBySlug, allPrimitiveDocs } from "../data/docs/all";
+import type { BlockCategoryId } from "../data/docs/types";
+import { BlockCategoryPage, BlocksIndexPage } from "./blocks/index";
 import { ComponentsIndexPage } from "./components/index";
-import { InputsPage } from "./components/inputs";
-import { NavigationPage } from "./components/navigation";
-import { OverlaysPage } from "./components/overlays";
-import { PanelPage } from "./components/panel";
-import { SurfacesPage } from "./components/surfaces";
 import { NotFoundPage } from "./not-found";
 import { OverviewPage } from "./overview";
-import { ErpPatternsPage } from "./patterns/erp";
-import { PatternsIndexPage } from "./patterns/index";
-import { StorefrontPatternsPage } from "./patterns/storefront";
 import { StartPage } from "./start";
 import { TokensColorPage } from "./tokens/color";
 import { TokensDensityPage } from "./tokens/density";
@@ -39,6 +28,26 @@ function renderPage(ui: ReactElement, locale: "es" | "ja" | "en" = "es") {
       <MemoryRouter>{ui}</MemoryRouter>
     </KotenProvider>,
   );
+}
+
+function primitive(slug: string) {
+  const doc = allPrimitiveBySlug.get(slug);
+
+  if (!doc) {
+    throw new Error(`Missing primitive doc: ${slug}`);
+  }
+
+  return doc;
+}
+
+function block(category: BlockCategoryId, slug: string) {
+  const doc = allBlockDoc(category, slug);
+
+  if (!doc) {
+    throw new Error(`Missing block doc: ${category}/${slug}`);
+  }
+
+  return doc;
 }
 
 describe("catalog pages", () => {
@@ -74,7 +83,7 @@ describe("catalog pages", () => {
     );
   });
 
-  it("indexes the seven foundation pages", () => {
+  it("indexes the foundation pages", () => {
     renderPage(<TokensIndexPage />);
 
     expect(screen.getByRole("heading", { level: 1, name: /Fundamentos/ })).toBeInTheDocument();
@@ -123,28 +132,6 @@ describe("catalog pages", () => {
     expect(themes.container.querySelectorAll("article[data-theme]")).toHaveLength(4);
   });
 
-  it("documents CommandPalette", async () => {
-    renderPage(<CommandPalettePage />);
-
-    expect(screen.getByRole("heading", { level: 1, name: /CommandPalette/ })).toBeInTheDocument();
-
-    const trigger = screen.getByRole("button", { name: "Abrir paleta" });
-    fireEvent.click(trigger);
-
-    const input = await screen.findByRole("combobox", { name: /Comandos de KURA/ });
-    fireEvent.change(input, { target: { value: "pedidos" } });
-
-    expect(screen.getByRole("option", { name: /Ver pedidos/ })).toBeInTheDocument();
-  });
-
-  it("documents DatePicker and Calendar", () => {
-    renderPage(<DatePickerPage />);
-
-    expect(screen.getByRole("heading", { level: 1, name: /DatePicker/ })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Fecha de entrega/ })).toBeInTheDocument();
-    expect(screen.getByRole("table", { name: /octubre de 2026/i })).toBeInTheDocument();
-  });
-
   it("follows the locale in the format preview", () => {
     renderPage(<TokensFormatPage />, "ja");
 
@@ -152,112 +139,176 @@ describe("catalog pages", () => {
     expect(screen.getAllByText("2026/10/21").length).toBeGreaterThan(0);
   });
 
-  it("indexes and documents the three components", () => {
-    const index = renderPage(<ComponentsIndexPage />);
-    expect(screen.getAllByRole("link", { name: /^Button/ }).length).toBeGreaterThan(0);
-    expect(screen.getByRole("table", { name: "Inventario de primitivas" })).toBeInTheDocument();
-    expect(screen.getAllByRole("row")).toHaveLength(46);
-    index.unmount();
+  it("lists every primitive with search, ID and reference", () => {
+    renderPage(<ComponentsIndexPage />);
 
-    const button = renderPage(<ButtonPage />);
-    expect(screen.getByRole("button", { name: "Guardando" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Copiar" })).toBeInTheDocument();
-    button.unmount();
+    expect(screen.getByRole("heading", { level: 1, name: /^Componentes/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("row")).toHaveLength(primitiveDocs.length + 1);
+    expect(screen.getByText("46 componentes")).toBeInTheDocument();
 
-    const panel = renderPage(<PanelPage />);
-    expect(screen.getByRole("heading", { level: 3, name: "Pedidos de hoy" })).toBeInTheDocument();
-    panel.unmount();
+    fireEvent.change(screen.getByRole("searchbox", { name: "Buscar componente" }), {
+      target: { value: "toast" },
+    });
 
-    const badge = renderPage(<BadgePage />);
-    expect(screen.getAllByText("En stock").length).toBeGreaterThan(0);
-    badge.unmount();
-
-    const forms = renderPage(<FormsPage />);
-    expect(screen.getAllByRole("textbox", { name: /Correo/ }).length).toBeGreaterThan(0);
-    expect(screen.getByRole("textbox", { name: "Notas de entrega" })).toBeInTheDocument();
-    expect(screen.getByText("El correo no es válido.")).toBeInTheDocument();
-    expect(forms.container.querySelector('[data-orientation="horizontal"]')).toBeInTheDocument();
-    forms.unmount();
-
-    const inputs = renderPage(<InputsPage />);
-    expect(screen.getByRole("combobox", { name: "Almacén de salida" })).toBeInTheDocument();
-    expect(screen.getByRole("checkbox", { name: "Recibir avisos de stock" })).toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: "Estándar" })).toBeInTheDocument();
-    expect(screen.getByRole("switch", { name: "Notificaciones" })).toBeInTheDocument();
-    expect(screen.getByRole("textbox", { name: "Unidades" })).toBeInTheDocument();
-    inputs.unmount();
-
-    const surfaces = renderPage(<SurfacesPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Superficies/ })).toBeInTheDocument();
-    expect(screen.getAllByRole("separator").length).toBeGreaterThan(0);
-    expect(screen.getByRole("img", { name: "Sello Koten" })).toBeInTheDocument();
-    surfaces.unmount();
-
-    const feedback = renderPage(<FeedbackPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Feedback/ })).toBeInTheDocument();
-    expect(screen.getAllByRole("status").length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("progressbar").length).toBeGreaterThan(0);
-    expect(screen.getAllByRole("meter").length).toBeGreaterThan(0);
-    expect(screen.getByRole("button", { name: "Mostrar toast" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Sin pedidos" })).toBeInTheDocument();
-    feedback.unmount();
-
-    const navigation = renderPage(<NavigationPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Navegación/ })).toBeInTheDocument();
-    expect(screen.getByRole("navigation", { name: "Migas de pan" })).toBeInTheDocument();
-    expect(screen.getByRole("navigation", { name: "Paginación de pedidos" })).toBeInTheDocument();
-    expect(screen.getByRole("tablist", { name: "Vista del pedido" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Envío y entrega" })).toBeInTheDocument();
-    navigation.unmount();
-
-    const overlays = renderPage(<OverlaysPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Overlays/ })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Abrir diálogo" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Abrir drawer" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Acciones" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Ver resumen" })).toBeInTheDocument();
-    overlays.unmount();
-
-    const data = renderPage(<DataPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Datos/ })).toBeInTheDocument();
-    expect(screen.getByRole("table", { name: "Pedidos KURA" })).toBeInTheDocument();
-    expect(screen.getByText("Pedidos hoy")).toBeInTheDocument();
-    expect(screen.getByRole("table", { name: "Pedidos por día" })).toBeInTheDocument();
-    data.unmount();
-
-    renderPage(<ControlsPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Controles/ })).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: "Descargar" }).length).toBeGreaterThan(0);
-    expect(screen.getByRole("group", { name: "Vista de pedidos" })).toBeInTheDocument();
-    expect(screen.getByRole("toolbar", { name: "Acciones de pedidos" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Toast" })).toHaveAttribute(
+      "href",
+      "/components/toast",
+    );
+    expect(screen.queryByRole("link", { name: "Button" })).not.toBeInTheDocument();
+    expect(screen.getByText("1 componentes")).toBeInTheDocument();
   });
 
-  it("documents the storefront and ERP patterns", () => {
-    const index = renderPage(<PatternsIndexPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Patrones/ })).toBeInTheDocument();
-    expect(screen.getAllByRole("row")).toHaveLength(21);
+  it("documents a primitive with installation, preview/code, props and a11y", () => {
+    renderPage(<PrimitiveDocPage doc={primitive("button")} />);
+
+    expect(screen.getByRole("heading", { level: 1, name: /Button/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /^Instalación/ })).toBeInTheDocument();
+    expect(
+      screen.getByText("npx shadcn@latest add http://localhost:5173/r/button.json"),
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Código" }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("heading", { level: 2, name: /^Props/ })).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: /Button · Accesibilidad/ })).toBeInTheDocument();
+    expect(screen.getByText(/HTML nativo/)).toBeInTheDocument();
+  });
+
+  it("marks form components with a form usage section", () => {
+    renderPage(<PrimitiveDocPage doc={primitive("field")} />);
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: /^Uso en un formulario/ }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByRole("textbox", { name: /Correo/ }).length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: /Base UI/ })).toHaveAttribute(
+      "href",
+      "https://base-ui.com/react/components/field",
+    );
+  });
+
+  it("declares provider and hook requirements for Toast", () => {
+    renderPage(<PrimitiveDocPage doc={primitive("toast")} />);
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: /^Requisitos de uso/ }),
+    ).toBeInTheDocument();
+    expect(screen.getAllByText(/ToastProvider/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/useToast/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("button", { name: /Show toast/i })).toBeInTheDocument();
+  });
+
+  it("opens a Dialog from its example", () => {
+    renderPage(<PrimitiveDocPage doc={primitive("dialog")} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /Abrir diálogo/ }));
+
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /Detalle del pedido/ })).toBeInTheDocument();
+  });
+
+  it("documents tables and date controls", () => {
+    const table = renderPage(<PrimitiveDocPage doc={primitive("table")} />);
+    expect(screen.getAllByRole("table").length).toBeGreaterThan(0);
+    table.unmount();
+
+    renderPage(<PrimitiveDocPage doc={primitive("date-picker")} />);
+    expect(screen.getByRole("button", { name: /Fecha de entrega/ })).toBeInTheDocument();
+  });
+
+  it("lists blocks by category and renders one block per page", () => {
+    const index = renderPage(<BlocksIndexPage />);
+    expect(screen.getByRole("heading", { level: 1, name: /^Bloques/ })).toBeInTheDocument();
+    expect(screen.getAllByRole("row")).toHaveLength(blockDocs.length + 1);
+    for (const category of blockCategories) {
+      expect(
+        screen.getAllByRole("link", { name: new RegExp(category.title.es) }).length,
+      ).toBeGreaterThan(0);
+    }
     index.unmount();
 
-    const storefront = renderPage(<StorefrontPatternsPage />);
-    expect(
-      screen.getByRole("heading", { level: 1, name: /Patrones de storefront/ }),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("searchbox", { name: "Buscar productos" })).toBeInTheDocument();
-    expect(screen.getByRole("img", { name: "HIKARI K-1 de frente" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Distribución" })).toBeInTheDocument();
-    storefront.unmount();
+    render(
+      <KotenProvider locale="es">
+        <MemoryRouter initialEntries={["/blocks/storefront"]}>
+          <Routes>
+            <Route path="/blocks/:category" element={<BlockCategoryPage />} />
+          </Routes>
+        </MemoryRouter>
+      </KotenProvider>,
+    );
+    expect(screen.getByRole("heading", { level: 1, name: /^Storefront/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /ProductCard/ })).toHaveAttribute(
+      "href",
+      "/blocks/storefront/product-card",
+    );
+  });
 
-    const erp = renderPage(<ErpPatternsPage />);
-    expect(screen.getByRole("heading", { level: 1, name: /Patrones de ERP/ })).toBeInTheDocument();
-    expect(screen.getAllByText("Pendiente").length).toBeGreaterThan(0);
-    expect(screen.getByRole("button", { name: "Abrir detalle de pedido" })).toBeInTheDocument();
-    erp.unmount();
+  it("documents a block with installation, props and a11y", () => {
+    renderPage(<BlockDocPage doc={block("storefront", "product-card")} />);
+
+    expect(screen.getByRole("heading", { level: 1, name: /^ProductCard/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /^Instalación/ })).toBeInTheDocument();
+    expect(
+      screen.getByText("npx shadcn@latest add http://localhost:5173/r/product-card.json"),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: /^Props/ })).toBeInTheDocument();
   });
 
   it("renders a translated 404 page", () => {
     renderPage(<NotFoundPage />, "en");
 
     expect(screen.getByRole("heading", { name: "Page not found" })).toBeInTheDocument();
+  });
+});
+
+describe("documentation data", () => {
+  it("keeps one page per primitive with unique IDs and complete copy", () => {
+    expect(allPrimitiveDocs).toHaveLength(46);
+    expect(new Set(allPrimitiveDocs.map((doc) => doc.slug)).size).toBe(allPrimitiveDocs.length);
+    expect(new Set(allPrimitiveDocs.map((doc) => doc.id)).size).toBe(allPrimitiveDocs.length);
+
+    for (const doc of allPrimitiveDocs) {
+      for (const locale of ["es", "ja", "en"] as const) {
+        expect(doc.description[locale].length, `${doc.slug} description ${locale}`).toBeGreaterThan(
+          20,
+        );
+        expect(doc.a11y[locale].length, `${doc.slug} a11y ${locale}`).toBeGreaterThan(1);
+      }
+
+      expect(doc.examples.length, `${doc.slug} examples`).toBeGreaterThan(0);
+      expect(doc.props.length, `${doc.slug} props`).toBeGreaterThan(0);
+      expect(doc.files.length, `${doc.slug} files`).toBeGreaterThan(0);
+    }
+  });
+
+  it("keeps form components wired to a form example", () => {
+    const formSlugs = [
+      "field",
+      "label",
+      "input",
+      "textarea",
+      "form-row",
+      "select",
+      "combobox",
+      "checkbox",
+      "radio-group",
+      "switch",
+      "number-field",
+    ];
+
+    for (const slug of formSlugs) {
+      expect(primitive(slug).formExample, `${slug} formExample`).toBeDefined();
+    }
+  });
+
+  it("keeps every block in one of the declared categories", () => {
+    expect(allBlockDocs).toHaveLength(20);
+    expect(new Set(allBlockDocs.map((doc) => `${doc.category}/${doc.slug}`)).size).toBe(
+      allBlockDocs.length,
+    );
+
+    for (const doc of allBlockDocs) {
+      expect(blockCategories.some((category) => category.id === doc.category)).toBe(true);
+      expect(doc.examples.length).toBeGreaterThan(0);
+      expect(doc.props.length).toBeGreaterThan(0);
+    }
   });
 });

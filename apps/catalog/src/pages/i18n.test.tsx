@@ -4,11 +4,12 @@ import { render, screen } from "@testing-library/react";
 import type { ReactElement } from "react";
 import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
+import { PrimitiveDocPage } from "../components/doc-page";
 import { shellLabels } from "../data/catalog";
+import { allPrimitiveBySlug } from "../data/docs/all";
 import { syncViewToUrl } from "../lib/use-catalog-view";
-import { ButtonPage } from "./components/button";
+import { BlocksIndexPage } from "./blocks/index";
 import { OverviewPage } from "./overview";
-import { PatternsIndexPage } from "./patterns/index";
 import { TokensColorPage } from "./tokens/color";
 
 function renderPage(ui: ReactElement, locale: "es" | "ja" | "en") {
@@ -17,6 +18,16 @@ function renderPage(ui: ReactElement, locale: "es" | "ja" | "en") {
       <MemoryRouter>{ui}</MemoryRouter>
     </KotenProvider>,
   );
+}
+
+function primitive(slug: string) {
+  const doc = allPrimitiveBySlug.get(slug);
+
+  if (!doc) {
+    throw new Error(`Missing primitive doc: ${slug}`);
+  }
+
+  return doc;
 }
 
 describe("catalog i18n", () => {
@@ -45,20 +56,18 @@ describe("catalog i18n", () => {
   });
 
   it("translates the internal docs labels and prop notes", () => {
-    renderPage(<ButtonPage />, "en");
+    renderPage(<PrimitiveDocPage doc={primitive("button")} />, "en");
 
-    expect(screen.getByRole("button", { name: "Copy" })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Copy" }).length).toBeGreaterThan(0);
     expect(screen.getByText(/The color is decided by the theme/)).toBeInTheDocument();
-    expect(
-      screen.getByRole("list", { name: /Accessibility notes for Button/ }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: /Button · Accessibility/ })).toBeInTheDocument();
   });
 
-  it("translates the pattern pages and their inventory", () => {
-    renderPage(<PatternsIndexPage />, "ja");
+  it("translates the block index and category descriptions", () => {
+    renderPage(<BlocksIndexPage />, "ja");
 
-    expect(screen.getByRole("heading", { level: 1, name: /^パターン/ })).toBeInTheDocument();
-    expect(screen.getByText(/HIKARIの商品ページとKURAのバックオフィス/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: /^ブロック/ })).toBeInTheDocument();
+    expect(screen.getAllByText(/HIKARI の商品ページ/).length).toBeGreaterThan(0);
   });
 
   it("declares the document language when syncing the view", () => {

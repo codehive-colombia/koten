@@ -96,15 +96,15 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
         "12 px de piso tipográfico y contraste AA en los cuatro temas.",
         "Los componentes no contienen strings: los labels llegan por prop o del `KotenProvider`.",
         "Fechas, moneda y números con `Intl`, nunca concatenados.",
-        "Cada primitiva tiene tests de estados, teclado y ARIA.",
+        "Cada componente tiene tests de estados, teclado y ARIA.",
       ],
       code: "bun run check   # lint, tipos, i18n y tests",
     },
     next: {
       title: "Siguientes pasos",
       meta: "De la pieza a la pantalla",
-      body: "Cada primitiva tiene su página con preview, props, código y notas de accesibilidad. Los patrones muestran cómo se combinan en la página HIKARI y en el backoffice KURA.",
-      links: "Ver componentes|Ver patrones",
+      body: "Cada componente tiene su página con instalación, preview, código, props y notas de accesibilidad. Los bloques muestran cómo se combinan en la página HIKARI y en el backoffice KURA.",
+      links: "Ver componentes|Ver bloques",
     },
   },
   ja: {
@@ -199,15 +199,15 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
         "最小 12px、4 テーマすべてで AA コントラスト。",
         "コンポーネントに文字列を持たず、ラベルは props か `KotenProvider` から来る。",
         "日付・通貨・数値は `Intl`。文字列連結は使わない。",
-        "各プリミティブに状態・キーボード・ARIA のテストがある。",
+        "各コンポーネントに状態・キーボード・ARIA のテストがある。",
       ],
       code: "bun run check   # lint・型・i18n・テスト",
     },
     next: {
       title: "次の一歩",
       meta: "部品から画面へ",
-      body: "各プリミティブにはプレビュー・props・コード・アクセシビリティ注記のページがあります。パターンでは、HIKARI の商品ページと KURA のバックオフィスでの組み合わせ方を示します。",
-      links: "部品を見る|パターンを見る",
+      body: "各コンポーネントにはインストール・プレビュー・コード・props・アクセシビリティ注記のページがあります。ブロックでは、HIKARI の商品ページと KURA のバックオフィスでの組み合わせ方を示します。",
+      links: "部品を見る|ブロックを見る",
     },
   },
   en: {
@@ -302,15 +302,15 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
         "A 12 px typographic floor and AA contrast in all four themes.",
         "Components hold no strings: labels come from props or `KotenProvider`.",
         "Dates, currency and numbers use `Intl`, never concatenated strings.",
-        "Every primitive has tests for states, keyboard and ARIA.",
+        "Every component has tests for states, keyboard and ARIA.",
       ],
       code: "bun run check   # lint, types, i18n and tests",
     },
     next: {
       title: "Next steps",
       meta: "From the piece to the screen",
-      body: "Every primitive has a page with preview, props, code and accessibility notes. The patterns show how they combine in the HIKARI product page and the KURA back office.",
-      links: "Browse components|Browse patterns",
+      body: "Every component has a page with installation, preview, code, props and accessibility notes. The blocks show how they combine in the HIKARI product page and the KURA back office.",
+      links: "Browse components|Browse blocks",
     },
   },
 };
@@ -376,7 +376,7 @@ export function StartPage() {
             <Link to="/components" className="text-link underline underline-offset-2">
               {componentsLabel}
             </Link>
-            <Link to="/patterns" className="text-link underline underline-offset-2">
+            <Link to="/blocks" className="text-link underline underline-offset-2">
               {patternsLabel}
             </Link>
           </p>

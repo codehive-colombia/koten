@@ -15,9 +15,9 @@ const kb = 1024;
 const budgets: Record<string, Budget> = {
   storefront: { initial: 150 * kb, total: 150 * kb, css: 30 * kb },
   erp: { initial: 250 * kb, total: 250 * kb, css: 30 * kb },
-  // The catalog is internal and serves the full documentation in ES/JA/EN (D-025).
+  // The catalog is internal and serves 46 component pages + 20 block pages in ES/JA/EN (D-025, D-042).
   // Pages are split by route (D-029): the entry does not load the whole documentation.
-  catalog: { initial: 260 * kb, total: 360 * kb, css: 30 * kb },
+  catalog: { initial: 290 * kb, total: 470 * kb, css: 30 * kb },
 };
 
 const failures: string[] = [];

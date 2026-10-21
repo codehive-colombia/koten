@@ -2,51 +2,66 @@ import "@testing-library/jest-dom/vitest";
 import { KotenProvider } from "@koten/ui";
 import { render } from "@testing-library/react";
 import axe from "axe-core";
-import type { ComponentType } from "react";
+import type { ReactElement } from "react";
+import { createElement } from "react";
 import { MemoryRouter } from "react-router";
 import { describe, expect, it } from "vitest";
-import { BadgePage } from "./components/badge";
-import { ButtonPage } from "./components/button";
-import { ControlsPage } from "./components/controls";
-import { DataPage } from "./components/data";
-import { FeedbackPage } from "./components/feedback";
-import { FormsPage } from "./components/forms";
-import { InputsPage } from "./components/inputs";
-import { NavigationPage } from "./components/navigation";
-import { OverlaysPage } from "./components/overlays";
-import { PanelPage } from "./components/panel";
-import { SurfacesPage } from "./components/surfaces";
-import { ErpPatternsPage } from "./patterns/erp";
-import { PatternsIndexPage } from "./patterns/index";
-import { StorefrontPatternsPage } from "./patterns/storefront";
+import { BlockDocPage, PrimitiveDocPage } from "../components/doc-page";
+import { allBlockDoc, allPrimitiveBySlug } from "../data/docs/all";
+import { BlocksIndexPage } from "./blocks/index";
+import { ComponentsIndexPage } from "./components/index";
 import { TokensIndexPage } from "./tokens/index";
 
-const pages: readonly [string, ComponentType][] = [
-  ["Button", ButtonPage],
-  ["Panel", PanelPage],
-  ["Badge", BadgePage],
-  ["Formularios", FormsPage],
-  ["Inputs", InputsPage],
-  ["Superficies", SurfacesPage],
-  ["Feedback", FeedbackPage],
-  ["Navegación", NavigationPage],
-  ["Overlays", OverlaysPage],
-  ["Datos", DataPage],
-  ["Controles", ControlsPage],
-  ["Fundamentos", TokensIndexPage],
-  ["Patrones", PatternsIndexPage],
-  ["Patrones de storefront", StorefrontPatternsPage],
-  ["Patrones de ERP", ErpPatternsPage],
+function primitive(slug: string) {
+  const doc = allPrimitiveBySlug.get(slug);
+
+  if (!doc) {
+    throw new Error(`Missing primitive doc: ${slug}`);
+  }
+
+  return doc;
+}
+
+function block(slug: string) {
+  const doc = allBlockDoc("storefront", slug) ?? allBlockDoc("erp", slug);
+
+  if (!doc) {
+    throw new Error(`Missing block doc: ${slug}`);
+  }
+
+  return doc;
+}
+
+const pages: readonly [string, ReactElement][] = [
+  ["Button", createElement(PrimitiveDocPage, { key: "button", doc: primitive("button") })],
+  ["Field", createElement(PrimitiveDocPage, { key: "field", doc: primitive("field") })],
+  ["Select", createElement(PrimitiveDocPage, { key: "select", doc: primitive("select") })],
+  ["Toast", createElement(PrimitiveDocPage, { key: "toast", doc: primitive("toast") })],
+  ["Dialog", createElement(PrimitiveDocPage, { key: "dialog", doc: primitive("dialog") })],
+  [
+    "DataTable",
+    createElement(PrimitiveDocPage, { key: "data-table", doc: primitive("data-table") }),
+  ],
+  [
+    "DatePicker",
+    createElement(PrimitiveDocPage, { key: "date-picker", doc: primitive("date-picker") }),
+  ],
+  ["ProductCard", createElement(BlockDocPage, { key: "product-card", doc: block("product-card") })],
+  [
+    "DetailDrawer",
+    createElement(BlockDocPage, { key: "detail-drawer", doc: block("detail-drawer") }),
+  ],
+  ["Componentes", createElement(ComponentsIndexPage, { key: "components" })],
+  ["Bloques", createElement(BlocksIndexPage, { key: "blocks" })],
+  ["Fundamentos", createElement(TokensIndexPage, { key: "tokens" })],
 ];
 
 describe("component page accessibility", () => {
-  for (const [name, Page] of pages) {
+  for (const [name, page] of pages) {
     it(`${name} has no serious/critical violations`, async () => {
       const { container } = render(
         <KotenProvider locale="es">
-          <MemoryRouter>
-            <Page />
-          </MemoryRouter>
+          <MemoryRouter>{page}</MemoryRouter>
         </KotenProvider>,
       );
 

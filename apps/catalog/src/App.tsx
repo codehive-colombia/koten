@@ -1,6 +1,6 @@
 import { KotenProvider } from "@koten/ui";
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { CatalogLayout } from "./components/catalog-layout";
 import { ScrollManager } from "./components/scroll-manager";
 import { useCatalogView } from "./lib/use-catalog-view";
@@ -40,57 +40,25 @@ const ComponentsIndexPage = lazy(() =>
     default: module.ComponentsIndexPage,
   })),
 );
-const ButtonPage = lazy(() =>
-  import("./pages/components/button").then((module) => ({ default: module.ButtonPage })),
-);
-const PanelPage = lazy(() =>
-  import("./pages/components/panel").then((module) => ({ default: module.PanelPage })),
-);
-const BadgePage = lazy(() =>
-  import("./pages/components/badge").then((module) => ({ default: module.BadgePage })),
-);
-const FormsPage = lazy(() =>
-  import("./pages/components/forms").then((module) => ({ default: module.FormsPage })),
-);
-const InputsPage = lazy(() =>
-  import("./pages/components/inputs").then((module) => ({ default: module.InputsPage })),
-);
-const SurfacesPage = lazy(() =>
-  import("./pages/components/surfaces").then((module) => ({ default: module.SurfacesPage })),
-);
-const FeedbackPage = lazy(() =>
-  import("./pages/components/feedback").then((module) => ({ default: module.FeedbackPage })),
-);
-const NavigationPage = lazy(() =>
-  import("./pages/components/navigation").then((module) => ({ default: module.NavigationPage })),
-);
-const OverlaysPage = lazy(() =>
-  import("./pages/components/overlays").then((module) => ({ default: module.OverlaysPage })),
-);
-const DataPage = lazy(() =>
-  import("./pages/components/data").then((module) => ({ default: module.DataPage })),
-);
-const CommandPalettePage = lazy(() =>
-  import("./pages/components/command").then((module) => ({
-    default: module.CommandPalettePage,
+const PrimitivePage = lazy(() =>
+  import("./pages/components/primitive").then((module) => ({
+    default: module.PrimitivePage,
   })),
 );
-const DatePickerPage = lazy(() =>
-  import("./pages/components/date").then((module) => ({ default: module.DatePickerPage })),
-);
-const ControlsPage = lazy(() =>
-  import("./pages/components/controls").then((module) => ({ default: module.ControlsPage })),
-);
-const PatternsIndexPage = lazy(() =>
-  import("./pages/patterns/index").then((module) => ({ default: module.PatternsIndexPage })),
-);
-const StorefrontPatternsPage = lazy(() =>
-  import("./pages/patterns/storefront").then((module) => ({
-    default: module.StorefrontPatternsPage,
+const BlocksIndexPage = lazy(() =>
+  import("./pages/blocks/index").then((module) => ({
+    default: module.BlocksIndexPage,
   })),
 );
-const ErpPatternsPage = lazy(() =>
-  import("./pages/patterns/erp").then((module) => ({ default: module.ErpPatternsPage })),
+const BlockCategoryPage = lazy(() =>
+  import("./pages/blocks/index").then((module) => ({
+    default: module.BlockCategoryPage,
+  })),
+);
+const BlockPage = lazy(() =>
+  import("./pages/blocks/block").then((module) => ({
+    default: module.BlockPage,
+  })),
 );
 const NotFoundPage = lazy(() =>
   import("./pages/not-found").then((module) => ({ default: module.NotFoundPage })),
@@ -121,23 +89,56 @@ export function App() {
             <Route path="/tokens/density" element={<TokensDensityPage />} />
             <Route path="/tokens/themes" element={<TokensThemesPage />} />
             <Route path="/tokens/format" element={<TokensFormatPage />} />
+
             <Route path="/components" element={<ComponentsIndexPage />} />
-            <Route path="/components/button" element={<ButtonPage />} />
-            <Route path="/components/panel" element={<PanelPage />} />
-            <Route path="/components/badge" element={<BadgePage />} />
-            <Route path="/components/forms" element={<FormsPage />} />
-            <Route path="/components/inputs" element={<InputsPage />} />
-            <Route path="/components/surfaces" element={<SurfacesPage />} />
-            <Route path="/components/feedback" element={<FeedbackPage />} />
-            <Route path="/components/navigation" element={<NavigationPage />} />
-            <Route path="/components/overlays" element={<OverlaysPage />} />
-            <Route path="/components/data" element={<DataPage />} />
-            <Route path="/components/controls" element={<ControlsPage />} />
-            <Route path="/components/date" element={<DatePickerPage />} />
-            <Route path="/components/command" element={<CommandPalettePage />} />
-            <Route path="/patterns" element={<PatternsIndexPage />} />
-            <Route path="/patterns/storefront" element={<StorefrontPatternsPage />} />
-            <Route path="/patterns/erp" element={<ErpPatternsPage />} />
+            {/* Old grouped pages keep their deep links alive. */}
+            <Route path="/components/forms" element={<Navigate to="/components/field" replace />} />
+            <Route
+              path="/components/inputs"
+              element={<Navigate to="/components/select" replace />}
+            />
+            <Route
+              path="/components/surfaces"
+              element={<Navigate to="/components/section-header" replace />}
+            />
+            <Route
+              path="/components/feedback"
+              element={<Navigate to="/components/alert" replace />}
+            />
+            <Route
+              path="/components/navigation"
+              element={<Navigate to="/components/link" replace />}
+            />
+            <Route
+              path="/components/overlays"
+              element={<Navigate to="/components/dialog" replace />}
+            />
+            <Route path="/components/data" element={<Navigate to="/components/table" replace />} />
+            <Route
+              path="/components/controls"
+              element={<Navigate to="/components/icon-button" replace />}
+            />
+            <Route
+              path="/components/date"
+              element={<Navigate to="/components/date-picker" replace />}
+            />
+            <Route
+              path="/components/command"
+              element={<Navigate to="/components/command-palette" replace />}
+            />
+            <Route path="/components/:slug" element={<PrimitivePage />} />
+
+            <Route path="/blocks" element={<BlocksIndexPage />} />
+            <Route path="/blocks/:category" element={<BlockCategoryPage />} />
+            <Route path="/blocks/:category/:slug" element={<BlockPage />} />
+
+            {/* Patterns became blocks (individual pages, grouped by category). */}
+            <Route path="/patterns" element={<Navigate to="/blocks" replace />} />
+            <Route
+              path="/patterns/storefront"
+              element={<Navigate to="/blocks/storefront" replace />}
+            />
+            <Route path="/patterns/erp" element={<Navigate to="/blocks/erp" replace />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
