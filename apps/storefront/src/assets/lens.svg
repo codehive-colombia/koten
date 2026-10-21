@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Objetivo HIKARI 35 mm f/2.8</title>
+  <rect width="800" height="600" fill="#EFE9DB"/>
+  <path d="M0 470 L800 470 L800 600 L0 600 Z" fill="#E4DCCB"/>
+  <rect x="300" y="190" width="200" height="260" rx="26" fill="#1C1A17"/>
+  <rect x="318" y="208" width="164" height="224" rx="18" fill="#24211D"/>
+  <circle cx="400" cy="320" r="76" fill="#0F0E0C" stroke="#5E574B" stroke-width="3"/>
+  <circle cx="400" cy="320" r="56" fill="#1E3A5F"/>
+  <circle cx="400" cy="320" r="34" fill="#0B1524"/>
+  <rect x="352" y="236" width="96" height="8" rx="4" fill="#5E574B"/>
+  <rect x="352" y="394" width="96" height="8" rx="4" fill="#5E574B"/>
+  <circle cx="474" cy="250" r="9" fill="#C23B22"/>
+</svg>

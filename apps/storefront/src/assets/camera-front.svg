@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>HIKARI K-1, vista frontal</title>
+  <rect width="800" height="600" fill="#EFE9DB"/>
+  <path d="M0 480 L800 480 L800 600 L0 600 Z" fill="#E4DCCB"/>
+  <rect x="170" y="190" width="460" height="250" rx="14" fill="#24211D"/>
+  <rect x="190" y="210" width="420" height="60" fill="#1C1A17"/>
+  <rect x="210" y="180" width="90" height="18" rx="4" fill="#5E574B"/>
+  <circle cx="400" cy="340" r="112" fill="#1C1A17" stroke="#5E574B" stroke-width="3"/>
+  <circle cx="400" cy="340" r="92" fill="#0F0E0C"/>
+  <circle cx="400" cy="340" r="70" fill="#1E3A5F"/>
+  <circle cx="400" cy="340" r="44" fill="#0B1524"/>
+  <circle cx="382" cy="320" r="16" fill="#F5F0E4" opacity="0.22"/>
+  <rect x="522" y="220" width="52" height="24" rx="3" fill="#5E574B"/>
+  <circle cx="586" cy="232" r="10" fill="#C23B22"/>
+  <rect x="196" y="398" width="62" height="10" rx="2" fill="#5E574B"/>
+  <rect x="536" y="392" width="66" height="20" rx="3" fill="#3A352E"/>
+  <rect x="240" y="446" width="320" height="8" rx="3" fill="#0F0E0C" opacity="0.5"/>
+</svg>

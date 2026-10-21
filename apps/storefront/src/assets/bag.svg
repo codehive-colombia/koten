@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>Bolsa HIKARI para cámara</title>
+  <rect width="800" height="600" fill="#EFE9DB"/>
+  <path d="M0 470 L800 470 L800 600 L0 600 Z" fill="#E4DCCB"/>
+  <path d="M230 260 Q230 210 280 210 L520 210 Q570 210 570 260 L570 390 Q570 430 530 430 L270 430 Q230 430 230 390 Z" fill="#5E574B"/>
+  <path d="M280 260 Q280 240 300 240 L500 240 Q520 240 520 260 L520 370 Q520 400 490 400 L310 400 Q280 400 280 370 Z" fill="#3A352E"/>
+  <rect x="330" y="270" width="140" height="90" rx="4" fill="#24211D"/>
+  <circle cx="400" cy="315" r="30" fill="#1C1A17" stroke="#948A75" stroke-width="2"/>
+  <circle cx="400" cy="315" r="16" fill="#1E3A5F"/>
+  <path d="M300 210 Q300 160 350 160 L450 160 Q500 160 500 210" fill="none" stroke="#5E574B" stroke-width="16"/>
+  <rect x="520" y="330" width="34" height="20" rx="3" fill="#C23B22"/>
+</svg>

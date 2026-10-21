@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <title>HIKARI K-1, vista superior</title>
+  <rect width="800" height="600" fill="#EFE9DB"/>
+  <path d="M0 470 L800 470 L800 600 L0 600 Z" fill="#E4DCCB"/>
+  <path d="M230 430 L330 180 L560 180 L610 430 Z" fill="#24211D"/>
+  <path d="M330 180 L560 180 L586 240 L316 240 Z" fill="#1C1A17"/>
+  <circle cx="448" cy="326" r="64" fill="#1C1A17" stroke="#5E574B" stroke-width="3"/>
+  <circle cx="448" cy="326" r="44" fill="#1E3A5F"/>
+  <rect x="366" y="260" width="34" height="14" rx="3" fill="#5E574B"/>
+  <circle cx="512" cy="292" r="11" fill="#C23B22"/>
+  <rect x="352" y="410" width="150" height="8" rx="3" fill="#0F0E0C" opacity="0.5"/>
+  <path d="M272 410 L306 250" stroke="#5E574B" stroke-width="2"/>
+</svg>
