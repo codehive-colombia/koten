@@ -27,7 +27,7 @@ export function StatCard({ label, value, delta, meta, sparkline, className }: St
       data-slot="stat-card"
       className={cn("border border-rule bg-surface p-[var(--koten-panel-p)]", className)}
     >
-      <p className="text-2xs font-semibold uppercase tracking-[0.12em] text-faint">{label}</p>
+      <p className="text-2xs font-semibold text-faint">{label}</p>
       <div className="mt-1 flex flex-wrap items-end justify-between gap-2">
         <p className="text-2xl font-semibold leading-none tabular-nums text-ink">{value}</p>
         {delta ? (

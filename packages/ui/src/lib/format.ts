@@ -23,6 +23,8 @@ export function formatCurrency(
   return new Intl.NumberFormat(toIntlLocale(locale), {
     style: "currency",
     currency,
+    currencyDisplay: "narrowSymbol",
+    useGrouping: true,
     ...intlOptions,
   }).format(value);
 }

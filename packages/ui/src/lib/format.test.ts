@@ -25,6 +25,11 @@ describe("formatCurrency", () => {
     expect(value).not.toContain(".");
   });
 
+  it("forces grouping in short amounts", () => {
+    expect(formatCurrency(6400, { locale: "es" })).toContain("6.400");
+    expect(formatCurrency(6400, { locale: "ja" })).toContain("6,400");
+  });
+
   it("formats EUR with two decimals", () => {
     const value = formatCurrency(12345.5, { locale: "es", currency: "EUR" });
 
