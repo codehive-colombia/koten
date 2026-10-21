@@ -1,11 +1,11 @@
 # Koten UI — Hoja de ruta
 
 > **Documento vivo y fuente de verdad del estado del proyecto.**
-> Última actualización: **2026-10-20**
-> Fase actual: **1 — Primitivas** (`done`)
-> Próxima fase: **2 — Storefront “HIKARI”**
-> Tarea en curso: **ninguna** — próxima `F2-001`
-> Última tarea completada: **`F1-010`**
+> Última actualización: **2026-10-21**
+> Fase actual: **3 — ERP “KURA”** (`done`)
+> Próxima fase: **4 — Cierre del POC**
+> Tarea en curso: **ninguna** — próxima `F4-001`
+> Última tarea completada: **`F3-009`**
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -108,20 +108,20 @@ ISO 8601: `YYYY-MM-DD`.
 
 ### Del POC
 
-- [ ] `bun install` y `bun run dev` levantan catálogo, storefront y ERP.
-- [ ] `bun run check` pasa: Biome + TypeScript + tests unitarios.
-- [ ] Storefront y ERP funcionan en **JA/ES/EN** sin clipping ni overflow horizontal.
-- [ ] Catálogo documenta todos los componentes usados, con variantes, código y notas de accesibilidad.
+- [x] `bun install` y `bun run dev` levantan catálogo, storefront y ERP.
+- [x] `bun run check` pasa: Biome + TypeScript + tests unitarios.
+- [x] Storefront y ERP funcionan en **JA/ES/EN** sin clipping ni overflow horizontal.
+- [x] Catálogo documenta todos los componentes usados, con variantes, código y notas de accesibilidad.
 - [ ] Sin violaciones `serious`/`critical` de axe en las rutas principales.
-- [ ] Presupuestos: LCP < 1.5 s local, CLS < 0.02, JS inicial < 150 KB gzip (storefront) y < 250 KB (ERP), CSS < 30 KB, **0 bytes de fuentes CJK**.
-- [ ] QA visual en 1440, 1280 y 1024 px.
-- [ ] Ningún texto crítico vive dentro de una imagen.
+- [x] Presupuestos: LCP < 1.5 s local, CLS < 0.02, JS inicial < 150 KB gzip (storefront) y < 250 KB (ERP), CSS < 30 KB, **0 bytes de fuentes CJK**.
+- [x] QA visual en 1440, 1280 y 1024 px.
+- [x] Ningún texto crítico vive dentro de una imagen.
 
 ### De la entrega
 
-- [ ] Una sesión nueva puede retomar leyendo `PROGRESS.md` + `ROADMAP.md` en menos de 5 minutos.
-- [ ] Cada tarea completada tiene evidencia (ruta, comando o commit).
-- [ ] Cada cambio de alcance tiene una decisión `D-*` o una pregunta `Q-*`.
+- [x] Una sesión nueva puede retomar leyendo `PROGRESS.md` + `ROADMAP.md` en menos de 5 minutos.
+- [x] Cada tarea completada tiene evidencia (ruta, comando o commit).
+- [x] Cada cambio de alcance tiene una decisión `D-*` o una pregunta `Q-*`.
 
 ---
 
@@ -184,18 +184,18 @@ ISO 8601: `YYYY-MM-DD`.
 
 ### Fase 2 — Storefront “HIKARI”
 
-**Estado:** `todo` · **Objetivo:** validar Chirashi en una página de producto realista, densa y multilenguaje.
+**Estado:** `done` · **Objetivo:** validar Chirashi en una página de producto realista, densa y multilenguaje.
 
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
-| `F2-001` | Definir contenido, datos mock y diccionarios JA/ES/EN. | `F1-010` | `todo` | Producto HIKARI K-1, precios, specs, reviews y avisos; ninguna string de UI hardcodeada. | — |
-| `F2-002` | Header: utility bar, logo, búsqueda, cuenta/carrito y nav de categorías. | `F1-010` | `todo` | Teclado; responsive; búsqueda con selector de categoría. | — |
-| `F2-003` | Hero de producto: galería, título, variantes, `PriceBlock`, stock, entrega y CTA. | `F2-001` | `todo` | Imágenes locales optimizadas; estados de compra; i18n. | — |
-| `F2-004` | Patrones de descubrimiento: `NoticeList`, `RankedList`, `CampaignBanner`, `ProductCard`. | `F2-001` | `todo` | Fechas reales; badges; densidad Chirashi; sin texto en imágenes. | — |
-| `F2-005` | Detalle: `SpecTable`, reviews, relacionados y footer denso. | `F2-001` | `todo` | Tablas semánticas; jerarquía; links legales. | — |
-| `F2-006` | Ensamblar la página, rutas y toggle de idioma. | `F2-002`–`F2-005` | `todo` | JA/ES/EN sin overflow; 1440/1280/1024; estados vacío/error. | — |
-| `F2-007` | QA storefront: axe, teclado, visual y performance. | `F2-006` | `todo` | Sin serious/critical; LCP y CLS dentro de presupuesto; capturas. | — |
-| `F2-008` | Documentar patrones del storefront en el catálogo. | `F2-006` | `todo` | Páginas de patrón con código y notas de uso. | — |
+| `F2-001` | Definir contenido, datos mock y diccionarios JA/ES/EN. | `F1-010` | `done` | Producto HIKARI K-1, precios, specs, reviews y avisos; ninguna string de UI hardcodeada. | `apps/storefront/src/content/{types,copy,product,merchandising,index}.ts`; 3 locales tipados; `content.test.ts`; `D-021`. |
+| `F2-002` | Header: utility bar, logo, búsqueda, cuenta/carrito y nav de categorías. | `F1-010` | `done` | Teclado; responsive; búsqueda con selector de categoría. | `patterns/{store-header,search-bar}.tsx`; `SearchBar` con select nativo + input search; demo en `/patterns/storefront`; tests de patrón. |
+| `F2-003` | Hero de producto: galería, título, variantes, `PriceBlock`, stock, entrega y CTA. | `F2-001` | `done` | Imágenes locales optimizadas; estados de compra; i18n. | `patterns/{product-gallery,price-block}.tsx`; `pages/product.tsx`; SVG locales con `width`/`height`; variantes, cantidad y toast de carrito. |
+| `F2-004` | Patrones de descubrimiento: `NoticeList`, `RankedList`, `CampaignBanner`, `ProductCard`. | `F2-001` | `done` | Fechas reales; badges; densidad Chirashi; sin texto en imágenes. | `patterns/{notice-list,ranked-list,campaign-banner,product-card}.tsx`; rail de la página HIKARI; fechas ISO formateadas con `Intl`. |
+| `F2-005` | Detalle: `SpecTable`, reviews, relacionados y footer denso. | `F2-001` | `done` | Tablas semánticas; jerarquía; links legales. | `patterns/{spec-table,review-summary,footer}.tsx`; tres tablas de specs, distribución de 128 reviews, 4 relacionados y footer de 4 columnas. |
+| `F2-006` | Ensamblar la página, rutas y toggle de idioma. | `F2-002`–`F2-005` | `done` | JA/ES/EN sin overflow; 1440/1280/1024; estados vacío/error. | `apps/storefront/src/App.tsx`, `pages/product.tsx`, `lib/use-storefront-locale.ts`; `?lang=`; layout 3 columnas en 1280 y 2 en 1024; QA 1440/1280/1024 y 390. |
+| `F2-007` | QA storefront: axe, teclado, visual y performance. | `F2-006` | `done` | Sin serious/critical; LCP y CLS dentro de presupuesto; capturas. | `App.test.tsx` (5 pruebas) + `content.test.ts` (4) + `a11y.test.tsx`; axe sin serious/critical; `bun run budget` → storefront 122,0 KB JS / 9,2 KB CSS / 0 fuentes; LCP 232–508 ms local y CLS 0; capturas 1440/1280/1024 y 390. |
+| `F2-008` | Documentar patrones del storefront en el catálogo. | `F2-006` | `done` | Páginas de patrón con código y notas de uso. | `apps/catalog/src/pages/patterns/{index,storefront}.tsx`; 11 patrones con demo, props, código y a11y; inventario `C-042`–`C-052`. |
 
 **Criterios de aceptación de la fase**
 
@@ -208,18 +208,19 @@ ISO 8601: `YYYY-MM-DD`.
 
 ### Fase 3 — ERP “KURA”
 
-**Estado:** `todo` · **Objetivo:** validar Daichō en un backoffice de distribución con tablas densas, filtros y detalle.
+**Estado:** `done` · **Objetivo:** validar Daichō en un backoffice de distribución con tablas densas, filtros y detalle.
 
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
-| `F3-001` | Datos mock KURA, tipos y formateadores. | `F1-010` | `todo` | 100+ pedidos deterministas; clientes, productos, estados y fechas. | — |
-| `F3-002` | Shell: `AppShell`, `SideNav`, `TopBar`, `PageHeader`, breadcrumb y skip link. | `F1-010` | `todo` | Navegación por teclado; colapso responsive; estado activo. | — |
-| `F3-003` | Dashboard: KPIs, pedidos recientes, avisos/tareas y bar chart. | `F3-001`, `F3-002` | `todo` | Charts con fallback accesible; densidad compacta; sin ruido visual. | — |
-| `F3-004` | Pedidos: `FilterBar`, `DataTable` con selección, sort y paginación, acciones masivas. | `F1-007`, `F3-001`, `F3-002` | `todo` | Estado en URL; `aria-live` para selección; vacío/loading. | — |
-| `F3-005` | `DetailDrawer` de pedido: cabecera, cliente, líneas, timeline y acciones. | `F1-006`, `F3-004` | `todo` | Foco gestionado; cierre con Escape; toast al actuar. | — |
-| `F3-006` | Formularios: `FormRow`, `FormSection`, validación y errores. | `F1-001`, `F1-002` | `todo` | Validación nativa/Base UI; errores vinculados; labels visibles. | — |
-| `F3-007` | Ensamblar dashboard + pedidos + toggle ES/JA. | `F3-003`–`F3-006` | `todo` | Sin overflow; 1440/1280/1024; estados de carga y vacío. | — |
-| `F3-008` | QA ERP: axe, teclado, visual y performance. | `F3-007` | `todo` | Sin serious/critical; presupuestos; capturas. | — |
+| `F3-001` | Datos mock KURA, tipos y formateadores. | `F1-010` | `done` | 100+ pedidos deterministas; clientes, productos, estados y fechas. | `apps/erp/src/data/{types,customers,products,orders,metrics,index}.ts`; 132 pedidos, 12 clientes, 16 productos; generador con semilla fija; `data.test.ts`; `D-021`. |
+| `F3-002` | Shell: `AppShell`, `SideNav`, `TopBar`, `PageHeader`, breadcrumb y skip link. | `F1-010` | `done` | Navegación por teclado; colapso responsive; estado activo. | `patterns/{app-shell,side-nav,top-bar,page-header}.tsx`; `apps/erp/src/App.tsx`; sidebar 232 px, menú móvil, `aria-current` y skip link. |
+| `F3-003` | Dashboard: KPIs, pedidos recientes, avisos/tareas y bar chart. | `F3-001`, `F3-002` | `done` | Charts con fallback accesible; densidad compacta; sin ruido visual. | `apps/erp/src/pages/dashboard.tsx`; 4 `StatCard` con sparkline, `BarChart` de 14 días con tabla sr-only, tabla de 8 columnas y panel de tareas. |
+| `F3-004` | Pedidos: `FilterBar`, `DataTable` con selección, sort y paginación, acciones masivas. | `F1-007`, `F3-001`, `F3-002` | `done` | Estado en URL; `aria-live` para selección; vacío/loading. | `apps/erp/src/pages/orders.tsx`; filtros `q/status/warehouse/range` en URL; sort, selección, 12/página, bulk preparar/enviar/exportar; `D-023`. |
+| `F3-005` | `DetailDrawer` de pedido: cabecera, cliente, líneas, timeline y acciones. | `F1-006`, `F3-004` | `done` | Foco gestionado; cierre con Escape; toast al actuar. | `patterns/{detail-drawer,timeline,status-badge}.tsx`; drawer por fila con cliente, entrega, líneas, nota e historial; foco devuelto al trigger; test de Escape. |
+| `F3-006` | Formularios: `FormRow`, `FormSection`, validación y errores. | `F1-001`, `F1-002` | `done` | Validación nativa/Base UI; errores vinculados; labels visibles. | `apps/erp/src/pages/order-form.tsx`; `FormSection` + `Field` + `Select` con `error`/`description`; resumen de errores con foco y toast al registrar. |
+| `F3-007` | Ensamblar dashboard + pedidos + toggle ES/JA. | `F3-003`–`F3-006` | `done` | Sin overflow; 1440/1280/1024; estados de carga y vacío. | `apps/erp/src/App.tsx`; rutas `/`, `/orders`, `/orders/new` y placeholders; ES/JA/EN (R-015); QA 1440/1280/1024. |
+| `F3-008` | QA ERP: axe, teclado, visual y performance. | `F3-007` | `done` | Sin serious/critical; presupuestos; capturas. | `App.test.tsx` (7 pruebas) + `a11y.test.tsx` (3 rutas); axe sin serious/critical; `bun run budget` → ERP 196,2 KB JS / 9,2 KB CSS / 0 fuentes; LCP 124–208 ms local y CLS 0; capturas dashboard, pedidos, drawer y formulario a 1440/1280/1024. |
+| `F3-009` | Corregir bloqueo de `Select` y paginación en las demos. | `F3-008` | `done` | Abrir un select no bloquea la página; la paginación avanza y conserva el estado; sin avisos de interacción. | `select.tsx` y `menu.tsx` (`modal={false}`), `Select` con `alignItemWithTrigger={false}`; `data-table.tsx` conserva la identidad de `data`; tests de scroll y re-render; `D-024`; stress en navegador 5 páginas + 5 selects. |
 
 **Criterios de aceptación de la fase**
 
@@ -316,31 +317,31 @@ ISO 8601: `YYYY-MM-DD`.
 
 | ID | Componente | Fase | Estado | Notas |
 | --- | --- | --- | --- | --- |
-| `C-042` | SearchBar | 2 | `todo` | Selector de categoría + input + botón. |
-| `C-043` | NoticeList | 2 | `todo` | Fechas; tags; “ver más”. |
-| `C-044` | RankedList | 2 | `todo` | Ranking; precio; imagen. |
-| `C-045` | ProductCard | 2 | `todo` | Imagen/precio/badges. |
-| `C-046` | PriceBlock | 2 | `todo` | Impuestos/puntos/stock. |
-| `C-047` | SpecTable | 2 | `todo` | Tabla de definiciones agrupada. |
-| `C-048` | CampaignBanner | 2 | `todo` | Strip/card/hero; texto real. |
-| `C-049` | StoreHeader | 2 | `todo` | Utility/head/nav. |
-| `C-050` | Footer | 2 | `todo` | Columnas densas; legal. |
-| `C-051` | ProductGallery | 2 | `todo` | Thumbs; zoom opcional. |
-| `C-052` | ReviewSummary | 2 | `todo` | Rating; distribución. |
+| `C-042` | SearchBar | 2 | `done` | Select de categoría + input search + botón; `role=search` en `<search>`. |
+| `C-043` | NoticeList | 2 | `done` | Fechas con `dateTime`; tags; “ver más”. |
+| `C-044` | RankedList | 2 | `done` | Ranking; precio; imagen 40 px. |
+| `C-045` | ProductCard | 2 | `done` | Imagen/precio/badges; enlace con nombre accesible. |
+| `C-046` | PriceBlock | 2 | `done` | Impuestos/puntos/stock/precio anterior. |
+| `C-047` | SpecTable | 2 | `done` | Tabla semántica agrupada con `scope=row`. |
+| `C-048` | CampaignBanner | 2 | `done` | Strip/card/hero; texto real. |
+| `C-049` | StoreHeader | 2 | `done` | Utility/head/nav; Hanko y slots. |
+| `C-050` | Footer | 2 | `done` | Columnas densas sobre sumi; legal. |
+| `C-051` | ProductGallery | 2 | `done` | Miniaturas con `aria-pressed`; imagen principal con alt. |
+| `C-052` | ReviewSummary | 2 | `done` | Rating; distribución; reseñas verificadas. |
 
 ### Patrones de ERP
 
 | ID | Componente | Fase | Estado | Notas |
 | --- | --- | --- | --- | --- |
-| `C-053` | AppShell | 3 | `todo` | Sidebar/topbar/content; skip link. |
-| `C-054` | SideNav | 3 | `todo` | Grupos; activo; colapso. |
-| `C-055` | TopBar | 3 | `todo` | Búsqueda/acciones/usuario. |
-| `C-056` | PageHeader | 3 | `todo` | Breadcrumb/título/acciones. |
-| `C-057` | FilterBar | 3 | `todo` | Campos; aplicar/limpiar; URL state. |
-| `C-058` | DetailDrawer | 3 | `todo` | Secciones/timeline/acciones. |
-| `C-059` | StatusBadge | 3 | `todo` | Mapa de estados; punto + texto. |
-| `C-060` | FormSection | 3 | `todo` | Fieldset/legend; grid. |
-| `C-061` | Timeline | 3 | `todo` | Eventos de pedido. |
+| `C-053` | AppShell | 3 | `done` | Sidebar/topbar/content; skip link; 232 px. |
+| `C-054` | SideNav | 3 | `done` | Grupos; activo; conteo; colapso móvil. |
+| `C-055` | TopBar | 3 | `done` | Búsqueda/acciones/usuario; sticky. |
+| `C-056` | PageHeader | 3 | `done` | Breadcrumb/título/descripción/acciones. |
+| `C-057` | FilterBar | 3 | `done` | Campos; aplicar/limpiar; resultado. |
+| `C-058` | DetailDrawer | 3 | `done` | Secciones/timeline/acciones; foco devuelto. |
+| `C-059` | StatusBadge | 3 | `done` | Mapa de estados; punto + texto. |
+| `C-060` | FormSection | 3 | `done` | Fieldset/legend; grid 1/2 columnas. |
+| `C-061` | Timeline | 3 | `done` | Eventos de pedido con tono y fecha. |
 
 ---
 
@@ -348,21 +349,21 @@ ISO 8601: `YYYY-MM-DD`.
 
 | ID | Requisito | Tareas | Estado |
 | --- | --- | --- | --- |
-| `R-001` | Set de componentes estilo shadcn, copiable, con variantes y buen uso de Tailwind. | `F0-003`, `F0-004`, `F0-007`, `F1-001`–`F1-010` | `todo` |
-| `R-002` | Estética del web japonés clásico: densidad, marcos, reglas, color semántico. | `D-002`, `F0-004`, `F1-003`, `F2-*`, `F3-*` | `todo` |
-| `R-003` | Dos modos: Chirashi (storefront) y Daichō (ERP). | `F0-004`, `F0-006`, `F0-011`, `F2-*`, `F3-*` | `todo` |
-| `R-004` | Funciona en cualquier idioma; el japonés es parte de la esencia. | `F0-005`, `F0-010`, `F2-001`, `F3-001`, `F4-001` | `todo` |
-| `R-005` | Desktop-first y optimizado para navegadores. | `F0-002`, `F0-003`, `F4-003`, `F4-004` | `todo` |
-| `R-006` | POC 1: frontpage de producto. | `F2-001`–`F2-008` | `todo` |
-| `R-007` | POC 2: backoffice estilo ERP. | `F3-001`–`F3-008` | `todo` |
-| `R-008` | Bun, Biome, React, TypeScript y estándares modernos. | `F0-001`, `F0-002` | `todo` |
-| `R-009` | Base UI + Tailwind v4. | `D-003`, `D-004`, `F0-003` | `todo` |
-| `R-010` | Catálogo y documentación viva. | `F0-006`, `F0-012`, `F1-009`, `F4-005` | `todo` |
+| `R-001` | Set de componentes estilo shadcn, copiable, con variantes y buen uso de Tailwind. | `F0-003`, `F0-004`, `F0-007`, `F1-001`–`F1-010` | `done` |
+| `R-002` | Estética del web japonés clásico: densidad, marcos, reglas, color semántico. | `D-002`, `F0-004`, `F1-003`, `F2-*`, `F3-*` | `done` |
+| `R-003` | Dos modos: Chirashi (storefront) y Daichō (ERP). | `F0-004`, `F0-006`, `F0-011`, `F2-*`, `F3-*` | `done` |
+| `R-004` | Funciona en cualquier idioma; el japonés es parte de la esencia. | `F0-005`, `F0-010`, `F2-001`, `F3-001`, `F4-001` | `done` |
+| `R-005` | Desktop-first y optimizado para navegadores. | `F0-002`, `F0-003`, `F4-003`, `F4-004` | `done` |
+| `R-006` | POC 1: frontpage de producto. | `F2-001`–`F2-008` | `done` |
+| `R-007` | POC 2: backoffice estilo ERP. | `F3-001`–`F3-008` | `done` |
+| `R-008` | Bun, Biome, React, TypeScript y estándares modernos. | `F0-001`, `F0-002` | `done` |
+| `R-009` | Base UI + Tailwind v4. | `D-003`, `D-004`, `F0-003` | `done` |
+| `R-010` | Catálogo y documentación viva. | `F0-006`, `F0-012`, `F1-009`, `F4-005` | `done` |
 | `R-011` | Accesibilidad AA. | `F1-010`, `F4-002` | `todo` |
 | `R-012` | Presupuestos de performance. | `F4-003` | `todo` |
-| `R-013` | Estrategia de fuentes CJK sin archivos completos. | `D-006`, `F0-004`, `F4-003` | `todo` |
-| `R-014` | Texto real, nunca texto en imágenes. | `D-010`, `F2-003`, `F2-004`, `F4-002` | `todo` |
-| `R-015` | Demos en JA/ES/EN. | `F2-001`, `F2-006`, `F3-001`, `F3-007`, `F4-001` | `todo` |
+| `R-013` | Estrategia de fuentes CJK sin archivos completos. | `D-006`, `F0-004`, `F4-003` | `done` |
+| `R-014` | Texto real, nunca texto en imágenes. | `D-010`, `F2-003`, `F2-004`, `F4-002` | `done` |
+| `R-015` | Demos en JA/ES/EN. | `F2-001`, `F2-006`, `F3-001`, `F3-007`, `F4-001` | `done` |
 | `R-016` | Referencias y análisis documentados. | `F0-000`, `docs/REQUIREMENTS.md`, `docs/DESIGN-SYSTEM.md` | `done` |
 | `R-017` | Sin clichés decorativos ni “cargo cult” japonés. | `D-002`, `docs/DESIGN-SYSTEM.md` | `done` |
 | `R-018` | Registry shadcn opcional. | `F5-001` | `todo` |
@@ -387,6 +388,9 @@ ISO 8601: `YYYY-MM-DD`.
 | `RISK-010` | Assets sin licencia clara. | Bajo | Assets locales, licencias documentadas, sin hotlinking. |
 | `RISK-011` | Copiar el clutter de las referencias sin criterio. | Alto | Principios y Do/Don’t; texto real; jerarquía; 12 px mínimo. |
 | `RISK-012` | Tokens de texto o de borde por debajo del contraste AA. | Medio | Test automático de contraste en `tokens.css`; faint/rule-strong/kin ajustados; revisión en `F1-010` y `F4-002`. |
+| `RISK-013` | Los datos mock de las demos divergen del futuro backend. | Medio | Tipos compartidos por app, generador determinista y adaptadores únicos; reemplazar módulos de datos sin tocar componentes. |
+| `RISK-014` | Las ilustraciones SVG no representan el producto final. | Bajo | Assets locales propios y reemplazables; `D-022`; sustituir por fotografía antes de producción sin cambiar la API de los patrones. |
+| `RISK-015` | Un overlay modal o una lista de datos inestable bloquea la interacción de la página. | Alto | `Select` no modal por defecto, dropdown estándar y `DataTable` con identidad estable; tests de regresión y `D-024`; stress en navegador antes de cerrar. |
 
 ---
 
@@ -396,7 +400,7 @@ ISO 8601: `YYYY-MM-DD`.
 | --- | --- | --- | --- |
 | `Q-001` | ¿Modo oscuro Sumi dentro de la v1? | `open` (propuesta: no) | `F5-002` |
 | `Q-002` | ¿Registry/CLI dentro de la v1? | `open` (propuesta: no) | `F5-001` |
-| `Q-003` | ¿Producto y assets finales del storefront? | `open` (propuesta: HIKARI K-1) | `F2-001` |
+| `Q-003` | ¿Producto y assets finales del storefront? | `decided` — `D-021`, `D-022` | `F2-001` |
 | `Q-004` | ¿Destino de deploy del POC? | `open` | `F4-006` |
 | `Q-005` | ¿Licencia del repo? | `open` (propuesta: MIT) | `F0-001` |
 | `Q-006` | ¿Matriz exacta de navegadores? | `open` (propuesta: últimas 2 versiones) | `F0-002` |
@@ -441,3 +445,6 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Controles: `IconButton`, `ToggleGroup` y `Toolbar` con página `/components/controls`. `F1-008` → `done`; `C-004`, `C-036` y `C-041` → `done`. | Sesión 012 |
 | 2026-10-21 | Catálogo completo de primitivas: inventario C-001–C-041 + C-062, enlaces, copiar código y trazabilidad. `F1-009` → `done`. | Sesión 013 |
 | 2026-10-21 | A11y/performance: axe en 11 páginas, `bun run budget` con presupuestos de JS/CSS/fuentes, foco visible y QA visual. `F1-010` → `done`; **fase 1 → `done`**. Próxima: `F2-001`. | Sesión 014 |
+| 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
+| 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
+| 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |

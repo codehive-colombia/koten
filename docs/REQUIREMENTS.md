@@ -2,7 +2,7 @@
 
 > Documento de alcance. Define **qué** se construye y **por qué**.
 > El estado de ejecución vive en [ROADMAP.md](../ROADMAP.md); las decisiones en [DECISIONS.md](./DECISIONS.md).
-> Última actualización: 2026-10-20.
+> Última actualización: 2026-10-21.
 
 ## 1. Encargo original
 
@@ -303,5 +303,6 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 - El POC es una SPA de Vite; si el storefront va a producción, se evalúa SSG/SSR en `F5-006`.
 - El catálogo es interno; no necesita SEO.
 - Los datos son ficticios y deterministas.
+- Los assets del POC son SVG locales propios (`D-022`); se reemplazan por fotografía antes de producción.
 - Las URLs de referencias marcadas con “—” deben verificarse antes de publicar documentación externa.
 - La estética se evalúa por principios, no por motivos decorativos.

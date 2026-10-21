@@ -8,12 +8,12 @@
 
 | Campo | Valor |
 | --- | --- |
-| Fecha | 2026-10-20 |
-| Fase | 1 — Primitivas (`done`) · próxima fase 2 |
-| Última tarea completada | `F1-010` — a11y y performance |
-| Tarea en curso | ninguna — próxima `F2-001` |
+| Fecha | 2026-10-21 |
+| Fase | 3 — ERP “KURA” (`done`) · próxima fase 4 |
+| Última tarea completada | `F3-009` — fix de interacción |
+| Tarea en curso | ninguna — próxima `F4-001` |
 | Bloqueos | ninguno |
-| Decisiones abiertas | `Q-001` a `Q-010`; `Q-007` cerrada por `D-018` |
+| Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`–`Q-010`; `Q-003` cerrada por `D-021`/`D-022` |
 
 ## Cómo registrar una sesión
 
@@ -38,6 +38,60 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 017 — Select modal y paginación
+
+- **Objetivo:** investigar el bloqueo de la página al abrir un `Select` o usar la paginación, y el aviso de `flushSync` en consola.
+- **Hecho:**
+  - **Causa 1 — `Select` modal por defecto.** Base UI 1.9 marca `Select` como modal: bloquea el scroll del documento y las interacciones fuera del popup. El modo `alignItemWithTrigger` añade mediciones de viewport y era el camino que producía el aviso de `flushSync`. Ahora `Select` usa `modal={false}` por defecto y `alignItemWithTrigger={false}`; el popup queda debajo del trigger y la página sigue interactiva. `Menu` también usa `modal={false}`. El modo modal se puede activar con `modal`.
+  - **Causa 2 — identidad de `data` en `DataTable`.** `data-table.tsx` pasaba `[...data]` a TanStack en cada render; el nuevo array se interpretaba como un cambio de datos y reiniciaba la página, así que “Siguiente” no avanzaba. Ahora se pasa la misma referencia. En navegador se validaron 5 páginas consecutivas y 5 ciclos de apertura/cierre de selects sin bloqueo ni avisos.
+  - Tests de regresión: scroll no bloqueado al abrir `Select`; página conservada tras un re-render del padre en `DataTable`.
+- **Tareas tocadas:** `F3-009` → `done`.
+- **Decisiones:** `D-024` (Select no modal y paginación con identidad estable); `RISK-015`.
+- **Evidencia:** `packages/ui/src/components/ui/{select,menu,data-table}.tsx`, `advanced-inputs.test.tsx`, `data-displays.test.tsx`, `overlays.test.tsx`; `bun run check` verde (**28 archivos / 157 tests**); prueba CDP: paginación 1→6 y 5 selects consecutivos sin `overflow: hidden` ni warnings; captura `select-nonmodal.png`.
+- **Sin validar:** interacción real en Firefox y Safari; el stress se hizo en Chromium. Si el aviso reaparece, revisar el camino de focus guards de Base UI en esos navegadores.
+- **Próximo:** fase 4 — `F4-001` auditoría i18n.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-21 · Sesión 016 — ERP KURA y cierre de fase 3
+
+- **Objetivo:** completar la fase 3 con datos deterministas, shell, dashboard, pedidos, drawer y formulario.
+- **Hecho:**
+  - Datos KURA deterministas: **132 pedidos**, 12 clientes y 16 productos con semillas fijas, fechas ancladas a 2026-10-21, líneas, totales, tracking y timelines.
+  - Shell `AppShell` + `SideNav` (232 px, activo, conteo, menú móvil) + `TopBar` (búsqueda global, notificaciones, idioma, cuenta) + `PageHeader`.
+  - Dashboard con 4 KPIs y sparklines, `BarChart` de 14 días con tabla de respaldo, pedidos recientes de 8 columnas y panel de tareas.
+  - Pedidos con `FilterBar` (`q`, `status`, `warehouse`, `range` en URL), `DataTable` con sort/selección/paginación, acciones masivas y exportación CSV; el conteo se anuncia con `aria-live`.
+  - `DetailDrawer` por fila con cliente, entrega, líneas, nota e historial; Escape cierra y el foco vuelve al trigger (probado).
+  - Formulario `/orders/new` con `FormSection`, `Field`, `Select` con error/description, resumen de errores enfocable y toast al registrar.
+  - Rutas `/`, `/orders`, `/orders/new` y placeholders para módulos fuera del POC; interfaz ES/JA/EN y `?lang=`.
+- **Tareas tocadas:** `F3-001`–`F3-008` → `done`; `C-053`–`C-061` → `done`.
+- **Decisiones:** `D-023` (rutas y estado en URL de las demos).
+- **Evidencia:** `apps/erp/src/{App.tsx,data/**,pages/**,lib/use-erp-locale.ts}`, `packages/ui/src/components/patterns/{app-shell,side-nav,top-bar,page-header,filter-bar,detail-drawer,status-badge,form-section,timeline}.tsx`; `bun run check` verde (**28 archivos / 154 tests**); `bun run budget` → ERP 196,2 KB JS / 9,2 KB CSS / 0 fuentes; LCP 124–208 ms local y CLS 0; axe en dashboard, pedidos y formulario; capturas 1440/1280/1024 de dashboard, pedidos, drawer y formulario.
+- **Sin validar:** lector de pantalla real y contraste calculado en navegador (quedan en `F4-002`).
+- **Próximo:** fase 4 — `F4-001` auditoría i18n.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-21 · Sesión 015 — Storefront HIKARI y cierre de fase 2
+
+- **Objetivo:** completar la fase 2 con contenido real JA/ES/EN, once patrones y la página de producto HIKARI K-1.
+- **Hecho:**
+  - Contenido tipado y localizado: producto, variantes, kits, specs, avisos, ranking, campaña, reseñas, relacionados, footer y diccionarios de UI completos en JA/ES/EN.
+  - Patrones `C-042`–`C-052`: `SearchBar`, `StoreHeader`, `ProductGallery`, `PriceBlock`, `ProductCard`, `NoticeList`, `RankedList`, `CampaignBanner`, `SpecTable`, `ReviewSummary` y `Footer`.
+  - Página HIKARI con layout 180 + main + 300 en desktop, 2 columnas en 1024, una columna en mobile; utility bar, búsqueda con categoría, breadcrumb, buy box, variantes, cantidad, CTA con toast, avisos, ranking, campaña, descripción, specs, reviews y relacionados.
+  - Selector JA/ES/EN persistido en `?lang=`; fechas y moneda con `Intl`; assets SVG locales con `width`/`height`, `alt` localizado y sin texto en imágenes.
+  - Documentación de los patrones en el catálogo: `/patterns`, `/patterns/storefront` y `/patterns/erp`; inventario y notas de a11y.
+- **Tareas tocadas:** `F2-001`–`F2-008` → `done`; `C-042`–`C-052` → `done`; `Q-003` cerrada.
+- **Decisiones:** `D-021` (contenido y datos mock deterministas) y `D-022` (assets SVG locales).
+- **Evidencia:** `apps/storefront/src/{App.tsx,content/**,pages/product.tsx,lib/use-storefront-locale.ts,assets/**}`, `packages/ui/src/components/patterns/**`, `apps/catalog/src/pages/patterns/**`; `bun run check` verde (**28 archivos / 154 tests**); `bun run budget` → storefront 122,0 KB JS / 9,2 KB CSS / 0 fuentes; LCP 232–508 ms local y CLS 0; axe sin serious/critical; capturas 1440/1280/1024 y 390.
+- **Sin validar:** lector de pantalla real y contraste calculado en navegador (quedan en `F4-002`).
+- **Próximo:** `F3-001` — datos mock KURA.
+- **Bloqueos:** ninguno.
 
 ---
 

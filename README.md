@@ -2,8 +2,8 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0 y 1 cerradas. 42 primitivas documentadas, auditadas con axe y con presupuestos de bundle.
-> **Tarea en curso:** ninguna — próxima `F2-001` (contenido y datos del storefront).
+> **Estado:** fases 0–3 cerradas. 42 primitivas y 20 patrones documentados; storefront HIKARI y ERP KURA navegables en JA/ES/EN, auditados con axe y con presupuestos de bundle.
+> **Tarea en curso:** ninguna — próxima `F4-001` (auditoría i18n).
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación
@@ -47,7 +47,7 @@ bun run budget   # JS/CSS gzip y 0 fuentes locales
 
 ## Estructura
 
-La fase 0 dejó tokens, un catálogo wiki multipágina, el selector ES/JA/EN y la primera validación (`Button`, `Panel`, `Badge`). La fase 1 suma formularios base; `components/patterns` se agrega en las fases 2 y 3.
+La fase 0 dejó tokens, el catálogo wiki multipágina y el selector ES/JA/EN. La fase 1 sumó 42 primitivas. Las fases 2 y 3 añadieron 20 patrones en `components/patterns`, la página HIKARI K-1 y el backoffice KURA con datos deterministas.
 
 ```txt
 apps/

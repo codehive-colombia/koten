@@ -187,13 +187,13 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-Las fases 0 y 1 están cerradas: workspace, catálogo wiki, tokens/temas/densidad y las 42 primitivas documentadas y auditadas. La próxima es la fase 2 (storefront HIKARI). **No repitas `git init`, el workspace ni `bun install`.** El repo sigue sin commit inicial; que `git status` muestre archivos sin versionar es esperado.
+Las fases 0 a 3 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, las 42 primitivas, los 20 patrones de storefront y ERP, y los dos demos navegables. La próxima es la fase 4 (cierre del POC). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
-2. Empezar la fase 2 con `F2-001`: contenido, datos mock y diccionarios JA/ES/EN del storefront.
-3. Seguir el patrón de `Button`/`Panel`/`Badge` y de los formularios: CVA, roles semánticos, `data-slot`, tests y página propia en el catálogo.
+2. Empezar la fase 4 con `F4-001`: auditoría i18n de las demos y del catálogo.
+3. Seguir el patrón de `Button`/`Panel`/`Badge`, de los formularios y de `packages/ui/src/components/patterns`: CVA, roles semánticos, `data-slot`, tests y página propia en el catálogo.
 4. Mantener la documentación en español (`D-020`) y la UI del catálogo en ES/JA/EN; no traducir el cuerpo de los docs sin una decisión nueva.
-5. No saltar a fases 2/3 sin cerrar la fase 1; registrar cualquier cambio de alcance con `D-*`.
+5. No saltar a fase 5 sin cerrar la fase 4; registrar cualquier cambio de alcance con `D-*`.
 
 Versiones resueltas en el scaffold: Bun 1.4.3, React 19.3.1, Vite 8.3.4, TypeScript 7.0.2, Tailwind 4.3.3, Base UI 1.9.0, Biome 2.5.15, Vitest 5.0.5.
 

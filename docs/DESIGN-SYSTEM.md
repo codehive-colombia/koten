@@ -2,7 +2,7 @@
 
 > **Tesis:** sencillez de medios, densidad de información.
 > La identidad no viene de adornos japoneses, sino de la gramática: marcos, reglas, tipografía, color semántico y ritmo.
-> Última actualización: 2026-10-20.
+> Última actualización: 2026-10-21.
 
 ## 1. Los tres registros
 
@@ -444,6 +444,7 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - TanStack Table solo en ERP.
 - Code splitting por ruta.
 - Imágenes AVIF/WebP locales, `width`/`height`, lazy bajo el fold.
+- El POC usa SVG locales para el producto (`D-022`); son reemplazables por fotografía sin cambiar la API de los patrones.
 - `content-visibility: auto` solo si no rompe anclas; medir antes.
 - Presupuestos: LCP < 1.5 s local, CLS < 0.02, JS < 150/250 KB gzip, CSS < 30 KB.
 
