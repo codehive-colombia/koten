@@ -253,7 +253,7 @@ export function OrdersPage({ copy, locale }: { copy: ErpCopy; locale: KotenLocal
       {
         id: "id",
         header: copy.orders.table.id,
-        cell: (order) => <span className="font-mono text-2xs">{order.id}</span>,
+        cell: (order) => <span className="whitespace-nowrap font-mono text-2xs">{order.id}</span>,
         sortValue: (order) => order.id,
         sortable: true,
       },

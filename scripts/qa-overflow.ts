@@ -55,7 +55,7 @@ const pages: readonly Page[] = [
   { app: "erp", label: "nuevo pedido", path: "/orders/new" },
 ];
 
-const widths = [1440, 1024, 390] as const;
+const widths = [1440, 1280, 1024, 390] as const;
 
 const measure = `(() => {
   const doc = document.documentElement;

@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 4 — Cierre del POC (`in_progress`) |
-| Última tarea completada | `F4-003` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F4-004` |
+| Última tarea completada | `F4-004` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F4-005` |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-001`, `Q-002`, `Q-004`–`Q-006`, `Q-008`, `Q-009`; `Q-003` cerrada por `D-021`/`D-022` y `Q-010` por `D-026` |
 
@@ -38,6 +38,23 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 022 — QA visual y capturas
+
+- **Objetivo:** cerrar `F4-004` con evidencia visual en 1440, 1280 y 1024, y corregir diferencias de layout.
+- **Hecho:**
+  - **Script nuevo** (`scripts/qa-visual.ts`): sirve el build con `vite preview`, captura 7 páginas (catálogo portada/formularios/patrones, storefront producto, ERP dashboard/pedidos/formulario) en 3 anchos y escribe `docs/qa/2026-10-21/index.md` con la matriz. Total: **21 capturas**.
+  - **Revisión:** se revisaron storefront 1440/1024, ERP pedidos 1280/1024 y formulario 1024, catálogo portada 1440 y patrones 1280. Jerarquía, densidad, marcos y rails se mantienen; sin clipping.
+  - **Corrección:** los IDs de pedido se partían en dos líneas a 1024; ahora la celda usa `whitespace-nowrap` en pedidos y dashboard.
+  - `qa-overflow` suma 1280 a su matriz: **96 combinaciones** (8 rutas × 3 idiomas × 4 anchos) sin desbordamiento ni recorte, LTR y RTL.
+- **Tareas tocadas:** `F4-004` → `done`.
+- **Decisiones:** ninguna.
+- **Evidencia:** `scripts/qa-visual.ts`, `docs/qa/2026-10-21/**`, `apps/erp/src/pages/{orders,dashboard}.tsx`; `bun run qa:visual` → 21 capturas; `bun run qa:overflow` → 96 combinaciones OK.
+- **Sin validar:** revisión pixel-perfect entre sistemas operativos (`RISK-008`); la fecha nativa del formulario la renderiza el navegador (`mm/dd/yyyy` en Chromium es-ES).
+- **Próximo:** `F4-005` — documentación final (README, catálogo, principios, tokens y recetas).
+- **Bloqueos:** ninguno.
 
 ---
 

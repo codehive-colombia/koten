@@ -199,7 +199,7 @@ export function DashboardPage({ copy, locale }: { copy: ErpCopy; locale: KotenLo
 
                 return (
                   <TableRow key={order.id}>
-                    <TableCell className="font-mono text-2xs">
+                    <TableCell className="whitespace-nowrap font-mono text-2xs">
                       <Link
                         to={`/orders?q=${encodeURIComponent(order.id)}`}
                         className="text-link underline-offset-2 hover:underline"

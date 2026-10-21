@@ -18,6 +18,7 @@
     "qa:a11y": "bun scripts/qa-a11y.ts",
     "qa:overflow": "bun scripts/qa-overflow.ts",
     "qa:perf": "bun scripts/qa-perf.ts",
+    "qa:visual": "bun scripts/qa-visual.ts",
     "ci": "bun run check && bun run build && bun run budget",
     "budget": "bun scripts/check-budgets.ts",
     "format": "biome format --write .",

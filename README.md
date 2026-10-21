@@ -47,6 +47,7 @@ bun run check:i18n  # strings hardcodeadas y utilidades físicas
 bun run qa:overflow # desbordamiento/recorte/RTL en 1440, 1024 y 390 (requiere dev + Chromium)
 bun run qa:a11y     # axe, 12 px mínimo y foco visible en navegador (requiere dev + Chromium)
 bun run qa:perf     # LCP/CLS sobre el build (requiere Chromium; hace su propio preview)
+bun run qa:visual   # capturas 1440/1280/1024 en docs/qa/<fecha>
 ```
 
 ## Estructura
