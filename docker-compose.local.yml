@@ -1,0 +1,13 @@
+# Local override: publish the three ports on the host for manual checks.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+#
+# Do not use this file on the server: Traefik reaches the container over the
+# Docker network and publishing these ports only risks collisions.
+
+services:
+  web:
+    ports:
+      - "${KOTEN_DOCS_PORT:-3000}:3000"
+      - "${KOTEN_STOREFRONT_PORT:-3001}:3001"
+      - "${KOTEN_ERP_PORT:-3002}:3002"

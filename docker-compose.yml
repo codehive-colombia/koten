@@ -9,10 +9,13 @@ services:
       args:
         VITE_SITE_URL: ${KOTEN_SITE_URL:-https://koten.codehive.com.co}
     restart: unless-stopped
-    ports:
-      - "${KOTEN_DOCS_PORT:-3000}:3000"
-      - "${KOTEN_STOREFRONT_PORT:-3001}:3001"
-      - "${KOTEN_ERP_PORT:-3002}:3002"
+    # Traefik reaches the container over the Docker network, so nothing is
+    # published on the host. Publishing 3000/3001/3002 would only collide with
+    # other services on the server. For local checks use docker-compose.local.yml.
+    expose:
+      - "3000"
+      - "3001"
+      - "3002"
     labels:
       traefik.enable: "true"
 

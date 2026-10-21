@@ -63,17 +63,19 @@ Sitio: **<https://koten.codehive.com.co>**
 | `/demos/store` | storefront HIKARI | 3001 |
 | `/demos/erp` | ERP KURA | 3002 |
 
-Una sola imagen multi-stage: Bun instala y construye las tres apps; nginx sin privilegios las sirve en los tres puertos. Traefik conserva el prefijo de cada demo, así que los assets viven bajo `/demos/store/` y `/demos/erp/` y no chocan con los del catálogo.
+Una sola imagen multi-stage: Bun instala y construye las tres apps; nginx sin privilegios las sirve en tres puertos **internos** del contenedor. Traefik conserva el prefijo de cada demo, así que los assets viven bajo `/demos/store/` y `/demos/erp/` y no chocan con los del catálogo.
+
+Los puertos no se publican en el host: Traefik alcanza el contenedor por la red de Docker y evita chocar con otros servicios del servidor.
 
 ```bash
-# construcción y arranque local
-docker compose up --build -d
-
-# imagen publicada por GitHub Actions (GHCR)
+# servidor (o el PaaS): sin puertos publicados
 KOTEN_IMAGE=ghcr.io/<owner>/<repo>:latest docker compose up -d
+
+# local: publica 3000/3001/3002 solo para probar
+docker compose -f docker-compose.yml -f docker-compose.local.yml up --build -d
 ```
 
-Variables principales en `.env` (ver `.env.example`): `KOTEN_IMAGE`, `KOTEN_SITE_URL`, `KOTEN_HOST`, los tres puertos de host y el entrypoint/certresolver de Traefik. `docker-compose.yml` incluye las reglas de Traefik para el dominio y las tres rutas; los enlaces públicos del catálogo y el registry se generan con `KOTEN_SITE_URL` (por defecto `https://koten.codehive.com.co`).
+Variables principales en `.env` (ver `.env.example`): `KOTEN_IMAGE`, `KOTEN_SITE_URL`, `KOTEN_HOST`, el entrypoint/certresolver de Traefik y —solo para el override local— los tres puertos de host. `docker-compose.yml` incluye las reglas de Traefik para el dominio y las tres rutas; los enlaces públicos del catálogo y el registry se generan con `KOTEN_SITE_URL` (por defecto `https://koten.codehive.com.co`).
 
 El workflow de GitHub Actions publica la imagen en GHCR en `main` y en tags `v*`, y solo la construye en pull requests. El registry de shadcn se regenera dentro de la imagen (`prebuild`), por lo que `/r/*.json` viaja en el mismo contenedor.
 
