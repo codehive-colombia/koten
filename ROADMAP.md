@@ -2,10 +2,9 @@
 
 > **Documento vivo y fuente de verdad del estado del proyecto.**
 > Última actualización: **2026-10-21**
-> Fase actual: **4 — Cierre del POC** (`done`) · **tag `v0.1.0-poc`**
-> Próxima fase: **5 — Opcional / posterior**
+> Fase actual: **5 — Opcional / posterior** (`in_progress`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`F4-006`**
+> Última tarea completada: **`F5-002`** · v1 en tag `v0.1.0-poc`
 > Mejora puntual completada: **`M-001`** — i18n del catálogo
 > Bloqueos: **ninguno**
 
@@ -109,6 +108,10 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-029` | Code splitting por ruta solo en el catálogo. | accepted | [D-029](./docs/DECISIONS.md#d-029) |
 | `D-030` | Sin estilos de impresión en la v1. | accepted | [D-030](./docs/DECISIONS.md#d-030) |
 | `D-031` | Entrega del POC sin deploy alojado. | accepted | [D-031](./docs/DECISIONS.md#d-031) |
+| `D-032` | SSG del storefront con Astro, fuera del POC. | accepted | [D-032](./docs/DECISIONS.md#d-032) |
+| `D-033` | No publicar `@koten/ui`. | accepted | [D-033](./docs/DECISIONS.md#d-033) |
+| `D-034` | La v1 cierra sin Sumi ni registry. | accepted | [D-034](./docs/DECISIONS.md#d-034) |
+| `D-035` | Sumi post-v1 con roles sólidos e inversos. | accepted | [D-035](./docs/DECISIONS.md#d-035) |
 
 ---
 
@@ -261,7 +264,7 @@ ISO 8601: `YYYY-MM-DD`.
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
 | `F5-001` | Registry shadcn: `registry.json`, build y instalación por URL. | `F4-006` | `todo` | `npx shadcn add <url>` instala un componente con sus tokens. | — |
-| `F5-002` | Tema Sumi (dark) con contraste AA. | `F4-006` | `todo` | Tema conmutable; sin flash; componentes existentes sin cambios. | — |
+| `F5-002` | Tema Sumi (dark) con contraste AA. | `F4-006` | `done` | Tema conmutable; sin flash; componentes existentes sin cambios. | `[data-theme="sumi"]` + roles `*-solid`/`solid-fg` e `inverse-bg`/`inverse-fg` (`D-035`); selector del catálogo y `?theme=sumi` en demos; script inline pre-paint; contraste AA en 4 temas; axe Sumi en catálogo/storefront/ERP → 0 serious/critical; capturas `*-sumi` a 1440/1280/1024. |
 | `F5-003` | DatePicker / Calendar. | `F4-006` | `todo` | Teclado, rango y locale. | — |
 | `F5-004` | CommandPalette. | `F4-006` | `todo` | Búsqueda, teclado y focus trap. | — |
 | `F5-005` | Virtualización de DataTable. | `F4-006` | `todo` | 10k filas sin degradación perceptible. | — |
@@ -470,6 +473,7 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Documentación final: página Empezar trilingüe, `docs/RECIPES.md`, README actualizado y decisión de impresión. `F4-005` → `done`; `D-030`; `Q-009` cerrada. Próxima: `F4-006`. | Sesión 023 |
 | 2026-10-21 | Definition of Done revisado y cierre de fase 4: `D-031` (sin deploy en v1), presupuesto del catálogo a 340 KB total, tag `v0.1.0-poc`. `F4-006` → `done`; **fase 4 → `done`**. | Sesión 024 |
 | 2026-10-21 | Fase 5 iniciada con las dos evaluaciones: `D-032` (Astro con islas para el storefront productivo) y `D-033` (no publicar el paquete); `D-034` cierra `Q-001`/`Q-002`. `F5-006`, `F5-007` → `done`. | Sesión 025 |
+| 2026-10-21 | Tema Sumi: tokens oscuros, roles sólidos e inversos, selector y pre-paint, contraste AA en 4 temas y axe en oscuro. `F5-002` → `done`; `D-035`. | Sesión 026 |
 | 2026-10-21 | Fase 2: contenido JA/ES/EN, 11 patrones de storefront, página HIKARI con galería, precio, specs, reviews, avisos, ranking, campaña y footer; `?lang=`. `F2-001`–`F2-008` → `done`; `D-021` y `D-022`; `Q-003` cerrada; **fase 2 → `done`**. | Sesión 015 |
 | 2026-10-21 | Fase 3: datos deterministas (132 pedidos), shell, dashboard, pedidos con filtros en URL, drawer con timeline, formulario validado y placeholders; ES/JA/EN. `F3-001`–`F3-008` → `done`; `D-023`; **fase 3 → `done`**. Próxima: `F4-001`. | Sesión 016 |
 | 2026-10-21 | Corrección de interacción: `Select` no modal y dropdown estándar; `DataTable` conserva la identidad de `data`, por lo que la paginación avanza; tests de regresión y stress en navegador. `F3-009` → `done`; `D-024`; `RISK-015`. | Sesión 017 |

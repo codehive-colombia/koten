@@ -20,7 +20,8 @@ export function useErpLocale() {
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.documentElement.dataset.theme = "daicho";
+    const theme = new URLSearchParams(window.location.search).get("theme");
+    document.documentElement.dataset.theme = theme === "sumi" ? "sumi" : "daicho";
     document.documentElement.dataset.density = "compact";
 
     const url = new URL(window.location.href);

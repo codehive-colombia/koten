@@ -40,7 +40,7 @@ export function StoreHeader({
 }: StoreHeaderProps) {
   return (
     <header data-slot="store-header" className={cn("min-w-0", className)}>
-      <div className="bg-sumi text-paper">
+      <div className="bg-inverse text-inverse-fg">
         <div className="koten-container flex min-h-7 flex-wrap items-center justify-between gap-x-4 gap-y-1 py-1 text-2xs">
           <div className="min-w-0">{utility.left}</div>
           {utility.right ? <div className="min-w-0">{utility.right}</div> : null}

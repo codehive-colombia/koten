@@ -26,6 +26,8 @@ type Page = {
   open?: string;
   /** Selector que debe existir tras `open`; si no, la medición no es válida. */
   expect?: string;
+  /** Tema forzado en la URL (por ejemplo `sumi`). */
+  theme?: string;
 };
 
 type AxeViolation = {
@@ -70,6 +72,14 @@ const pages: readonly Page[] = [
     expect: '[role="dialog"]',
   },
   { app: "erp", label: "nuevo pedido", path: "/orders/new" },
+  {
+    app: "catalog",
+    label: "datos (Sumi)",
+    path: "/components/data",
+    theme: "sumi",
+  },
+  { app: "storefront", label: "producto (Sumi)", path: "/", theme: "sumi" },
+  { app: "erp", label: "pedidos (Sumi)", path: "/orders", theme: "sumi" },
   {
     app: "erp",
     label: "nuevo pedido + select",
@@ -215,7 +225,10 @@ async function run() {
             mobile: viewport.width < 500,
           });
 
-          const url = `${config.origin}${page.path}?lang=${locale}`;
+          const target = new URL(page.path, config.origin);
+          target.searchParams.set("lang", locale);
+          if (page.theme) target.searchParams.set("theme", page.theme);
+          const url = target.href;
           const loaded = cdp.once("Page.loadEventFired").catch(() => undefined);
           await send("Page.navigate", { url });
           await loaded;

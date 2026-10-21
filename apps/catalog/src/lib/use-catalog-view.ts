@@ -15,7 +15,7 @@ const defaultView: CatalogView = {
 };
 
 const densityIds: readonly DensityId[] = ["compact", "default", "comfortable"];
-const themeIds: readonly ThemeId[] = ["chirashi", "daicho", "kanso"];
+const themeIds: readonly ThemeId[] = ["chirashi", "daicho", "kanso", "sumi"];
 const localeIds: readonly KotenLocale[] = ["es", "ja", "en"];
 
 function isTheme(value: string | null): value is ThemeId {

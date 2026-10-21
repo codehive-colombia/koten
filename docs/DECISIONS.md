@@ -503,3 +503,20 @@
 - **Decisión:** La v1 no incluye Sumi ni registry. Ambas siguen disponibles como tareas post-v1 y, si se implementan, no reabren el alcance del tag: se documentan con su propia decisión y se validan con contraste AA y con una instalación real, respectivamente.
 - **Consecuencias:** `Q-001` y `Q-002` se cierran como “fuera de la v1”; el registro de decisiones deja de tener preguntas de alcance v1 abiertas. Quedan abiertas `Q-004` (cerrada por `D-031`), `Q-005` (licencia) y `Q-006` (matriz de navegadores), que no bloquean el POC.
 - **Alternativas:** Meterlas en la v1 (retrasa el tag sin demanda); borrar las preguntas (el registro es append-only; se cierran, no se borran).
+
+---
+
+<a id="d-035"></a>
+## D-035 · Sumi: tema oscuro post-v1 con roles sólidos separados
+
+- **Fecha:** 2026-10-21
+- **Estado:** `accepted` (`F5-002`; amplía `D-015`, que lo dejaba fuera de la v1)
+- **Contexto:** `D-015` excluyó Sumi de la v1 para no duplicar la matriz visual antes de cerrar el POC. Con la v1 etiquetada, `F5-002` lo habilita. Un tema oscuro no puede reutilizar los colores de estado para texto y para fondos sólidos a la vez: un verde legible sobre papel oscuro no admite texto blanco encima, y viceversa. Tampoco alcanza con invertir `bg`/`fg`: las barras invertidas usaban `bg-sumi text-paper` y en oscuro quedaban tinta sobre tinta (contraste 1,13 detectado por axe).
+- **Decisión:**
+  - `[data-theme="sumi"]` invierte papel/tinta, aclara el primario y declara `color-scheme: dark`; el resto de los temas no cambia.
+  - Se separan los roles **`*-solid`** (fondo con texto claro) de los roles de texto (`danger`, `success`…). Badge `solid` y `Button` danger usan `bg-*-solid` + `text-solid-fg`.
+  - Se agregan roles **`inverse-bg`/`inverse-fg`** para las superficies invertidas (utility bar, footer): antes eran `bg-sumi text-paper` y en oscuro colapsaban.
+  - El tema se aplica **antes del primer paint** con un script inline en `index.html`; el catálogo lo conmuta con su selector y las demos aceptan `?theme=sumi`.
+  - El test de contraste cubre los cuatro temas, incluidos los pares `solid-fg`/`*-solid` y `inverse-fg`/`inverse-bg`.
+- **Consecuencias:** Sumi es un tema completo y auditable (axe 0 serious/critical en catálogo, storefront y ERP; capturas en `docs/qa`). Los componentes existentes no cambian su API; solo los dos que pintaban fondos de estado con `text-white`. Cualquier tema futuro debe declarar sus `*-solid` si invierte la base.
+- **Alternativas:** Un único rol de color con opacidad para fondos (rompe AA); mantener `bg-sumi`/`text-paper` (ilegible en oscuro); tema oscuro solo en el catálogo (no prueba el sistema completo).

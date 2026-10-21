@@ -20,7 +20,8 @@ export function useStorefrontLocale() {
 
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.documentElement.dataset.theme = "chirashi";
+    const theme = new URLSearchParams(window.location.search).get("theme");
+    document.documentElement.dataset.theme = theme === "sumi" ? "sumi" : "chirashi";
     document.documentElement.dataset.density = "default";
 
     const url = new URL(window.location.href);

@@ -3,8 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <title>Koten UI · Catálogo</title>
+    <script>
+      // Aplica tema, densidad e idioma antes del primer paint (F5-002).
+      (() => {
+        const params = new URLSearchParams(location.search);
+        const root = document.documentElement;
+        const theme = params.get("theme");
+        if (["chirashi", "daicho", "kanso", "sumi"].includes(theme)) root.dataset.theme = theme;
+        const density = params.get("density");
+        if (["compact", "default", "comfortable"].includes(density)) root.dataset.density = density;
+        const lang = params.get("lang");
+        if (["es", "ja", "en"].includes(lang)) root.lang = lang;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

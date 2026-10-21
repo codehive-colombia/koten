@@ -28,6 +28,17 @@
   --color-link: var(--koten-link);
   --color-danger: var(--koten-danger);
   --color-danger-strong: var(--koten-danger-strong);
+  --color-danger-solid: var(--koten-danger-solid);
+  --color-danger-solid-hover: var(--koten-danger-solid-hover);
+  --color-solid-fg: var(--koten-solid-fg);
+  --color-inverse: var(--koten-inverse-bg);
+  --color-inverse-fg: var(--koten-inverse-fg);
+  --color-neutral-solid: var(--koten-neutral-solid);
+  --color-success-solid: var(--koten-success-solid);
+  --color-warning-solid: var(--koten-warning-solid);
+  --color-info-solid: var(--koten-info-solid);
+  --color-sale-solid: var(--koten-sale-solid);
+  --color-new-solid: var(--koten-new-solid);
   --color-success: var(--koten-success);
   --color-warning: var(--koten-warning);
   --color-info: var(--koten-info);

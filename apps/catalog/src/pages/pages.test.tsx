@@ -105,7 +105,7 @@ describe("páginas del catálogo", () => {
     density.unmount();
 
     const themes = renderPage(<TokensThemesPage />);
-    expect(themes.container.querySelectorAll("article[data-theme]")).toHaveLength(3);
+    expect(themes.container.querySelectorAll("article[data-theme]")).toHaveLength(4);
   });
 
   it("responde al locale en la vista previa de formato", () => {

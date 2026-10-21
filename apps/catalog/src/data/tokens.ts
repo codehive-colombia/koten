@@ -1,6 +1,6 @@
 import type { Localized } from "../lib/i18n";
 
-export type ThemeId = "chirashi" | "daicho" | "kanso";
+export type ThemeId = "chirashi" | "daicho" | "kanso" | "sumi";
 
 export type DensityId = "compact" | "default" | "comfortable";
 
@@ -350,6 +350,16 @@ export const themes: readonly {
       es: "Catálogo. Primario ai, ritmo de lectura y acentos mínimos.",
       ja: "カタログ。主要色は藍、読みやすいリズム、最小限の差し色。",
       en: "Catalog. Ai primary, reading rhythm and minimal accents.",
+    },
+  },
+  {
+    id: "sumi",
+    label: "Sumi",
+    jp: "墨",
+    description: {
+      es: "Oscuro. Papel sumi, tinta cálida y fondos sólidos propios para mantener AA.",
+      ja: "暗色。墨の紙、温かいインク、AAを保つ独立したソリッド背景。",
+      en: "Dark. Sumi paper, warm ink and separate solid backgrounds to keep AA.",
     },
   },
 ];

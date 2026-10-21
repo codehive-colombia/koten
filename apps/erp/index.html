@@ -3,12 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <meta
       name="description"
       content="KURA, backoffice de distribución mayorista: dashboard, pedidos, filtros y detalle."
     />
     <title>KURA · ERP</title>
+    <script>
+      // Sumi antes del primer paint; el hook mantiene el resto del estado (F5-002).
+      (() => {
+        const params = new URLSearchParams(location.search);
+        const root = document.documentElement;
+        if (params.get("theme") === "sumi") root.dataset.theme = "sumi";
+        const lang = params.get("lang");
+        if (["es", "ja", "en"].includes(lang)) root.lang = lang;
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

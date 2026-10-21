@@ -27,7 +27,7 @@ describe("readViewFromUrl", () => {
   });
 
   it("rejects unknown values", () => {
-    expect(readViewFromUrl("?theme=sumi&density=huge&lang=fr")).toEqual({
+    expect(readViewFromUrl("?theme=neon&density=huge&lang=fr")).toEqual({
       theme: "kanso",
       density: "default",
       locale: "es",

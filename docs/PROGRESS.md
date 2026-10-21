@@ -10,8 +10,8 @@
 | --- | --- |
 | Fecha | 2026-10-21 |
 | Fase | 5 — Opcional (`in_progress`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `F5-007` · mejora puntual `M-001` |
-| Tarea en curso | ninguna — próxima `F5-001` (registry) o `F5-002` (Sumi) |
+| Última tarea completada | `F5-002` · mejora puntual `M-001` |
+| Tarea en curso | ninguna — próxima `F5-003` (DatePicker) |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
 
@@ -38,6 +38,24 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-21 · Sesión 026 — Tema Sumi
+
+- **Objetivo:** cerrar `F5-002` con un tema oscuro real, conmutable, sin flash y con AA.
+- **Hecho:**
+  - **Tokens:** bloque `[data-theme="sumi"]` con papel #171512, tinta cálida, primario ai claro y `color-scheme: dark`. Se separan roles `*-solid` (fondo) de los de texto y se agregan `inverse-bg`/`inverse-fg` para las superficies invertidas (utility bar, footer), que en oscuro quedaban tinta sobre tinta.
+  - **Componentes:** `Badge solid` y `Button danger` usan `bg-*-solid`/`text-solid-fg`; el resto no cambia su API.
+  - **Conmutación:** selector de tema del catálogo con Sumi; demos aceptan `?theme=sumi`. Un script inline en los tres `index.html` aplica tema, densidad e idioma antes del primer paint (sin flash).
+  - **Contraste:** el test de tokens cubre los 4 temas, incluidos `solid-fg` sobre cada `*-solid`, `inverse-fg`/`inverse-bg` y bordes a 3:1.
+  - **QA:** axe en Sumi para catálogo, storefront y ERP a 1440/390 y tres idiomas → 0 serious/critical, 0 textos < 12 px. Capturas nuevas `*-sumi` en `docs/qa/2026-10-21` (36 capturas totales).
+- **Tareas tocadas:** `F5-002` → `done`.
+- **Decisiones:** `D-035` (Sumi post-v1 con roles sólidos/inversos).
+- **Evidencia:** `packages/ui/src/styles/{tokens,globals}.css`, `packages/ui/src/components/{ui/badge,ui/button,patterns/store-header,patterns/footer}.tsx`, `packages/ui/src/styles/tokens.contrast.test.ts`, `apps/catalog/src/{data/tokens,lib/use-catalog-view,pages/tokens/themes}.ts*`, `apps/{catalog,storefront,erp}/index.html`, hooks de locale; `bun run check` verde (**30 archivos / 180 tests**); `qa:a11y` → 96 páginas sin serious/critical.
+- **Sin validar:** flash en una carga con red lenta (el script es síncrono, pero no se midió con throttling); preferencias del sistema (`prefers-color-scheme`) no se usan: el tema es explícito.
+- **Próximo:** `F5-003` — DatePicker/Calendar.
+- **Bloqueos:** ninguno.
 
 ---
 

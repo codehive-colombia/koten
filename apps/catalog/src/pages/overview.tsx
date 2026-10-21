@@ -19,7 +19,7 @@ const copy = {
     title: "Koten UI",
     description:
       "Sencillez de medios, densidad de información. Un sistema de componentes para el web japonés clásico, validado en un catálogo, un storefront y un ERP.",
-    meta: "Fases 1–3 cerradas · 42 primitivas · 20 patrones · 3 temas · 3 densidades",
+    meta: "Fases 1–3 cerradas · 42 primitivas · 20 patrones · 4 temas · 3 densidades",
     principles: [
       "El marco es la unidad: panel, cabecera, regla, borde.",
       "El color señala; no decora.",
@@ -59,7 +59,7 @@ const copy = {
     statusBody:
       "Primitivas, storefront HIKARI y ERP KURA comparten tokens, componentes y reglas. Los selectores de tema, densidad e idioma modifican la interfaz; las muestras fijas comparan valores.",
     themes: "Temas",
-    themesValue: "Chirashi · Daichō · Kanso",
+    themesValue: "Chirashi · Daichō · Kanso · Sumi",
     densities: "Densidades",
     densitiesValue: "Compacta · Default · Amplia",
     languages: "Idiomas de UI",
@@ -74,7 +74,7 @@ const copy = {
     title: "Koten UI",
     description:
       "手段の簡素さ、情報の密度。古典的な日本のウェブのためのコンポーネントシステム。カタログ、店舗、ERPで検証する。",
-    meta: "フェーズ1〜3完了 · 42プリミティブ · 20パターン · 3テーマ · 3密度",
+    meta: "フェーズ1〜3完了 · 42プリミティブ · 20パターン · 4テーマ · 3密度",
     principles: [
       "枠が単位：パネル、見出し、罫線、境界。",
       "色は意味を示し、装飾しない。",
@@ -112,7 +112,7 @@ const copy = {
     statusBody:
       "プリミティブ、店舗HIKARI、ERP KURAはトークン・コンポーネント・ルールを共有する。テーマ、密度、言語のセレクタはUIを変え、固定サンプルは値を比較する。",
     themes: "テーマ",
-    themesValue: "Chirashi · Daichō · Kanso",
+    themesValue: "Chirashi · Daichō · Kanso · Sumi",
     densities: "密度",
     densitiesValue: "コンパクト · 標準 · ゆったり",
     languages: "UI言語",
@@ -127,7 +127,7 @@ const copy = {
     title: "Koten UI",
     description:
       "Simplicity of means, density of information. A component system for the classic Japanese web, validated in a catalog, a storefront and an ERP.",
-    meta: "Phases 1–3 complete · 42 primitives · 20 patterns · 3 themes · 3 densities",
+    meta: "Phases 1–3 complete · 42 primitives · 20 patterns · 4 themes · 3 densities",
     principles: [
       "The frame is the unit: panel, header, rule, border.",
       "Color signals; it does not decorate.",
@@ -166,7 +166,7 @@ const copy = {
     statusBody:
       "Primitives, the HIKARI storefront and the KURA ERP share tokens, components and rules. Theme, density and language selectors change the UI; fixed samples compare values.",
     themes: "Themes",
-    themesValue: "Chirashi · Daichō · Kanso",
+    themesValue: "Chirashi · Daichō · Kanso · Sumi",
     densities: "Densities",
     densitiesValue: "Compact · Default · Comfortable",
     languages: "UI languages",

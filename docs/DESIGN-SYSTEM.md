@@ -14,6 +14,8 @@
 
 Los tres comparten tokens, componentes y reglas. Cambian los valores semánticos, no la estructura.
 
+**Sumi** (墨) es el tema oscuro post-v1: invierte papel y tinta, aclara el primario y separa los fondos sólidos de estado (`*-solid` + `solid-fg`) para mantener AA. No es un registro nuevo: es cualquiera de los tres en oscuro.
+
 ## 2. Qué tomamos y qué rechazamos
 
 ### Tomamos
@@ -294,7 +296,7 @@ Seigaiha o asanoha en SVG/CSS, `currentColor` al 6–10%, solo en bandas decorat
 
 | Eje | Dónde vive | Ejemplo |
 | --- | --- | --- |
-| Tema | `data-theme` en `<html>` | `chirashi`, `daicho`, `kanso` |
+| Tema | `data-theme` en `<html>` | `chirashi`, `daicho`, `kanso`, `sumi` |
 | Densidad | `data-density` en `<html>` | `compact`, `default`, `comfortable` |
 | Variante | prop `variant` | `primary`, `secondary`, `outline`, `ghost`, `danger`, `link` |
 | Tono | prop `tone` | `neutral`, `info`, `success`, `warning`, `danger`, `sale`, `new` |
@@ -388,6 +390,20 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
   --koten-primary-hover: var(--koten-ai-hover);
   --koten-primary-strong: #142a44;
   --koten-danger: var(--koten-shu);
+}
+
+[data-theme="sumi"] {
+  color-scheme: dark;
+  --koten-bg: #171512;
+  --koten-bg-raised: #1f1c18;
+  --koten-fg: #f4eee1;
+  --koten-primary: #9cc2ef;
+  --koten-primary-fg: #14181d;
+  /* Los fondos sólidos conservan texto blanco y contraste AA. */
+  --koten-danger-solid: #a6331f;
+  --koten-success-solid: #3f6b32;
+  --koten-warning-solid: #6d5210;
+  --koten-info-solid: #2b5a8f;
 }
 ```
 

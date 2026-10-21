@@ -15,7 +15,7 @@ import { launchChromium, sleep } from "./lib/cdp";
 
 type AppId = "catalog" | "storefront" | "erp";
 
-type Shot = { app: AppId; label: string; path: string };
+type Shot = { app: AppId; label: string; path: string; theme?: string };
 
 const apps: Record<AppId, { port: number; directory: string }> = {
   catalog: { port: 4173, directory: "apps/catalog" },
@@ -32,6 +32,10 @@ const shots: readonly Shot[] = [
   { app: "erp", label: "dashboard", path: "/" },
   { app: "erp", label: "pedidos", path: "/orders" },
   { app: "erp", label: "formulario", path: "/orders/new" },
+  { app: "catalog", label: "portada-sumi", path: "/", theme: "sumi" },
+  { app: "catalog", label: "formularios-sumi", path: "/components/forms", theme: "sumi" },
+  { app: "storefront", label: "producto-sumi", path: "/", theme: "sumi" },
+  { app: "erp", label: "pedidos-sumi", path: "/orders", theme: "sumi" },
 ];
 
 const viewports = [
@@ -101,9 +105,10 @@ async function run() {
         });
 
         const loaded = cdp.once("Page.loadEventFired").catch(() => undefined);
-        await send("Page.navigate", {
-          url: `http://localhost:${config.port}${shot.path}?lang=es`,
-        });
+        const url = new URL(shot.path, `http://localhost:${config.port}`);
+        url.searchParams.set("lang", "es");
+        if (shot.theme) url.searchParams.set("theme", shot.theme);
+        await send("Page.navigate", { url: url.href });
         await loaded;
         await sleep(600);
 

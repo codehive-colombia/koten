@@ -13,7 +13,7 @@ export const buttonVariants = cva(
         secondary: "border-rule-strong bg-surface text-ink hover:bg-tint",
         outline: "border-rule-strong bg-transparent text-ink hover:bg-tint",
         ghost: "border-transparent bg-transparent text-ink hover:bg-tint",
-        danger: "border-danger-strong bg-danger text-white hover:bg-danger-strong",
+        danger: "border-danger-strong bg-danger-solid text-solid-fg hover:bg-danger-solid-hover",
         link: "h-auto border-transparent bg-transparent px-0 text-link underline-offset-2 hover:underline",
       },
       size: {

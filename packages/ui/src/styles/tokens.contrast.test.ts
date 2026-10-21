@@ -6,7 +6,7 @@ const css = readFileSync(resolvePath(process.cwd(), "packages/ui/src/styles/toke
 
 const rootBlock = css.slice(0, css.indexOf("/* ---- Themes")) || css;
 
-const themeIds = ["chirashi", "daicho", "kanso"] as const;
+const themeIds = ["chirashi", "daicho", "kanso", "sumi"] as const;
 
 const themeBlocks = Object.fromEntries(
   themeIds.map((theme) => {
@@ -87,6 +87,7 @@ const textPairs = [
   ["danger", "bg-raised", "error sobre superficie"],
   ["sale", "bg-raised", "rebaja sobre superficie"],
   ["new", "bg-raised", "novedad sobre superficie"],
+  ["inverse-fg", "inverse-bg", "texto sobre superficie inversa"],
 ] as const;
 
 describe("contraste de tokens", () => {
@@ -111,22 +112,35 @@ describe("contraste de tokens", () => {
     });
   }
 
-  it("mantiene blanco legible sobre los fondos sólidos de estado", () => {
-    for (const tone of ["info", "success", "warning", "danger", "sale", "new", "ink"] as const) {
-      const ratio = contrast("#ffffff", resolve(tone, rootBlock));
+  it("mantiene el texto sólido legible sobre cada fondo de estado", () => {
+    const tones = ["info", "success", "warning", "danger", "sale", "new", "neutral"] as const;
 
-      expect(ratio, `blanco sobre ${tone} (${ratio.toFixed(2)}:1)`).toBeGreaterThanOrEqual(4.5);
+    for (const theme of themeIds) {
+      const block = themeBlocks[theme];
+
+      for (const tone of tones) {
+        const ratio = contrast(resolve("solid-fg", block), resolve(`${tone}-solid`, block));
+
+        expect(
+          ratio,
+          `${theme}: texto sólido sobre ${tone} (${ratio.toFixed(2)}:1)`,
+        ).toBeGreaterThanOrEqual(4.5);
+      }
     }
   });
 
   it("mantiene el borde de control en al menos 3:1", () => {
-    for (const background of ["bg", "bg-raised"] as const) {
-      const ratio = contrast(resolve("border-strong", rootBlock), resolve(background, rootBlock));
+    for (const theme of themeIds) {
+      const block = themeBlocks[theme];
 
-      expect(
-        ratio,
-        `borde de control sobre ${background} (${ratio.toFixed(2)}:1)`,
-      ).toBeGreaterThanOrEqual(3);
+      for (const background of ["bg", "bg-raised"] as const) {
+        const ratio = contrast(resolve("border-strong", block), resolve(background, block));
+
+        expect(
+          ratio,
+          `${theme}: borde de control sobre ${background} (${ratio.toFixed(2)}:1)`,
+        ).toBeGreaterThanOrEqual(3);
+      }
     }
   });
 });

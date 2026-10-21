@@ -8,7 +8,7 @@ const copy = {
     eyebrow: "Fundamentos · テーマ",
     title: "Temas",
     description:
-      "Chirashi, Daichō y Kanso comparten estructura y componentes. Cambian los valores semánticos: el primario, el foco y la selección. El tema se declara una vez en el root.",
+      "Chirashi, Daichō, Kanso y Sumi comparten estructura y componentes. Cambian los valores semánticos: el primario, el foco, la selección y, en Sumi, el papel. El tema se declara una vez en el root.",
     meta: "data-theme · misma estructura, distintos valores",
     comparison: {
       title: "Comparación",
@@ -20,10 +20,10 @@ const copy = {
       meta: "Lo que cambia y lo que no",
       heading: "Contrato del tema",
       items: [
-        "El tema cambia --koten-primary, --koten-focus y --koten-selection.",
-        "El papel, la tinta y las reglas se mantienen estables.",
+        "El tema cambia --koten-primary, --koten-focus, --koten-selection y, en Sumi, papel y tinta.",
         "Los componentes usan roles (bg-primary), nunca nombres de color.",
-        "Chirashi lleva shu al primario; Daichō y Kanso llevan ai.",
+        "Chirashi lleva shu al primario; Daichō y Kanso, ai; Sumi usa un ai claro.",
+        "Los fondos sólidos de estado usan *-solid y solid-fg para mantener AA.",
         "El tema no se pasa por prop: se hereda de [data-theme].",
       ],
     },
@@ -32,7 +32,7 @@ const copy = {
     eyebrow: "基礎 · テーマ",
     title: "テーマ",
     description:
-      "Chirashi、Daichō、Kansoは構造とコンポーネントを共有する。変わるのは意味的な値：主要色、フォーカス、選択。テーマはルートで一度だけ宣言する。",
+      "Chirashi、Daichō、Kanso、Sumiは構造とコンポーネントを共有する。変わるのは意味的な値：主要色、フォーカス、選択、そしてSumiでは紙とインク。テーマはルートで一度だけ宣言する。",
     meta: "data-theme · 同じ構造、異なる値",
     comparison: {
       title: "比較",
@@ -44,10 +44,10 @@ const copy = {
       meta: "変わるものと変わらないもの",
       heading: "テーマの契約",
       items: [
-        "テーマは --koten-primary、--koten-focus、--koten-selection を変える。",
-        "紙、墨、罫線は安定して保たれる。",
+        "テーマは --koten-primary、--koten-focus、--koten-selection を変え、Sumiでは紙とインクも反転する。",
         "コンポーネントは役割（bg-primary）を使い、色名は使わない。",
-        "Chirashiは主要色に朱、DaichōとKansoは藍を使う。",
+        "Chirashiは朱、DaichōとKansoは藍、Sumiは明るい藍を主要色にする。",
+        "状態のソリッド背景は *-solid、文字は solid-fg を使いAAを保つ。",
         "テーマはpropではなく [data-theme] から継承する。",
       ],
     },
@@ -56,7 +56,7 @@ const copy = {
     eyebrow: "Foundations · テーマ",
     title: "Themes",
     description:
-      "Chirashi, Daichō and Kanso share structure and components. What changes are semantic values: primary, focus and selection. The theme is declared once on the root.",
+      "Chirashi, Daichō, Kanso and Sumi share structure and components. What changes are semantic values: primary, focus, selection and, in Sumi, the paper. The theme is declared once on the root.",
     meta: "data-theme · same structure, different values",
     comparison: {
       title: "Comparison",

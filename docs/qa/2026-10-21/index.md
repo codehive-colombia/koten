@@ -29,3 +29,15 @@ Criterio: sin overflow horizontal, sin recortes, jerarquía y densidad estables.
 | erp | formulario | 1440×900 | `erp-formulario-1440.jpg` |
 | erp | formulario | 1280×800 | `erp-formulario-1280.jpg` |
 | erp | formulario | 1024×768 | `erp-formulario-1024.jpg` |
+| catalog | portada-sumi | 1440×900 | `catalog-portada-sumi-1440.jpg` |
+| catalog | portada-sumi | 1280×800 | `catalog-portada-sumi-1280.jpg` |
+| catalog | portada-sumi | 1024×768 | `catalog-portada-sumi-1024.jpg` |
+| catalog | formularios-sumi | 1440×900 | `catalog-formularios-sumi-1440.jpg` |
+| catalog | formularios-sumi | 1280×800 | `catalog-formularios-sumi-1280.jpg` |
+| catalog | formularios-sumi | 1024×768 | `catalog-formularios-sumi-1024.jpg` |
+| storefront | producto-sumi | 1440×900 | `storefront-producto-sumi-1440.jpg` |
+| storefront | producto-sumi | 1280×800 | `storefront-producto-sumi-1280.jpg` |
+| storefront | producto-sumi | 1024×768 | `storefront-producto-sumi-1024.jpg` |
+| erp | pedidos-sumi | 1440×900 | `erp-pedidos-sumi-1440.jpg` |
+| erp | pedidos-sumi | 1280×800 | `erp-pedidos-sumi-1280.jpg` |
+| erp | pedidos-sumi | 1024×768 | `erp-pedidos-sumi-1024.jpg` |

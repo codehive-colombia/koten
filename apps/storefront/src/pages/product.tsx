@@ -94,7 +94,7 @@ export function ProductPage({ locale, onLocaleChange }: ProductPageProps) {
         utility={{
           left: copy.utility.left,
           right: (
-            <span className="text-paper/80">
+            <span className="text-inverse-fg/80">
               {copy.utility.right} · <span className="tabular-nums">2026.10.21</span>
             </span>
           ),

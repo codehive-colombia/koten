@@ -51,7 +51,21 @@
   --koten-sale: var(--koten-shu);
   --koten-new: var(--koten-ai);
   --koten-focus: var(--koten-ai);
+
+  /* Fondos sólidos con texto claro. En Sumi se separan del color de texto
+     para que ambos mantengan contraste AA. */
+  --koten-solid-fg: #ffffff;
+  --koten-neutral-solid: var(--koten-ink);
+  --koten-danger-solid: var(--koten-danger);
+  --koten-danger-solid-hover: var(--koten-danger-strong);
+  --koten-success-solid: var(--koten-success);
+  --koten-warning-solid: var(--koten-warning);
+  --koten-info-solid: var(--koten-info);
+  --koten-sale-solid: var(--koten-sale);
+  --koten-new-solid: var(--koten-new);
   --koten-selection: var(--koten-ai-tint);
+  --koten-inverse-bg: var(--koten-sumi);
+  --koten-inverse-fg: var(--koten-kinari);
   --koten-overlay: rgb(28 26 23 / 42%);
   --koten-shadow-overlay: 0 8px 24px rgb(28 26 23 / 18%);
   --koten-highlight: rgb(255 255 255 / 22%);
@@ -125,6 +139,47 @@
   --koten-danger-strong: #8f2815;
   --koten-focus: var(--koten-ai);
   --koten-selection: var(--koten-ai-tint);
+}
+
+[data-theme="sumi"] {
+  color-scheme: dark;
+
+  --koten-bg: #171512;
+  --koten-bg-raised: #1f1c18;
+  --koten-bg-tint: #27231d;
+  --koten-fg: #f4eee1;
+  --koten-fg-muted: #c9bda9;
+  --koten-fg-faint: #ab9f8a;
+  --koten-border: #3a342b;
+  --koten-border-strong: #7d7160;
+  --koten-primary: #9cc2ef;
+  --koten-primary-hover: #b9d6f8;
+  --koten-primary-strong: #d3e6fb;
+  --koten-primary-fg: #14181d;
+  --koten-link: #9cc2ef;
+  --koten-danger: #ff9d8a;
+  --koten-danger-strong: #ffc4b8;
+  --koten-success: #a9cf93;
+  --koten-warning: #e6c37c;
+  --koten-info: #9cc2ef;
+  --koten-sale: #ff9d8a;
+  --koten-new: #9cc2ef;
+  --koten-focus: #9cc2ef;
+  --koten-selection: #2a3a4d;
+  --koten-inverse-bg: #2c2822;
+  --koten-inverse-fg: #f4eee1;
+  --koten-overlay: rgb(0 0 0 / 66%);
+  --koten-shadow-overlay: 0 8px 24px rgb(0 0 0 / 55%);
+  --koten-highlight: rgb(255 255 255 / 12%);
+
+  --koten-neutral-solid: #4a443a;
+  --koten-danger-solid: #a6331f;
+  --koten-danger-solid-hover: #8f2815;
+  --koten-success-solid: #3f6b32;
+  --koten-warning-solid: #6d5210;
+  --koten-info-solid: #2b5a8f;
+  --koten-sale-solid: #a6331f;
+  --koten-new-solid: #2b5a8f;
 }
 
 /* ---- Density ----------------------------------------------------------- */
