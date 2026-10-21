@@ -13,12 +13,17 @@ export type MenuItem = {
 export type MenuProps = {
   trigger: ReactElement;
   items: readonly MenuItem[];
+  /**
+   * Base UI menus are modal by default. Koten keeps menus non-modal so an
+   * open menu never locks the page or blocks unrelated controls.
+   */
+  modal?: boolean;
   className?: string;
 };
 
-export function Menu({ trigger, items, className }: MenuProps) {
+export function Menu({ trigger, items, modal = false, className }: MenuProps) {
   return (
-    <BaseMenu.Root>
+    <BaseMenu.Root modal={modal}>
       <BaseMenu.Trigger render={trigger} />
       <BaseMenu.Portal>
         <BaseMenu.Positioner sideOffset={4} className="z-50 outline-hidden">

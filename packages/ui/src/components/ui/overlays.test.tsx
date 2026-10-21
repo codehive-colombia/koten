@@ -67,6 +67,21 @@ describe("Menu", () => {
 
     expect(onSelect).toHaveBeenCalledOnce();
   });
+
+  it("opens without locking the page scroll", async () => {
+    render(
+      <Menu
+        trigger={<Button>Acciones</Button>}
+        items={[{ label: "Editar", onSelect: () => undefined }]}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Acciones" }));
+
+    expect(await screen.findByRole("menuitem", { name: "Editar" })).toBeInTheDocument();
+    expect(document.body.style.overflow).not.toBe("hidden");
+    expect(document.documentElement.style.overflow).not.toBe("hidden");
+  });
 });
 
 describe("Popover", () => {
