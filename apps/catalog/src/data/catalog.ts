@@ -24,7 +24,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
         path: "/start",
         label: { es: "Empezar", ja: "はじめかた", en: "Getting started" },
       },
-      { path: "/tokens", label: { es: "Tokens", ja: "トークン", en: "Tokens" } },
+      {
+        path: "/tokens",
+        label: { es: "Fundamentos", ja: "基礎", en: "Foundations" },
+      },
       { path: "/tokens/color", label: { es: "Color", ja: "色", en: "Color" } },
       {
         path: "/tokens/typography",
@@ -151,8 +154,7 @@ export type ShellLabels = {
   theme: string;
   density: string;
   language: string;
-  phase: string;
-  viewState: string;
+  tagline: string;
   docsLanguage: string;
   preview: string;
   openDemo: string;
@@ -171,8 +173,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Tema",
     density: "Densidad",
     language: "Idioma",
-    phase: "Fase 4 · Cierre del POC",
-    viewState: "Estado en URL",
+    tagline: "45 primitivas · 20 patrones · 4 temas · 3 densidades",
     docsLanguage:
       "Documentación completa en ES/JA/EN · interfaz, cuerpo y ejemplos cambian de idioma",
     preview: "Vista previa",
@@ -190,8 +191,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "テーマ",
     density: "密度",
     language: "言語",
-    phase: "フェーズ4 · デモ仕上げ",
-    viewState: "URLに状態を保存",
+    tagline: "45プリミティブ · 20パターン · 4テーマ · 3密度",
     docsLanguage: "ドキュメントはES/JA/ENで完備 · UI・本文・例が言語に追従します",
     preview: "プレビュー",
     openDemo: "デモを開く",
@@ -208,8 +208,7 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Theme",
     density: "Density",
     language: "Language",
-    phase: "Phase 4 · POC wrap-up",
-    viewState: "State in URL",
+    tagline: "45 primitives · 20 patterns · 4 themes · 3 densities",
     docsLanguage: "Full documentation in ES/JA/EN · UI, body and examples follow the language",
     preview: "Preview",
     openDemo: "Open demo",

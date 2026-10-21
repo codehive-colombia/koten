@@ -25,7 +25,7 @@ const copy = {
     title: "Patrones de storefront",
     description:
       "Las once piezas que sostienen la página HIKARI K-1: cabecera, búsqueda, galería, precio, tarjetas, avisos, ranking, campaña, specs, reseñas y footer. Todas son composiciones de primitivas; ninguna hardcodea strings.",
-    meta: "C-042 … C-052 · demo real en http://localhost:5174",
+    meta: "11 piezas · demo real en http://localhost:5174",
     categories: [
       { value: "all", label: "Todo" },
       { value: "cameras", label: "Cámaras" },
@@ -297,7 +297,7 @@ const copy = {
     title: "ストアフロントのパターン",
     description:
       "HIKARI K-1 の商品ページを支える 11 の部品。ヘッダー、検索、ギャラリー、価格、カード、お知らせ、ランキング、キャンペーン、仕様、レビュー、フッター。すべてプリミティブの組み合わせで、文字列をハードコードしていません。",
-    meta: "C-042 … C-052 · 実デモ http://localhost:5174",
+    meta: "11 部品 · 実デモ http://localhost:5174",
     categories: [
       { value: "all", label: "すべて" },
       { value: "cameras", label: "カメラ" },
@@ -569,7 +569,7 @@ const copy = {
     title: "Storefront patterns",
     description:
       "The eleven pieces behind the HIKARI K-1 page: header, search, gallery, price, cards, notices, ranking, campaign, specs, reviews and footer. All are primitive compositions; none hardcodes strings.",
-    meta: "C-042 … C-052 · live demo at http://localhost:5174",
+    meta: "11 pieces · live demo at http://localhost:5174",
     categories: [
       { value: "all", label: "All" },
       { value: "cameras", label: "Cameras" },

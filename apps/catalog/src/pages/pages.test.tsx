@@ -41,8 +41,8 @@ function renderPage(ui: ReactElement, locale: "es" | "ja" | "en" = "es") {
   );
 }
 
-describe("páginas del catálogo", () => {
-  it("muestra la portada con sus accesos", () => {
+describe("catalog pages", () => {
+  it("renders the landing page with its entry points", () => {
     renderPage(<OverviewPage />);
 
     expect(screen.getByRole("heading", { level: 1, name: /Koten UI/ })).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("link", { name: /Componentes/ })).toBeInTheDocument();
   });
 
-  it("explica cómo empezar y copiar una primitiva", () => {
+  it("explains how to start and copy a primitive", () => {
     renderPage(<StartPage />);
 
     expect(screen.getByRole("heading", { level: 1, name: /Empezar/ })).toBeInTheDocument();
@@ -61,10 +61,10 @@ describe("páginas del catálogo", () => {
     );
   });
 
-  it("indexa las siete páginas de fundamentos", () => {
+  it("indexes the seven foundation pages", () => {
     renderPage(<TokensIndexPage />);
 
-    expect(screen.getByRole("heading", { level: 1, name: /Tokens/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: /Fundamentos/ })).toBeInTheDocument();
 
     for (const title of [
       "Color",
@@ -79,7 +79,7 @@ describe("páginas del catálogo", () => {
     }
   });
 
-  it("muestra color y roles semánticos", () => {
+  it("shows color and semantic roles", () => {
     renderPage(<TokensColorPage />);
 
     expect(screen.getByRole("heading", { level: 2, name: /Paleta/ })).toBeInTheDocument();
@@ -88,7 +88,7 @@ describe("páginas del catálogo", () => {
     expect(screen.getByText("--koten-sale")).toBeInTheDocument();
   });
 
-  it("muestra tipografía, espaciado y forma", () => {
+  it("shows typography, spacing and shape", () => {
     const typography = renderPage(<TokensTypographyPage />);
     expect(screen.getByText("text-4xl")).toBeInTheDocument();
     typography.unmount();
@@ -101,7 +101,7 @@ describe("páginas del catálogo", () => {
     expect(screen.getByText("--koten-layout-wide")).toBeInTheDocument();
   });
 
-  it("compara densidades y temas con muestras fijas", () => {
+  it("compares densities and themes with fixed samples", () => {
     const density = renderPage(<TokensDensityPage />);
     expect(density.container.querySelectorAll("div[data-density]")).toHaveLength(3);
     density.unmount();
@@ -110,7 +110,7 @@ describe("páginas del catálogo", () => {
     expect(themes.container.querySelectorAll("article[data-theme]")).toHaveLength(4);
   });
 
-  it("documenta CommandPalette", async () => {
+  it("documents CommandPalette", async () => {
     renderPage(<CommandPalettePage />);
 
     expect(screen.getByRole("heading", { level: 1, name: /CommandPalette/ })).toBeInTheDocument();
@@ -124,7 +124,7 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("option", { name: /Ver pedidos/ })).toBeInTheDocument();
   });
 
-  it("documenta DatePicker y Calendar", () => {
+  it("documents DatePicker and Calendar", () => {
     renderPage(<DatePickerPage />);
 
     expect(screen.getByRole("heading", { level: 1, name: /DatePicker/ })).toBeInTheDocument();
@@ -132,19 +132,17 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("table", { name: /octubre de 2026/i })).toBeInTheDocument();
   });
 
-  it("responde al locale en la vista previa de formato", () => {
+  it("follows the locale in the format preview", () => {
     renderPage(<TokensFormatPage />, "ja");
 
     expect(screen.getAllByText("閉じる").length).toBeGreaterThan(0);
     expect(screen.getAllByText("2026/10/21").length).toBeGreaterThan(0);
   });
 
-  it("indexa y documenta los tres componentes", () => {
+  it("indexes and documents the three components", () => {
     const index = renderPage(<ComponentsIndexPage />);
     expect(screen.getAllByRole("link", { name: /^Button/ }).length).toBeGreaterThan(0);
-    expect(
-      screen.getByRole("table", { name: "Inventario de primitivas de la fase 1" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("table", { name: "Inventario de primitivas" })).toBeInTheDocument();
     expect(screen.getAllByRole("row")).toHaveLength(46);
     index.unmount();
 
@@ -222,7 +220,7 @@ describe("páginas del catálogo", () => {
     expect(screen.getByRole("toolbar", { name: "Acciones de pedidos" })).toBeInTheDocument();
   });
 
-  it("documenta los patrones de storefront y ERP", () => {
+  it("documents the storefront and ERP patterns", () => {
     const index = renderPage(<PatternsIndexPage />);
     expect(screen.getByRole("heading", { level: 1, name: /Patrones/ })).toBeInTheDocument();
     expect(screen.getAllByRole("row")).toHaveLength(21);
@@ -244,7 +242,7 @@ describe("páginas del catálogo", () => {
     erp.unmount();
   });
 
-  it("muestra una página 404 traducida", () => {
+  it("renders a translated 404 page", () => {
     renderPage(<NotFoundPage />, "en");
 
     expect(screen.getByRole("heading", { name: "Page not found" })).toBeInTheDocument();

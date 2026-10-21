@@ -224,7 +224,7 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
             lang={view.locale}
             className="koten-container flex flex-wrap items-center gap-x-4 gap-y-1 py-1 text-2xs text-muted"
           >
-            <span className="font-semibold">{labels.phase}</span>
+            <span className="font-semibold">{labels.tagline}</span>
             <span aria-hidden="true" className="text-rule-strong">
               /
             </span>
@@ -234,9 +234,7 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
             <span aria-hidden="true" className="text-rule-strong">
               /
             </span>
-            <span>
-              {labels.viewState} · {labels.docsLanguage}
-            </span>
+            <span>{labels.docsLanguage}</span>
           </div>
         </div>
       </header>

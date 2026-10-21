@@ -18,7 +18,7 @@ const copy = {
     title: "Patrones",
     description:
       "Composiciones de primitivas que resuelven una pantalla completa: la página de producto HIKARI y el backoffice KURA. Cada patrón documenta anatomía, props, código y notas de accesibilidad.",
-    meta: "20 patrones · fases 2 y 3 · demos en 5174 y 5175",
+    meta: "20 patrones · demos en 5174 y 5175",
     storefrontTitle: "Storefront",
     storefrontDescription:
       "Header, búsqueda, galería, precio, tarjetas, avisos, ranking, campaña, specs, reseñas y footer.",
@@ -27,7 +27,7 @@ const copy = {
       "Shell, sidebar, topbar, cabecera, filtros, estados, formularios, timeline y drawer de detalle.",
     inventoryTitle: "Inventario de patrones",
     inventoryNote: "Cada ID corresponde a una pieza documentada y usada por un demo.",
-    tableCaption: "Inventario de patrones de las fases 2 y 3",
+    tableCaption: "Inventario de patrones",
     columnId: "ID",
     columnPattern: "Patrón",
     columnPage: "Página",
@@ -39,7 +39,7 @@ const copy = {
     title: "パターン",
     description:
       "プリミティブを組み合わせて画面全体を成立させる構成です。HIKARIの商品ページとKURAのバックオフィスを例に、各パターンの構造、props、コード、アクセシビリティの注意点をまとめます。",
-    meta: "20 パターン · フェーズ 2・3 · デモは 5174 と 5175",
+    meta: "20 パターン · デモは 5174 と 5175",
     storefrontTitle: "ストアフロント",
     storefrontDescription:
       "ヘッダー、検索、ギャラリー、価格、カード、お知らせ、ランキング、キャンペーン、仕様、レビュー、フッター。",
@@ -48,7 +48,7 @@ const copy = {
       "シェル、サイドバー、トップバー、ページヘッダー、絞り込み、ステータス、フォーム、タイムライン、詳細ドロワー。",
     inventoryTitle: "パターン一覧",
     inventoryNote: "各 ID は、ドキュメント化されデモで使われている部品に対応します。",
-    tableCaption: "フェーズ 2・3 のパターン一覧",
+    tableCaption: "パターン一覧",
     columnId: "ID",
     columnPattern: "パターン",
     columnPage: "ページ",
@@ -60,7 +60,7 @@ const copy = {
     title: "Patterns",
     description:
       "Primitive compositions that carry a whole screen: the HIKARI product page and the KURA back office. Each pattern documents anatomy, props, code and accessibility notes.",
-    meta: "20 patterns · phases 2 and 3 · demos on 5174 and 5175",
+    meta: "20 patterns · demos on 5174 and 5175",
     storefrontTitle: "Storefront",
     storefrontDescription:
       "Header, search, gallery, price, cards, notices, ranking, campaign, specs, reviews and footer.",
@@ -69,7 +69,7 @@ const copy = {
       "Shell, sidebar, topbar, page header, filters, statuses, forms, timeline and detail drawer.",
     inventoryTitle: "Pattern inventory",
     inventoryNote: "Each ID maps to a documented piece used by a demo.",
-    tableCaption: "Pattern inventory for phases 2 and 3",
+    tableCaption: "Pattern inventory",
     columnId: "ID",
     columnPattern: "Pattern",
     columnPage: "Page",

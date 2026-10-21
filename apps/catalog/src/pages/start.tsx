@@ -8,11 +8,11 @@ const copy = {
     eyebrow: "Fundamentos · 使い方",
     title: "Empezar",
     description:
-      "Koten UI no es un paquete npm: es un conjunto de archivos que se copian al proyecto. Esta página resume el camino mínimo para levantar las demos, copiar una primitiva y verificar el resultado.",
+      "Koten UI no es un paquete npm: es un conjunto de archivos que se copian al proyecto. Esta página resume el camino mínimo para levantar las demos, copiar una primitiva y usarla en una pantalla real.",
     meta: "Bun 1.4.3 · React 19 · Tailwind 4 · Base UI 1.9",
     requirements: {
-      title: "Requisitos",
-      meta: "Lo que necesita la máquina",
+      title: "Lo que necesitas",
+      meta: "Requisitos del entorno",
       items: [
         "Bun 1.4.3 (workspaces, scripts y tests).",
         "Un navegador moderno: Chrome, Edge, Firefox o Safari recientes.",
@@ -64,9 +64,9 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
     },
     copyComponent: {
       title: "Copiar una primitiva",
-      meta: "La receta de AGENTS.md §9",
+      meta: "De la página a tu código",
       items: [
-        "Verifica el componente en el inventario (C-001…C-062) y su página del catálogo.",
+        "Abre la página del componente que necesitas y lee su preview, props y código.",
         "Copia el archivo y conserva el named export y el `data-slot`.",
         "Mantén las variantes con CVA y los roles semánticos (`primary`, `danger`, `sale`…).",
         "Si necesita composición, usa `render` + `useRender` + `mergeProps`; nunca `asChild`.",
@@ -88,21 +88,22 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
         "Formatos con `formatDate`, `formatCurrency` y `formatNumber`; labels por prop o `KotenProvider`.",
       ],
     },
-    verify: {
-      title: "Verificar antes de entregar",
-      meta: "Barato ahora, caro después",
-      code: `bun run check       # lint, tipos, i18n y tests
-bun run build       # tres apps
-bun run budget      # JS inicial/total, CSS y fuentes
-bun run qa:a11y     # axe, 12 px y foco (requiere dev)
-bun run qa:overflow # desbordamiento y RTL (requiere dev)
-bun run qa:perf     # LCP/CLS sobre el build
-bun run qa:visual   # capturas 1440/1280/1024`,
+    quality: {
+      title: "Calidad incorporada",
+      meta: "Accesibilidad y datos reales",
+      items: [
+        "Navegable con teclado, con foco visible y sin violaciones de axe.",
+        "12 px de piso tipográfico y contraste AA en los cuatro temas.",
+        "Los componentes no contienen strings: los labels llegan por prop o del `KotenProvider`.",
+        "Fechas, moneda y números con `Intl`, nunca concatenados.",
+        "Cada primitiva tiene tests de estados, teclado y ARIA.",
+      ],
+      code: "bun run check   # lint, tipos, i18n y tests",
     },
-    recipes: {
-      title: "Recetas y siguientes pasos",
-      meta: "Del archivo copiado a la pantalla",
-      body: "Las recetas copiables (formulario, tabla densa, drawer, tarjeta de producto) viven en `docs/RECIPES.md`. Cada primitiva tiene su página con preview, props, código y notas de accesibilidad; los patrones muestran cómo se combinan.",
+    next: {
+      title: "Siguientes pasos",
+      meta: "De la pieza a la pantalla",
+      body: "Cada primitiva tiene su página con preview, props, código y notas de accesibilidad. Los patrones muestran cómo se combinan en la página HIKARI y en el backoffice KURA.",
       links: "Ver componentes|Ver patrones",
     },
   },
@@ -110,7 +111,7 @@ bun run qa:visual   # capturas 1440/1280/1024`,
     eyebrow: "基礎 · 使い方",
     title: "はじめかた",
     description:
-      "Koten UI は npm パッケージではありません。プロジェクトにコピーして使うファイル群です。このページでは、デモの起動、プリミティブのコピー、検証までの最短手順をまとめます。",
+      "Koten UI は npm パッケージではありません。プロジェクトにコピーして使うファイル群です。このページでは、デモの起動、プリミティブのコピー、実画面での利用までの最短手順をまとめます。",
     meta: "Bun 1.4.3 · React 19 · Tailwind 4 · Base UI 1.9",
     requirements: {
       title: "必要なもの",
@@ -166,9 +167,9 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
     },
     copyComponent: {
       title: "プリミティブをコピーする",
-      meta: "AGENTS.md §9 の手順",
+      meta: "ページから自分のコードへ",
       items: [
-        "インベントリ（C-001…C-062）とカタログのページで対象を確認する。",
+        "必要なコンポーネントのページを開き、プレビュー・props・コードを読む。",
         "ファイルをコピーし、named export と `data-slot` を保つ。",
         "バリアントは CVA、色は意味的役割（`primary`、`danger`、`sale` など）を使う。",
         "合成が必要なら `render` + `useRender` + `mergeProps`。`asChild` は使いません。",
@@ -190,21 +191,22 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
         "書式は `formatDate`・`formatCurrency`・`formatNumber`。ラベルは props か `KotenProvider`。",
       ],
     },
-    verify: {
-      title: "納品前の検証",
-      meta: "今は安く、後で高くつく",
-      code: `bun run check       # lint・型・i18n・テスト
-bun run build       # 3 アプリ
-bun run budget      # 初期/合計 JS・CSS・フォント
-bun run qa:a11y     # axe・12px・フォーカス（dev 必須）
-bun run qa:overflow # はみ出しと RTL（dev 必須）
-bun run qa:perf     # ビルドの LCP/CLS
-bun run qa:visual   # 1440/1280/1024 のキャプチャ`,
+    quality: {
+      title: "組み込みの品質",
+      meta: "アクセシビリティと実データ",
+      items: [
+        "キーボードで操作でき、フォーカスが可視で、axe の違反がない。",
+        "最小 12px、4 テーマすべてで AA コントラスト。",
+        "コンポーネントに文字列を持たず、ラベルは props か `KotenProvider` から来る。",
+        "日付・通貨・数値は `Intl`。文字列連結は使わない。",
+        "各プリミティブに状態・キーボード・ARIA のテストがある。",
+      ],
+      code: "bun run check   # lint・型・i18n・テスト",
     },
-    recipes: {
-      title: "レシピと次の一歩",
-      meta: "コピーから画面へ",
-      body: "コピー可能なレシピ（フォーム、密なテーブル、ドロワー、商品カード）は `docs/RECIPES.md` にあります。各プリミティブにはプレビュー・props・コード・アクセシビリティ注記のページがあり、パターンでは組み合わせ方を示します。",
+    next: {
+      title: "次の一歩",
+      meta: "部品から画面へ",
+      body: "各プリミティブにはプレビュー・props・コード・アクセシビリティ注記のページがあります。パターンでは、HIKARI の商品ページと KURA のバックオフィスでの組み合わせ方を示します。",
       links: "部品を見る|パターンを見る",
     },
   },
@@ -212,10 +214,10 @@ bun run qa:visual   # 1440/1280/1024 のキャプチャ`,
     eyebrow: "Foundations · 使い方",
     title: "Getting started",
     description:
-      "Koten UI is not an npm package: it is a set of files you copy into your project. This page covers the shortest path to run the demos, copy a primitive and verify the result.",
+      "Koten UI is not an npm package: it is a set of files you copy into your project. This page covers the shortest path to run the demos, copy a primitive and use it in a real screen.",
     meta: "Bun 1.4.3 · React 19 · Tailwind 4 · Base UI 1.9",
     requirements: {
-      title: "Requirements",
+      title: "What you need",
       meta: "What the machine needs",
       items: [
         "Bun 1.4.3 (workspaces, scripts and tests).",
@@ -268,11 +270,11 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
     },
     copyComponent: {
       title: "Copying a primitive",
-      meta: "The AGENTS.md §9 recipe",
+      meta: "From the page to your code",
       items: [
-        "Check the component in the inventory (C-001…C-062) and its catalog page.",
+        "Open the page of the component you need and read its preview, props and code.",
         "Copy the file and keep the named export and the `data-slot`.",
-        "Keep variants in CVA and use semantic roles (`primary`, `danger`, `sale`…).",
+        "Keep variants with CVA and semantic roles (`primary`, `danger`, `sale`…).",
         "For composition use `render` + `useRender` + `mergeProps`; never `asChild`.",
         "Add tests for states, keyboard and ARIA, and document the component in the catalog.",
       ],
@@ -292,21 +294,22 @@ npx shadcn@latest add http://localhost:5173/r/button.json`,
         "Format with `formatDate`, `formatCurrency` and `formatNumber`; labels by prop or `KotenProvider`.",
       ],
     },
-    verify: {
-      title: "Verify before shipping",
-      meta: "Cheap now, expensive later",
-      code: `bun run check       # lint, types, i18n and tests
-bun run build       # three apps
-bun run budget      # initial/total JS, CSS and fonts
-bun run qa:a11y     # axe, 12 px and focus (needs dev)
-bun run qa:overflow # overflow and RTL (needs dev)
-bun run qa:perf     # LCP/CLS on the build
-bun run qa:visual   # 1440/1280/1024 captures`,
+    quality: {
+      title: "Quality built in",
+      meta: "Accessibility and real data",
+      items: [
+        "Keyboard operable, with visible focus and no axe violations.",
+        "A 12 px typographic floor and AA contrast in all four themes.",
+        "Components hold no strings: labels come from props or `KotenProvider`.",
+        "Dates, currency and numbers use `Intl`, never concatenated strings.",
+        "Every primitive has tests for states, keyboard and ARIA.",
+      ],
+      code: "bun run check   # lint, types, i18n and tests",
     },
-    recipes: {
-      title: "Recipes and next steps",
-      meta: "From copied file to screen",
-      body: "Copy-paste recipes (form, dense table, drawer, product card) live in `docs/RECIPES.md`. Every primitive has a page with preview, props, code and accessibility notes; the patterns show how they combine.",
+    next: {
+      title: "Next steps",
+      meta: "From the piece to the screen",
+      body: "Every primitive has a page with preview, props, code and accessibility notes. The patterns show how they combine in the HIKARI product page and the KURA back office.",
       links: "Browse components|Browse patterns",
     },
   },
@@ -318,7 +321,7 @@ const copyByLocale: Record<KotenLocale, Copy> = copy;
 export function StartPage() {
   const { locale } = useKoten();
   const t = copyByLocale[locale];
-  const [componentsLabel, patternsLabel] = t.recipes.links.split("|");
+  const [componentsLabel, patternsLabel] = t.next.links.split("|");
 
   return (
     <article>
@@ -348,6 +351,11 @@ export function StartPage() {
           <Code>{t.project.code2}</Code>
         </Section>
 
+        <Section id="registry" title={t.registry.title} jp="登録" meta={t.registry.meta}>
+          <p className="text-xs leading-relaxed text-muted">{t.registry.body}</p>
+          <Code>{t.registry.code}</Code>
+        </Section>
+
         <Section id="copiar" title={t.copyComponent.title} jp="複写" meta={t.copyComponent.meta}>
           <List items={t.copyComponent.items} label={t.copyComponent.title} />
           <Code>{t.copyComponent.code}</Code>
@@ -357,12 +365,13 @@ export function StartPage() {
           <List items={t.rules.items} label={t.rules.title} />
         </Section>
 
-        <Section id="verificar" title={t.verify.title} jp="検証" meta={t.verify.meta}>
-          <Code>{t.verify.code}</Code>
+        <Section id="calidad" title={t.quality.title} jp="品質" meta={t.quality.meta}>
+          <List items={t.quality.items} label={t.quality.title} />
+          <Code>{t.quality.code}</Code>
         </Section>
 
-        <Section id="recetas" title={t.recipes.title} jp="応用" meta={t.recipes.meta}>
-          <p className="text-xs leading-relaxed text-muted">{t.recipes.body}</p>
+        <Section id="siguientes" title={t.next.title} jp="応用" meta={t.next.meta}>
+          <p className="text-xs leading-relaxed text-muted">{t.next.body}</p>
           <p className="mt-[var(--koten-gap)] flex flex-wrap gap-x-4 gap-y-1 text-xs font-semibold">
             <Link to="/components" className="text-link underline underline-offset-2">
               {componentsLabel}

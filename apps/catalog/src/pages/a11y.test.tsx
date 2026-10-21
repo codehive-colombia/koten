@@ -19,6 +19,7 @@ import { SurfacesPage } from "./components/surfaces";
 import { ErpPatternsPage } from "./patterns/erp";
 import { PatternsIndexPage } from "./patterns/index";
 import { StorefrontPatternsPage } from "./patterns/storefront";
+import { TokensIndexPage } from "./tokens/index";
 
 const pages: readonly [string, ComponentType][] = [
   ["Button", ButtonPage],
@@ -32,14 +33,15 @@ const pages: readonly [string, ComponentType][] = [
   ["Overlays", OverlaysPage],
   ["Datos", DataPage],
   ["Controles", ControlsPage],
+  ["Fundamentos", TokensIndexPage],
   ["Patrones", PatternsIndexPage],
   ["Patrones de storefront", StorefrontPatternsPage],
   ["Patrones de ERP", ErpPatternsPage],
 ];
 
-describe("accesibilidad de las páginas de componentes", () => {
+describe("component page accessibility", () => {
   for (const [name, Page] of pages) {
-    it(`${name} no tiene violaciones serious/critical`, async () => {
+    it(`${name} has no serious/critical violations`, async () => {
       const { container } = render(
         <KotenProvider locale="es">
           <MemoryRouter>

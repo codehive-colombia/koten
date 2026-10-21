@@ -19,8 +19,8 @@ function renderPage(ui: ReactElement, locale: "es" | "ja" | "en") {
   );
 }
 
-describe("i18n del catálogo", () => {
-  it("traduce el cuerpo de la portada al japonés y al inglés", () => {
+describe("catalog i18n", () => {
+  it("translates the landing body into Japanese and English", () => {
     const japanese = renderPage(<OverviewPage />, "ja");
     expect(screen.getByText(/手段の簡素さ/)).toBeInTheDocument();
     expect(screen.getByText("色は意味を示し、装飾しない。")).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe("i18n del catálogo", () => {
     expect(screen.queryByText("Principios")).not.toBeInTheDocument();
   });
 
-  it("traduce secciones, captions y notas de tokens", () => {
+  it("translates token sections, captions and notes", () => {
     renderPage(<TokensColorPage />, "en");
 
     expect(screen.getByRole("heading", { level: 2, name: /^Palette/ })).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe("i18n del catálogo", () => {
     expect(screen.queryByRole("heading", { level: 2, name: /^Paleta/ })).not.toBeInTheDocument();
   });
 
-  it("traduce los labels internos de docs y las notas de props", () => {
+  it("translates the internal docs labels and prop notes", () => {
     renderPage(<ButtonPage />, "en");
 
     expect(screen.getByRole("button", { name: "Copy" })).toBeInTheDocument();
@@ -51,14 +51,14 @@ describe("i18n del catálogo", () => {
     ).toBeInTheDocument();
   });
 
-  it("traduce las páginas de patrones y su inventario", () => {
+  it("translates the pattern pages and their inventory", () => {
     renderPage(<PatternsIndexPage />, "ja");
 
     expect(screen.getByRole("heading", { level: 1, name: /^パターン/ })).toBeInTheDocument();
     expect(screen.getByText(/HIKARIの商品ページとKURAのバックオフィス/)).toBeInTheDocument();
   });
 
-  it("declara el idioma del documento al sincronizar la vista", () => {
+  it("declares the document language when syncing the view", () => {
     syncViewToUrl({ theme: "kanso", density: "default", locale: "ja" });
     expect(document.documentElement.lang).toBe("ja");
 
@@ -66,13 +66,13 @@ describe("i18n del catálogo", () => {
     expect(document.documentElement.lang).toBe("en");
   });
 
-  it("mantiene los labels de shell en los tres idiomas", () => {
+  it("keeps the shell labels in all three languages", () => {
     for (const locale of ["es", "ja", "en"] as const) {
       const labels = shellLabels[locale];
 
       expect(labels.docsLanguage.length).toBeGreaterThan(0);
       expect(labels.catalog.length).toBeGreaterThan(0);
-      expect(labels.phase.length).toBeGreaterThan(0);
+      expect(labels.tagline.length).toBeGreaterThan(0);
     }
 
     expect(shellLabels.es.docsLanguage).not.toBe(shellLabels.en.docsLanguage);

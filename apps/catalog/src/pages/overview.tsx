@@ -19,7 +19,7 @@ const copy = {
     title: "Koten UI",
     description:
       "Sencillez de medios, densidad de información. Un sistema de componentes para el web japonés clásico, validado en un catálogo, un storefront y un ERP.",
-    meta: "Fases 1–3 cerradas · 45 primitivas · 20 patrones · 4 temas · 3 densidades",
+    meta: "45 primitivas · 20 patrones · 4 temas · 3 densidades · ES/JA/EN",
     principles: [
       "El marco es la unidad: panel, cabecera, regla, borde.",
       "El color señala; no decora.",
@@ -54,17 +54,19 @@ const copy = {
     demos: "Demos",
     demosJp: "デモ",
     principlesTitle: "Principios",
-    statusTitle: "Estado",
-    statusBadge: "Fases 1–3",
+    statusTitle: "De un vistazo",
+    statusBadge: "4 temas",
     statusBody:
-      "Primitivas, storefront HIKARI y ERP KURA comparten tokens, componentes y reglas. Los selectores de tema, densidad e idioma modifican la interfaz; las muestras fijas comparan valores.",
+      "Primitivas, storefront HIKARI y ERP KURA comparten tokens, componentes y reglas. Elige un tema, una densidad y un idioma: el catálogo entero responde, incluidas tablas y ejemplos.",
+    components: "Primitivas",
+    componentsValue: "45 · 20 patrones",
     themes: "Temas",
     themesValue: "Chirashi · Daichō · Kanso · Sumi",
     densities: "Densidades",
     densitiesValue: "Compacta · Default · Amplia",
     languages: "Idiomas de UI",
     languagesValue: "ES · JA · EN",
-    explore: "Explorar tokens",
+    explore: "Explorar fundamentos",
     noteStrong: "Cómo leer este catálogo.",
     noteBody:
       "La documentación está completa en ES/JA/EN: el selector de idioma cambia el cuerpo, la interfaz y los ejemplos. El tema y la densidad afectan toda la página, incluidas las tablas y el espaciado.",
@@ -74,7 +76,7 @@ const copy = {
     title: "Koten UI",
     description:
       "手段の簡素さ、情報の密度。古典的な日本のウェブのためのコンポーネントシステム。カタログ、店舗、ERPで検証する。",
-    meta: "フェーズ1〜3完了 · 42プリミティブ · 20パターン · 4テーマ · 3密度",
+    meta: "45プリミティブ · 20パターン · 4テーマ · 3密度 · ES/JA/EN",
     principles: [
       "枠が単位：パネル、見出し、罫線、境界。",
       "色は意味を示し、装飾しない。",
@@ -107,17 +109,19 @@ const copy = {
     demos: "デモ",
     demosJp: "デモ",
     principlesTitle: "原則",
-    statusTitle: "状態",
-    statusBadge: "フェーズ1〜3",
+    statusTitle: "概要",
+    statusBadge: "4テーマ",
     statusBody:
-      "プリミティブ、店舗HIKARI、ERP KURAはトークン・コンポーネント・ルールを共有する。テーマ、密度、言語のセレクタはUIを変え、固定サンプルは値を比較する。",
+      "プリミティブ、店舗HIKARI、ERP KURAはトークン・コンポーネント・ルールを共有する。テーマ、密度、言語を選ぶと、表や例を含むカタログ全体が反応する。",
+    components: "プリミティブ",
+    componentsValue: "45 · 20パターン",
     themes: "テーマ",
     themesValue: "Chirashi · Daichō · Kanso · Sumi",
     densities: "密度",
     densitiesValue: "コンパクト · 標準 · ゆったり",
     languages: "UI言語",
     languagesValue: "ES · JA · EN",
-    explore: "トークンを見る",
+    explore: "基礎を見る",
     noteStrong: "このカタログの読み方。",
     noteBody:
       "ドキュメントはES/JA/ENで完備され、言語セレクタで本文・UI・例が切り替わる。テーマと密度は表や余白を含むページ全体に影響する。",
@@ -127,7 +131,7 @@ const copy = {
     title: "Koten UI",
     description:
       "Simplicity of means, density of information. A component system for the classic Japanese web, validated in a catalog, a storefront and an ERP.",
-    meta: "Phases 1–3 complete · 45 primitives · 20 patterns · 4 themes · 3 densities",
+    meta: "45 primitives · 20 patterns · 4 themes · 3 densities · ES/JA/EN",
     principles: [
       "The frame is the unit: panel, header, rule, border.",
       "Color signals; it does not decorate.",
@@ -161,17 +165,19 @@ const copy = {
     demos: "Demos",
     demosJp: "デモ",
     principlesTitle: "Principles",
-    statusTitle: "Status",
-    statusBadge: "Phases 1–3",
+    statusTitle: "At a glance",
+    statusBadge: "4 themes",
     statusBody:
-      "Primitives, the HIKARI storefront and the KURA ERP share tokens, components and rules. Theme, density and language selectors change the UI; fixed samples compare values.",
+      "Primitives, the HIKARI storefront and the KURA ERP share tokens, components and rules. Pick a theme, a density and a language: the whole catalog responds, tables and examples included.",
+    components: "Primitives",
+    componentsValue: "45 · 20 patterns",
     themes: "Themes",
     themesValue: "Chirashi · Daichō · Kanso · Sumi",
     densities: "Densities",
     densitiesValue: "Compact · Default · Comfortable",
     languages: "UI languages",
     languagesValue: "ES · JA · EN",
-    explore: "Explore tokens",
+    explore: "Explore foundations",
     noteStrong: "How to read this catalog.",
     noteBody:
       "Documentation is complete in ES/JA/EN: the language selector switches the body, the UI and the examples. Theme and density affect the whole page, including tables and spacing.",
@@ -226,7 +232,7 @@ export function OverviewPage() {
             <PanelTitle as="h2">{t.principlesTitle}</PanelTitle>
             <PanelActions>
               <Badge tone="new" dot>
-                v0.1 POC
+                ES · JA · EN
               </Badge>
             </PanelActions>
           </PanelHeader>
@@ -256,6 +262,8 @@ export function OverviewPage() {
           <PanelBody>
             <p className="text-xs text-muted">{t.statusBody}</p>
             <dl className="mt-[var(--koten-gap)] grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-2xs">
+              <dt className="text-faint">{t.components}</dt>
+              <dd className="text-end">{t.componentsValue}</dd>
               <dt className="text-faint">{t.themes}</dt>
               <dd className="text-end">{t.themesValue}</dd>
               <dt className="text-faint">{t.densities}</dt>

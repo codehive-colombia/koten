@@ -172,8 +172,8 @@ const copy = {
     },
     inventory: {
       heading: "Inventario de primitivas",
-      description: "Todas las piezas de la fase 1, con su página de referencia y su ID estable.",
-      caption: "Inventario de primitivas de la fase 1",
+      description: "Todas las primitivas, con su página de referencia y su ID estable.",
+      caption: "Inventario de primitivas",
       id: "ID",
       component: "Componente",
       page: "Página",
@@ -260,8 +260,8 @@ const copy = {
     },
     inventory: {
       heading: "プリミティブ一覧",
-      description: "フェーズ1のすべての部品。参照ページと安定したID付き。",
-      caption: "フェーズ1のプリミティブ一覧",
+      description: "すべてのプリミティブ。参照ページと安定したID付き。",
+      caption: "プリミティブ一覧",
       id: "ID",
       component: "コンポーネント",
       page: "ページ",
@@ -348,8 +348,8 @@ const copy = {
     },
     inventory: {
       heading: "Primitive inventory",
-      description: "Every piece from phase 1, with its reference page and stable ID.",
-      caption: "Phase 1 primitive inventory",
+      description: "Every primitive, with its reference page and stable ID.",
+      caption: "Primitive inventory",
       id: "ID",
       component: "Component",
       page: "Page",

@@ -25,7 +25,7 @@ const copy = {
     title: "Patrones de ERP",
     description:
       "Las nueve piezas del backoffice KURA: shell, navegación lateral, topbar, cabecera de página, filtros, estados, formularios, timeline y drawer de detalle. La tabla es el centro; el color solo refuerza.",
-    meta: "C-053 … C-061 · demo real en http://localhost:5175",
+    meta: "9 piezas · demo real en http://localhost:5175",
     shellSectionTitle: "AppShell, SideNav y TopBar",
     shellSectionMeta: "232 px + contenido; skip link",
     navLabel: "Navegación principal",
@@ -219,7 +219,7 @@ const copy = {
     title: "ERP のパターン",
     description:
       "KURA バックオフィスを構成する 9 の部品。シェル、サイドナビゲーション、トップバー、ページヘッダー、絞り込み、ステータス、フォーム、タイムライン、詳細ドロワー。主役は表で、色は補助に留めます。",
-    meta: "C-053 … C-061 · 実デモ http://localhost:5175",
+    meta: "9 部品 · 実デモ http://localhost:5175",
     shellSectionTitle: "AppShell、SideNav、TopBar",
     shellSectionMeta: "232 px + コンテンツ、スキップリンク",
     navLabel: "メインナビゲーション",
@@ -413,7 +413,7 @@ const copy = {
     title: "ERP patterns",
     description:
       "The nine pieces of the KURA back office: shell, side navigation, topbar, page header, filters, statuses, forms, timeline and detail drawer. The table is the centre; colour only reinforces.",
-    meta: "C-053 … C-061 · live demo at http://localhost:5175",
+    meta: "9 pieces · live demo at http://localhost:5175",
     shellSectionTitle: "AppShell, SideNav and TopBar",
     shellSectionMeta: "232 px + content; skip link",
     navLabel: "Main navigation",

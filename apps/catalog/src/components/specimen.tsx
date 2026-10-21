@@ -1,7 +1,16 @@
-// biome-ignore-all lint/a11y/noNoninteractiveTabindex: regiones desplazables accesibles con teclado (F4-002).
-import { cn, type KotenLocale, useKoten } from "@koten/ui";
+// biome-ignore-all lint/a11y/noNoninteractiveTabindex: scroll regions kept keyboard accessible (F4-002).
+import { cn, formatCurrency, formatDate, type KotenLocale, useKoten } from "@koten/ui";
 import type { ReactNode } from "react";
-import type { ColorToken, DensityId, SemanticRole, ThemeId } from "../data/tokens";
+import {
+  type ColorToken,
+  type DensityId,
+  primitiveColors,
+  radii,
+  type SemanticRole,
+  spacingScale,
+  type ThemeId,
+  themes,
+} from "../data/tokens";
 import { type Localized, pickLocalized } from "../lib/i18n";
 
 const specimenLabels: Record<
@@ -32,6 +41,9 @@ const specimenLabels: Record<
     order: string;
     filter: string;
     apply: string;
+    specimenTitle: string;
+    specimenType: string;
+    specimenNote: string;
   }
 > = {
   es: {
@@ -60,6 +72,9 @@ const specimenLabels: Record<
     order: "Pedido",
     filter: "Filtrar",
     apply: "Aplicar",
+    specimenTitle: "Hoja de muestras",
+    specimenType: "Serif, sans y mono sobre el papel del tema.",
+    specimenNote: "Cuatro temas sobre la misma estructura",
   },
   ja: {
     roleCaption: "チラシ・台帳・簡素の各テーマで解決される意味的役割",
@@ -87,6 +102,9 @@ const specimenLabels: Record<
     order: "注文",
     filter: "フィルタ",
     apply: "適用",
+    specimenTitle: "見本帳",
+    specimenType: "テーマの紙に載るセリフ・サンズ・等幅。",
+    specimenNote: "同じ構造に載る4つのテーマ",
   },
   en: {
     roleCaption: "Semantic roles resolved across the Chirashi, Daichō and Kanso themes",
@@ -114,6 +132,9 @@ const specimenLabels: Record<
     order: "Order",
     filter: "Filter",
     apply: "Apply",
+    specimenTitle: "Sample sheet",
+    specimenType: "Serif, sans and mono on the theme paper.",
+    specimenNote: "Four themes on the same structure",
   },
 };
 
@@ -538,5 +559,181 @@ export function ThemeCard({
         </div>
       </div>
     </article>
+  );
+}
+
+/**
+ * A composed "sample sheet": type, price, status and the four themes in one band.
+ * It shows the foundations working together instead of describing them.
+ */
+export function FoundationsSpecimen() {
+  const { locale } = useKoten();
+  const labels = specimenLabels[locale];
+  const price = formatCurrency(128000, { locale });
+
+  return (
+    <section className="border border-rule bg-surface">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-rule bg-tint px-[var(--koten-panel-p)] py-1.5">
+        <p className="text-2xs font-semibold uppercase tracking-[0.14em] text-muted">
+          {labels.specimenTitle}
+        </p>
+        <p className="font-mono text-2xs text-faint">koten · 見本帳</p>
+      </div>
+      <div className="grid md:grid-cols-[1.1fr_1fr]">
+        <div className="border-b border-rule p-[calc(var(--koten-panel-p)*1.5)] md:border-b-0 md:border-e">
+          <p lang="ja" className="font-serif text-4xl font-semibold leading-tight">
+            情報の密度
+          </p>
+          <p className="mt-2 max-w-xs text-xs leading-relaxed text-muted">{labels.specimenType}</p>
+          <p className="mt-4 font-serif text-2xl font-semibold tabular-nums text-primary">
+            {price}
+          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-1.5">
+            <span className="border border-success bg-surface px-1.5 py-0.5 text-2xs text-success">
+              {labels.stockAvailable}
+            </span>
+            <span className="border border-warning bg-surface px-1.5 py-0.5 text-2xs text-warning">
+              {labels.stockLow}
+            </span>
+            <span className="border border-danger bg-surface px-1.5 py-0.5 text-2xs text-danger">
+              {labels.stockOut}
+            </span>
+            <span className="inline-flex items-center border border-rule-strong bg-surface px-1.5 py-0.5 text-2xs outline-2 outline-offset-1 outline-focus">
+              {labels.focus}
+            </span>
+          </div>
+        </div>
+        <div className="p-[calc(var(--koten-panel-p)*1.5)]">
+          <p className="text-2xs text-faint">{labels.specimenNote}</p>
+          <ul className="mt-[var(--koten-gap)] grid grid-cols-2 gap-[var(--koten-gap)]">
+            {themes.map((theme) => (
+              <li key={theme.id} data-theme={theme.id} className="border border-rule bg-surface">
+                <span aria-hidden="true" className="flex h-6">
+                  <span className="flex-1 bg-primary" />
+                  <span className="w-3 bg-surface" />
+                  <span className="w-3 bg-tint" />
+                </span>
+                <span className="block border-t border-rule px-2 py-1 text-2xs font-semibold">
+                  {theme.label} <span className="font-normal text-faint">{theme.jp}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export type FoundationKind =
+  | "color"
+  | "type"
+  | "spacing"
+  | "shape"
+  | "density"
+  | "themes"
+  | "format";
+
+const previewDate = Date.UTC(2026, 9, 21, 12);
+
+/** Small, live preview of one foundation; used by the Foundations landing cards. */
+export function FoundationPreview({ kind }: { kind: FoundationKind }) {
+  const { locale } = useKoten();
+
+  if (kind === "color") {
+    return (
+      <span aria-hidden="true" className="flex items-end gap-1">
+        {primitiveColors.slice(0, 9).map((color) => (
+          <span
+            key={color.token}
+            className="h-10 flex-1 border border-rule"
+            style={{ background: `var(${color.token})` }}
+          />
+        ))}
+      </span>
+    );
+  }
+
+  if (kind === "type") {
+    return (
+      <span aria-hidden="true" className="flex items-baseline gap-3">
+        <span className="font-serif text-4xl leading-none">Aa</span>
+        <span lang="ja" className="font-sans text-2xl leading-none text-muted">
+          情報
+        </span>
+        <span className="font-mono text-xs text-faint">0123</span>
+      </span>
+    );
+  }
+
+  if (kind === "spacing") {
+    return (
+      <span aria-hidden="true" className="flex h-12 items-end gap-1">
+        {spacingScale
+          .filter((value) => value <= 32)
+          .map((value) => (
+            <span key={value} className="w-3 bg-primary" style={{ height: `${value * 1.4}px` }} />
+          ))}
+      </span>
+    );
+  }
+
+  if (kind === "shape") {
+    return (
+      <span aria-hidden="true" className="flex items-end gap-3">
+        <span className="size-9 border border-rule-strong bg-tint" />
+        {radii.map((radius) => (
+          <span
+            key={radius.token}
+            className="size-9 border border-rule-strong bg-tint"
+            style={{ borderRadius: `var(${radius.token})` }}
+          />
+        ))}
+        <span className="size-9 rounded-full border border-rule-strong bg-tint" />
+        <span className="h-9 w-12 border border-rule bg-surface shadow-overlay" />
+      </span>
+    );
+  }
+
+  if (kind === "density") {
+    return (
+      <span aria-hidden="true" className="grid gap-1">
+        {(["compact", "default", "comfortable"] as const).map((density) => (
+          <span
+            key={density}
+            data-density={density}
+            className="flex items-center border border-rule bg-tint px-1"
+            style={{ height: "var(--koten-row-h)" }}
+          >
+            <span className="h-1 w-8 bg-primary" />
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  if (kind === "themes") {
+    return (
+      <span aria-hidden="true" className="flex items-end gap-1">
+        {themes.map((theme) => (
+          <span
+            key={theme.id}
+            data-theme={theme.id}
+            className="flex h-10 flex-1 flex-col border border-rule bg-surface"
+          >
+            <span className="h-3 bg-primary" />
+            <span className="h-1 bg-tint" />
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  return (
+    <span aria-hidden="true" className="grid gap-1 font-mono text-2xs tabular-nums text-muted">
+      <span>{formatDate(previewDate, { locale })}</span>
+      <span className="text-ink">{formatCurrency(128000, { locale })}</span>
+      <span>{formatDate(previewDate, { locale, month: "long", day: "numeric" })}</span>
+    </span>
   );
 }
