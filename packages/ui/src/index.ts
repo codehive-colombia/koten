@@ -1,3 +1,58 @@
+export type { AppShellProps } from "./components/patterns/app-shell";
+export { AppShell } from "./components/patterns/app-shell";
+export type { CampaignBannerProps } from "./components/patterns/campaign-banner";
+export { CampaignBanner } from "./components/patterns/campaign-banner";
+export type { DetailDrawerProps, DetailSectionProps } from "./components/patterns/detail-drawer";
+export { DetailDrawer, DetailSection } from "./components/patterns/detail-drawer";
+export type { FilterBarProps } from "./components/patterns/filter-bar";
+export { FilterBar } from "./components/patterns/filter-bar";
+export type {
+  FooterColumn,
+  FooterLink,
+  FooterProps,
+} from "./components/patterns/footer";
+export { Footer } from "./components/patterns/footer";
+export type { FormSectionProps } from "./components/patterns/form-section";
+export { FormSection } from "./components/patterns/form-section";
+export type { NoticeItem, NoticeListProps } from "./components/patterns/notice-list";
+export { NoticeList } from "./components/patterns/notice-list";
+export type { PageHeaderProps } from "./components/patterns/page-header";
+export { PageHeader } from "./components/patterns/page-header";
+export type { PriceBlockProps } from "./components/patterns/price-block";
+export { PriceBlock } from "./components/patterns/price-block";
+export type { ProductCardProps } from "./components/patterns/product-card";
+export { ProductCard } from "./components/patterns/product-card";
+export type {
+  ProductGalleryImage,
+  ProductGalleryProps,
+} from "./components/patterns/product-gallery";
+export { ProductGallery } from "./components/patterns/product-gallery";
+export type { RankedListItem, RankedListProps } from "./components/patterns/ranked-list";
+export { RankedList } from "./components/patterns/ranked-list";
+export type {
+  ReviewDistribution,
+  ReviewItem,
+  ReviewSummaryProps,
+} from "./components/patterns/review-summary";
+export { ReviewSummary } from "./components/patterns/review-summary";
+export type { SearchBarProps, SearchCategoryOption } from "./components/patterns/search-bar";
+export { SearchBar } from "./components/patterns/search-bar";
+export type { SideNavGroup, SideNavItem, SideNavProps } from "./components/patterns/side-nav";
+export { SideNav } from "./components/patterns/side-nav";
+export type { SpecGroup, SpecRow, SpecTableProps } from "./components/patterns/spec-table";
+export { SpecTable } from "./components/patterns/spec-table";
+export type { OrderStatus, StatusBadgeProps } from "./components/patterns/status-badge";
+export { orderStatusTones, StatusBadge } from "./components/patterns/status-badge";
+export type { StoreHeaderProps, StoreNavItem } from "./components/patterns/store-header";
+export { StoreHeader } from "./components/patterns/store-header";
+export type {
+  TimelineEvent,
+  TimelineProps,
+  TimelineTone,
+} from "./components/patterns/timeline";
+export { Timeline } from "./components/patterns/timeline";
+export type { TopBarProps } from "./components/patterns/top-bar";
+export { TopBar } from "./components/patterns/top-bar";
 export type { AccordionItem, AccordionProps } from "./components/ui/accordion";
 export { Accordion } from "./components/ui/accordion";
 export type { AlertProps, AlertTone } from "./components/ui/alert";
