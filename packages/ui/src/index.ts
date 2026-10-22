@@ -164,8 +164,16 @@ export type { ToolbarButtonProps, ToolbarProps } from "./components/ui/toolbar";
 export { Toolbar, ToolbarButton, ToolbarGroup, ToolbarSeparator } from "./components/ui/toolbar";
 export type { TooltipProps } from "./components/ui/tooltip";
 export { Tooltip } from "./components/ui/tooltip";
-export { type KotenLabels, type KotenLocale, labelsByLocale } from "./i18n/labels";
+export { formatCurrency, formatDate, formatNumber } from "./i18n/format";
+export {
+  fallbackLocale,
+  type KotenBuiltInLocale,
+  type KotenLabels,
+  type KotenLocale,
+  type KotenLocaleCode,
+  labelsByLocale,
+  resolveLabels,
+} from "./i18n/labels";
 export type { KotenConfig, KotenFormatters, KotenProviderProps } from "./i18n/provider";
 export { KotenProvider, useKoten, useKotenFormatters } from "./i18n/provider";
 export { cn } from "./lib/cn";
-export { formatCurrency, formatDate, formatNumber } from "./lib/format";

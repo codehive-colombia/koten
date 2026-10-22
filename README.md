@@ -2,7 +2,7 @@
 
 Sistema de componentes React con la gramática del web japonés clásico: densidad informativa, marcos de 1 px, papel cálido, tipografía del sistema y jerarquía por reglas. **Chirashi** cubre comercio, **Daichō** backoffice, **Kanso** lectura y **Sumi** el modo oscuro.
 
-> **Estado:** fases 0–5 cerradas, tag `v0.1.0-poc` y despliegue en <https://koten.codehive.com.co>. 46 componentes y 20 bloques documentados, demos HIKARI y KURA en ES/JA/EN, auditorías de accesibilidad y performance, registry shadcn y capa de documentación para agentes.
+> **Estado:** fases 0–5 cerradas, tag `v0.1.0-poc` y despliegue en <https://koten.codehive.com.co>. 46 componentes y 20 bloques documentados, demos HIKARI y KURA en ES/JA/EN, auditorías de accesibilidad y performance, registry shadcn, i18n personalizable y tres skills para agentes.
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación
@@ -14,9 +14,9 @@ Sistema de componentes React con la gramática del web japonés clásico: densid
 | [docs/DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) | Gramática visual, tokens, componentes, i18n y accesibilidad. |
 | [docs/DECISIONS.md](./docs/DECISIONS.md) | Decisiones con IDs estables. |
 | [docs/PROGRESS.md](./docs/PROGRESS.md) | Bitácora append-only y handoff. |
-| [docs/RECIPES.md](./docs/RECIPES.md) | Recetas copiables de formulario, tabla, drawer y tarjeta. |
+| [docs/RECIPES.md](./docs/RECIPES.md) | Recetas copiables de formulario, tabla, drawer, tarjeta e i18n. |
 | [llms.txt](./llms.txt) | Índice de documentación para agentes. |
-| [skills/](./skills) | Skills `koten-ui` y `koten-design-system`. |
+| [skills/](./skills) | Skills `koten-ui`, `koten-design-system` y `koten-design-language`. |
 | [docs/qa/](./docs/qa/) | Capturas de QA visual por fecha. |
 | [AGENTS.md](./AGENTS.md) | Protocolo para retomar el proyecto. |
 
@@ -85,7 +85,7 @@ npx shadcn@latest add https://koten.codehive.com.co/r/koten-theme.json
 npx shadcn@latest add https://koten.codehive.com.co/r/button.json
 ```
 
-En local, `bun run dev` sirve el registry en `http://localhost:5173/r/`. Los items usan los aliases de `components.json` (`@ui`, `@components`, `@lib`) y reescriben los imports al prefijo del proyecto. `koten-theme` es una dependencia y escribe tokens, temas y densidad en el `tailwind.css` declarado; no crea una carpeta `styles/`.
+En local, `bun run dev` sirve el registry en `http://localhost:5173/r/`. Los items usan los aliases de `components.json` (`@ui`, `@components`, `@lib`) y reescriben los imports al prefijo del proyecto. `koten-theme` escribe tokens, temas y densidad en el `tailwind.css` declarado; no crea una carpeta `styles/`. `koten-i18n` instala el runtime y el inglés; `koten-i18n-es` y `koten-i18n-ja` agregan solo su diccionario.
 
 ## IA y agentes
 
@@ -95,12 +95,14 @@ Tres niveles, generados desde la misma fuente que el catálogo:
 | --- | --- | --- |
 | Lectura | `/llms.txt`, `/llms-full.txt`, `/md/components/<slug>.md`, `/md/blocks/<categoría>/<slug>.md` | Índice, corpus y una página por pieza. |
 | Consumo | `skills/koten-ui` | Elegir, instalar, componer, tematizar y verificar. |
-| Extensión | `skills/koten-design-system` | Agregar primitivas, bloques, temas y densidades. |
+| Extensión | `skills/koten-design-system` | Agregar primitivas, bloques, temas y densidades dentro del repositorio. |
+| Autoría | `skills/koten-design-language` | Crear una pieza nueva en un proyecto que ya usa Koten. |
 
 ```bash
 npx skills add codehive-colombia/koten --list
 npx skills add codehive-colombia/koten --skill koten-ui
 npx skills add codehive-colombia/koten --skill koten-design-system
+npx skills add codehive-colombia/koten --skill koten-design-language
 ```
 
 La página `/ai` explica los tres niveles. `predev` y `prebuild` regeneran la capa de agentes junto con el registry; `bun run ai:check` corre dentro de `bun run check`. Las skills siguen el estándar [Agent Skills](https://agentskills.io/specification).
@@ -123,7 +125,7 @@ Con Bun, cambia `npx` por `bunx`. El catálogo recuerda la elección en `localSt
 Después:
 
 1. Importa el CSS de Tailwind que declara tu `components.json`; el tema se escribe ahí.
-2. Envuelve la app con `KotenProvider` (`@/lib/koten/provider` o tu alias).
+2. Envuelve la app con `KotenProvider` (`@/lib/koten/i18n/provider` o tu alias); `locale` acepta cualquier BCP 47.
 3. Elige tema y densidad en el elemento raíz (`data-theme`, `data-density`).
 4. Consulta **Componentes** (`/components`) y **Bloques** (`/blocks`) para instalación, props, código y accesibilidad.
 
@@ -158,7 +160,7 @@ packages/
     src/styles/globals.css
     src/lib/
 infra/nginx/    # runtime de producción
-skills/         # skills para agentes
+skills/         # koten-ui, koten-design-system y koten-design-language
 scripts/        # registry, documentación para agentes y QA
 docs/           # requisitos, diseño, decisiones y bitácora
 Dockerfile

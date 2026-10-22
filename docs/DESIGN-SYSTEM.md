@@ -421,13 +421,26 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 
 ## 7. i18n
 
+Koten separa tres capas y no impone un runtime de contenido:
+
+| Capa | Dueño | Contrato |
+| --- | --- | --- |
+| Labels internos | Koten | `lib/koten/i18n/messages/*.json`; el inglés es la base. |
+| Copy del producto | La app | Diccionarios propios o i18next/FormatJS/Lingui. |
+| Fechas, moneda y números | `Intl` | `useKotenFormatters()`. |
+
 - Los componentes no contienen strings de UI. Todo label pasa por props o por `KotenProvider`.
+- `locale` acepta cualquier BCP 47 (`es`, `ja-JP`, `fr-FR`). ES/JA/EN son los idiomas del catálogo y los diccionarios incluidos, no un requisito del consumidor (`R-004`, `D-049`).
+- El item `koten-i18n` instala el runtime y el inglés base; `koten-i18n-es` y `koten-i18n-ja` agregan su JSON. Cada pack se registra en `lib/koten/i18n/dictionaries.ts`.
+- Los diccionarios son JSON: el `tsconfig` del consumidor necesita `resolveJsonModule` (Vite y Next lo traen por defecto).
+- `labels` en `KotenProvider` acepta un diccionario completo o un override parcial. La base es el diccionario del locale o, si no existe, el inglés; los overrides se aplican al final.
+- `useKoten()` tipa el locale como los diccionarios instalados; para un idioma sin diccionario se usa `useKoten<string>()` o la unión propia de la app.
 - Textos internos: cerrar, anterior, siguiente, vacío, cargando, seleccionar, quitar.
 - `Intl.DateTimeFormat` y `Intl.NumberFormat`.
-- Moneda: JPY sin decimales; EUR/USD con dos.
+- Moneda: JPY sin decimales; EUR/USD con dos. El provider fija `currency` y `timeZone`.
 - Fechas: `2026/10/21 (水)` en JA; `21 oct 2026` en ES; `Oct 21, 2026` en EN.
 - Calendario japonés (令和) como opción, no por defecto.
-- `lang` correcto en `<html>` y en fragmentos.
+- `lang` correcto en `<html>` y en fragmentos; lo declara la app, no el provider.
 - Propiedades lógicas (`ms`, `me`, `ps`, `pe`, `start`, `end`) para RTL best-effort.
 - Evitar alturas fijas en textos; usar `min-height` y `text-wrap: pretty`.
 - Probar ES/EN, que suelen ser más largos que JA.
@@ -609,14 +622,16 @@ Las skills siguen el estándar [Agent Skills](https://agentskills.io/specificati
 | Skill | Para qué |
 | --- | --- |
 | `koten-ui` | Elegir, instalar, componer, tematizar y verificar una pantalla con las piezas existentes. |
-| `koten-design-system` | Agregar una primitiva o un bloque, crear tokens/temas/densidades y aplicar la gramática a un sistema nuevo. |
+| `koten-design-system` | Agregar una primitiva o un bloque, crear tokens/temas/densidades dentro del repositorio y aplicar la gramática a un sistema nuevo. |
+| `koten-design-language` | Crear una pieza que el catálogo no trae, en cualquier proyecto que ya use Koten: esencia, tokens, marcos, sombras, contraste y accesibilidad. |
 
 Estructura:
 
 - `SKILL.md` corto, con el **qué** y el **cuándo** en `name`/`description`.
-- `references/` con el detalle que solo se carga cuando hace falta: inventario, composición, calidad, gramática, blueprint y extensión.
+- `references/` con el detalle que solo se carga cuando hace falta: inventario, composición, calidad, gramática, blueprint, extensión, tokens y verificación.
 - Referencias relativas, sin rutas absolutas ni secretos.
 - El inventario y los enlaces a guías se generan; no se editan a mano.
+- Cada token `--koten-*` citado por una skill debe existir en `tokens.css`/`globals.css`; `ai:check` falla si una skill inventa uno.
 
 La instalación típica es:
 
@@ -624,12 +639,13 @@ La instalación típica es:
 npx skills add codehive-colombia/koten --list
 npx skills add codehive-colombia/koten --skill koten-ui
 npx skills add codehive-colombia/koten --skill koten-design-system
+npx skills add codehive-colombia/koten --skill koten-design-language
 ```
 
 ### 14.3 Generación y control
 
 - `bun run ai:docs` regenera `apps/catalog/public/llms.txt`, `llms-full.txt`, `md/**` y los archivos rastreados (`llms.txt` raíz y `skills/koten-ui/references/{inventory,guides}.md`).
-- `bun run ai:check` falla si un archivo rastreado está desactualizado o si una skill rompe el frontmatter o una referencia relativa. Forma parte de `bun run check`.
+- `bun run ai:check` falla si un archivo rastreado está desactualizado, si una skill rompe el frontmatter o una referencia relativa, o si cita un token `--koten-*` que el tema no declara. Forma parte de `bun run check`.
 - `predev` y `prebuild` del catálogo generan la capa de agentes junto con el registry, así que el sitio y la imagen de producción nunca publican documentación vieja.
 - El catálogo tiene una página `/ai` con los tres niveles, los comandos y el enlace a los artefactos.
 

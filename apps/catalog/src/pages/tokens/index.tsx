@@ -62,7 +62,7 @@ const copy = {
         title: "Idioma y formato",
         jp: "言語と書式",
         kind: "format" as FoundationKind,
-        description: "Fechas, moneda, números y labels con Intl en ES/JA/EN.",
+        description: "Fechas, moneda, números y labels; cualquier locale y diccionarios editables.",
       },
     ],
     start: {
@@ -125,7 +125,7 @@ const copy = {
         title: "言語と書式",
         jp: "言語と書式",
         kind: "format" as FoundationKind,
-        description: "ES/JA/ENでのIntlによる日付、通貨、数値、ラベル。",
+        description: "Intlによる日付、通貨、数値、ラベル。任意のロケールと編集可能な辞書。",
       },
     ],
     start: {
@@ -188,7 +188,7 @@ const copy = {
         title: "Language & format",
         jp: "言語と書式",
         kind: "format" as FoundationKind,
-        description: "Dates, currency, numbers and labels with Intl in ES/JA/EN.",
+        description: "Dates, currency, numbers and labels; any locale and editable dictionaries.",
       },
     ],
     start: {

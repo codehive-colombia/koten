@@ -73,6 +73,7 @@ describe("agent documentation", () => {
     expect(index).toContain(`${siteUrl}/md/blocks/storefront/product-card.md`);
     expect(index).toContain("npx skills add codehive-colombia/koten --skill koten-ui");
     expect(index).toContain("koten-design-system");
+    expect(index).toContain("koten-design-language");
   });
 
   it("generates the shared inventory with registry names for FormRow and Calendar", () => {
@@ -103,5 +104,32 @@ describe("agent documentation", () => {
     );
 
     expect(validateSkills(root).join("\n")).toContain("name must match the directory");
+  });
+
+  it("rejects a skill that references a token the theme does not declare", () => {
+    const root = mkdtempSync(join(tmpdir(), "koten-skills-tokens-"));
+    const directory = join(root, "skills", "invented-token");
+    const styles = join(root, "packages/ui/src/styles");
+    mkdirSync(directory, { recursive: true });
+    mkdirSync(styles, { recursive: true });
+    writeFileSync(join(styles, "tokens.css"), ":root { --koten-ok: #000000; }\n");
+    writeFileSync(join(styles, "globals.css"), "@theme { --color-ok: var(--koten-ok); }\n");
+    writeFileSync(
+      join(directory, "SKILL.md"),
+      [
+        "---",
+        "name: invented-token",
+        "description: A skill that uses a role nobody declared.",
+        "---",
+        "",
+        "# Invented",
+        "",
+        "Use `var(--koten-ok)` for the frame and `var(--koten-invented)` for the fill.",
+        "Keep the frame at one pixel and verify the contrast before shipping.",
+        "",
+      ].join("\n"),
+    );
+
+    expect(validateSkills(root).join("\n")).toContain("unknown token --koten-invented");
   });
 });

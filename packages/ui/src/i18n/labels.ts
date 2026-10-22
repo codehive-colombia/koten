@@ -1,4 +1,4 @@
-export type KotenLocale = "es" | "ja" | "en";
+import { labelsByLocale } from "./dictionaries";
 
 export type KotenLabels = {
   close: string;
@@ -25,77 +25,33 @@ export type KotenLabels = {
   optional: string;
 };
 
-export const labelsByLocale: Record<KotenLocale, KotenLabels> = {
-  es: {
-    close: "Cerrar",
-    previous: "Anterior",
-    next: "Siguiente",
-    empty: "Sin resultados",
-    loading: "Cargando…",
-    select: "Seleccionar",
-    remove: "Quitar",
-    search: "Buscar",
-    clear: "Limpiar",
-    apply: "Aplicar",
-    cancel: "Cancelar",
-    confirm: "Confirmar",
-    more: "Más opciones",
-    expand: "Expandir",
-    collapse: "Contraer",
-    sortAscending: "Orden ascendente",
-    sortDescending: "Orden descendente",
-    selectAll: "Seleccionar todo",
-    selected: "seleccionados",
-    noResults: "No se encontraron resultados",
-    required: "Obligatorio",
-    optional: "Opcional",
-  },
-  ja: {
-    close: "閉じる",
-    previous: "前へ",
-    next: "次へ",
-    empty: "該当なし",
-    loading: "読み込み中…",
-    select: "選択",
-    remove: "削除",
-    search: "検索",
-    clear: "クリア",
-    apply: "適用",
-    cancel: "キャンセル",
-    confirm: "確認",
-    more: "その他の操作",
-    expand: "展開",
-    collapse: "折りたたむ",
-    sortAscending: "昇順",
-    sortDescending: "降順",
-    selectAll: "すべて選択",
-    selected: "選択済み",
-    noResults: "結果が見つかりません",
-    required: "必須",
-    optional: "任意",
-  },
-  en: {
-    close: "Close",
-    previous: "Previous",
-    next: "Next",
-    empty: "No results",
-    loading: "Loading…",
-    select: "Select",
-    remove: "Remove",
-    search: "Search",
-    clear: "Clear",
-    apply: "Apply",
-    cancel: "Cancel",
-    confirm: "Confirm",
-    more: "More options",
-    expand: "Expand",
-    collapse: "Collapse",
-    sortAscending: "Sort ascending",
-    sortDescending: "Sort descending",
-    selectAll: "Select all",
-    selected: "selected",
-    noResults: "No results found",
-    required: "Required",
-    optional: "Optional",
-  },
-};
+/** Locales with an installed dictionary. */
+export type KotenBuiltInLocale = keyof typeof labelsByLocale;
+
+/**
+ * Locale used by apps and dictionaries: the installed built-ins.
+ * In the registry core this is only `"en"`; installing more packs widens it.
+ */
+export type KotenLocale = KotenBuiltInLocale;
+
+/** Any BCP 47 tag; the installed locales keep autocomplete. */
+export type KotenLocaleCode = KotenLocale | (string & {});
+
+/** Locale used when no dictionary matches. The core always installs English. */
+export const fallbackLocale: KotenLocale = "en";
+
+export { labelsByLocale };
+
+/**
+ * Resolves the labels for a locale: the installed dictionary for that locale,
+ * or the English base when there is none, then the provider overrides.
+ */
+export function resolveLabels(
+  locale: KotenLocaleCode,
+  overrides?: Partial<KotenLabels>,
+): KotenLabels {
+  const base = labelsByLocale[locale as KotenLocale] ?? {};
+  const labels = { ...labelsByLocale[fallbackLocale], ...base };
+
+  return overrides ? { ...labels, ...overrides } : labels;
+}

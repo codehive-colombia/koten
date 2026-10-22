@@ -57,7 +57,7 @@ const siteUrl = (process.env.KOTEN_SITE_URL?.trim() || "https://koten.codehive.c
 
 const themeName = "koten-theme";
 
-type RegistryFileType = "registry:ui" | "registry:component" | "registry:lib";
+type RegistryFileType = "registry:ui" | "registry:component" | "registry:lib" | "registry:file";
 
 type RegistryFile = {
   path: string;
@@ -66,7 +66,12 @@ type RegistryFile = {
   content: string;
 };
 
-type RegistryItemType = "registry:ui" | "registry:block" | "registry:theme";
+type RegistryItemType =
+  | "registry:ui"
+  | "registry:block"
+  | "registry:theme"
+  | "registry:lib"
+  | "registry:file";
 
 type RegistryItem = {
   $schema: string;
@@ -184,7 +189,10 @@ function toRegistryPath(file: string): string {
   if (file.startsWith(patternsRoot)) {
     return `components/patterns/${relative(patternsRoot, file)}`;
   }
-  if (file.startsWith(libRoot) || file.startsWith(i18nRoot)) {
+  if (file.startsWith(i18nRoot)) {
+    return `lib/koten/i18n/${relative(i18nRoot, file)}`;
+  }
+  if (file.startsWith(libRoot)) {
     return `lib/koten/${basename(file)}`;
   }
 
@@ -208,6 +216,7 @@ function toTarget(file: string): string {
 function toType(file: string): RegistryFileType {
   const path = toRegistryPath(file);
 
+  if (path.endsWith(".json")) return "registry:file";
   if (path.startsWith("components/ui/")) return "registry:ui";
   if (path.startsWith("components/patterns/")) return "registry:component";
 
@@ -222,7 +231,13 @@ function toImportPath(file: string): string {
 function resolveLocal(from: string, specifier: string): string {
   const base = resolve(dirname(from), specifier);
 
-  for (const candidate of [`${base}.ts`, `${base}.tsx`, join(base, "index.ts")]) {
+  for (const candidate of [
+    base,
+    `${base}.ts`,
+    `${base}.tsx`,
+    `${base}.json`,
+    join(base, "index.ts"),
+  ]) {
     try {
       if (statSync(candidate).isFile()) return candidate;
     } catch {
@@ -242,6 +257,10 @@ function importsOf(source: string): string[] {
 function rewriteImports(source: string, file: string): string {
   return source.replace(importPattern, (full, specifier: string) => {
     if (!specifier.startsWith(".")) return full;
+
+    // JSON dictionaries stay next to `dictionaries.ts`; shadcn does not need
+    // to rewrite them and a relative path keeps the install self-contained.
+    if (specifier.endsWith(".json")) return full;
 
     return `from "${toImportPath(resolveLocal(file, specifier))}"`;
   });
@@ -360,8 +379,13 @@ function buildThemeItem(): RegistryItem {
   };
 }
 
-function buildItem(entry: string, themeUrl: string): RegistryItem {
-  const files = closure(entry);
+const i18nName = "koten-i18n";
+const localePacks = ["en", "es", "ja"] as const;
+
+function buildItem(entry: string, themeUrl: string, i18nUrl: string): RegistryItem {
+  // The i18n runtime and dictionaries travel in `koten-i18n`, so a component
+  // never carries its own copy that a second install could overwrite.
+  const files = closure(entry).filter((file) => !file.startsWith(i18nRoot));
   const name = basename(entry).replace(/\.tsx$/, "");
   const dependencies = new Set<string>();
 
@@ -386,23 +410,15 @@ function buildItem(entry: string, themeUrl: string): RegistryItem {
     content: rewriteImports(readFileSync(file, "utf8"), file),
   }));
 
-  // The i18n core and `cn` always travel with the component.
-  for (const file of [
-    join(libRoot, "cn.ts"),
-    join(libRoot, "format.ts"),
-    join(libRoot, "intl.ts"),
-    join(i18nRoot, "labels.ts"),
-    join(i18nRoot, "provider.tsx"),
-  ]) {
-    const target = toTarget(file);
+  // `cn` always travels with the component.
+  const cn = join(libRoot, "cn.ts");
 
-    if (registryFiles.some((item) => item.target === target)) continue;
-
+  if (!registryFiles.some((item) => item.target === toTarget(cn))) {
     registryFiles.push({
-      path: toRegistryPath(file),
-      target,
+      path: toRegistryPath(cn),
+      target: toTarget(cn),
       type: "registry:lib",
-      content: rewriteImports(readFileSync(file, "utf8"), file),
+      content: rewriteImports(readFileSync(cn, "utf8"), cn),
     });
   }
 
@@ -413,17 +429,111 @@ function buildItem(entry: string, themeUrl: string): RegistryItem {
     title: titleFor(name),
     description: `Koten UI · ${titleFor(name)}. Editable copy with tokens and dependencies.`,
     dependencies: [...dependencies].sort(),
-    registryDependencies: [themeUrl],
+    registryDependencies: [themeUrl, i18nUrl],
     files: registryFiles.sort((first, second) => first.target.localeCompare(second.target)),
+  };
+}
+
+function buildI18nItem(): RegistryItem {
+  const files: RegistryFile[] = ["provider.tsx", "labels.ts", "format.ts", "intl.ts"].map(
+    (name) => {
+      const file = join(i18nRoot, name);
+
+      return {
+        path: toRegistryPath(file),
+        target: toTarget(file),
+        type: toType(file),
+        content: rewriteImports(readFileSync(file, "utf8"), file),
+      };
+    },
+  );
+  const dictionaries = join(i18nRoot, "dictionaries.ts");
+
+  files.push({
+    path: toRegistryPath(dictionaries),
+    target: toTarget(dictionaries),
+    type: "registry:lib",
+    content: [
+      'import type { KotenLabels } from "@/lib/koten/i18n/labels";',
+      'import en from "./messages/en.json";',
+      "",
+      "export const labelsByLocale = { en } satisfies Record<string, KotenLabels>;",
+      "",
+    ].join("\n"),
+  });
+
+  const english = join(i18nRoot, "messages", "en.json");
+
+  files.push({
+    path: toRegistryPath(english),
+    target: toTarget(english),
+    type: "registry:file",
+    content: readFileSync(english, "utf8"),
+  });
+
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: i18nName,
+    type: "registry:lib",
+    title: "Koten I18n",
+    description: "Koten labels, locale resolution and Intl formatters. English base included.",
+    docs: [
+      "Wraps labels and Intl without imposing a content runtime. The base ships English in `lib/koten/i18n/messages/en.json`.",
+      "Add another locale with a `koten-i18n-<locale>` pack, then register it in `lib/koten/i18n/dictionaries.ts`.",
+      "Pass `labels` to `KotenProvider` for a full custom dictionary or a partial override; unknown locales fall back to English.",
+      "ES/JA/EN are the catalog languages and optional dictionaries, not a requirement for consumers.",
+    ].join("\n\n"),
+    files: files.sort((first, second) => first.target.localeCompare(second.target)),
+  };
+}
+
+function buildLocaleItem(locale: (typeof localePacks)[number], site: string): RegistryItem {
+  const file = join(i18nRoot, "messages", `${locale}.json`);
+  const register =
+    locale === "en"
+      ? "English is already installed by `koten-i18n`. Use this pack only to restore the base JSON."
+      : [
+          `Import it in \`lib/koten/i18n/dictionaries.ts\`:`,
+          "",
+          "```ts",
+          `import ${locale} from "./messages/${locale}.json";`,
+          "",
+          `export const labelsByLocale = { en, ${locale} } satisfies Record<string, KotenLabels>;`,
+          "```",
+          "",
+          "Keep the English base: it is the fallback for missing keys.",
+        ].join("\n");
+
+  return {
+    $schema: "https://ui.shadcn.com/schema/registry-item.json",
+    name: `${i18nName}-${locale}`,
+    type: "registry:file",
+    title: `Koten I18n ${locale.toUpperCase()}`,
+    description: `Koten label dictionary in ${locale}.`,
+    registryDependencies: [`${site}/r/${i18nName}.json`],
+    docs: register,
+    files: [
+      {
+        path: toRegistryPath(file),
+        target: toTarget(file),
+        type: "registry:file",
+        content: readFileSync(file, "utf8"),
+      },
+    ],
   };
 }
 
 export function buildItems(options: { siteUrl?: string } = {}): RegistryItem[] {
   const site = (options.siteUrl?.trim() || siteUrl).replace(/\/+$/, "");
   const theme = buildThemeItem();
+  const i18n = buildI18nItem();
   const items = [
     theme,
-    ...componentFiles().map((entry) => buildItem(entry, `${site}/r/${themeName}.json`)),
+    i18n,
+    ...componentFiles().map((entry) =>
+      buildItem(entry, `${site}/r/${themeName}.json`, `${site}/r/${i18nName}.json`),
+    ),
+    ...localePacks.map((locale) => buildLocaleItem(locale, site)),
   ];
   const names = new Set<string>();
 

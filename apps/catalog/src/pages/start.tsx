@@ -46,8 +46,9 @@ const copy = {
         items: [
           "React 19 y Tailwind CSS 4 en el proyecto.",
           "Un `components.json` de shadcn. Si no existe, ejecuta `{init}`.",
+          "`resolveJsonModule` en el `tsconfig` para los diccionarios JSON del i18n (Vite y Next lo traen).",
           "Node 20 o superior para `npx`; el CLI de shadcn lo usa.",
-          "Opcional: una skill de agente para que la instalación y el uso sigan las reglas del sistema (`koten-ui`).",
+          "Opcional: una skill de agente para que la instalación y el uso sigan las reglas del sistema (`koten-ui`); `koten-design-language` si vas a crear piezas que el catálogo no trae.",
         ],
       },
       theme: {
@@ -56,14 +57,14 @@ const copy = {
       },
       component: {
         title: "2 · Instala el componente que necesitas",
-        body: "Cada página de componente muestra su comando. El item trae el archivo y el núcleo `lib/koten`; el CLI reescribe los imports a los aliases de tu proyecto. Instala solo lo que vas a usar.",
+        body: "Cada página de componente muestra su comando. El item trae el archivo y, como dependencia, `lib/koten` y `lib/koten/i18n`; el CLI reescribe los imports a los aliases de tu proyecto. Instala solo lo que vas a usar.",
       },
       blockComment: "también puedes instalar un bloque completo",
       provider: {
         title: "3 · Conecta el provider",
-        body: "Envuelve la app una vez e importa el CSS de Tailwind que ya usa tu proyecto; el tema se escribe ahí. Los ejemplos usan `@/`; el CLI lo reescribe al prefijo de tu `components.json`.",
+        body: "Envuelve la app una vez e importa el CSS de Tailwind que ya usa tu proyecto; el tema se escribe ahí. `locale` acepta cualquier BCP 47 y los diccionarios ES/JA/EN son opcionales. Los ejemplos usan `@/`; el CLI lo reescribe al prefijo de tu `components.json`.",
         code: `import "./app.css"; // el CSS de Tailwind de tu components.json
-import { KotenProvider } from "@/lib/koten/provider";
+import { KotenProvider } from "@/lib/koten/i18n/provider";
 
 createRoot(document.getElementById("root")!).render(
   <KotenProvider locale="es">
@@ -82,12 +83,12 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · Tema, densidad e idioma",
-        body: "No edites los componentes para cambiar el tono. El tema y la densidad viven en el elemento raíz; el idioma va en el provider. Chirashi es comercio, Daichō es backoffice, Kanso es lectura y Sumi es el modo oscuro.",
+        body: "No edites los componentes para cambiar el tono. El tema y la densidad viven en el elemento raíz; el idioma va en el provider y acepta cualquier BCP 47 (ES/JA/EN son los diccionarios incluidos, no un requisito). Chirashi es comercio, Daichō es backoffice, Kanso es lectura y Sumi es el modo oscuro.",
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
         title: "6 · Deja que un agente te ayude",
-        body: "La documentación para agentes no es el catálogo humano: es un índice `llms.txt`, una página Markdown por pieza y dos skills. La skill `koten-ui` instala y compone; la skill `koten-design-system` extiende el sistema.",
+        body: "La documentación para agentes no es el catálogo humano: es un índice `llms.txt`, una página Markdown por pieza y tres skills. La skill `koten-ui` instala y compone; `koten-design-system` extiende el sistema dentro del repositorio; `koten-design-language` enseña a crear una pieza que el catálogo no trae, con tokens, marcos y contraste, en cualquier proyecto que ya use Koten.",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
     },
@@ -135,6 +136,7 @@ bun run budget  # presupuesto de JS/CSS y fuentes`,
           "`docs/DESIGN-SYSTEM.md`: gramática visual, tokens y reglas de accesibilidad.",
           "`docs/RECIPES.md`: formulario, tabla, drawer y tarjeta listos para copiar.",
           "`skills/koten-design-system`: cómo agregar una pieza sin romper el sistema.",
+          "`skills/koten-design-language`: cómo crear una pieza nueva respetando tokens, bordes, sombras y contraste.",
         ],
       },
       audits: {
@@ -159,7 +161,7 @@ bun run ai:check`,
           "`apps/storefront`: POC HIKARI, la página de producto.",
           "`apps/erp`: POC KURA, el backoffice tabular.",
           "`packages/ui`: primitivas, bloques, tokens y utilidades.",
-          "`skills/`: skills `koten-ui` y `koten-design-system`.",
+          "`skills/`: skills `koten-ui`, `koten-design-system` y `koten-design-language`.",
           "`scripts/`: registry, documentación para agentes y QA.",
           "`docs/`: requisitos, diseño, decisiones y bitácora.",
         ],
@@ -208,8 +210,9 @@ bun run ai:check`,
         items: [
           "プロジェクトに React 19 と Tailwind CSS 4 がある。",
           "shadcn の `components.json` がある。なければ `{init}` を実行。",
+          "i18nのJSON辞書には tsconfig の resolveJsonModule が必要（ViteとNextは既定で有効）。",
           "`npx` 用に Node 20 以上（shadcn CLI が使います）。",
-          "任意：エージェント用の skill `koten-ui` を入れると、導入と利用が規約に沿います。",
+          "任意：エージェント用の skill `koten-ui` を入れると、導入と利用が規約に沿います。カタログにない部品を作るなら `koten-design-language` も入れてください。",
         ],
       },
       theme: {
@@ -218,14 +221,14 @@ bun run ai:check`,
       },
       component: {
         title: "2 · 必要なコンポーネントを導入する",
-        body: "各コンポーネントのページにコマンドがあります。項目にはファイルとコアの `lib/koten` が含まれ、CLI がインポートをプロジェクトのエイリアスに書き換えます。使うものだけ導入してください。",
+        body: "各コンポーネントのページにコマンドがあります。項目にはファイルと、依存として `lib/koten` と `lib/koten/i18n` が含まれ、CLI がインポートをプロジェクトのエイリアスに書き換えます。使うものだけ導入してください。",
       },
       blockComment: "ブロックをまとめて導入することもできます",
       provider: {
         title: "3 · provider を接続する",
-        body: "アプリを一度だけ包み、既存の Tailwind CSS を読み込みます。テーマはそこに書き込まれます。例は `@/` を使い、CLI が `components.json` の接頭辞に書き換えます。",
+        body: "アプリを一度だけ包み、既存の Tailwind CSS を読み込みます。テーマはそこに書き込まれます。`locale` は任意の BCP 47 を受け付け、ES/JA/EN の辞書は任意です。例は `@/` を使い、CLI が `components.json` の接頭辞に書き換えます。",
         code: `import "./app.css"; // components.json の Tailwind CSS
-import { KotenProvider } from "@/lib/koten/provider";
+import { KotenProvider } from "@/lib/koten/i18n/provider";
 
 createRoot(document.getElementById("root")!).render(
   <KotenProvider locale="ja">
@@ -244,12 +247,12 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · テーマ・密度・言語",
-        body: "色を変えるためにコンポーネントを編集しないでください。テーマと密度はルート要素、言語は provider に置きます。Chirashi は商業、Daichō はバックオフィス、Kanso は読書、Sumi はダークです。",
+        body: "色を変えるためにコンポーネントを編集しないでください。テーマと密度はルート要素、言語は provider に置き、任意の BCP 47 を受け付けます（ES/JA/EN は同梱辞書であり必須ではありません）。Chirashi は商業、Daichō はバックオフィス、Kanso は読書、Sumi はダークです。",
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
         title: "6 · エージェントに任せる",
-        body: "エージェント向け文書は人間向けカタログとは別です。`llms.txt` の索引、部品ごとの Markdown、2つの skills があります。`koten-ui` は導入と合成、`koten-design-system` は拡張を担当します。",
+        body: "エージェント向け文書は人間向けカタログとは別です。`llms.txt` の索引、部品ごとの Markdown、3つの skills があります。`koten-ui` は導入と合成、`koten-design-system` はリポジトリ内での拡張、`koten-design-language` は Koten を導入済みの任意のプロジェクトで、カタログにない部品をトークン、枠、コントラストに沿って作る方法を担当します。",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
     },
@@ -297,6 +300,7 @@ bun run budget  # JS/CSS とフォントの予算`,
           "`docs/DESIGN-SYSTEM.md`：視覚文法、トークン、アクセシビリティ。",
           "`docs/RECIPES.md`：フォーム、テーブル、ドロワー、カードのレシピ。",
           "`skills/koten-design-system`：システムを壊さずに部品を追加する方法。",
+          "`skills/koten-design-language`：トークン、枠、影、コントラストを守って新しい部品を作る方法。",
         ],
       },
       audits: {
@@ -321,7 +325,7 @@ bun run ai:check`,
           "`apps/storefront`：HIKARI の商品ページ。",
           "`apps/erp`：KURA のバックオフィス。",
           "`packages/ui`：プリミティブ、ブロック、トークン、ユーティリティ。",
-          "`skills/`：`koten-ui` と `koten-design-system`。",
+          "`skills/`：`koten-ui`、`koten-design-system`、`koten-design-language`。",
           "`scripts/`：レジストリ、エージェント文書、QA。",
           "`docs/`：要件、設計、決定、ログ。",
         ],
@@ -371,8 +375,9 @@ bun run ai:check`,
         items: [
           "React 19 and Tailwind CSS 4 in the project.",
           "A shadcn `components.json`. If it does not exist, run `{init}`.",
+          "`resolveJsonModule` in `tsconfig` for the i18n JSON dictionaries (Vite and Next enable it).",
           "Node 20 or newer for `npx`; the shadcn CLI uses it.",
-          "Optional: an agent skill so installation and usage follow the system rules (`koten-ui`).",
+          "Optional: an agent skill so installation and usage follow the system rules (`koten-ui`); add `koten-design-language` when you need pieces the catalog does not ship.",
         ],
       },
       theme: {
@@ -381,14 +386,14 @@ bun run ai:check`,
       },
       component: {
         title: "2 · Install the component you need",
-        body: "Every component page shows its command. The item brings the file and the `lib/koten` core; the CLI rewrites imports to your project aliases. Install only what you will use.",
+        body: "Every component page shows its command. The item brings the file and, as dependencies, `lib/koten` and `lib/koten/i18n`; the CLI rewrites imports to your project aliases. Install only what you will use.",
       },
       blockComment: "you can also install a whole block",
       provider: {
         title: "3 · Wire the provider",
-        body: "Wrap the app once and import the Tailwind CSS your project already uses; the theme is written there. The examples use `@/`; the CLI rewrites it to your `components.json` prefix.",
+        body: "Wrap the app once and import the Tailwind CSS your project already uses; the theme is written there. `locale` accepts any BCP 47 and the ES/JA/EN dictionaries are optional. The examples use `@/`; the CLI rewrites it to your `components.json` prefix.",
         code: `import "./app.css"; // the Tailwind CSS from components.json
-import { KotenProvider } from "@/lib/koten/provider";
+import { KotenProvider } from "@/lib/koten/i18n/provider";
 
 createRoot(document.getElementById("root")!).render(
   <KotenProvider locale="en">
@@ -407,12 +412,12 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · Theme, density and language",
-        body: "Do not edit components to change the tone. Theme and density live on the root element; language goes in the provider. Chirashi is commerce, Daichō is back office, Kanso is reading and Sumi is dark mode.",
+        body: "Do not edit components to change the tone. Theme and density live on the root element; language goes in the provider and accepts any BCP 47 (ES/JA/EN are the included dictionaries, not a requirement). Chirashi is commerce, Daichō is back office, Kanso is reading and Sumi is dark mode.",
         code: `<html lang="en" data-theme="daicho" data-density="compact">`,
       },
       agents: {
         title: "6 · Let an agent help",
-        body: "The agent documentation is not the human catalog: it is an `llms.txt` index, one Markdown page per piece and two skills. The `koten-ui` skill installs and composes; the `koten-design-system` skill extends the system.",
+        body: "The agent documentation is not the human catalog: it is an `llms.txt` index, one Markdown page per piece and three skills. The `koten-ui` skill installs and composes; `koten-design-system` extends the system inside the repository; `koten-design-language` teaches how to author a piece the catalog does not ship, with tokens, frames and contrast, in any project that already uses Koten.",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
     },
@@ -460,6 +465,7 @@ bun run budget  # JS/CSS and font budget`,
           "`docs/DESIGN-SYSTEM.md`: visual grammar, tokens and accessibility rules.",
           "`docs/RECIPES.md`: form, table, drawer and card recipes ready to copy.",
           "`skills/koten-design-system`: how to add a piece without breaking the system.",
+          "`skills/koten-design-language`: how to author a new piece under the tokens, frames, shadows and contrast rules.",
         ],
       },
       audits: {
@@ -484,7 +490,7 @@ bun run ai:check`,
           "`apps/storefront`: HIKARI, the product page.",
           "`apps/erp`: KURA, the tabular back office.",
           "`packages/ui`: primitives, blocks, tokens and utilities.",
-          "`skills/`: `koten-ui` and `koten-design-system`.",
+          "`skills/`: `koten-ui`, `koten-design-system` and `koten-design-language`.",
           "`scripts/`: registry, agent docs and QA.",
           "`docs/`: requirements, design, decisions and log.",
         ],

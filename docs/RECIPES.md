@@ -204,20 +204,37 @@ va en la URL, no en memoria (`D-023`).
 
 ## 6. i18n y formato
 
+Koten separa tres capas:
+
+| Capa | Dueño | Dónde |
+| --- | --- | --- |
+| Labels internos (cerrar, buscar…) | Koten | `lib/koten/i18n/messages/*.json` |
+| Copy del producto | Tu app | Tus diccionarios o tu librería de i18n |
+| Fechas, moneda y números | `Intl` | `useKotenFormatters()` |
+
+El item `koten-i18n` es dependencia de cada componente: instala el runtime y el inglés base. Los packs `koten-i18n-es` y `koten-i18n-ja` agregan solo su JSON; se registran en `lib/koten/i18n/dictionaries.ts`.
+
 ```tsx
+// copy de la app, tipado por tu propia unión
 const copy = {
   es: { save: "Guardar", total: (value: number) => `${value} pedidos` },
-  ja: { save: "保存", total: (value: number) => `${value}件` },
-  en: { save: "Save", total: (value: number) => `${value} orders` },
+  fr: { save: "Enregistrer", total: (value: number) => `${value} commandes` },
 } as const;
+type AppLocale = keyof typeof copy;
 
-const { locale, formatters } = useKoten();
+const { locale } = useKoten<string>();
+const formatters = useKotenFormatters();
+const t = copy[locale as AppLocale] ?? copy.es;
 
-<Button>{copy[locale].save}</Button>
+<Button>{t.save}</Button>
 <span>{formatters.formatDate(order.date, { dateStyle: "medium" })}</span>
 <span>{formatters.formatCurrency(order.total, { maximumFractionDigits: 0 })}</span>
 ```
 
+- Un locale sin diccionario usa el inglés base; `labels` en `KotenProvider` acepta un diccionario completo o un override parcial.
+- `useKoten()` tipa el locale como los diccionarios instalados. Usá `useKoten<string>()` o tu propia unión si leés un idioma sin diccionario.
+- Koten no impone un runtime de contenido: si usás i18next, FormatJS o Lingui, ese runtime es la fuente del copy y de los labels.
+- ES/JA/EN son los idiomas del catálogo y los diccionarios incluidos, no un requisito del consumidor.
 - Ningún componente de `packages/ui` contiene strings: todo entra por props o provider.
 - Fechas, moneda y números se formatean con `Intl`, nunca con concatenación ni `toFixed`.
 - Nada de utilidades físicas (`text-left`, `pl-2`): usá `text-start`, `ps-2` (`D-026`).

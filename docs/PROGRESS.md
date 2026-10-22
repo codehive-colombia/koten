@@ -54,12 +54,64 @@ Reglas:
 - **Decisiones:** `D-050`.
 - **Evidencia:**
   - `apps/catalog/src/components/{doc-page,catalog-layout}.tsx`; `apps/catalog/src/pages/{start,ai,overview}.tsx`; `apps/catalog/src/pages/{tokens/index,blocks/index,components/index,tokens/typography}.tsx`; `README.md`; `docs/{DESIGN-SYSTEM,REQUIREMENTS,DECISIONS,PROGRESS}.md`; `ROADMAP.md`.
-  - `bun run check` verde: **35 archivos / 225 tests**, Biome, TypeScript, i18n y `ai:check`.
+  - `bun run check` verde: **35 archivos / 235 tests**, Biome, TypeScript, i18n y `ai:check`; `bun run build` y `bun run budget` OK.
   - Navegador a 1440: Button (accesibilidad como lista), DataTable (requisitos como lista), Fundamentos, Storefront y Empezar. A 390 y EN/JA: Fundamentos y Empezar sin overflow.
   - `qa:a11y` inició con portada ES 1440: axe 0 serious, 0 textos < 12 px, foco 15/15; la ejecución completa excedió el tiempo de la sesión.
 - **Sin validar:** lector de pantalla y el resto de la matriz `qa:a11y`/`qa:overflow`.
 - **Próximo:** ninguna tarea abierta.
 - **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-22 · Sesión 040 — i18n personalizable (`M-011`)
+
+- **Objetivo:** que el i18n no dependa de los tres idiomas de la documentación: cualquier BCP 47, diccionarios editables por idioma y un único punto de edición instalado por el registry.
+- **Hecho:**
+  - **Tres capas explícitas**: labels internos del kit (21 strings), copy de la app (fuera del kit) y formato `Intl` (`useKotenFormatters`). El provider ya no es el dueño del contenido.
+  - **API**: `KotenLocaleCode = KotenLocale | (string & {})` en `locale`; `KotenLocale` sigue siendo el conjunto de diccionarios instalados, así que las apps conservan exhaustividad. `useKoten()` acepta un genérico (`useKoten<string>()`, `useKoten<"fr-FR">()`) para leer un locale sin diccionario. `labels` acepta un diccionario completo o un override parcial; la base es el diccionario del locale o el inglés, y los overrides se aplican al final. Sin `locale`, el provider usa inglés.
+  - **Diccionarios JSON**: `packages/ui/src/i18n/messages/{es,ja,en}.json`, registrados en `dictionaries.ts` con `satisfies Record<string, KotenLabels>`; `format.ts` e `intl.ts` se movieron a `packages/ui/src/i18n/`.
+  - **Registry**: nuevo item `koten-i18n` (`registry:lib`) que instala el runtime y el inglés base en `lib/koten/i18n`; `koten-i18n-es`, `koten-i18n-ja` y `koten-i18n-en` son items `registry:file` con un solo JSON. Los componentes dependen de `koten-i18n` y dejaron de incrustar `labels`/`provider`/`format`/`intl`; 69 items generados.
+  - **Catálogo**: `/tokens/format` pasa a explicar las tres capas, la instalación por packs, el registro en `dictionaries.ts`, un locale `fr-FR` en vivo con `KotenProvider` anidado y los límites; Empezar y los textos de Fundamentos se alinean.
+  - **Agentes**: `llms.txt`, el inventario y las skills `koten-ui` usan la nueva ruta `@/lib/koten/i18n/provider` y explican que ES/JA/EN son opcionales.
+  - **Docs**: `DESIGN-SYSTEM.md` §7, `RECIPES.md` §6, `REQUIREMENTS.md` (`R-028`), `DECISIONS.md` (`D-049`), `ROADMAP.md` (`M-011`), README y AGENTS.
+- **Tareas tocadas:** `M-011` → `done`; `R-028` → `done`.
+- **Decisiones:** `D-049`.
+- **Evidencia:**
+  - `packages/ui/src/i18n/{labels,provider,dictionaries,format,intl}.ts(x)` + `messages/{es,ja,en}.json`; tests de locale desconocido, merge parcial, fallback y formatters (`labels.test.ts`, `provider.test.tsx`, `format.test.ts`).
+  - `scripts/build-registry.ts` + `build-registry.test.ts`: 69 items, `koten-i18n` con `dictionaries.ts` solo inglés y `messages/en.json`, packs `koten-i18n-{en,es,ja}` con `registry:file`, componentes dependientes de tema e i18n.
+  - `apps/catalog/src/pages/tokens/format.tsx`; `apps/catalog/src/pages/start.tsx`; `pages/tokens/index.tsx`; `pages/a11y.test.tsx` incluye la página de formato; `bun run check` verde (**35 archivos / 234 tests**, Biome, TypeScript, i18n 151 archivos y `ai:check`).
+  - `bun run build` OK; `bun run budget` → catálogo **263,6/444,9 KB**, storefront 122,3 KB, ERP 199,4 KB; `bun run registry` → **69 items** en `apps/catalog/public/r`.
+  - **Instalación real** con `shadcn@4.22.1` en un proyecto temporal con aliases `~/`: `koten-i18n` creó los 6 archivos en `lib/koten/i18n` y reescribió `@/` → `~/`; `koten-i18n-es` instaló el core + `messages/es.json` y mostró el snippet de registro; `button` instaló tema + i18n + `cn` y reescribió imports. El proyecto de prueba no tenía Tailwind configurado, así que la actualización de `app.css` del tema falló con `proxyOf`; el i18n no depende de ese paso.
+- **Sin validar:** `qa:a11y`/`qa:overflow` de navegador no se repitieron, aunque axe cubre la página de formato en tests.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-22 · Sesión 039 — Skill `koten-design-language` (`M-010`)
+
+- **Objetivo:** dar a los agentes un manual portátil de la esencia de Koten y del criterio para crear una pieza que el catálogo no trae, sin mezclarlo con el trabajo dentro del repositorio.
+- **Hecho:**
+  - **Tercera skill**: `skills/koten-design-language/` con `SKILL.md` y tres referencias. La descripción separa los tres trabajos: consumir (`koten-ui`), extender el repositorio (`koten-design-system`) y crear una pieza local (`koten-design-language`).
+  - **Esencia y reglas**: tesis de sencillez de medios y densidad de información; el marco como unidad; roles semánticos; marcos de 1 px; radios de 2–3 px; sombras solo en overlays; tipografía con piso de 12 px; densidad por tokens; movimiento mínimo; teclado, foco y contraste AA.
+  - **`references/tokens.md`**: dos capas (primitivas vs. roles), tabla completa de roles y utilidades, cómo elegir un rol, contrato de contraste (4.5:1 texto, 3:1 bordes de control y foco), tipografía, forma, densidad, los cuatro temas, extensión local de tokens y anti-patrones.
+  - **`references/authoring.md`**: cuándo crear y cuándo componer, contrato previo, plantilla con CVA/`data-slot`, composición con Base UI (`render`, nunca `asChild`), matriz de estados, contrato de accesibilidad por familia, i18n, ejemplo completo `DefinitionList` con tests y checklist de revisión.
+  - **`references/verification.md`**: procedimiento de contraste con calculadora, matriz de temas/densidades/anchos, guiones de teclado, chequeos automáticos, revisión visual, cuándo escalar y definición de terminado.
+  - **Anti-drift**: `validateSkills` ahora rechaza cualquier `--koten-*` citado por una skill que no esté declarado en `tokens.css` o `globals.css`; hay test de regresión. El inventario y las guías siguen generándose con `ai:docs`.
+  - **Catálogo**: `/ai` mantiene los tres niveles y el nivel 3 presenta las dos skills de extensión/creación; `/start` menciona las tres skills; `llms.txt`, README, `skills/README.md` y `DESIGN-SYSTEM.md` §14 quedan alineados.
+- **Tareas tocadas:** `M-010` → `done`; `R-027` → `done`.
+- **Decisiones:** `D-048`.
+- **Evidencia:**
+  - `skills/koten-design-language/{SKILL.md,references/{tokens,authoring,verification}.md}`.
+  - `scripts/build-ai-docs.ts` + `scripts/build-ai-docs.test.ts`; `llms.txt` regenerado.
+  - `apps/catalog/src/pages/{ai,start}.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `README.md`; `skills/README.md`; `docs/{DESIGN-SYSTEM,REQUIREMENTS,DECISIONS}.md`; `ROADMAP.md`.
+  - `bun run ai:docs` → 46 componentes, 20 bloques, 70 archivos de sitio y 3 archivos rastreados; `bun run ai:check` verde.
+  - `bun run check` verde: **35 archivos / 226 tests**, Biome, TypeScript en 4 workspaces, i18n y `ai:check`.
+  - `bun run build` verde; `bun run budget` → catálogo **263,6/441,0 KB**, storefront 122,3 KB, ERP 199,3 KB, 0 fuentes.
+- **Sin validar:** axe real sobre `/ai` tras el cambio de copy; lectura con lector de pantalla de la página. La skill se probó con `npx skills add` solo de forma indirecta (estructura validada por `ai:check`), no en un proyecto consumidor nuevo.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
+
 
 ---
 
@@ -76,7 +128,7 @@ Reglas:
 - **Decisiones:** `D-047`.
 - **Evidencia:**
   - `apps/catalog/src/lib/package-manager.ts`; `apps/catalog/src/lib/site.ts`; `apps/catalog/src/components/view-toggles.tsx`; `apps/catalog/src/components/doc-page.tsx`; `apps/catalog/src/pages/{start,overview}.tsx`; `apps/catalog/src/data/catalog.ts`; `scripts/build-ai-docs.ts`.
-  - Tests: `site.test.ts` cubre `npx` y `bunx`; `pages.test.tsx` comprueba el cambio, el valor en `localStorage` y la persistencia entre la página de Button y la de ProductCard. `bun run check` verde: **35 archivos / 225 tests**, Biome, TypeScript, i18n y `ai:check`.
+  - Tests: `site.test.ts` cubre `npx` y `bunx`; `pages.test.tsx` comprueba el cambio, el valor en `localStorage` y la persistencia entre la página de Button y la de ProductCard. `bun run check` verde: **35 archivos / 235 tests**, Biome, TypeScript, i18n y `ai:check`; `bun run build` y `bun run budget` OK.
   - `bun run build` OK; `bun run budget` → catálogo **263,6/440,1 KB**, storefront 122,3 KB, ERP 199,3 KB.
   - Navegador: en `/start` se elige `bunx` y los comandos pasan a `bunx shadcn@latest add …`; al navegar a `/components/button`, la sección Instalación sigue mostrando `bunx`. El selector también aparece en la portada.
 - **Sin validar:** lectura con lector de pantalla del selector en las tres páginas.

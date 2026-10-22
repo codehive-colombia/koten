@@ -2,7 +2,7 @@
 
 Generated from `apps/catalog/src/data/docs` by `bun run ai:docs`. Do not edit by hand.
 
-Use the registry item with `npx shadcn@latest add https://koten.codehive.com.co/r/<item>.json`. Install `koten-theme` first when the project has no Koten tokens.
+Use the registry item with `npx shadcn@latest add https://koten.codehive.com.co/r/<item>.json`. Install `koten-theme` first when the project has no Koten tokens. Components depend on `koten-i18n`; add `koten-i18n-es` or `koten-i18n-ja` only for those dictionaries.
 
 ## Components (46)
 
@@ -83,6 +83,7 @@ Use the registry item with `npx shadcn@latest add https://koten.codehive.com.co/
 ## Rules of thumb
 
 - Prefer an existing primitive or block over a new component.
+- When no installed piece covers the job, use the `koten-design-language` skill to author it with the Koten tokens, frames and contrast rules instead of inventing styles.
 - A primitive is a single, reusable piece with a public API. A block composes primitives for a concrete screen.
 - Do not rewrite the installed source to change the theme: change `data-theme`/`data-density` or the token roles.
 - Form controls pair with `Field` or `FormRow`; overlays need a portal and focus return; `Toast` needs `ToastProvider`.

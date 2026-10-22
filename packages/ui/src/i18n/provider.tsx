@@ -1,23 +1,31 @@
 import { createContext, type ReactNode, useContext, useMemo } from "react";
-import { formatCurrency, formatDate, formatNumber } from "../lib/format";
-import { type KotenLabels, type KotenLocale, labelsByLocale } from "./labels";
+import { formatCurrency, formatDate, formatNumber } from "./format";
+import {
+  type KotenLabels,
+  type KotenLocale,
+  type KotenLocaleCode,
+  labelsByLocale,
+  resolveLabels,
+} from "./labels";
 
-export type KotenConfig = {
-  locale: KotenLocale;
+export type KotenConfig<L extends string = KotenLocale> = {
+  locale: L;
   labels: KotenLabels;
   timeZone?: string;
   currency?: string;
 };
 
-const fallback: KotenConfig = {
-  locale: "es",
-  labels: labelsByLocale.es,
+const fallback: KotenConfig<string> = {
+  locale: "en",
+  labels: labelsByLocale.en,
 };
 
-const KotenContext = createContext<KotenConfig>(fallback);
+const KotenContext = createContext<KotenConfig<string>>(fallback);
 
 export type KotenProviderProps = {
-  locale?: KotenLocale;
+  /** Any BCP 47 tag. The installed dictionaries keep autocomplete. */
+  locale?: KotenLocaleCode;
+  /** Partial overrides merged over the English base and the locale dictionary. */
   labels?: Partial<KotenLabels>;
   timeZone?: string;
   currency?: string;
@@ -25,16 +33,16 @@ export type KotenProviderProps = {
 };
 
 export function KotenProvider({
-  locale = "es",
+  locale = "en",
   labels,
   timeZone,
   currency,
   children,
 }: KotenProviderProps) {
-  const value = useMemo<KotenConfig>(
+  const value = useMemo<KotenConfig<string>>(
     () => ({
       locale,
-      labels: labels ? { ...labelsByLocale[locale], ...labels } : labelsByLocale[locale],
+      labels: resolveLabels(locale, labels),
       timeZone,
       currency,
     }),
@@ -44,8 +52,13 @@ export function KotenProvider({
   return <KotenContext.Provider value={value}>{children}</KotenContext.Provider>;
 }
 
-export function useKoten(): KotenConfig {
-  return useContext(KotenContext);
+/**
+ * Reads the kit config. The generic defaults to the installed dictionaries so
+ * app copy dictionaries stay exhaustive; pass your own union or `string` when
+ * you use a locale that has no installed dictionary.
+ */
+export function useKoten<L extends string = KotenLocale>(): KotenConfig<L> {
+  return useContext(KotenContext) as KotenConfig<L>;
 }
 
 export type KotenFormatters = {
@@ -55,7 +68,7 @@ export type KotenFormatters = {
 };
 
 export function useKotenFormatters(): KotenFormatters {
-  const { locale, timeZone, currency } = useKoten();
+  const { locale, timeZone, currency } = useKoten<string>();
 
   return useMemo(
     () => ({

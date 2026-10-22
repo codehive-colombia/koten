@@ -10,11 +10,11 @@ const wrapper = ({ children }: { children: ReactNode }) => (
 );
 
 describe("KotenProvider", () => {
-  it("defaults to Spanish outside a provider", () => {
+  it("falls back to English outside a provider", () => {
     const { result } = renderHook(() => useKoten());
 
-    expect(result.current.locale).toBe("es");
-    expect(result.current.labels.close).toBe("Cerrar");
+    expect(result.current.locale).toBe("en");
+    expect(result.current.labels.close).toBe("Close");
   });
 
   it("resolves Japanese labels and allows overrides", () => {
@@ -29,6 +29,20 @@ describe("KotenProvider", () => {
     expect(result.current.locale).toBe("ja");
     expect(result.current.labels.close).toBe("とじる");
     expect(result.current.labels.next).toBe("次へ");
+  });
+
+  it("accepts a locale without a built-in dictionary", () => {
+    const { result } = renderHook(() => useKoten<string>(), {
+      wrapper: ({ children }: { children: ReactNode }) => (
+        <KotenProvider locale="fr-FR" labels={{ close: "Fermer" }}>
+          {children}
+        </KotenProvider>
+      ),
+    });
+
+    expect(result.current.locale).toBe("fr-FR");
+    expect(result.current.labels.close).toBe("Fermer");
+    expect(result.current.labels.next).toBe("Next");
   });
 
   it("binds formatters to the provider locale and time zone", () => {
