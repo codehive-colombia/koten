@@ -116,6 +116,8 @@ npx skills add codehive-colombia/koten --skill koten-design-language
 
 La página `/ai` explica los tres niveles. `predev` y `prebuild` regeneran la capa de agentes junto con el registry; `bun run ai:check` corre dentro de `bun run check`. Las skills siguen el estándar [Agent Skills](https://agentskills.io/specification).
 
+Cada dirección del catálogo se sirve como HTML que ya trae el resumen, la instalación y los enlaces, y tiene un gemelo Markdown: agrega `.md` o envía `Accept: text/markdown`. `robots.txt`, `sitemap.xml` y la cabecera `Link` apuntan a `llms.txt`, así que un agente no necesita ejecutar JavaScript ni adivinar el índice.
+
 ## Usar Koten UI en tu proyecto
 
 Necesitas React 19, Tailwind CSS 4 y un `components.json` de shadcn. No clonas el repositorio ni instalas Bun. La guía completa está en **Empezar** (`/start#usar`).

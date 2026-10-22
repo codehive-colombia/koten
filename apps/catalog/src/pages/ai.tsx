@@ -14,16 +14,18 @@ const copy = {
     docs: {
       title: "1 · Documentación legible por máquina",
       meta: "llms.txt · llms-full.txt · Markdown",
-      body: "El catálogo publica un índice `llms.txt`, un corpus completo y una página Markdown por componente y bloque, en inglés. Cada página incluye instalación, archivos, requisitos, ejemplos, props y accesibilidad.",
+      body: "El catálogo publica un índice `llms.txt`, un corpus completo y una página Markdown por componente y bloque, en inglés. Cada página incluye instalación, archivos, requisitos, ejemplos, props y accesibilidad. Cada dirección del catálogo existe también en Markdown —agrega `.md` o pide `Accept: text/markdown`— y su HTML ya trae el resumen, la instalación y los enlaces: un agente que abre la URL no encuentra una página vacía.",
       items: [
         `/llms.txt: índice con los 46 componentes, 20 bloques, guías y skills.`,
         `/llms-full.txt: todo el sistema en un solo archivo para cargar de una vez.`,
         `/md/components/<slug>.md y /md/blocks/<categoría>/<slug>.md: una página por pieza.`,
         `/md/guides/design-system.md y /md/guides/recipes.md: las guías internas copiadas tal cual.`,
+        "`/components/button.md` (o `Accept: text/markdown`): la misma página sin JavaScript.",
+        "Si le pasas la web a un agente, pega la URL de `llms.txt` y no la portada: la portada sola no le dice dónde está el resto.",
       ],
       code: `curl ${site.origin}/llms.txt
 curl ${site.origin}/md/components/button.md
-curl ${site.origin}/md/blocks/erp/app-shell.md`,
+curl ${site.origin}/components/button.md`,
     },
     consume: {
       title: "2 · Skill para consumir componentes",
@@ -88,16 +90,18 @@ bun run check      # incluye ai:check`,
     docs: {
       title: "1 · 機械可読なドキュメント",
       meta: "llms.txt · llms-full.txt · Markdown",
-      body: "カタログは `llms.txt` の索引、全ファイル、コンポーネントとブロックごとの Markdown を英語で公開します。各ページには導入、ファイル、要件、例、props、アクセシビリティを掲載します。",
+      body: "カタログは `llms.txt` の索引、全ファイル、コンポーネントとブロックごとの Markdown を英語で公開します。各ページには導入、ファイル、要件、例、props、アクセシビリティを掲載します。カタログの各アドレスは Markdown でも存在し（`.md` を付けるか `Accept: text/markdown`）、HTML にも要約、導入コマンド、リンクが入っているため、エージェントが URL を開いて空のページに当たることはありません。",
       items: [
         `/llms.txt: 46 コンポーネント、20 ブロック、ガイド、skills の索引。`,
         `/llms-full.txt: システム全体を1ファイルにまとめたもの。`,
         `/md/components/<slug>.md と /md/blocks/<category>/<slug>.md: 1部品ごとのページ。`,
         `/md/guides/design-system.md と /md/guides/recipes.md: 内部ガイドのコピー。`,
+        "`/components/button.md`（または `Accept: text/markdown`）: JavaScript なしの同じページ。",
+        "エージェントに web を渡すときは、トップページではなく `llms.txt` の URL を貼ってください。トップページだけでは残りの場所が伝わりません。",
       ],
       code: `curl ${site.origin}/llms.txt
 curl ${site.origin}/md/components/button.md
-curl ${site.origin}/md/blocks/erp/app-shell.md`,
+curl ${site.origin}/components/button.md`,
     },
     consume: {
       title: "2 · コンポーネント利用の skill",
@@ -162,16 +166,18 @@ bun run check      # ai:check を含む`,
     docs: {
       title: "1 · Machine-readable documentation",
       meta: "llms.txt · llms-full.txt · Markdown",
-      body: "The catalog publishes an `llms.txt` index, a full corpus and one Markdown page per component and block, in English. Each page includes installation, files, requirements, examples, props and accessibility.",
+      body: "The catalog publishes an `llms.txt` index, a full corpus and one Markdown page per component and block, in English. Each page includes installation, files, requirements, examples, props and accessibility. Every catalog address also exists as Markdown —append `.md` or send `Accept: text/markdown`— and its HTML already carries the summary, the install command and the links, so an agent that opens the URL does not land on an empty page.",
       items: [
         `/llms.txt: index of the 46 components, 20 blocks, guides and skills.`,
         `/llms-full.txt: the whole system in one file for a single load.`,
         `/md/components/<slug>.md and /md/blocks/<category>/<slug>.md: one page per piece.`,
         `/md/guides/design-system.md and /md/guides/recipes.md: the internal guides copied as-is.`,
+        "`/components/button.md` (or `Accept: text/markdown`): the same page without JavaScript.",
+        "When you hand the site to an agent, paste the `llms.txt` URL, not the homepage: the homepage alone does not say where the rest is.",
       ],
       code: `curl ${site.origin}/llms.txt
 curl ${site.origin}/md/components/button.md
-curl ${site.origin}/md/blocks/erp/app-shell.md`,
+curl ${site.origin}/components/button.md`,
     },
     consume: {
       title: "2 · Skill to consume components",

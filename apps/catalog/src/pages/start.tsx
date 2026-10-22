@@ -80,7 +80,7 @@ createRoot(document.getElementById("root")!).render(
       },
       agents: {
         title: "Opcional · Skills de agente",
-        body: "La documentación para agentes no es el catálogo humano: es un índice `llms.txt`, una página Markdown por pieza y tres skills. La skill `koten-ui` instala y compone; `koten-design-system` extiende el sistema dentro del repositorio; `koten-design-language` enseña a crear una pieza que el catálogo no trae, con tokens, marcos y contraste, en cualquier proyecto que ya use Koten.",
+        body: "La documentación para agentes no es el catálogo humano: es un índice `llms.txt`, una página Markdown por pieza y tres skills. La skill `koten-ui` instala y compone; `koten-design-system` extiende el sistema dentro del repositorio; `koten-design-language` enseña a crear una pieza que el catálogo no trae, con tokens, marcos y contraste, en cualquier proyecto que ya use Koten. Si le pasas la web a un agente, dale la URL de `llms.txt` y no la portada.",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
     },
@@ -229,7 +229,7 @@ createRoot(document.getElementById("root")!).render(
       },
       agents: {
         title: "任意 · エージェント用スキル",
-        body: "エージェント向け文書は人間向けカタログとは別です。`llms.txt` の索引、部品ごとの Markdown、3つの skills があります。`koten-ui` は導入と合成、`koten-design-system` はリポジトリ内での拡張、`koten-design-language` は Koten を導入済みの任意のプロジェクトで、カタログにない部品をトークン、枠、コントラストに沿って作る方法を担当します。",
+        body: "エージェント向け文書は人間向けカタログとは別です。`llms.txt` の索引、部品ごとの Markdown、3つの skills があります。`koten-ui` は導入と合成、`koten-design-system` はリポジトリ内での拡張、`koten-design-language` は Koten を導入済みの任意のプロジェクトで、カタログにない部品をトークン、枠、コントラストに沿って作る方法を担当します。エージェントに web を渡すときは、トップページではなく `llms.txt` の URL を貼ってください。",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
     },
@@ -379,7 +379,7 @@ createRoot(document.getElementById("root")!).render(
       },
       agents: {
         title: "Optional · Agent skills",
-        body: "The agent documentation is not the human catalog: it is an `llms.txt` index, one Markdown page per piece and three skills. The `koten-ui` skill installs and composes; `koten-design-system` extends the system inside the repository; `koten-design-language` teaches how to author a piece the catalog does not ship, with tokens, frames and contrast, in any project that already uses Koten.",
+        body: "The agent documentation is not the human catalog: it is an `llms.txt` index, one Markdown page per piece and three skills. The `koten-ui` skill installs and composes; `koten-design-system` extends the system inside the repository; `koten-design-language` teaches how to author a piece the catalog does not ship, with tokens, frames and contrast, in any project that already uses Koten. When you hand the site to an agent, give it the `llms.txt` URL, not the homepage.",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
     },

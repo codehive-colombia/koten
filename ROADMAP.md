@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-22**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-019`** · japonés opcional en consumo
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable), **`M-012`** (documentación directa y listas), **`M-013`** (diseñador de temas), **`M-014`** (README en inglés con versión en español), **`M-015`** (panel flotante de configuración), **`M-016`** (flujo de lectura de Empezar), **`M-017`** (límites del diseñador de temas), **`M-018`** (listas en Límites y Reglas de formato) y **`M-019`** (japonés opcional en consumo)
+> Última tarea completada: **`M-020`** · entrada legible para agentes
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable), **`M-012`** (documentación directa y listas), **`M-013`** (diseñador de temas), **`M-014`** (README en inglés con versión en español), **`M-015`** (panel flotante de configuración), **`M-016`** (flujo de lectura de Empezar), **`M-017`** (límites del diseñador de temas), **`M-018`** (listas en Límites y Reglas de formato), **`M-019`** (japonés opcional en consumo) y **`M-020`** (entrada legible para agentes)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -319,6 +319,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-017` | Quitar la sección **Lo que no se toca** del diseñador de temas (`D-056`). | `done` | La página `/theme` termina en la exportación; los límites siguen explicados en la introducción, el cuerpo de exportación y las comprobaciones AA; sin cambios de parámetros, cálculos ni comportamiento; tests verdes. | `apps/catalog/src/pages/theme.tsx`; `apps/catalog/src/pages/theme.test.tsx`; `D-056`. |
 | `M-018` | Sustituir las tarjetas de **Límites** y **Reglas** en `/tokens/format` por listas con reglas (`D-050`). | `done` | Las dos últimas secciones usan una lista de una columna con `divide-y` y borde superior/inferior; sin rejilla de dos columnas ni barra lateral; el contenido y los encabezados se conservan; `bun run check` verde. | `apps/catalog/src/pages/tokens/format.tsx`; `D-050`. |
 | `M-019` | Japonés opcional en consumo y autoría externa (`R-031`, `D-057`). | `done` | `koten-ui` y `koten-design-language` prohíben el japonés por defecto y lo dejan opt-in; `koten-design-system` y el catálogo conservan el japonés como lenguaje visual; `llms.txt`, Markdown por pieza, README, `/ai`, Empezar y RECIPES explican la distinción; ejemplos con etiquetas japonesas horneadas se reemplazan por props o texto neutro; tests y `ai:check` verdes. | `skills/**`; `scripts/build-ai-docs.ts` + test; `llms.txt`; `apps/catalog/src/pages/{ai,start}.tsx`; `docs/{DESIGN-SYSTEM,RECIPES,REQUIREMENTS}.md`; `README.md`; `README.es.md`; `D-057`; `R-031`. |
+| `M-020` | Entrada legible para agentes en cada ruta del catálogo (`R-032`, `D-058`). | `done` | Cada ruta devuelve HTML con título, resumen, instalación y enlaces dentro de `#root` (React lo reemplaza al montar); cada ruta tiene gemelo Markdown y responde a `Accept: text/markdown`; `.md` con `text/markdown; charset=utf-8`; `robots.txt` y `sitemap.xml` reales; `Link` y `<link>` anuncian `llms.txt` y el gemelo; `/ai` y Empezar dicen que se pegue `llms.txt`; cobertura de rutas y tests verdes. | `scripts/build-agent-pages.ts` + `build-agent-pages.test.ts`; `scripts/build-ai-docs.ts`; `apps/catalog/package.json`; `package.json`; `infra/nginx/default.conf`; `apps/catalog/src/pages/{ai,start}.tsx`; `llms.txt`; `docs/REQUIREMENTS.md`; `D-058`; `R-032`. |
 
 ---
 
@@ -443,6 +444,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-029` | Documentación directa: sin repeticiones ni explicaciones fuera de lugar, y listas en lugar de tarjetas en las secciones de lectura. | `M-012`, `D-050` | `done` |
 | `R-030` | Diseñador de temas con parámetros curados, validación AA y export de un overlay de tokens. | `M-013`, `D-051` | `done` |
 | `R-031` | Japonés opcional en consumo y autoría externa: sin texto, kanji, etiquetas `jp`, Tategaki, Hanko ni Pattern por defecto. | `M-019`, `D-057` | `done` |
+| `R-032` | El catálogo se puede leer sin JavaScript: HTML con contenido, gemelo Markdown, negociación, `robots.txt`, `sitemap.xml` y anuncio de `llms.txt`. | `M-020`, `D-058` | `done` |
 
 ---
 
@@ -468,6 +470,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `RISK-016` | El prefijo del proxy y el `base` de Vite se desincronizan y los assets de las demos caen en el catálogo. | Alto | nginx conserva el prefijo y hace fallback por app; `base` de producción probado con `vite preview`, `docker build`, curls a `/demos/{store,erp}/` y navegador; presupuesto acepta cualquier `base`; variables `VITE_*` para cambiar dominio sin tocar código. |
 | `RISK-017` | La capa de agentes se desactualiza o `npx skills` no puede acceder al repositorio si cambia de visibilidad. | Medio | Generación desde una sola fuente en `predev`/`prebuild`; `bun run ai:check` dentro de `bun run check`; el catálogo sigue funcionando sin skills; documentar el acceso requerido al instalar. |
 | `RISK-018` | Un tema exportado se edita a mano después del diseñador y rompe el contraste o la gramática. | Medio | El diseñador solo acepta parámetros curados y bloquea la exportación si falla AA; el CSS declara que es un overlay y la documentación pide verificar con contenido real; las combinaciones por defecto están cubiertas por tests. |
+| `RISK-020` | El HTML estático por ruta se desactualiza o el shell de Vite cambia y las páginas vuelven a quedar vacías para los agentes. | Medio | El generador falla el build si el shell no tiene `<title>` o el `#root` vacío; `ai:check` falla si una ruta de `App.tsx` no tiene página; el Markdown sigue siendo la capa de detalle y `llms.txt` se anuncia en `Link` y `<link>`. |
 | `RISK-019` | `README.md` y `README.es.md` divergen en comandos, cifras o enlaces. | Bajo | Las cifras viven en el roadmap y no se repiten como fuente; ambos README se actualizan en el mismo commit y se revisan en cada cambio de alcance; los enlaces mutuos están en la primera línea. |
 
 ---
@@ -557,3 +560,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-22 | Mejora puntual `M-017`: `/theme` elimina la sección **Lo que no se toca**; los límites siguen en la introducción, la exportación y las comprobaciones AA. `D-056`. | Sesión 047 |
 | 2026-10-22 | Mejora puntual `M-018`: **Límites** y **Reglas** de `/tokens/format` pasan de una rejilla de dos columnas con barra lateral a una lista de una columna con reglas. `D-050`. | Sesión 048 |
 | 2026-10-22 | Mejora puntual `M-019`: el japonés queda como opt-in en consumo y autoría externa (`koten-ui`, `koten-design-language`, `llms.txt`, Markdown, README y `/ai`); el catálogo y `koten-design-system` conservan el japonés como lenguaje visual interno. `D-057`, `R-031`. | Sesión 049 |
+| 2026-10-22 | Mejora puntual `M-020`: cada ruta del catálogo se sirve como HTML con contenido (título, resumen, instalación y enlaces) y con gemelo Markdown; `Accept: text/markdown`, `.md` con su tipo correcto, `robots.txt`, `sitemap.xml`, `Link`/`<link>` hacia `llms.txt` y copy en `/ai` y Empezar para pegar el índice. `D-058`, `R-032`, `RISK-020`. | Sesión 050 |

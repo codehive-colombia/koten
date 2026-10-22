@@ -8,7 +8,7 @@
     "predev": "KOTEN_SITE_URL=http://localhost:5173 bun ../../scripts/build-registry.ts && KOTEN_SITE_URL=http://localhost:5173 bun ../../scripts/build-ai-docs.ts",
     "prebuild": "bun ../../scripts/build-registry.ts && bun ../../scripts/build-ai-docs.ts",
     "dev": "vite --port 5173",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && bun ../../scripts/build-agent-pages.ts",
     "preview": "vite preview --port 4173",
     "typecheck": "tsc --noEmit"
   },

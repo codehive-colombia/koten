@@ -143,6 +143,7 @@ skills/
   koten-design-system/  # skill para extender el sistema
 scripts/
   build-ai-docs.ts      # llms.txt, Markdown por pieza e inventario de skills
+  build-agent-pages.ts  # HTML con contenido y gemelo Markdown por ruta
 ROADMAP.md
 README.md
 README.es.md
@@ -199,7 +200,7 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 46 componentes, 20 bloques, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`), la capa de documentación y skills para agentes (`M-007`, `D-045`), la separación de **Empezar** en usar el sistema y desarrollar el sistema (`M-008`, `D-046`), el selector persistente **npx / bunx** (`M-009`, `D-047`), la skill de autoría `koten-design-language` (`M-010`, `D-048`), el i18n personalizable con locale BCP 47 y diccionarios JSON por idioma (`M-011`, `D-049`), la revisión editorial con listas en lugar de tarjetas (`M-012`, `D-050`) y el diseñador de temas con guardrails y export de tokens (`M-013`, `D-051`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
+Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 46 componentes, 20 bloques, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`), la capa de documentación y skills para agentes (`M-007`, `D-045`), la separación de **Empezar** en usar el sistema y desarrollar el sistema (`M-008`, `D-046`), el selector persistente **npx / bunx** (`M-009`, `D-047`), la skill de autoría `koten-design-language` (`M-010`, `D-048`), el i18n personalizable con locale BCP 47 y diccionarios JSON por idioma (`M-011`, `D-049`), la revisión editorial con listas en lugar de tarjetas (`M-012`, `D-050`) y el diseñador de temas con guardrails y export de tokens (`M-013`, `D-051`), el japonés opcional en consumo (`M-019`, `D-057`) y la entrada legible para agentes en cada ruta (`M-020`, `D-058`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
 2. No hay tareas abiertas: cualquier trabajo nuevo entra como `M-*` o una fase 6 con decisión `D-*`.

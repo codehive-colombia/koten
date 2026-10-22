@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-019` · japonés opcional en consumo |
+| Última tarea completada | `M-020` · entrada legible para agentes |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,28 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 050 — Entrada legible para agentes (`M-020`)
+
+- **Objetivo:** que un agente al que se le pasa una URL del catálogo lea algo útil sin JavaScript, en vez de encontrar el shell vacío del SPA.
+- **Hecho:**
+  - **Diagnóstico en producción:** `/`, `/start`, `/components/button` y `/theme` devolvían el mismo HTML de 1 290 bytes; `/components/button.md` devolvía el shell con `200 text/html`; `/md/**` se servía como `application/octet-stream`; `/robots.txt` y `/sitemap.xml` devolvían el shell.
+  - **HTML por ruta:** `scripts/build-agent-pages.ts` escribe 80 documentos estáticos (`dist/<ruta>.html`, `index.html` para `/`) con título, `meta description`, `canonical`, `rel="llms-txt"`, `rel="alternate"` y un `<main data-agent-fallback>` dentro de `#root` con resumen, instalación, requisitos, accesibilidad y enlaces. React lo reemplaza al montar: sin SSR, sin hidratación y sin cloaking.
+  - **Gemelos Markdown:** las piezas reutilizan el Markdown de `ai:docs`; las rutas de entrada generan `md/index.md`, `md/start.md`, `md/ai.md`, `md/tokens/*.md`, `md/theme.md`, `md/components.md` y `md/blocks.md`. `Accept: text/markdown` y `.md` pegado a la URL devuelven `text/markdown; charset=utf-8` con `Vary: Accept`.
+  - **Descubrimiento:** `robots.txt`, `sitemap.xml`, cabecera `Link` (`llms-txt` + gemelo), `<link>` en el HTML y una nota en `llms.txt` que explica el gemelo y el punto de entrada.
+  - **Copy:** `/ai` y Empezar dicen que se pega `llms.txt` y no la portada, con ejemplos de las tres formas de la página.
+  - **Guardia:** `ai:check` ejecuta `build-agent-pages.ts --check`; el generador falla el build si el shell pierde `<title>` o el `#root` vacío; el router se compara contra las páginas para que una ruta nueva no vuelva al shell.
+  - **Trazabilidad:** `D-058`, `R-032`, `RISK-020`, `M-020`.
+- **Tareas tocadas:** `M-020` → `done`.
+- **Decisiones:** `D-058`.
+- **Evidencia:**
+  - `scripts/build-agent-pages.ts` + `build-agent-pages.test.ts` (10 tests); `scripts/build-ai-docs.ts`; `apps/catalog/package.json`; `package.json`; `infra/nginx/default.conf`; `apps/catalog/src/pages/{ai,start}.tsx`; `llms.txt`.
+  - `apps/catalog`: `bun run build` → 96 archivos de agente escritos.
+  - Verificado con `nginxinc/nginx-unprivileged:1.27-alpine` montando `apps/catalog/dist`: `/`, `/start`, `/components/button`, `/blocks/erp/app-shell`, `/tokens/color`, `/theme` → `200 text/html` con contenido; `/components/button.md`, `/md/start.md` y `Accept: text/markdown` → `text/markdown; charset=utf-8`; `/robots.txt` → `text/plain; charset=utf-8`; `/sitemap.xml` → `text/xml`; `Link` con `llms-txt` y el gemelo de cada ruta.
+- **Próximo:** publicar la imagen con `docker compose`; el gemelo Markdown de `/start` es un resumen, no la guía completa (la guía vive en el cuerpo trilingüe).
+- **Bloqueos:** ninguno.
 
 ---
 

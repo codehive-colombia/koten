@@ -115,6 +115,7 @@ La fase 5 completó el registry, Sumi, DatePicker, CommandPalette y la virtualiz
 | `R-029` | Should | Documentación directa y listas en lugar de tarjetas. | Requisitos y accesibilidad como listas con reglas; índices de Fundamentos, Bloques y Empezar sin tarjetas; sin boilerplate repetido; referencias de 12 px y alcance vigentes; `bun run check` verde. |
 | `R-030` | Should | Diseñador de temas con guardrails para usuarios que no editan tokens. | Página `/theme` con registro, pigmento de la paleta, papel, radio y densidad; valores derivados; 11 comprobaciones AA; exportación bloqueada si falla; overlay de tokens sobre `koten-theme`; enlaces desde Temas y la navegación. |
 | `R-031` | Should | Japonés opcional en consumo y autoría externa. | En `koten-ui` y `koten-design-language`, el japonés no se impone: sin texto, kanji, etiquetas `jp`, Tategaki, Hanko ni Pattern por defecto; solo si el usuario lo pide. Las docs internas y el catálogo pueden usarlo como lenguaje visual. |
+| `R-032` | Must | El catálogo se puede leer sin JavaScript. | Cada ruta devuelve HTML con título, resumen, instalación y enlaces; cada ruta tiene un gemelo Markdown (`/components/button.md`) y responde a `Accept: text/markdown`; `robots.txt` y `sitemap.xml` reales; `Link` y `<link>` anuncian `llms.txt` y el gemelo. |
 
 ## 6. Requisitos no funcionales
 

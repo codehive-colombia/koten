@@ -245,6 +245,8 @@ export function renderLlmsTxt(siteUrl: string): string {
     "",
     "Koten UI is not an npm package. Components are copied into the project with the shadcn CLI, so the source stays editable. The grammar is built from 1 px frames, warm paper, semantic color roles, system fonts and a 12 px typographic floor. Tokens, theme and density travel in the `koten-theme` registry item; labels, locale resolution and `Intl` formatters travel in `koten-i18n`, with English as the base and optional `koten-i18n-es` / `koten-i18n-ja` dictionaries.",
     "",
+    `Every catalog page is also served as Markdown: append \`.md\` to any URL (\`${siteUrl}/components/button.md\`) or send \`Accept: text/markdown\`. The HTML of each page already carries its title, summary, install command and links, so this file is the entry point and not the only readable address.`,
+    "",
     "## Start",
     "",
     `- [Getting started](${siteUrl}/start): install the theme and i18n base, copy primitives and wire KotenProvider.`,

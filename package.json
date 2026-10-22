@@ -17,7 +17,7 @@
     "check": "biome check . && bun run typecheck && bun run check:i18n && bun run ai:check && bun run test",
     "check:i18n": "bun scripts/check-i18n.ts",
     "ai:docs": "bun scripts/build-ai-docs.ts",
-    "ai:check": "bun scripts/build-ai-docs.ts --check",
+    "ai:check": "bun scripts/build-ai-docs.ts --check && bun scripts/build-agent-pages.ts --check",
     "qa:a11y": "bun scripts/qa-a11y.ts",
     "qa:overflow": "bun scripts/qa-overflow.ts",
     "qa:perf": "bun scripts/qa-perf.ts",
