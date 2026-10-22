@@ -19,7 +19,7 @@
  * and `prebuild` scripts, exactly like the shadcn registry.
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { allBlockDocs, allPrimitiveDocs } from "../apps/catalog/src/data/docs/all";
 import type { BlockDoc, PrimitiveDoc } from "../apps/catalog/src/data/docs/types";
@@ -263,7 +263,8 @@ export function renderLlmsTxt(siteUrl: string): string {
     "",
     `- [koten-ui](${repositoryUrl}/tree/main/skills/koten-ui): consume the components, choose the right primitive and install it with the registry.`,
     `- [koten-design-system](${repositoryUrl}/tree/main/skills/koten-design-system): add primitives or blocks and extend the system under Koten's grammar.`,
-    `- Install with \`npx skills add codehive-colombia/koten --skill koten-ui\` (or \`koten-design-system\`).`,
+    `- [koten-design-language](${repositoryUrl}/tree/main/skills/koten-design-language): author a missing piece in any Koten project with the tokens, frames, shadows and contrast rules.`,
+    `- Install with \`npx skills add codehive-colombia/koten --skill koten-ui\` (or \`koten-design-system\`, \`koten-design-language\`).`,
     "",
     "## Repository",
     "",
@@ -316,6 +317,7 @@ export function renderInventory(siteUrl: string): string {
     "## Rules of thumb",
     "",
     "- Prefer an existing primitive or block over a new component.",
+    "- When no installed piece covers the job, use the `koten-design-language` skill to author it with the Koten tokens, frames and contrast rules instead of inventing styles.",
     "- A primitive is a single, reusable piece with a public API. A block composes primitives for a concrete screen.",
     "- Do not rewrite the installed source to change the theme: change `data-theme`/`data-density` or the token roles.",
     "- Form controls pair with `Field` or `FormRow`; overlays need a portal and focus return; `Toast` needs `ToastProvider`.",
@@ -476,10 +478,43 @@ function parseFrontmatter(source: string): SkillFrontmatter {
   return { name: read("name"), description: read("description") };
 }
 
-/** Validates the Agent Skills frontmatter and every relative reference. */
+/** Every Markdown file inside a skill directory, for token and reference checks. */
+function skillMarkdownFiles(directory: string): string[] {
+  return readdirSync(directory).flatMap((entry) => {
+    const path = join(directory, entry);
+
+    if (statSync(path).isDirectory()) {
+      return skillMarkdownFiles(path);
+    }
+
+    return path.endsWith(".md") ? [path] : [];
+  });
+}
+
+/** Roles declared by the shipped styles; a skill must not invent `--koten-*` names. */
+function declaredTokens(root: string): Set<string> | null {
+  const files = [
+    join(root, "packages/ui/src/styles/tokens.css"),
+    join(root, "packages/ui/src/styles/globals.css"),
+  ];
+  const names = new Set<string>();
+
+  for (const file of files) {
+    if (!existsSync(file)) return null;
+
+    for (const match of readFileSync(file, "utf8").matchAll(/--koten-[a-z0-9][a-z0-9-]*/g)) {
+      names.add(match[0]);
+    }
+  }
+
+  return names;
+}
+
+/** Validates the Agent Skills frontmatter, the relative references and the token names. */
 export function validateSkills(root: string): string[] {
   const skillsRoot = join(root, "skills");
   const failures: string[] = [];
+  const tokens = declaredTokens(root);
 
   if (!existsSync(skillsRoot)) {
     return ["skills/ does not exist"];
@@ -535,6 +570,22 @@ export function validateSkills(root: string): string[] {
 
       if (!existsSync(join(skillsRoot, directory, reference))) {
         failures.push(`${directory}: missing referenced file ${reference}`);
+      }
+    }
+
+    if (tokens) {
+      for (const file of skillMarkdownFiles(join(skillsRoot, directory))) {
+        const source = readFileSync(file, "utf8");
+        const seen = new Set<string>();
+
+        for (const match of source.matchAll(/--koten-[a-z0-9][a-z0-9-]*/g)) {
+          const token = match[0];
+
+          if (!tokens.has(token) && !seen.has(token)) {
+            seen.add(token);
+            failures.push(`${directory}: unknown token ${token} in ${relative(skillsRoot, file)}`);
+          }
+        }
       }
     }
   }
