@@ -10,10 +10,10 @@
 | --- | --- |
 | Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-013` · diseñador de temas |
+| Última tarea completada | `M-014` · README en inglés y espejo en español |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
-| Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
+| Decisiones abiertas | `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
 
 ## Cómo registrar una sesión
 
@@ -38,6 +38,40 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 044 — Licencia MIT y cierre de `Q-005`
+
+- **Objetivo:** definir la licencia del repositorio para que la distribución por copia y por registry sea inequívoca, sin cerrar el uso comercial ni imponer copyleft.
+- **Hecho:**
+  - **MIT:** `LICENSE` con el texto estándar y aviso `Copyright (c) 2026 Koten UI contributors`.
+  - **Metadatos:** `"license": "MIT"` en el `package.json` de la raíz y en `apps/catalog`, `apps/storefront`, `apps/erp` y `packages/ui`.
+  - **README:** la sección de licencia de `README.md` y `README.es.md` explica el permiso, la conservación del aviso y la ausencia de garantía.
+  - **Trazabilidad:** `D-053` cierra `Q-005`; `ROADMAP.md` actualiza `F0-001` y el registro de cambios.
+- **Tareas tocadas:** `F0-001` conserva `done`; `Q-005` → `decided`.
+- **Decisiones:** `D-053`.
+- **Evidencia:** `LICENSE`, `package.json`, `apps/*/package.json`, `packages/ui/package.json`, `README.md`, `README.es.md`, `docs/DECISIONS.md` (`D-053`), `ROADMAP.md`, `docs/PROGRESS.md`. `bun run check` verde.
+- **Sin validar:** revisión legal del aviso de copyright y de la titularidad; el texto de MIT es el estándar y no se modificó.
+- **Próximo:** `Q-006` es la única pregunta abierta; no bloquea el tag.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-22 · Sesión 043 — README en inglés y espejo en español (`M-014`)
+
+- **Objetivo:** que la entrada del repositorio se lea sin traducir para quien llega desde fuera, sin perder la versión española que usa el equipo y sin tocar el resto de la documentación de mantenimiento.
+- **Hecho:**
+  - **`README.md` en inglés:** traducción fiel del README existente; conserva secciones, tablas, comandos, cifras y enlaces.
+  - **`README.es.md`:** conserva el texto español como espejo opcional; ambas versiones se enlazan desde la primera línea (`English` / `Español`).
+  - **Resto de documentos:** `ROADMAP.md`, `AGENTS.md` y `docs/*.md` siguen en español; el README en inglés lo advierte y enlaza a ellos. Los artefactos de agentes siguen en inglés (`D-045`).
+  - **Protocolo:** `AGENTS.md` §8 y §11 registran el README inglés y la regla de actualizar ambos en el mismo commit; `D-052` precisa `D-008`/`D-025` solo para el README; `RISK-019` cubre la divergencia entre versiones.
+- **Tareas tocadas:** `M-014` → `done`.
+- **Decisiones:** `D-052`; `RISK-019`.
+- **Evidencia:** `README.md`, `README.es.md`, `docs/DECISIONS.md` (`D-052`), `ROADMAP.md` (`M-014`, `RISK-019`), `AGENTS.md` y esta entrada. `bun run check` verde: Biome, TypeScript, i18n (154 archivos), `ai:check` y **37 archivos / 250 tests**.
+- **Sin validar:** render de ambos README en GitHub (tablas, anclas y enlaces relativos).
+- **Próximo:** ninguna tarea abierta; cualquier cambio nuevo entra como `M-*` con decisión `D-*`.
+- **Bloqueos:** ninguno.
 
 ---
 

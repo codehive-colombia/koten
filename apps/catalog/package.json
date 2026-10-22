@@ -2,6 +2,7 @@
   "name": "@koten/catalog",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "predev": "KOTEN_SITE_URL=http://localhost:5173 bun ../../scripts/build-registry.ts && KOTEN_SITE_URL=http://localhost:5173 bun ../../scripts/build-ai-docs.ts",

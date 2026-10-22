@@ -41,6 +41,8 @@
 - [D-049 · i18n del consumidor: diccionarios JSON por idioma y locale BCP 47](#d-049)
 - [D-050 · Documentación directa y listas en lugar de tarjetas](#d-050)
 - [D-051 · Diseñador de temas con parámetros curados, contraste AA y export superpuesto](#d-051)
+- [D-052 · README en inglés como entrada y versión en español opcional](#d-052)
+- [D-053 · Licencia MIT y cierre de Q-005](#d-053)
 
 ---
 
@@ -814,3 +816,39 @@
   - La lógica pura vive en `apps/catalog/src/lib/theme-designer.ts` (paleta, mezclas, luminancia, contraste, serialización y CSS), con tests de todas las combinaciones de registro, pigmento y papel. La página se cubre con tests de interacción, i18n y axe.
 - **Consecuencias:** Un usuario común puede producir un tema coherente en cinco decisiones y once comprobaciones, sin leer el archivo de tokens. La herramienta no permite crear un Koten “alternativo”: la tipografía, la escala, el espaciado, los bordes, las sombras, el movimiento y los estados quedan fuera de su alcance. El resultado sigue siendo un proyecto que depende de `koten-theme`; actualizar tokens de Koten sigue siendo una reinstalación del item. El CSS exportado es editable a mano, así que el contraste puede romperse después de la herramienta (`RISK-018`); la página lo advierte y la documentación pide verificar el resultado con contenido real.
 - **Alternativas:** Un editor libre de todos los tokens (convierte el catálogo en un generador de sistemas y rompe `D-004`); un color picker con validación de contraste (sigue permitiendo cualquier pigmento y diluye la paleta); exportar un `tokens.css` completo (se desincroniza en la siguiente versión y duplica valores); aplicar el tema al catálogo entero (impide comparar y puede volver ilegible la documentación); guardar el tema en `localStorage` (una preferencia personal no debería alterar enlaces compartidos); un paquete o CLI de temas (más superficie que una página estática).
+
+---
+
+<a id="d-052"></a>
+## D-052 · README en inglés como entrada y versión en español opcional
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-014`; precisa `D-008`, `D-025` y `D-045` solo para el README)
+- **Contexto:** El README es la primera superficie que ve alguien que llega desde GitHub, el registry o un buscador, y la mayoría de ese tráfico no lee español. Al mismo tiempo, el equipo mantiene el roadmap, las decisiones y la bitácora en español, y `D-008`/`D-025` extendían esa regla a todos los documentos de trabajo, incluido el README. Traducir solo el README dejaba dos versiones sin jerarquía ni enlace mutuo; traducir todo el mantenimiento duplicaba el costo sin mejorar el producto.
+- **Decisión:**
+  - **`README.md` queda en inglés** y es la única entrada por defecto. No cambia su contenido, estructura ni enlaces: es la traducción de la versión que ya existía.
+  - **`README.es.md` conserva la versión en español** como espejo opcional. Ambas versiones llevan un selector al inicio (`English` / `Español`) y enlazan a la otra.
+  - **Los demás documentos de trabajo siguen en español** (`ROADMAP.md`, `AGENTS.md`, `docs/*.md`): `D-008` y `D-025` se mantienen vigentes para ellos. El README en inglés avisa de esa separación con una línea y enlaces.
+  - **Los artefactos para agentes siguen en inglés** (`D-045`). `llms.txt` enlaza a `README.md`, que ahora coincide con el idioma de la capa de agentes.
+  - **Sin duplicación de comandos ni datos:** las dos versiones describen el mismo sistema y se actualizan en el mismo cambio; las diferencias son solo de idioma.
+- **Consecuencias:** Quien llega al repositorio entiende el proyecto sin traducir; quien trabaja en él conserva la documentación de mantenimiento en español. Hay dos README que mantener sincronizados, con riesgo de divergencia (`RISK-019`); se mitiga manteniéndolos en el mismo commit y revisando ambos en cada cambio de alcance. Las cifras de componentes, bloques y fases siguen viviendo en el roadmap, no en el README.
+- **Alternativas:** Dejar el README en español y añadir un `README.en.md` (el idioma por defecto seguiría sin ser el del público mayoritario); traducir también roadmap, decisiones y bitácora (duplica el costo de mantenimiento sin valor para el consumidor); un README bilingüe en un solo archivo (duplica la longitud y rompe la lectura lineal); generar el README desde el catálogo (el README explica arranque e infraestructura, que no viven en las páginas de componentes); dejar solo el inglés y borrar el español (pierde la versión que el equipo usa a diario).
+- **Evidencia:** `README.md`, `README.es.md`; enlaces mutuos en la primera línea de ambos; `AGENTS.md` §11 y §13 actualizados.
+
+---
+
+<a id="d-053"></a>
+## D-053 · Licencia MIT y cierre de Q-005
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (cierra `Q-005`)
+- **Contexto:** `Q-005` quedó abierta desde `F0-001` con MIT como propuesta, porque el POC no tenía licencia ni campo `license`. El proyecto se distribuye copiando la fuente y el ecosistema de referencia —shadcn/ui, Radix UI y Base UI— usa MIT. La alternativa de Apache-2.0 daba una atribución más explícita en versiones modificadas, pero añadía la obligación de señalar cambios en cada archivo y un `NOTICE`, fricción que no compensa para un kit que se copia y se adapta.
+- **Decisión:**
+  - El repositorio, los componentes y la documentación se distribuyen bajo **MIT**.
+  - Se agrega `LICENSE` con el texto estándar de MIT y el aviso `Copyright (c) 2026 Koten UI contributors`. Si el proyecto pasa a una entidad legal concreta, solo se actualiza esa línea.
+  - `package.json` de la raíz y de las cuatro workspaces declara `"license": "MIT"`.
+  - El README en inglés y su espejo en español explican el permiso, la obligación de conservar el aviso y la ausencia de garantía.
+  - No se agregan cláusulas de atribución adicionales, `Commons Clause` ni restricciones de uso comercial: el permiso es el de MIT.
+- **Consecuencias:** Cualquiera puede usar Koten en proyectos gratuitos o de pago, modificarlo, sublicenciarlo y venderlo, siempre que conserve el aviso de copyright y permiso en copias o porciones sustanciales. MIT no exige declarar cambios, no concede patentes y no impide que un derivado se ofrezca como producto; la atribución es la mínima del aviso. `Q-005` deja de estar abierta y `F0-001` queda con la licencia definida.
+- **Alternativas:** Apache-2.0 (atribución y aviso de cambios más fuertes, con concesión de patentes, pero más fricción para un kit copiable); MPL-2.0 (obliga a publicar las modificaciones de los archivos de Koten); GPL/AGPL (copyleft incompatible con la promesa de uso libre en productos propietarios); una licencia custom o `Commons Clause` (deja de ser open source y complica la compatibilidad); dejar `Q-005` abierta (bloquea la distribución clara del repositorio y del registry).
+- **Evidencia:** `LICENSE`; `package.json`, `apps/*/package.json`, `packages/ui/package.json`; `README.md` y `README.es.md`; `ROADMAP.md` (`Q-005` cerrada); `docs/PROGRESS.md` (sesión 044).

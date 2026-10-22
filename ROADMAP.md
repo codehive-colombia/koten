@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-22**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-013`** · diseñador de temas
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable), **`M-012`** (documentación directa y listas) y **`M-013`** (diseñador de temas)
+> Última tarea completada: **`M-014`** · README en inglés y espejo en español
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable), **`M-012`** (documentación directa y listas), **`M-013`** (diseñador de temas) y **`M-014`** (README en inglés con versión en español)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -127,6 +127,8 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-049` | i18n del consumidor: diccionarios JSON por idioma y locale BCP 47. | accepted | [D-049](./docs/DECISIONS.md#d-049) |
 | `D-050` | Documentación directa y listas en lugar de tarjetas. | accepted | [D-050](./docs/DECISIONS.md#d-050) |
 | `D-051` | Diseñador de temas con parámetros curados, contraste AA y export superpuesto. | accepted | [D-051](./docs/DECISIONS.md#d-051) |
+| `D-052` | README en inglés como entrada y versión en español opcional. | accepted | [D-052](./docs/DECISIONS.md#d-052) |
+| `D-053` | Licencia MIT para el repositorio, los componentes y la documentación. | accepted | [D-053](./docs/DECISIONS.md#d-053) |
 
 ---
 
@@ -160,7 +162,7 @@ ISO 8601: `YYYY-MM-DD`.
 | ID | Tarea | Depende de | Estado | Criterio de aceptación | Evidencia |
 | --- | --- | --- | --- | --- | --- |
 | `F0-000` | Crear hoja de ruta, requisitos, diseño, decisiones, bitácora y protocolo. | — | `done` | Documentos creados y enlazados desde el README. | `README.md`, `ROADMAP.md`, `docs/*`, `AGENTS.md` |
-| `F0-001` | Inicializar git y workspace de Bun (`apps/*`, `packages/*`). | `F0-000` | `done` | `bun install` funciona; scripts raíz `dev`, `build`, `check`, `test`; `.gitignore` creado; licencia definida o `Q-005` registrada como pendiente. | `package.json`, `bun.lock`, `.gitignore`, `.git/` (`git init -b main`, sin commit inicial); `bun install` OK. Licencia: `Q-005` sigue abierta. |
+| `F0-001` | Inicializar git y workspace de Bun (`apps/*`, `packages/*`). | `F0-000` | `done` | `bun install` funciona; scripts raíz `dev`, `build`, `check`, `test`; `.gitignore` creado; licencia definida o `Q-005` registrada como pendiente. | `package.json`, `bun.lock`, `.gitignore`, `.git/` (`git init -b main`, sin commit inicial); `bun install` OK. Licencia: MIT (`D-053`, cierra `Q-005`); `LICENSE` y campos `license` en las workspaces. |
 | `F0-002` | Configurar Biome, TS strict y Vite + React en las tres apps. | `F0-001` | `done` | `bun run check` pasa en apps vacías; alias `@/*` y `@koten/ui/*` resuelven. | `biome.json`, `tsconfig.base.json`, `apps/*/{package.json,tsconfig.json,vite.config.ts}`; `bun run check` OK (Biome + tsc + 2 tests). |
 | `F0-003` | Instalar Tailwind v4, Base UI, CVA, `clsx` y `tailwind-merge`. | `F0-002` | `done` | `@tailwindcss/vite` configurado; `@base-ui/react` instalado; `cn()` funciona; paleta por defecto bloqueada. | `packages/ui/package.json`, `packages/ui/src/lib/cn.ts`, `packages/ui/src/styles/globals.css`; `bun run build` OK en las tres apps. |
 | `F0-004` | Crear `tokens.css`, `globals.css`, temas y densidades. | `F0-003` | `done` | Tokens de color, tipo, espaciado, radios y densidad; `[data-theme]` y `[data-density]`; página de espécimen. | `packages/ui/src/styles/tokens.css`, `globals.css`; espécimen en `apps/catalog/src/pages/tokens.tsx` + `components/specimen.tsx` + `data/tokens.ts`; contraste AA cubierto por `tokens.contrast.test.ts`; 6 tests de página. |
@@ -307,6 +309,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-011` | i18n personalizable: locale BCP 47, diccionarios JSON por idioma y un único punto de edición (`R-028`). | `done` | El provider acepta cualquier BCP 47; `koten-i18n` instala el runtime y el inglés base en `lib/koten/i18n`; `koten-i18n-es` y `koten-i18n-ja` instalan solo su JSON; `dictionaries.ts` registra los packs; un locale sin diccionario cae al inglés o a `labels`; `/tokens/format`, Empezar, DESIGN-SYSTEM, RECIPES y skills explican las tres capas; `bun run check` verde. | `packages/ui/src/i18n/**`; `scripts/build-registry.ts` + test; `apps/catalog/src/pages/tokens/format.tsx`; `apps/catalog/src/pages/start.tsx`; `docs/{DESIGN-SYSTEM,RECIPES,REQUIREMENTS}.md`; `skills/koten-ui/**`; `D-049`. |
 | `M-012` | Revisión editorial de la documentación y sustitución de tarjetas por listas (`R-029`). | `done` | Requisitos y accesibilidad de componentes/bloques usan listas con reglas; índices de Fundamentos, Bloques y Empezar dejan de ser tarjetas; se retira el boilerplate repetido de instalación, archivos y metas de sección; se corrigen referencias obsoletas a 11 px y al alcance de la v1; README y guías internas quedan en tono directo; `bun run check` verde. | `apps/catalog/src/components/{doc-page,catalog-layout}.tsx`; `apps/catalog/src/pages/{start,ai,overview}.tsx`; `apps/catalog/src/pages/{tokens/index,blocks/index,components/index,tokens/typography}.tsx`; `README.md`; `docs/{DESIGN-SYSTEM,REQUIREMENTS}.md`; `D-050`; `R-029`. |
 | `M-013` | Diseñador de temas con guardrails, validación AA y export de tokens (`R-030`). | `done` | Página `/theme` con registro, pigmento, papel, radio y densidad; el resto de valores se deriva; 11 comprobaciones AA con exportación bloqueada y papel seguro; overlay `:root` para pegar tras `koten-theme`; estado en `?ks=`; enlace desde Temas y la navegación; tests de lógica, interacción, i18n y axe; `qa:a11y` y `qa:overflow` cubren la ruta. | `apps/catalog/src/lib/theme-designer.ts` + `theme-designer.test.ts`; `apps/catalog/src/components/theme-preview.tsx`; `apps/catalog/src/pages/theme.tsx` + `theme.test.tsx`; `apps/catalog/src/pages/tokens/themes.tsx`; `apps/catalog/src/App.tsx`; `apps/catalog/src/data/catalog.ts`; `apps/catalog/src/pages/a11y.test.tsx`; `scripts/qa-a11y.ts`; `scripts/qa-overflow.ts`; `D-051`; `R-030`. |
+| `M-014` | README en inglés como entrada, con versión en español opcional (`README.es.md`) y enlaces mutuos (`D-052`). | `done` | `README.md` en inglés con el mismo contenido, estructura y enlaces que la versión anterior; `README.es.md` conserva el texto español; ambas versiones se enlazan desde la primera línea; el resto de documentos de trabajo sigue en español; `bun run check` verde. | `README.md`; `README.es.md`; `docs/DECISIONS.md` (`D-052`); `AGENTS.md`; `ROADMAP.md`; `docs/PROGRESS.md`; `RISK-019`. |
 
 ---
 
@@ -455,6 +458,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `RISK-016` | El prefijo del proxy y el `base` de Vite se desincronizan y los assets de las demos caen en el catálogo. | Alto | nginx conserva el prefijo y hace fallback por app; `base` de producción probado con `vite preview`, `docker build`, curls a `/demos/{store,erp}/` y navegador; presupuesto acepta cualquier `base`; variables `VITE_*` para cambiar dominio sin tocar código. |
 | `RISK-017` | La capa de agentes se desactualiza o `npx skills` no puede acceder al repositorio si cambia de visibilidad. | Medio | Generación desde una sola fuente en `predev`/`prebuild`; `bun run ai:check` dentro de `bun run check`; el catálogo sigue funcionando sin skills; documentar el acceso requerido al instalar. |
 | `RISK-018` | Un tema exportado se edita a mano después del diseñador y rompe el contraste o la gramática. | Medio | El diseñador solo acepta parámetros curados y bloquea la exportación si falla AA; el CSS declara que es un overlay y la documentación pide verificar con contenido real; las combinaciones por defecto están cubiertas por tests. |
+| `RISK-019` | `README.md` y `README.es.md` divergen en comandos, cifras o enlaces. | Bajo | Las cifras viven en el roadmap y no se repiten como fuente; ambos README se actualizan en el mismo commit y se revisan en cada cambio de alcance; los enlaces mutuos están en la primera línea. |
 
 ---
 
@@ -466,7 +470,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `Q-002` | ¿Registry/CLI dentro de la v1? | `decided` — `D-034` (no en v1) | `F5-001` |
 | `Q-003` | ¿Producto y assets finales del storefront? | `decided` — `D-021`, `D-022` | `F2-001` |
 | `Q-004` | ¿Destino de deploy del POC? | `decided` — `D-031` | `F4-006` |
-| `Q-005` | ¿Licencia del repo? | `open` (propuesta: MIT) | `F0-001` |
+| `Q-005` | ¿Licencia del repo? | `decided` — `D-053` (MIT) | `F0-001` |
 | `Q-006` | ¿Matriz exacta de navegadores? | `open` (propuesta: últimas 2 versiones) | `F0-002` |
 | `Q-007` | ¿Proveedor de CI? | `decided` — `D-018` | `F0-008` |
 | `Q-008` | ¿Publicar `@koten/ui`? | `decided` — `D-033` (no) | `F5-007` |
@@ -536,3 +540,5 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-22 | Mejora puntual `M-011`: i18n personalizable con cualquier BCP 47, runtime e inglés base en `koten-i18n`, packs JSON por idioma (`koten-i18n-es`, `koten-i18n-ja`), registro en `dictionaries.ts` y documentación de las tres capas en `/tokens/format`, Empezar, RECIPES y skills. `D-049`, `R-028`. | Sesión 040 |
 | 2026-10-22 | Mejora puntual `M-012`: revisión editorial del catálogo y las guías; requisitos y accesibilidad como listas, índices sin tarjetas, menos boilerplate repetido, README y documentos internos más directos, y corrección de referencias obsoletas a 11 px. `D-050`, `R-029`. | Sesión 041 |
 | 2026-10-22 | Mejora puntual `M-013`: página `/theme` para diseñar un tema con cinco parámetros curados (registro, pigmento, papel, radio, densidad), 11 comprobaciones AA, bloqueo de exportación y papel seguro; overlay de tokens para pegar tras `koten-theme`, estado compartible en `?ks=` y enlace desde Temas. `D-051`, `R-030`, `RISK-018`. | Sesión 042 |
+| 2026-10-22 | Mejora puntual `M-014`: `README.md` pasa a inglés como entrada del repositorio y `README.es.md` conserva la versión española como espejo opcional; enlaces mutuos en la primera línea, documentos de trabajo en español y artefactos de agentes en inglés. `D-052`, `RISK-019`. | Sesión 043 |
+| 2026-10-22 | Licencia MIT: `LICENSE`, campo `license` en la raíz y las cuatro workspaces, sección de licencia en ambos README y cierre de `Q-005` con `D-053`. `F0-001` queda con la licencia definida. | Sesión 044 |

@@ -1,108 +1,112 @@
 # Koten UI · 古典
 
-Sistema de componentes React con la gramática del web japonés clásico: densidad informativa, marcos de 1 px, papel cálido, tipografía del sistema y jerarquía por reglas. **Chirashi** cubre comercio, **Daichō** backoffice, **Kanso** lectura y **Sumi** el modo oscuro.
+**English** · [Español](./README.es.md)
 
-> **Estado:** fases 0–5 cerradas, tag `v0.1.0-poc` y despliegue en <https://koten.codehive.com.co>. 46 componentes y 20 bloques documentados, demos HIKARI y KURA en ES/JA/EN, auditorías de accesibilidad y performance, registry shadcn, i18n personalizable, tres skills para agentes y un diseñador de temas con guardrails (`M-013`, `D-051`).
-> **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
+A React component system built on the grammar of the classical Japanese web: information density, 1 px frames, warm paper, system typography and hierarchy through rules. **Chirashi** covers commerce, **Daichō** back office, **Kanso** reading and **Sumi** dark mode.
 
-## Documentación
+> **Status:** phases 0–5 are closed, tag `v0.1.0-poc`, deployed at <https://koten.codehive.com.co>. 46 components and 20 blocks documented, HIKARI and KURA demos in ES/JA/EN, accessibility and performance audits, shadcn registry, customizable i18n, three agent skills and a theme designer with guardrails (`M-013`, `D-051`).
+> **Source of truth:** [ROADMAP.md](./ROADMAP.md).
 
-| Documento | Para qué |
+Working documents — roadmap, decisions, log and protocol — are kept in Spanish: [ROADMAP.md](./ROADMAP.md), [docs/](./docs/) and [AGENTS.md](./AGENTS.md).
+
+## Documentation
+
+| Document | What it is for |
 | --- | --- |
-| [ROADMAP.md](./ROADMAP.md) | Fases, tareas, estado, dependencias y trazabilidad. |
-| [docs/REQUIREMENTS.md](./docs/REQUIREMENTS.md) | Alcance, referencias y criterios de éxito. |
-| [docs/DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) | Gramática visual, tokens, componentes, i18n y accesibilidad. |
-| [docs/DECISIONS.md](./docs/DECISIONS.md) | Decisiones con IDs estables. |
-| [docs/PROGRESS.md](./docs/PROGRESS.md) | Bitácora append-only y handoff. |
-| [docs/RECIPES.md](./docs/RECIPES.md) | Recetas copiables de formulario, tabla, drawer, tarjeta e i18n. |
-| [llms.txt](./llms.txt) | Índice de documentación para agentes. |
-| [skills/](./skills) | Skills `koten-ui`, `koten-design-system` y `koten-design-language`. |
-| [docs/qa/](./docs/qa/) | Capturas de QA visual por fecha. |
-| [AGENTS.md](./AGENTS.md) | Protocolo para retomar el proyecto. |
+| [ROADMAP.md](./ROADMAP.md) | Phases, tasks, status, dependencies and traceability. |
+| [docs/REQUIREMENTS.md](./docs/REQUIREMENTS.md) | Scope, references and success criteria. |
+| [docs/DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) | Visual grammar, tokens, components, i18n and accessibility. |
+| [docs/DECISIONS.md](./docs/DECISIONS.md) | Decisions with stable IDs. |
+| [docs/PROGRESS.md](./docs/PROGRESS.md) | Append-only session log and handoff. |
+| [docs/RECIPES.md](./docs/RECIPES.md) | Copyable form, table, drawer, card and i18n recipes. |
+| [llms.txt](./llms.txt) | Documentation index for agents. |
+| [skills/](./skills) | `koten-ui`, `koten-design-system` and `koten-design-language` skills. |
+| [docs/qa/](./docs/qa/) | Visual QA screenshots by date. |
+| [AGENTS.md](./AGENTS.md) | Protocol for picking the project back up. |
 
-## Principios
+## Principles
 
-- Sencillez de medios, densidad de información.
-- El marco es la unidad: panel, cabecera, regla, borde.
-- El color señala; no decora.
-- Tipografía del sistema y texto real, nunca texto en imágenes.
-- Desktop primero, accesible por defecto, rápido por diseño.
+- Simplicity of means, density of information.
+- The frame is the unit: panel, header, rule, border.
+- Color signals; it does not decorate.
+- System typography and real text, never text in images.
+- Desktop first, accessible by default, fast by design.
 
 ## Stack
 
-Bun workspaces · React 19 · TypeScript 7 strict · Vite 8 · Tailwind CSS v4 · Base UI · CVA · TanStack Table (solo ERP) · Lucide · React Router 7.18 · Vitest + Testing Library + axe-core · Chromium/CDP para auditorías · Biome.
+Bun workspaces · React 19 · TypeScript 7 strict · Vite 8 · Tailwind CSS v4 · Base UI · CVA · TanStack Table (ERP only) · Lucide · React Router 7.18 · Vitest + Testing Library + axe-core · Chromium/CDP for audits · Biome.
 
-Sin CSS-in-JS runtime, sin fuentes CJK completas, sin librería de charts, sin carousel ni date-picker pesado.
+No runtime CSS-in-JS, no full CJK fonts, no charting library, no carousel or heavy date picker.
 
-Versiones resueltas: Bun 1.4.3, React 19.3.1, Vite 8.3.4, TypeScript 7.0.2, Tailwind 4.3.3, Base UI 1.9.0, Biome 2.5.15, Vitest 5.0.5.
+Resolved versions: Bun 1.4.3, React 19.3.1, Vite 8.3.4, TypeScript 7.0.2, Tailwind 4.3.3, Base UI 1.9.0, Biome 2.5.15, Vitest 5.0.5.
 
-## Comandos
+## Commands
 
 ```bash
 bun install
-bun run dev        # 5173 catálogo · 5174 storefront · 5175 ERP
+bun run dev        # 5173 catalog · 5174 storefront · 5175 ERP
 bun run check      # Biome + TypeScript + i18n + ai:check + tests
-bun run ci         # check + build + presupuestos
-bun run build      # build de las tres apps
-bun run budget     # JS/CSS gzip y fuentes
-bun run qa:a11y    # axe, 12 px mínimo y foco visible (requiere dev + Chromium)
-bun run qa:overflow # overflow y RTL en 1440/1280/1024/390 (requiere dev + Chromium)
-bun run qa:perf    # LCP/CLS sobre el build (requiere Chromium)
-bun run qa:visual  # capturas en docs/qa/<fecha>
-bun run registry   # registry shadcn en apps/catalog/public/r
-bun run ai:docs    # llms.txt, Markdown por pieza e inventario de skills
-bun run ai:check   # falla si la capa de agentes está desactualizada
+bun run ci         # check + build + budgets
+bun run build      # build all three apps
+bun run budget     # gzipped JS/CSS and fonts
+bun run qa:a11y    # axe, 12 px minimum and visible focus (needs dev server + Chromium)
+bun run qa:overflow # overflow and RTL at 1440/1280/1024/390 (needs dev server + Chromium)
+bun run qa:perf    # LCP/CLS on the build (needs Chromium)
+bun run qa:visual  # screenshots into docs/qa/<date>
+bun run registry   # shadcn registry in apps/catalog/public/r
+bun run ai:docs    # llms.txt, Markdown per piece and skills inventory
+bun run ai:check   # fails when the agent layer is stale
 ```
 
-## Producción
+## Production
 
-Sitio: **<https://koten.codehive.com.co>**
+Site: **<https://koten.codehive.com.co>**
 
-| Ruta | App | Puerto interno |
+| Route | App | Internal port |
 | --- | --- | --- |
-| `/` | catálogo y documentación | 3000 |
-| `/demos/store` | storefront HIKARI | 3001 |
-| `/demos/erp` | ERP KURA | 3002 |
+| `/` | catalog and documentation | 3000 |
+| `/demos/store` | HIKARI storefront | 3001 |
+| `/demos/erp` | KURA ERP | 3002 |
 
-Una imagen multi-stage construye las tres apps con Bun y las sirve con nginx sin privilegios. Traefik conserva el prefijo de cada demo, así que sus assets no chocan con los del catálogo. Los puertos no se publican en el host.
+A multi-stage image builds the three apps with Bun and serves them through unprivileged nginx. Traefik keeps each demo's prefix, so its assets do not collide with the catalog's. Ports are not published on the host.
 
 ```bash
-# servidor o PaaS
+# server or PaaS
 KOTEN_IMAGE=ghcr.io/<owner>/<repo>:latest docker compose up -d
 
-# local: publica 3000/3001/3002
+# local: publishes 3000/3001/3002
 docker compose -f docker-compose.yml -f docker-compose.local.yml up --build -d
 ```
 
-Variables en `.env` (ver `.env.example`): `KOTEN_IMAGE`, `KOTEN_SITE_URL`, `KOTEN_HOST`, el entrypoint/certresolver de Traefik y los puertos del override local. `KOTEN_SITE_URL` alimenta los enlaces públicos y el registry.
+Variables live in `.env` (see `.env.example`): `KOTEN_IMAGE`, `KOTEN_SITE_URL`, `KOTEN_HOST`, the Traefik entrypoint/certresolver and the local override ports. `KOTEN_SITE_URL` feeds public links and the registry.
 
-El workflow publica la imagen en GHCR en `main` y tags `v*`, y solo la construye en pull requests. El registry y la documentación para agentes se regeneran dentro de la imagen, por lo que `/r/*.json`, `/llms.txt` y `/md/**` viajan en el contenedor.
+The workflow publishes the image to GHCR on `main` and `v*` tags, and only builds it on pull requests. The registry and the agent documentation are regenerated inside the image, so `/r/*.json`, `/llms.txt` and `/md/**` ship in the container.
 
-## Registry shadcn
+## shadcn registry
 
 ```bash
 npx shadcn@latest add https://koten.codehive.com.co/r/koten-theme.json
 npx shadcn@latest add https://koten.codehive.com.co/r/button.json
 ```
 
-En local, `bun run dev` sirve el registry en `http://localhost:5173/r/`. Los items usan los aliases de `components.json` (`@ui`, `@components`, `@lib`) y reescriben los imports al prefijo del proyecto. `koten-theme` escribe tokens, temas y densidad en el `tailwind.css` declarado; no crea una carpeta `styles/`. `koten-i18n` instala el runtime y el inglés; `koten-i18n-es` y `koten-i18n-ja` agregan solo su diccionario.
+Locally, `bun run dev` serves the registry at `http://localhost:5173/r/`. Items use the aliases from `components.json` (`@ui`, `@components`, `@lib`) and rewrite imports to the project prefix. `koten-theme` writes tokens, themes and density into the declared `tailwind.css`; it does not create a `styles/` folder. `koten-i18n` installs the runtime and English; `koten-i18n-es` and `koten-i18n-ja` add only their dictionary.
 
-## Diseñador de temas
+## Theme designer
 
-La página **`/theme`** permite adaptar Koten sin editar doscientos tokens. Solo se eligen cinco cosas: registro, pigmento de la paleta, papel, radio y densidad. Los valores derivados (hover, tintes, neutros, estados, sombras) se calculan; la tipografía, el espaciado, los bordes, el movimiento y el significado de los estados no se tocan. Antes de exportar se validan 11 pares WCAG 2.2 AA; si alguno falla, la copia y la descarga se bloquean y se ofrece el papel seguro más cercano.
+The **`/theme`** page lets you adapt Koten without editing two hundred tokens. You only choose five things: register, palette pigment, paper, radius and density. Derived values (hover, tints, neutrals, states, shadows) are calculated; typography, spacing, borders, motion and the meaning of states are off-limits. Before export, 11 WCAG 2.2 AA pairs are validated; if any fails, copy and download are blocked and the nearest safe paper is offered.
 
-La salida es un archivo `koten-custom.css` con un overlay `:root` de valores semánticos. Se pega al final del `tailwind.css`, **después de `koten-theme`**, y el tema se comparte con `?ks=registro.pigmento.papel.radio.densidad`. La especificación completa está en [DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) §6.
+The output is a `koten-custom.css` file with a `:root` overlay of semantic values. Paste it at the end of `tailwind.css`, **after `koten-theme`**, and share the theme with `?ks=register.pigment.paper.radius.density`. The full specification is in [DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) §6.
 
-## IA y agentes
+## AI and agents
 
-Tres niveles, generados desde la misma fuente que el catálogo:
+Three levels, generated from the same source as the catalog:
 
-| Nivel | Artefacto | Uso |
+| Level | Artifact | Use |
 | --- | --- | --- |
-| Lectura | `/llms.txt`, `/llms-full.txt`, `/md/components/<slug>.md`, `/md/blocks/<categoría>/<slug>.md` | Índice, corpus y una página por pieza. |
-| Consumo | `skills/koten-ui` | Elegir, instalar, componer, tematizar y verificar. |
-| Extensión | `skills/koten-design-system` | Agregar primitivas, bloques, temas y densidades dentro del repositorio. |
-| Autoría | `skills/koten-design-language` | Crear una pieza nueva en un proyecto que ya usa Koten. |
+| Reading | `/llms.txt`, `/llms-full.txt`, `/md/components/<slug>.md`, `/md/blocks/<category>/<slug>.md` | Index, corpus and one page per piece. |
+| Consumption | `skills/koten-ui` | Choose, install, compose, theme and verify. |
+| Extension | `skills/koten-design-system` | Add primitives, blocks, themes and densities inside the repository. |
+| Authoring | `skills/koten-design-language` | Create a new piece in a project that already uses Koten. |
 
 ```bash
 npx skills add codehive-colombia/koten --list
@@ -111,33 +115,33 @@ npx skills add codehive-colombia/koten --skill koten-design-system
 npx skills add codehive-colombia/koten --skill koten-design-language
 ```
 
-La página `/ai` explica los tres niveles. `predev` y `prebuild` regeneran la capa de agentes junto con el registry; `bun run ai:check` corre dentro de `bun run check`. Las skills siguen el estándar [Agent Skills](https://agentskills.io/specification).
+The `/ai` page explains the three levels. `predev` and `prebuild` regenerate the agent layer together with the registry; `bun run ai:check` runs inside `bun run check`. Skills follow the [Agent Skills](https://agentskills.io/specification) standard.
 
-## Usar Koten UI en tu proyecto
+## Using Koten UI in your project
 
-Necesitas React 19, Tailwind CSS 4 y un `components.json` de shadcn. No clonas el repositorio ni instalas Bun. La guía completa está en **Empezar** (`/start#usar`).
+You need React 19, Tailwind CSS 4 and a shadcn `components.json`. You do not clone the repository or install Bun. The full guide is in **Getting started** (`/start#usar`).
 
 ```bash
-# 1. tema, una sola vez
+# 1. theme, once
 npx shadcn@latest add https://koten.codehive.com.co/r/koten-theme.json
 
-# 2. componente o bloque
+# 2. component or block
 npx shadcn@latest add https://koten.codehive.com.co/r/button.json
 npx shadcn@latest add https://koten.codehive.com.co/r/product-card.json
 ```
 
-Con Bun, cambia `npx` por `bunx`. El catálogo recuerda la elección en `localStorage`.
+With Bun, replace `npx` with `bunx`. The catalog remembers your choice in `localStorage`.
 
-Después:
+Then:
 
-1. Importa el CSS de Tailwind que declara tu `components.json`; el tema se escribe ahí.
-2. Envuelve la app con `KotenProvider` (`@/lib/koten/i18n/provider` o tu alias); `locale` acepta cualquier BCP 47.
-3. Elige tema y densidad en el elemento raíz (`data-theme`, `data-density`).
-4. Consulta **Componentes** (`/components`) y **Bloques** (`/blocks`) para instalación, props, código y accesibilidad.
+1. Import the Tailwind CSS declared in your `components.json`; the theme is written there.
+2. Wrap the app with `KotenProvider` (`@/lib/koten/i18n/provider` or your alias); `locale` accepts any BCP 47 tag.
+3. Pick theme and density on the root element (`data-theme`, `data-density`).
+4. Browse **Components** (`/components`) and **Blocks** (`/blocks`) for installation, props, code and accessibility.
 
-## Desarrollar Koten UI
+## Developing Koten UI
 
-Este camino es para trabajar dentro del repositorio: catálogo, primitivas, bloques, demos, auditorías y registry.
+This path is for working inside the repository: catalog, primitives, blocks, demos, audits and registry.
 
 ```bash
 git clone https://github.com/codehive-colombia/koten.git
@@ -149,36 +153,36 @@ bun run build
 bun run budget
 ```
 
-Antes de tocar una pieza, lee [AGENTS.md](./AGENTS.md), [docs/DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) y [docs/RECIPES.md](./docs/RECIPES.md). Las auditorías `bun run qa:*` son opcionales y requieren Chromium. La guía completa está en **Empezar** (`/start#desarrollar`).
+Before touching a piece, read [AGENTS.md](./AGENTS.md), [docs/DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) and [docs/RECIPES.md](./docs/RECIPES.md). The `bun run qa:*` audits are optional and require Chromium. The full guide is in **Getting started** (`/start#desarrollar`).
 
-## Estructura
+## Structure
 
 ```txt
 apps/
-  catalog/      # documentación viva y laboratorio
-  storefront/   # POC HIKARI
-  erp/          # POC KURA
+  catalog/      # living documentation and lab
+  storefront/   # HIKARI POC
+  erp/          # KURA POC
 packages/
   ui/
-    src/components/ui/       # primitivas copiables
-    src/components/patterns/ # composiciones
+    src/components/ui/       # copyable primitives
+    src/components/patterns/ # compositions
     src/styles/tokens.css
     src/styles/globals.css
     src/lib/
-infra/nginx/    # runtime de producción
-skills/         # koten-ui, koten-design-system y koten-design-language
-scripts/        # registry, documentación para agentes y QA
-docs/           # requisitos, diseño, decisiones y bitácora
+infra/nginx/    # production runtime
+skills/         # koten-ui, koten-design-system and koten-design-language
+scripts/        # registry, agent documentation and QA
+docs/           # requirements, design, decisions and log
 Dockerfile
 docker-compose.yml
 ```
 
-## Cómo retomar
+## Picking it back up
 
-1. Lee [docs/PROGRESS.md](./docs/PROGRESS.md) para ver el estado real.
-2. Lee [ROADMAP.md](./ROADMAP.md) y continúa la tarea `in_progress` o elige la primera `todo` con dependencias `done`.
-3. Sigue [AGENTS.md](./AGENTS.md) para actualizar estado, evidencia y bitácora.
+1. Read [docs/PROGRESS.md](./docs/PROGRESS.md) for the real status.
+2. Read [ROADMAP.md](./ROADMAP.md) and continue the `in_progress` task or pick the first `todo` whose dependencies are `done`.
+3. Follow [AGENTS.md](./AGENTS.md) to update status, evidence and the log.
 
-## Licencia
+## License
 
-Por definir. Ver `Q-005` en el roadmap.
+MIT. See [LICENSE](./LICENSE). You can use Koten UI in free or commercial projects, modify it and redistribute it, provided the copyright and permission notice are kept. The software is provided without warranty.
