@@ -1,4 +1,5 @@
-import { type KotenLocale, useKoten } from "@koten/ui";
+import { buttonVariants, type KotenLocale, useKoten } from "@koten/ui";
+import { Link } from "react-router";
 import { PageHeader } from "../../components/docs";
 import { Section, SubHeading, ThemeCard } from "../../components/specimen";
 import { themes } from "../../data/tokens";
@@ -12,8 +13,13 @@ const copy = {
     meta: "data-theme · misma estructura, distintos valores",
     comparison: {
       title: "Comparación",
-      meta: "Una pieza, tres registros",
+      meta: "Una pieza, cuatro registros",
       note: "Las tarjetas mantienen su tema para poder compararlas. El resto del catálogo cambia con el selector del encabezado.",
+    },
+    designer: {
+      title: "Diseñar tu propio tema",
+      body: "Ajusta registro, pigmento y papel con guardrails de contraste; exporta solo los tokens.",
+      action: "Abrir el diseñador",
     },
     rules: {
       title: "Reglas",
@@ -36,8 +42,13 @@ const copy = {
     meta: "data-theme · 同じ構造、異なる値",
     comparison: {
       title: "比較",
-      meta: "1つの部品、3つの様式",
+      meta: "1つの部品、4つの様式",
       note: "カードは比較できるよう独自のテーマを保つ。カタログの残りはヘッダーのセレクタで変わる。",
+    },
+    designer: {
+      title: "自分のテーマを設計",
+      body: "様式・顔料・紙をコントラストのガードレール内で調整し、トークンだけを書き出します。",
+      action: "デザイナーを開く",
     },
     rules: {
       title: "規則",
@@ -60,8 +71,13 @@ const copy = {
     meta: "data-theme · same structure, different values",
     comparison: {
       title: "Comparison",
-      meta: "One piece, three registers",
+      meta: "One piece, four registers",
       note: "The cards keep their theme so they can be compared. The rest of the catalog changes with the header selector.",
+    },
+    designer: {
+      title: "Design your own theme",
+      body: "Tune register, pigment and paper within contrast guardrails; export only the tokens.",
+      action: "Open the designer",
     },
     rules: {
       title: "Rules",
@@ -94,9 +110,19 @@ export function TokensThemesPage() {
         meta={t.meta}
       />
 
+      <div className="mt-[calc(var(--koten-gap)*2)] flex flex-wrap items-center justify-between gap-[var(--koten-gap)] border border-rule bg-surface p-[var(--koten-panel-p)]">
+        <div className="min-w-0">
+          <p className="text-xs font-semibold">{t.designer.title}</p>
+          <p className="mt-0.5 text-2xs leading-relaxed text-muted">{t.designer.body}</p>
+        </div>
+        <Link to="/theme" className={buttonVariants({ variant: "primary", size: "sm" })}>
+          {t.designer.action}
+        </Link>
+      </div>
+
       <div className="mt-[calc(var(--koten-gap)*2)] space-y-[calc(var(--koten-gap)*2)]">
         <Section id="comparacion" title={t.comparison.title} jp="比較" meta={t.comparison.meta}>
-          <div className="grid gap-[var(--koten-gap)] lg:grid-cols-3">
+          <div className="grid gap-[var(--koten-gap)] sm:grid-cols-2">
             {themes.map((theme) => (
               <ThemeCard key={theme.id} theme={theme} />
             ))}

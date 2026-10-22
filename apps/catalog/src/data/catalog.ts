@@ -49,6 +49,10 @@ export const navGroups: readonly CatalogNavGroup[] = [
       { path: "/tokens/density", label: { es: "Densidad", ja: "密度", en: "Density" } },
       { path: "/tokens/themes", label: { es: "Temas", ja: "テーマ", en: "Themes" } },
       {
+        path: "/theme",
+        label: { es: "Diseñar un tema", ja: "テーマを設計", en: "Theme designer" },
+      },
+      {
         path: "/tokens/format",
         label: { es: "Idioma y formato", ja: "言語と書式", en: "Language & format" },
       },

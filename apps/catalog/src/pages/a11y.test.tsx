@@ -12,6 +12,7 @@ import { AIPage } from "./ai";
 import { BlocksIndexPage } from "./blocks/index";
 import { ComponentsIndexPage } from "./components/index";
 import { StartPage } from "./start";
+import { ThemeDesignerPage } from "./theme";
 import { TokensFormatPage } from "./tokens/format";
 import { TokensIndexPage } from "./tokens/index";
 
@@ -58,6 +59,7 @@ const pages: readonly [string, ReactElement][] = [
   ["Bloques", createElement(BlocksIndexPage, { key: "blocks" })],
   ["IA y agentes", createElement(AIPage, { key: "ai" })],
   ["Empezar", createElement(StartPage, { key: "start" })],
+  ["Diseñar un tema", createElement(ThemeDesignerPage, { key: "theme" })],
   ["Idioma y formato", createElement(TokensFormatPage, { key: "format" })],
   ["Fundamentos", createElement(TokensIndexPage, { key: "tokens" })],
 ];

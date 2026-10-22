@@ -83,7 +83,7 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · Tema, densidad e idioma",
-        body: "No edites los componentes para cambiar el tono. El tema y la densidad viven en el elemento raíz; el idioma va en el provider y acepta cualquier BCP 47 (ES/JA/EN son los diccionarios incluidos, no un requisito). Chirashi es comercio, Daichō es backoffice, Kanso es lectura y Sumi es el modo oscuro.",
+        body: "No edites los componentes para cambiar el tono. El tema y la densidad viven en el elemento raíz; el idioma va en el provider y acepta cualquier BCP 47 (ES/JA/EN son los diccionarios incluidos, no un requisito). Chirashi es comercio, Daichō es backoffice, Kanso es lectura y Sumi es el modo oscuro. Para crear una variante sin editar tokens, abre `/theme`.",
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
@@ -247,7 +247,7 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · テーマ・密度・言語",
-        body: "色を変えるためにコンポーネントを編集しないでください。テーマと密度はルート要素、言語は provider に置き、任意の BCP 47 を受け付けます（ES/JA/EN は同梱辞書であり必須ではありません）。Chirashi は商業、Daichō はバックオフィス、Kanso は読書、Sumi はダークです。",
+        body: "色を変えるためにコンポーネントを編集しないでください。テーマと密度はルート要素、言語は provider に置き、任意の BCP 47 を受け付けます（ES/JA/EN は同梱辞書であり必須ではありません）。Chirashi は商業、Daichō はバックオフィス、Kanso は読書、Sumi はダークです。トークンを編集せずに変種を作るには `/theme` を開きます。",
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
@@ -412,7 +412,7 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · Theme, density and language",
-        body: "Do not edit components to change the tone. Theme and density live on the root element; language goes in the provider and accepts any BCP 47 (ES/JA/EN are the included dictionaries, not a requirement). Chirashi is commerce, Daichō is back office, Kanso is reading and Sumi is dark mode.",
+        body: "Do not edit components to change the tone. Theme and density live on the root element; language goes in the provider and accepts any BCP 47 (ES/JA/EN are the included dictionaries, not a requirement). Chirashi is commerce, Daichō is back office, Kanso is reading and Sumi is dark mode. To create a variant without editing tokens, open `/theme`.",
         code: `<html lang="en" data-theme="daicho" data-density="compact">`,
       },
       agents: {

@@ -33,6 +33,9 @@ const TokensDensityPage = lazy(() =>
 const TokensThemesPage = lazy(() =>
   import("./pages/tokens/themes").then((module) => ({ default: module.TokensThemesPage })),
 );
+const ThemeDesignerPage = lazy(() =>
+  import("./pages/theme").then((module) => ({ default: module.ThemeDesignerPage })),
+);
 const TokensFormatPage = lazy(() =>
   import("./pages/tokens/format").then((module) => ({ default: module.TokensFormatPage })),
 );
@@ -90,6 +93,7 @@ export function App() {
             <Route path="/tokens/shape" element={<TokensShapePage />} />
             <Route path="/tokens/density" element={<TokensDensityPage />} />
             <Route path="/tokens/themes" element={<TokensThemesPage />} />
+            <Route path="/theme" element={<ThemeDesignerPage />} />
             <Route path="/tokens/format" element={<TokensFormatPage />} />
 
             <Route path="/components" element={<ComponentsIndexPage />} />
