@@ -2,7 +2,7 @@
 
 > ADR ligero. Cada decisión tiene ID estable y no se renumera.
 > Si una decisión se reemplaza, se agrega una nueva con `supersede a D-00x`.
-> Última actualización: 2026-10-21.
+> Última actualización: 2026-10-22.
 
 ## Índice
 
@@ -37,6 +37,7 @@
 - [D-045 · Documentación para agentes y skills de consumo y diseño](#d-045)
 - [D-046 · Empezar se separa en usar y desarrollar el sistema](#d-046)
 - [D-047 · Runner de shadcn configurable: npx o bunx](#d-047)
+- [D-050 · Documentación directa y listas en lugar de tarjetas](#d-050)
 
 ---
 
@@ -738,3 +739,20 @@
   - La documentación generada para agentes incluye ambos comandos (`# Node` y `# Bun`), aunque el frontmatter conserva `npx` como forma canónica.
 - **Consecuencias:** Un proyecto Bun copia `bunx` en todas las páginas sin repetir la elección; un proyecto Node sigue viendo `npx`. La preferencia sobrevive a la navegación y a recargar la página. `site.test.ts` cubre ambos runners y `pages.test.tsx` comprueba el cambio, el `localStorage` y la persistencia entre páginas. No se escribe la preferencia en la URL, así que un enlace compartido no impone un runner.
 - **Alternativas:** Duplicar cada comando con dos líneas fijas (más ruido y copy desactualizado); usar la URL (contamina enlaces y `replaceState` con una preferencia personal); un provider nuevo (más ceremonia para un valor global simple); detectar Bun por heurística (frágil: el navegador no sabe qué runner usa el proyecto).
+
+---
+
+<a id="d-050"></a>
+## D-050 · Documentación directa y listas en lugar de tarjetas
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-012`; precisa `D-008`, `D-025` y `D-042`)
+- **Contexto:** El catálogo había acumulado texto repetido en cada página: la instalación explicaba los aliases y `koten-theme` en todos los componentes, las secciones mostraban metas genéricas (“API pública, valores por defecto y notas”) y los requisitos de uso se presentaban como tarjetas. En los índices, las tarjetas con borde y cabecera competían con la lectura y repetían información que ya estaba en el título. El resultado era más largo de lo necesario y ocultaba lo específico de cada pieza.
+- **Decisión:**
+  - **Listas para leer.** Requisitos de uso y accesibilidad se muestran como listas con reglas; los índices de Fundamentos, Bloques y Empezar usan filas de lista, no tarjetas. Las tarjetas se reservan para la portada editorial; en el resto de la documentación, la navegación también se lee como lista.
+  - **Una explicación por tema.** La instalación por registry, los aliases y `koten-theme` se explican en **Empezar**; cada componente solo muestra el comando y los archivos. Se retiran las metas de sección que repetían el título y el párrafo genérico de uso en formularios.
+  - **Tono directo.** Se eliminan frases de relleno, repeticiones entre descripción y ejemplo y explicaciones que no cambian una decisión. Se conserva la amplitud cuando aporta: API, estados, accesibilidad y límites.
+  - **Vigencia.** Se corrigen referencias obsoletas a 11 px (`D-027` fija 12 px) y al alcance de la v1; las guías describen el sistema actual.
+  - La documentación sigue en ES/JA/EN (`D-025`) y los artefactos para agentes se regeneran desde la misma fuente (`D-045`).
+- **Consecuencias:** Las páginas de componente son más cortas y fáciles de recorrer; la información repetida vive una sola vez y los índices se leen como documentos. Las tarjetas de la portada conservan su función editorial. El cambio es de presentación y copy, no de API ni de tokens.
+- **Alternativas:** Mantener tarjetas en todas las secciones (más peso visual y menos densidad); mover la explicación de instalación a un modal o tooltip (oculta información que el lector necesita al copiar); dejar las metas genéricas (ruido en cada página); recortar también la portada (pierde su función de muestra del sistema).

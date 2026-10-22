@@ -19,7 +19,7 @@ const copy = {
     eyebrow: "Bloques · 応用",
     title: "Bloques",
     description:
-      "Piezas pre-armadas con primitivas del sistema. Cada bloque vive en su propia página con instalación, preview, código, props y accesibilidad. Se agrupan por categoría para que puedan crecer sin mezclarse con los componentes individuales.",
+      "Piezas compuestas con las primitivas del sistema. Cada bloque tiene su página con instalación, ejemplos, props y accesibilidad, agrupados por categoría.",
     meta: "20 bloques · 2 categorías · ES/JA/EN",
     all: "Todos los bloques",
     id: "ID",
@@ -34,7 +34,7 @@ const copy = {
     eyebrow: "ブロック · 応用",
     title: "ブロック",
     description:
-      "システムのプリミティブを組み合わせた既製の部品です。各ブロックは独立したページを持ち、インストール、プレビュー、コード、props、アクセシビリティを掲載します。カテゴリ別にまとめ、個別コンポーネントと分けて拡張できます。",
+      "システムのプリミティブを組み合わせた部品です。各ブロックは導入、例、props、アクセシビリティを掲載する独立したページを持ち、カテゴリ別にまとまっています。",
     meta: "20 ブロック · 2 カテゴリ · ES/JA/EN",
     all: "すべてのブロック",
     id: "ID",
@@ -49,7 +49,7 @@ const copy = {
     eyebrow: "Blocks · 応用",
     title: "Blocks",
     description:
-      "Pre-assembled pieces built from the system primitives. Every block has its own page with installation, preview, code, props and accessibility. They are grouped by category so they can grow without mixing with individual components.",
+      "Pieces composed from the system primitives. Every block has its own page with installation, examples, props and accessibility, grouped by category.",
     meta: "20 blocks · 2 categories · ES/JA/EN",
     all: "All blocks",
     id: "ID",
@@ -79,32 +79,28 @@ export function BlocksIndexPage() {
         meta={t.meta}
       />
 
-      <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">
+      <ul className="mt-[calc(var(--koten-gap)*2)] divide-y divide-rule border-y border-rule">
         {blockCategories.map((category) => {
           const items = blocksByCategory(category.id);
 
           return (
-            <Link
-              key={category.id}
-              to={`/blocks/${category.id}`}
-              className="group flex h-full flex-col border border-rule bg-surface text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1"
-            >
-              <span className="flex min-h-[var(--koten-row-h)] items-center justify-between gap-2 border-b border-rule bg-tint px-[var(--koten-panel-p)]">
-                <span className="text-xs font-semibold">{category.title[locale]}</span>
-                <span aria-hidden="true" className="text-primary">
-                  →
+            <li key={category.id}>
+              <Link
+                to={`/blocks/${category.id}`}
+                className="group grid gap-1 py-3 text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1 sm:grid-cols-[10rem_minmax(0,1fr)_7rem] sm:items-baseline sm:gap-4"
+              >
+                <span className="text-sm font-semibold">{category.title[locale]}</span>
+                <span className="text-xs leading-relaxed text-muted">
+                  {category.description[locale]}
                 </span>
-              </span>
-              <span className="flex-1 p-[var(--koten-panel-p)] text-xs leading-relaxed text-muted">
-                {category.description[locale]}
-              </span>
-              <span className="border-t border-rule px-[var(--koten-panel-p)] py-1 text-2xs text-faint">
-                {t.count(items.length)}
-              </span>
-            </Link>
+                <span className="text-2xs text-faint sm:text-end">
+                  {t.count(items.length)} <span aria-hidden="true">→</span>
+                </span>
+              </Link>
+            </li>
           );
         })}
-      </div>
+      </ul>
 
       <div className="mt-[calc(var(--koten-gap)*2)]">
         <h2 className="text-lg font-semibold">{t.all}</h2>
@@ -172,31 +168,29 @@ export function BlockCategoryPage() {
           {t.empty}
         </p>
       ) : (
-        <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">
+        <ul className="mt-[calc(var(--koten-gap)*2)] divide-y divide-rule border-y border-rule">
           {items.map((doc) => (
-            <Link
-              key={doc.slug}
-              to={`/blocks/${doc.category}/${doc.slug}`}
-              className="group flex h-full flex-col border border-rule bg-surface text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1"
-            >
-              <span className="flex min-h-[var(--koten-row-h)] items-center justify-between gap-2 border-b border-rule bg-tint px-[var(--koten-panel-p)]">
-                <span className="text-xs font-semibold">
-                  {doc.name}
-                  <span className="ms-2 font-normal text-faint">{doc.jp}</span>
+            <li key={doc.slug}>
+              <Link
+                to={`/blocks/${doc.category}/${doc.slug}`}
+                className="group grid gap-1 py-3 text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1 sm:grid-cols-[minmax(0,1fr)_6rem] sm:items-baseline sm:gap-4"
+              >
+                <span className="min-w-0">
+                  <span className="flex flex-wrap items-baseline gap-2 text-sm font-semibold">
+                    {doc.name}
+                    <span className="text-xs font-normal text-faint">{doc.jp}</span>
+                  </span>
+                  <span className="mt-1 block text-xs leading-relaxed text-muted">
+                    {doc.description[locale]}
+                  </span>
                 </span>
-                <span aria-hidden="true" className="text-primary">
-                  →
+                <span className="font-mono text-2xs text-faint sm:text-end">
+                  {doc.id} <span aria-hidden="true">→</span>
                 </span>
-              </span>
-              <span className="flex-1 p-[var(--koten-panel-p)] text-xs leading-relaxed text-muted">
-                {doc.description[locale]}
-              </span>
-              <span className="border-t border-rule px-[var(--koten-panel-p)] py-1 font-mono text-2xs text-faint">
-                {doc.id}
-              </span>
-            </Link>
+              </Link>
+            </li>
           ))}
-        </div>
+        </ul>
       )}
     </div>
   );

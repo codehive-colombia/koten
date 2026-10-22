@@ -64,20 +64,20 @@ Las referencias se usan para **extraer principios**, no para copiar píxeles. El
 - Monorepo con `apps/catalog`, `apps/storefront`, `apps/erp` y `packages/ui`.
 - Tokens, temas y densidades.
 - Primitivas y patrones del inventario del roadmap.
-- Catálogo documentado en español.
+- Catálogo documentado en ES/JA/EN.
 - Storefront de producto “HIKARI K-1” en JA/ES/EN.
-- ERP “KURA” con dashboard y pedidos en ES/JA.
+- ERP “KURA” con dashboard y pedidos en ES/JA/EN.
 - Tests unitarios, de integración y auditoría de accesibilidad.
 - Presupuestos de performance y QA visual.
 
-### Fuera de la v1
+### Fuera del POC original
+
+La fase 5 completó el registry, Sumi, DatePicker, CommandPalette y la virtualización. Siguen fuera de alcance:
 
 - Publicación de un paquete npm o CLI propio.
-- Registry shadcn (fase 5).
-- Modo oscuro completo (fase 5, tema Sumi).
-- SSR/SSG de producción para el storefront (fase 5, evaluación).
+- SSR/SSG de producción para el storefront; solo se evaluó (`D-032`).
 - Backend real, autenticación, pagos, envíos o persistencia.
-- Virtualización de tablas, date picker complejo, command palette y carousel.
+- Carousel y otras dependencias pesadas.
 - Soporte RTL completo; se usa best-effort con propiedades lógicas.
 
 ## 5. Requisitos funcionales
@@ -117,7 +117,7 @@ Las referencias se usan para **extraer principios**, no para copiar píxeles. El
 
 - Body/UI: `Hiragino Kaku Gothic ProN`, `Hiragino Sans`, `Yu Gothic`, `YuGothic`, `Meiryo`, `Noto Sans JP`, `system-ui`, `sans-serif`.
 - Titulares editoriales: `Hiragino Mincho ProN`, `Yu Mincho`, `Noto Serif JP`, `Georgia`, `serif`.
-- Escala: 11/12/13/14/16/20/24/30 px. Body 13–14; meta 11–12.
+- Escala: 12/13/14/16/20/24/30/38 px. Body 13–14; meta 12.
 - `line-height` 1.6–1.7 en japonés; 1.4–1.6 en latín; 1.2–1.3 en titulares.
 - Números tabulares para precios, cantidades, fechas y tablas.
 - Sin fuentes CJK completas. Si se usa una display, subset Latin < 30 KB o subset exacto de titulares.
@@ -237,7 +237,7 @@ Las referencias se usan para **extraer principios**, no para copiar píxeles. El
 - Estado siempre con texto + color.
 - Foco vuelve a la fila al cerrar el drawer.
 - Filtros reflejados en URL.
-- ES/JA sin clipping.
+- ES/JA/EN sin clipping.
 - Sin backend; datos deterministas.
 
 ## 9. Catálogo
@@ -249,7 +249,7 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 - Principios y referencias.
 - Paleta, tipografía, espaciado, radios, densidad.
 - Rutas por fundamento y por componente (formato wiki con sidebar).
-- Componentes: preview, variantes, estados, props, código, a11y.
+- Componentes: instalación, ejemplos, props, código y a11y.
 - Patrones: storefront y ERP.
 - Plantillas: enlaces a los dos demos.
 - Do/Don’t.
@@ -263,7 +263,7 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 - Usa los mismos componentes que los demos.
 - La portada es una landing editorial del sistema: piezas reales y enlaces a la documentación, sin testimonios, precios inventados ni claims de marketing.
 - Se puede navegar con teclado.
-- Documentación en español; demos en JA/ES/EN.
+- Documentación y demos en ES/JA/EN.
 
 ## 10. Fuera de alcance
 
@@ -272,7 +272,6 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 - Analítica, SEO avanzado, internacionalización de rutas.
 - Animaciones complejas o scroll-driven.
 - 3D/WebGL.
-- Modo oscuro y registry en la v1.
 - Publicación npm.
 - Soporte IE o navegadores sin Tailwind v4.
 

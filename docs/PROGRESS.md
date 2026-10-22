@@ -8,9 +8,9 @@
 
 | Campo | Valor |
 | --- | --- |
-| Fecha | 2026-10-21 |
+| Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-009` · selector npx/bunx persistente |
+| Última tarea completada | `M-012` · documentación directa y listas |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,28 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 041 — Documentación directa y listas (`M-012`)
+
+- **Objetivo:** revisar los textos del catálogo y las guías para quitar repeticiones y explicaciones que no aportan, y sustituir las tarjetas de lectura por listas.
+- **Hecho:**
+  - **Listas:** requisitos de uso y accesibilidad de cada componente/bloque son listas con reglas; los índices de Fundamentos, Bloques y Empezar usan filas en lugar de tarjetas.
+  - **Menos repetición:** se retiró el boilerplate de instalación, archivos y metas genéricas de sección, y el párrafo de uso en formularios. La explicación completa de aliases y `koten-theme` queda en Empezar.
+  - **Copy directo:** se ajustaron Empezar, IA y agentes, Fundamentos, Componentes, Bloques, portada y README; se eliminaron frases de relleno y datos históricos que ya no describían el sistema.
+  - **Vigencia:** se corrigieron referencias a 11 px (`D-027` fija 12 px) y el alcance de la v1 en `DESIGN-SYSTEM.md` y `REQUIREMENTS.md`.
+  - **Agentes:** `bun run ai:docs` regenerado desde la fuente.
+- **Tareas tocadas:** `M-012` → `done`; `R-029` → `done`; `R-019` corregida a `done`.
+- **Decisiones:** `D-050`.
+- **Evidencia:**
+  - `apps/catalog/src/components/{doc-page,catalog-layout}.tsx`; `apps/catalog/src/pages/{start,ai,overview}.tsx`; `apps/catalog/src/pages/{tokens/index,blocks/index,components/index,tokens/typography}.tsx`; `README.md`; `docs/{DESIGN-SYSTEM,REQUIREMENTS,DECISIONS,PROGRESS}.md`; `ROADMAP.md`.
+  - `bun run check` verde: **35 archivos / 225 tests**, Biome, TypeScript, i18n y `ai:check`.
+  - Navegador a 1440: Button (accesibilidad como lista), DataTable (requisitos como lista), Fundamentos, Storefront y Empezar. A 390 y EN/JA: Fundamentos y Empezar sin overflow.
+  - `qa:a11y` inició con portada ES 1440: axe 0 serious, 0 textos < 12 px, foco 15/15; la ejecución completa excedió el tiempo de la sesión.
+- **Sin validar:** lector de pantalla y el resto de la matriz `qa:a11y`/`qa:overflow`.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
 
 ---
 

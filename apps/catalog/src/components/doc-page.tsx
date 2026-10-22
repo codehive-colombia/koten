@@ -13,23 +13,15 @@ type Chrome = {
   preview: string;
   code: string;
   install: string;
-  installBody: string;
   files: string;
-  filesBody: string;
   reference: string;
   native: string;
-  nativeBody: string;
   composition: string;
   requirements: string;
   formUsage: string;
-  formUsageBody: string;
-  formMeta: string;
   props: string;
-  propsMeta: string;
   a11y: string;
-  a11yMeta: string;
   examples: string;
-  examplesMeta: string;
   example: string;
   baseUi: string;
   tanstack: string;
@@ -42,26 +34,15 @@ const chrome: Record<KotenLocale, Chrome> = {
     preview: "Vista previa",
     code: "Código",
     install: "Instalación",
-    installBody:
-      "El item usa los aliases de tu components.json: el componente va a ui, el núcleo a lib/koten y koten-theme escribe tokens, temas y densidad en el CSS de tailwind.css. No se crea una carpeta styles/.",
     files: "Archivos",
-    filesBody:
-      "Rutas resueltas con los aliases de components.json; koten-theme se instala como dependencia.",
     reference: "Referencia",
     native: "HTML nativo",
-    nativeBody: "Sin primitiva de Base UI; el componente envuelve HTML y tokens del sistema.",
     composition: "Composición de primitivas",
     requirements: "Requisitos de uso",
     formUsage: "Uso en un formulario",
-    formUsageBody:
-      "Este componente forma parte de una sección de formulario. La muestra siguiente lo integra con label, ayuda, error y envío.",
-    formMeta: "label · ayuda · error · envío",
     props: "Props",
-    propsMeta: "API pública, valores por defecto y notas",
     a11y: "Accesibilidad",
-    a11yMeta: "Nombre, teclado, foco y anuncios",
     examples: "Ejemplos",
-    examplesMeta: "Vista previa y código copiable",
     example: "Ejemplo",
     baseUi: "Base UI",
     tanstack: "TanStack Table",
@@ -72,26 +53,15 @@ const chrome: Record<KotenLocale, Chrome> = {
     preview: "プレビュー",
     code: "コード",
     install: "インストール",
-    installBody:
-      "項目は components.json のエイリアスを使います。コンポーネントは ui、コアは lib/koten に配置され、koten-theme がトークン・テーマ・密度を tailwind.css の CSS に書き込みます。styles/ フォルダーは作成しません。",
     files: "ファイル",
-    filesBody:
-      "components.json のエイリアスで解決されるパス。koten-theme は依存関係としてインストールされます。",
     reference: "参照",
     native: "ネイティブHTML",
-    nativeBody: "Base UI のプリミティブは使わず、HTML とシステムのトークンで構成します。",
     composition: "プリミティブの合成",
     requirements: "利用要件",
     formUsage: "フォーム内での使用",
-    formUsageBody:
-      "このコンポーネントはフォームセクションの一部です。以下の例ではラベル、説明、エラー、送信と組み合わせています。",
-    formMeta: "ラベル · 説明 · エラー · 送信",
     props: "プロパティ",
-    propsMeta: "公開API、既定値、注意点",
     a11y: "アクセシビリティ",
-    a11yMeta: "名前、キーボード、フォーカス、通知",
     examples: "例",
-    examplesMeta: "プレビューとコピー可能なコード",
     example: "例",
     baseUi: "Base UI",
     tanstack: "TanStack Table",
@@ -102,26 +72,15 @@ const chrome: Record<KotenLocale, Chrome> = {
     preview: "Preview",
     code: "Code",
     install: "Installation",
-    installBody:
-      "The item uses your components.json aliases: the component goes to ui, the core to lib/koten, and koten-theme writes tokens, themes and density into the tailwind.css file. No styles/ folder is created.",
     files: "Files",
-    filesBody:
-      "Paths resolved with the components.json aliases; koten-theme installs as a dependency.",
     reference: "Reference",
     native: "Native HTML",
-    nativeBody: "No Base UI primitive; the component wraps HTML and system tokens.",
     composition: "Primitive composition",
     requirements: "Usage requirements",
     formUsage: "Use inside a form",
-    formUsageBody:
-      "This component is part of a form section. The sample below integrates it with label, help, error and submit.",
-    formMeta: "label · help · error · submit",
     props: "Props",
-    propsMeta: "Public API, defaults and notes",
     a11y: "Accessibility",
-    a11yMeta: "Name, keyboard, focus and announcements",
     examples: "Examples",
-    examplesMeta: "Preview and copyable code",
     example: "Example",
     baseUi: "Base UI",
     tanstack: "TanStack Table",
@@ -163,9 +122,7 @@ function PageMeta({ doc, kind }: { doc: PrimitiveDoc | BlockDoc; kind: "componen
               {doc.baseUi.includes("tanstack") ? t.tanstack : t.baseUi} ↗
             </a>
           ) : (
-            <span className="text-muted">
-              {kind === "block" ? t.composition : `${t.native} · ${t.nativeBody}`}
-            </span>
+            <span className="text-muted">{kind === "block" ? t.composition : t.native}</span>
           )}
         </dd>
       </div>
@@ -267,19 +224,19 @@ function Requirements({ items }: { items: readonly DocRequirement[] }) {
       jp="要件"
       meta={items.map((item) => requirementLabels[item.kind][locale]).join(" · ")}
     >
-      <ul className="grid gap-[var(--koten-gap)] sm:grid-cols-2">
+      <ul className="divide-y divide-rule border-y border-rule text-xs">
         {items.map((item) => (
           <li
             key={`${item.kind}-${item.label.es}`}
-            className="border border-rule bg-surface p-[var(--koten-panel-p)]"
+            className="grid gap-1 py-2 sm:grid-cols-[14rem_minmax(0,1fr)] sm:items-baseline sm:gap-4"
           >
-            <p className="flex flex-wrap items-center gap-2 text-xs font-semibold">
+            <p className="flex flex-wrap items-center gap-2 font-semibold">
               <Badge tone={item.kind === "provider" ? "warning" : "neutral"} appearance="outline">
                 {requirementLabels[item.kind][locale]}
               </Badge>
               <span>{item.label[locale]}</span>
             </p>
-            <p className="mt-1 text-2xs leading-relaxed text-muted">{item.detail[locale]}</p>
+            <p className="leading-relaxed text-muted">{item.detail[locale]}</p>
           </li>
         ))}
       </ul>
@@ -300,8 +257,7 @@ function Installation({ doc }: { doc: PrimitiveDoc | BlockDoc }) {
       jp="導入"
       meta={`/r/${doc.registrySlug ?? doc.slug}.json`}
     >
-      <p className="text-xs leading-relaxed text-muted">{t.installBody}</p>
-      <div className="mt-[var(--koten-gap)] flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <PackageManagerTabs
           value={packageManager}
           label={shellLabels[locale].runner}
@@ -312,7 +268,6 @@ function Installation({ doc }: { doc: PrimitiveDoc | BlockDoc }) {
       <h3 className="mt-4 text-2xs font-semibold uppercase tracking-[0.12em] text-faint">
         {t.files}
       </h3>
-      <p className="mt-1 text-2xs text-muted">{t.filesBody}</p>
       <ul className="mt-2 grid gap-1 font-mono text-2xs text-muted sm:grid-cols-2">
         {doc.files.map((file) => (
           <li key={file} className="border-s-2 border-rule-strong ps-2">
@@ -335,7 +290,7 @@ function Props({ doc }: { doc: PrimitiveDoc | BlockDoc }) {
   };
 
   return (
-    <Section id="props" title={t.props} jp="API" meta={t.propsMeta}>
+    <Section id="props" title={t.props} jp="API">
       <div tabIndex={0} className="overflow-x-auto border border-rule">
         <table className="w-full min-w-[36rem] border-collapse text-start">
           <caption className="sr-only">{`${doc.name} · ${t.props}`}</caption>
@@ -378,13 +333,13 @@ function A11y({ doc }: { doc: PrimitiveDoc | BlockDoc }) {
   const t = chrome[locale];
 
   return (
-    <Section id="a11y" title={t.a11y} jp="配慮" meta={t.a11yMeta}>
+    <Section id="a11y" title={t.a11y} jp="配慮">
       <ul
         aria-label={`${doc.name} · ${t.a11y}`}
-        className="grid gap-[var(--koten-gap)] text-xs text-muted sm:grid-cols-2"
+        className="divide-y divide-rule border-y border-rule text-xs leading-relaxed text-muted"
       >
         {doc.a11y[locale].map((item) => (
-          <li key={item} className="border-s-2 border-primary ps-2">
+          <li key={item} className="py-2">
             {item}
           </li>
         ))}
@@ -428,7 +383,7 @@ export function PrimitiveDocPage({ doc }: { doc: PrimitiveDoc }) {
         <Requirements items={doc.requirements ?? []} />
         <Installation doc={doc} />
 
-        <Section id="ejemplos" title={t.examples} jp="例" meta={t.examplesMeta}>
+        <Section id="ejemplos" title={t.examples} jp="例">
           <div className="space-y-[var(--koten-gap)]">
             {doc.examples.map((example) => (
               <PreviewCode
@@ -444,10 +399,7 @@ export function PrimitiveDocPage({ doc }: { doc: PrimitiveDoc }) {
         </Section>
 
         {doc.formExample ? (
-          <Section id="formulario" title={t.formUsage} jp="フォーム" meta={t.formMeta}>
-            <p className="mb-3 border-s-2 border-primary ps-2 text-xs leading-relaxed text-muted">
-              {t.formUsageBody}
-            </p>
+          <Section id="formulario" title={t.formUsage} jp="フォーム">
             <PreviewCode
               id={`${doc.slug}-form`}
               title={doc.formExample.title[locale]}
@@ -477,7 +429,7 @@ export function BlockDocPage({ doc }: { doc: BlockDoc }) {
         <Requirements items={doc.requirements ?? []} />
         <Installation doc={doc} />
 
-        <Section id="ejemplos" title={t.examples} jp="例" meta={t.examplesMeta}>
+        <Section id="ejemplos" title={t.examples} jp="例">
           <div className="space-y-[var(--koten-gap)]">
             {doc.examples.map((example) => (
               <PreviewCode

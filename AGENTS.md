@@ -176,6 +176,8 @@ AGENTS.md
 - Fechas ISO (`YYYY-MM-DD`).
 - No borrar decisiones ni entradas de bitácora.
 - No reescribir documentos completos si se puede hacer una edición puntual.
+- No repetir en cada página lo que ya se explica en **Empezar**; cada sección conserva solo lo específico de la pieza.
+- Usar listas con reglas para requisitos, accesibilidad e índices; reservar las tarjetas para la portada. La navegación de la documentación también se lee como lista.
 - Las referencias externas deben llevar URL; si no se verificó, marcarla como pendiente.
 - Los ejemplos de código deben ser copiables y coherentes con la API real.
 
@@ -194,7 +196,7 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 45 primitivas, 20 patrones, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`), la capa de documentación y skills para agentes (`M-007`, `D-045`), la separación de **Empezar** en usar el sistema y desarrollar el sistema (`M-008`, `D-046`) y el selector persistente **npx / bunx** (`M-009`, `D-047`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
+Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 46 componentes, 20 bloques, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`), la capa de documentación y skills para agentes (`M-007`, `D-045`), la separación de **Empezar** en usar el sistema y desarrollar el sistema (`M-008`, `D-046`), el selector persistente **npx / bunx** (`M-009`, `D-047`) y la revisión editorial con listas en lugar de tarjetas (`M-012`, `D-050`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
 2. No hay tareas abiertas: cualquier trabajo nuevo entra como `M-*` o una fase 6 con decisión `D-*`.

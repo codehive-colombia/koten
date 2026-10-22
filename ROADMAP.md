@@ -1,11 +1,11 @@
 # Koten UI — Hoja de ruta
 
 > **Documento vivo y fuente de verdad del estado del proyecto.**
-> Última actualización: **2026-10-21**
+> Última actualización: **2026-10-22**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-009`** · selector npx/bunx persistente
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia) y **`M-009`** (runner npx/bunx)
+> Última tarea completada: **`M-012`** · documentación directa y listas
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx) y **`M-012`** (documentación directa y listas)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -34,7 +34,7 @@ Koten UI es un set de componentes React **estilo shadcn**: la fuente vive en el 
 
 La prueba de concepto son **dos sitios** —una página de producto y un backoffice— más un **catálogo** que documenta y valida el sistema.
 
-**No objetivos de la v1:** publicar un paquete npm, tener un CLI propio, modo oscuro completo, SSR/SSG de producción, virtualización de tablas y componentes de terceros que no estén en el inventario.
+**No objetivos del POC:** publicar un paquete npm, tener un CLI propio y SSR/SSG de producción. El resto del alcance opcional se completó en la fase 5.
 
 ---
 
@@ -297,8 +297,9 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-005` | Producción en `koten.codehive.com.co` con una imagen Docker, compose de tres puertos y CI (`R-023`). | `done` | Una imagen Bun + nginx sirve catálogo en `/` (3000), storefront en `/demos/store` (3001) y ERP en `/demos/erp` (3002); los tres routers de Traefik comparten dominio y conservan el prefijo; assets y deep links funcionan; el registry y los comandos shadcn usan el dominio de producción; GitHub Actions publica la imagen en GHCR. | `Dockerfile`; `docker-compose.yml`; `infra/nginx/default.conf`; `.dockerignore`; `.env.example`; `apps/catalog/src/lib/site.ts`; `apps/{storefront,erp}/vite.config.ts`; `apps/erp/src/App.tsx`; `scripts/{build-registry,check-budgets,qa-perf,qa-visual}.ts`; `.github/workflows/ci.yml`; `D-043`. Verificado con `docker build` y `docker compose`: `/`, `/demos/store/`, `/demos/erp/`, `/r/button.json` y deep links responden 200; navegador sin errores; `bun run check` (34 archivos / 209 tests) y `bun run budget` verdes. |
 | `M-006` | Registry alineado con `components.json`: aliases de shadcn y tema en el CSS del proyecto (`R-018`). | `done` | Los targets usan `@ui`, `@components` y `@lib`; los imports se reescriben a los aliases del proyecto; `koten-theme` entrega tokens, temas y densidad en `tailwind.css` sin crear `styles/`; una instalación real con aliases `~/...` compila con Tailwind 4 y `bun run check` pasa. | `scripts/build-registry.ts` + `build-registry.test.ts`; `apps/catalog/src/{components/doc-page.tsx,pages/start.tsx,data/docs/types.ts}`; `README.md`; `Dockerfile` y `docker-compose.yml` (`KOTEN_SITE_URL`); `apps/catalog/package.json`; `postcss` en la raíz; `D-044`. Verificado con `npx shadcn add` en un proyecto con `tailwind.css: app/app.css` y aliases `~/...`: archivos en `components/ui`, `components/patterns` y `lib/koten`, imports `~/...`, sin `styles/`; `@tailwindcss/cli` compila; `bun run check` (212 tests), `bun run build` y `bun run budget` verdes. |
 | `M-007` | Documentación para agentes y skills de consumo y diseño (`R-024`). | `done` | `llms.txt`, `llms-full.txt` y una página Markdown por componente y bloque; guías internas copiadas; skills `koten-ui` y `koten-design-system` en `skills/` compatibles con `npx skills`; página `/ai`; generación determinista y `bun run ai:check` dentro de `bun run check`. | `scripts/build-ai-docs.ts` + `build-ai-docs.test.ts`; `skills/{koten-ui,koten-design-system}/**`; `apps/catalog/src/pages/ai.tsx`; `App.tsx`; `data/catalog.ts`; `components/doc-page.tsx`; `apps/catalog/package.json`; `package.json`; `D-045`; `R-024`. |
-| `M-008` | Empezar separado por audiencia: usar el sistema vs desarrollar el sistema (`R-025`). | `done` | `/start` abre con dos caminos y tarjetas; el camino de uso instala `koten-theme` y componentes por registry, sin Bun ni clonar; el de desarrollo clona el monorepo, ejecuta las tres apps, verifica y audita; se elimina el flujo obsoleto de copiar `packages/ui`; README replica la separación; tests y a11y verdes. | `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `apps/catalog/src/pages/a11y.test.tsx`; `README.md`; `docs/DESIGN-SYSTEM.md` §12; `docs/REQUIREMENTS.md` (`R-025`); `D-046`. |
+| `M-008` | Empezar separado por audiencia: usar el sistema vs desarrollar el sistema (`R-025`). | `done` | `/start` abre con dos caminos; el camino de uso instala `koten-theme` y componentes por registry, sin Bun ni clonar; el de desarrollo clona el monorepo, ejecuta las tres apps, verifica y audita; se elimina el flujo obsoleto de copiar `packages/ui`; README replica la separación; tests y a11y verdes. | `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `apps/catalog/src/pages/a11y.test.tsx`; `README.md`; `docs/DESIGN-SYSTEM.md` §12; `docs/REQUIREMENTS.md` (`R-025`); `D-046`. |
 | `M-009` | Selector `npx` / `bunx` persistente para los comandos de shadcn (`R-026`). | `done` | Empezar, portada e instalación de cada componente/bloque muestran tabs npx/bunx; la elección se guarda en `localStorage` y se comparte entre páginas; `registryCommand` y el `shadcn init` de Empezar respetan el runner; la documentación generada incluye ambos comandos. | `apps/catalog/src/lib/package-manager.ts`; `apps/catalog/src/lib/site.ts`; `apps/catalog/src/components/view-toggles.tsx`; `apps/catalog/src/components/doc-page.tsx`; `apps/catalog/src/pages/{start,overview}.tsx`; `apps/catalog/src/data/catalog.ts`; `scripts/build-ai-docs.ts`; tests de `site` y páginas; `D-047`. |
+| `M-012` | Revisión editorial de la documentación y sustitución de tarjetas por listas (`R-029`). | `done` | Requisitos y accesibilidad de componentes/bloques usan listas con reglas; índices de Fundamentos, Bloques y Empezar dejan de ser tarjetas; se retira el boilerplate repetido de instalación, archivos y metas de sección; se corrigen referencias obsoletas a 11 px y al alcance de la v1; README y guías internas quedan en tono directo; `bun run check` verde. | `apps/catalog/src/components/{doc-page,catalog-layout}.tsx`; `apps/catalog/src/pages/{start,ai,overview}.tsx`; `apps/catalog/src/pages/{tokens/index,blocks/index,components/index,tokens/typography}.tsx`; `README.md`; `docs/{DESIGN-SYSTEM,REQUIREMENTS}.md`; `D-050`; `R-029`. |
 
 ---
 
@@ -410,7 +411,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-016` | Referencias y análisis documentados. | `F0-000`, `docs/REQUIREMENTS.md`, `docs/DESIGN-SYSTEM.md` | `done` |
 | `R-017` | Sin clichés decorativos ni “cargo cult” japonés. | `D-002`, `docs/DESIGN-SYSTEM.md` | `done` |
 | `R-018` | Registry shadcn opcional. | `F5-001`, `M-006` | `done` |
-| `R-019` | Tema oscuro Sumi opcional. | `F5-002` | `todo` |
+| `R-019` | Tema oscuro Sumi opcional. | `F5-002`, `D-035` | `done` |
 | `R-020` | Trazabilidad entre sesiones. | `F0-000`, `AGENTS.md`, `docs/PROGRESS.md` | `done` |
 | `R-021` | Portada editorial del catálogo. | `M-003`, `D-041` | `done` |
 | `R-022` | Documentación individual por componente y bloque, con instalación, preview/código, props, a11y y referencia Base UI. | `M-004`, `D-042` | `done` |
@@ -418,6 +419,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-024` | Documentación para agentes (`llms.txt`, Markdown por pieza) y skills `koten-ui`/`koten-design-system` compatibles con `npx skills`. | `M-007`, `D-045` | `done` |
 | `R-025` | Empezar separado en usar el sistema y desarrollar el sistema, con requisitos y comandos propios. | `M-008`, `D-046` | `done` |
 | `R-026` | Selector npx/bunx persistente para los comandos de shadcn. | `M-009`, `D-047` | `done` |
+| `R-029` | Documentación directa: sin repeticiones ni explicaciones fuera de lugar, y listas en lugar de tarjetas en las secciones de lectura. | `M-012`, `D-050` | `done` |
 
 ---
 
@@ -519,3 +521,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Mejora puntual `M-007`: capa de documentación para agentes en tres niveles (`llms.txt`, Markdown por componente/bloque y guías), skills `koten-ui` y `koten-design-system` compatibles con `npx skills`, página `/ai`, generación desde una sola fuente y `bun run ai:check` en `bun run check`. `D-045`, `R-024`, `RISK-017`. | Sesión 036 |
 | 2026-10-21 | Mejora puntual `M-008`: **Empezar** se separa en dos caminos, usar Koten UI (registry, `KotenProvider`, sin Bun ni clonar) y desarrollar Koten UI (monorepo, `bun run dev`, `check`, auditorías); se elimina el flujo obsoleto de copiar `packages/ui`; README replica la separación. `D-046`, `R-025`. | Sesión 037 |
 | 2026-10-21 | Mejora puntual `M-009`: selector **npx / bunx** en Empezar, portada e instalación de cada componente/bloque, persistido en `localStorage` y compartido entre páginas; `registryCommand` respeta el runner y la documentación generada incluye ambos comandos. `D-047`, `R-026`. | Sesión 038 |
+| 2026-10-22 | Mejora puntual `M-012`: revisión editorial del catálogo y las guías; requisitos y accesibilidad como listas, índices sin tarjetas, menos boilerplate repetido, README y documentos internos más directos, y corrección de referencias obsoletas a 11 px. `D-050`, `R-029`. | Sesión 041 |

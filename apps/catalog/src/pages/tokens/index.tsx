@@ -12,7 +12,7 @@ const copy = {
     eyebrow: "Fundamentos · 基礎",
     title: "Fundamentos",
     description:
-      "El contrato visual de Koten UI en una sola página: color, tipografía, espacio, forma, densidad, temas y formato. Todo vive en variables CSS y responde al tema y a la densidad del encabezado.",
+      "El contrato visual de Koten UI: color, tipografía, espacio, forma, densidad, temas y formato. Los valores viven en variables CSS y siguen el tema y la densidad del encabezado.",
     meta: "7 páginas · 4 temas · 3 densidades · ES/JA/EN",
     sections: [
       {
@@ -66,8 +66,8 @@ const copy = {
       },
     ],
     start: {
-      title: "Empieza por aquí.",
-      body: "Cambia el tema y la densidad en el encabezado y recorre los fundamentos. Cuando tengas el tono, copia una primitiva y compón una pantalla real.",
+      title: "Siguiente paso",
+      body: "Cambia tema y densidad en el encabezado y recorre los fundamentos. Después instala una primitiva o un bloque.",
       links: "Empezar|Ver componentes",
     },
   },
@@ -75,7 +75,7 @@ const copy = {
     eyebrow: "基礎 · 概要",
     title: "基礎",
     description:
-      "Koten UIの視覚的契約を1ページに：色、タイポグラフィ、余白、形、密度、テーマ、書式。すべてCSS変数にあり、ヘッダーのテーマと密度に反応する。",
+      "Koten UIの視覚的契約：色、タイポグラフィ、余白、形、密度、テーマ、書式。値はCSS変数にあり、ヘッダーのテーマと密度に従う。",
     meta: "7ページ · 4テーマ · 3密度 · ES/JA/EN",
     sections: [
       {
@@ -129,8 +129,8 @@ const copy = {
       },
     ],
     start: {
-      title: "ここから始める。",
-      body: "ヘッダーでテーマと密度を変えながら基礎を見て回る。トーンが決まったら、プリミティブをコピーして実画面を組み立てる。",
+      title: "次のステップ",
+      body: "ヘッダーでテーマと密度を変え、基礎を見て回る。その後、プリミティブかブロックを導入する。",
       links: "はじめる|部品を見る",
     },
   },
@@ -138,7 +138,7 @@ const copy = {
     eyebrow: "Foundations · 基礎",
     title: "Foundations",
     description:
-      "The visual contract of Koten UI on a single page: color, typography, space, shape, density, themes and format. Everything lives in CSS variables and follows the header theme and density.",
+      "The visual contract of Koten UI: color, typography, space, shape, density, themes and format. Values live in CSS variables and follow the header theme and density.",
     meta: "7 pages · 4 themes · 3 densities · ES/JA/EN",
     sections: [
       {
@@ -192,8 +192,8 @@ const copy = {
       },
     ],
     start: {
-      title: "Start here.",
-      body: "Change the theme and density in the header and walk the foundations. Once the tone is set, copy a primitive and compose a real screen.",
+      title: "Next step",
+      body: "Change theme and density in the header and walk the foundations. Then install a primitive or a block.",
       links: "Getting started|Browse components",
     },
   },
@@ -220,33 +220,34 @@ export function TokensIndexPage() {
         <FoundationsSpecimen />
       </div>
 
-      <div className="mt-[calc(var(--koten-gap)*2)] grid gap-[var(--koten-gap)] sm:grid-cols-2">
+      <ul className="mt-[calc(var(--koten-gap)*2)] divide-y divide-rule border-y border-rule">
         {t.sections.map((section) => (
-          <Link
-            key={section.to}
-            to={section.to}
-            className="group flex h-full flex-col border border-rule bg-surface text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1"
-          >
-            <span className="flex min-h-[var(--koten-row-h)] items-center justify-between gap-2 border-b border-rule bg-tint px-[var(--koten-panel-p)]">
-              <span className="text-xs font-semibold">
-                {section.title}
-                <span className="ms-2 font-normal text-faint">{section.jp}</span>
+          <li key={section.to}>
+            <Link
+              to={section.to}
+              className="group grid gap-3 py-3 text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1 sm:grid-cols-[minmax(0,1fr)_15rem] sm:items-center sm:gap-6"
+            >
+              <span className="min-w-0">
+                <span className="flex flex-wrap items-baseline gap-2 text-sm font-semibold">
+                  {section.title}
+                  <span className="text-xs font-normal text-faint">{section.jp}</span>
+                </span>
+                <span className="mt-1 block text-xs leading-relaxed text-muted">
+                  {section.description}
+                </span>
               </span>
-              <span aria-hidden="true" className="text-primary">
-                →
+              <span className="flex items-center justify-between gap-3 border-t border-rule pt-2 sm:border-s sm:border-t-0 sm:ps-4 sm:pt-0">
+                <span className="flex min-h-12 items-center">
+                  <FoundationPreview kind={section.kind} />
+                </span>
+                <span aria-hidden="true" className="text-primary">
+                  →
+                </span>
               </span>
-            </span>
-            <span className="flex flex-1 flex-col p-[var(--koten-panel-p)]">
-              <span className="flex min-h-14 items-center">
-                <FoundationPreview kind={section.kind} />
-              </span>
-              <span className="mt-2 block text-xs leading-relaxed text-muted">
-                {section.description}
-              </span>
-            </span>
-          </Link>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
 
       <div className="mt-[calc(var(--koten-gap)*2)] border-s-2 border-primary bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
         <strong className="text-ink">{t.start.title}</strong> {t.start.body}{" "}

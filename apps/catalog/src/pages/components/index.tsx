@@ -20,7 +20,7 @@ const copy = {
     eyebrow: "Componentes · 部品",
     title: "Componentes",
     description:
-      "Cada primitiva vive en su propia página: instalación, ejemplos con preview y código, props, accesibilidad y la referencia a Base UI cuando corresponde. Las piezas de formulario incluyen una muestra de uso dentro de un formulario.",
+      "Cada primitiva tiene su página con instalación, ejemplos, props y accesibilidad. Las piezas de formulario incluyen una muestra dentro de un formulario.",
     meta: "46 componentes individuales · ES/JA/EN",
     search: "Buscar componente",
     placeholder: "Nombre o ID (Button, C-001…)",
@@ -43,7 +43,7 @@ const copy = {
     eyebrow: "コンポーネント · 部品",
     title: "コンポーネント",
     description:
-      "各プリミティブは独立したページを持ちます。インストール、プレビューとコード付きの例、props、アクセシビリティ、該当する場合は Base UI への参照を掲載します。フォーム部品にはフォーム内での使用例があります。",
+      "各プリミティブは、導入、例、props、アクセシビリティを掲載する独立したページを持ちます。フォーム部品にはフォーム内での使用例があります。",
     meta: "46 個の独立ページ · ES/JA/EN",
     search: "コンポーネントを検索",
     placeholder: "名前または ID（Button、C-001…）",
@@ -65,7 +65,7 @@ const copy = {
     eyebrow: "Components · 部品",
     title: "Components",
     description:
-      "Every primitive lives on its own page: installation, preview and code examples, props, accessibility and the Base UI reference when it applies. Form pieces include a sample of their use inside a form.",
+      "Every primitive has its own page with installation, examples, props and accessibility. Form pieces include a sample of their use inside a form.",
     meta: "46 individual components · ES/JA/EN",
     search: "Search components",
     placeholder: "Name or ID (Button, C-001…)",
@@ -177,15 +177,13 @@ export function ComponentsIndexPage() {
         </div>
       </div>
 
-      <div className="mt-[calc(var(--koten-gap)*2)] border border-rule bg-surface p-[var(--koten-panel-p)] text-xs text-muted">
-        <p className="font-semibold text-ink">{t.blocksTitle}</p>
-        <p className="mt-1">{t.blocksBody}</p>
-        <Link
-          to="/blocks"
-          className="mt-2 inline-block font-semibold text-link underline-offset-2 hover:underline"
-        >
-          {t.blocksLink}
-        </Link>
+      <div className="mt-[calc(var(--koten-gap)*2)] border-t border-rule pt-3 text-xs text-muted">
+        <p>
+          <span className="font-semibold text-ink">{t.blocksTitle}</span> {t.blocksBody}{" "}
+          <Link to="/blocks" className="font-semibold text-link underline-offset-2 hover:underline">
+            {t.blocksLink}
+          </Link>
+        </p>
       </div>
     </div>
   );

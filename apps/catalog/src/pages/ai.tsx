@@ -9,12 +9,12 @@ const copy = {
     eyebrow: "Fundamentos · 自動",
     title: "IA y agentes",
     description:
-      "Koten UI expone el sistema en tres niveles para que un agente pueda leerlo, instalar componentes y extender la gramática sin adivinar la API. Todo se genera desde la misma fuente que el catálogo, así que no hay una segunda documentación que se desactualice.",
+      "Koten UI expone el sistema en tres niveles: leerlo, instalar componentes y extender la gramática. La documentación se genera desde el catálogo, sin una segunda fuente que se desactualice.",
     meta: "llms.txt · Markdown por página · 2 skills",
     docs: {
       title: "1 · Documentación legible por máquina",
       meta: "llms.txt · llms-full.txt · Markdown",
-      body: "El catálogo publica un índice en formato llms.txt, un archivo completo y una página Markdown por componente y bloque. Las páginas incluyen instalación, archivos, requisitos, ejemplos, props y accesibilidad en inglés, el idioma que consumen los agentes.",
+      body: "El catálogo publica un índice `llms.txt`, un corpus completo y una página Markdown por componente y bloque, en inglés. Cada página incluye instalación, archivos, requisitos, ejemplos, props y accesibilidad.",
       items: [
         `/llms.txt: índice con los 46 componentes, 20 bloques, guías y skills.`,
         `/llms-full.txt: todo el sistema en un solo archivo para cargar de una vez.`,
@@ -28,7 +28,7 @@ curl ${site.origin}/md/blocks/erp/app-shell.md`,
     consume: {
       title: "2 · Skill para consumir componentes",
       meta: "koten-ui · inventario · composición",
-      body: "La skill koten-ui enseña a elegir la pieza correcta, instalar koten-theme, instalar el item del registry, envolver la app con KotenProvider y respetar la API. Incluye un inventario generado con el registry de cada componente y recetas de formulario, tabla, drawer y tarjeta.",
+      body: "La skill `koten-ui` cubre elección, instalación, composición y verificación. Incluye un inventario generado y recetas de formulario, tabla, drawer y tarjeta.",
       items: [
         "Elegir primitiva o bloque antes de escribir markup.",
         "Instalar el tema primero y el componente después.",
@@ -41,7 +41,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     design: {
       title: "3 · Skill para extender el design system",
       meta: "koten-design-system · tokens · blueprint",
-      body: "La skill koten-design-system cubre el trabajo inverso: agregar una primitiva o un bloque, crear un tema o una densidad, documentar la página del catálogo y preparar el registry. También explica cómo aplicar la gramática de Koten a un sistema nuevo sin copiar solo la paleta.",
+      body: "La skill `koten-design-system` cubre el trabajo inverso: agregar una primitiva o un bloque, crear un tema o una densidad, documentar la página y preparar el registry. También explica cómo aplicar la gramática a un sistema nuevo.",
       items: [
         "Clasificar la pieza: token, primitiva, bloque, tema o densidad.",
         "Definir el contrato antes del markup: variantes, estados, ARIA.",
@@ -53,7 +53,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     why: {
       title: "Por qué está construido así",
       meta: "Divulgación progresiva · una fuente",
-      body: "Las skills siguen el estándar Agent Skills: el frontmatter name/description se carga al inicio y el cuerpo solo cuando la tarea lo activa. El detalle vive en references/, un nivel abajo, para no gastar contexto. El inventario y las guías se generan desde apps/catalog/src/data/docs; el catálogo y la documentación de agentes no pueden divergir.",
+      body: "Las skills siguen el estándar Agent Skills: el frontmatter `name`/`description` carga al inicio y el cuerpo solo cuando la tarea lo activa. El detalle vive en `references/` para no gastar contexto.",
       items: [
         "SKILL.md corto, con instrucciones y enlaces; referencias para el detalle.",
         "Descripciones con el qué y el cuándo, para que el agente active la skill correcta.",
@@ -64,7 +64,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     sync: {
       title: "Mantenerlo en sincronía",
       meta: "bun run ai:docs · bun run ai:check",
-      body: "La capa de agentes se regenera al arrancar el catálogo y antes de construir producción. La comprobación falla si el llms.txt del repositorio, el inventario de la skill o el frontmatter de una skill no cumplen.",
+      body: "La capa se regenera al arrancar el catálogo y antes del build de producción. `ai:check` falla si `llms.txt`, el inventario o el frontmatter no están en sincronía.",
       code: `bun run ai:docs    # regenera llms.txt, Markdown e inventario
 bun run ai:check   # falla si algo está desactualizado
 bun run check      # incluye ai:check`,
@@ -80,12 +80,12 @@ bun run check      # incluye ai:check`,
     eyebrow: "基礎 · 自動",
     title: "AIとエージェント",
     description:
-      "Koten UI は、エージェントが API を推測せずにシステムを読み、コンポーネントを導入し、文法を拡張できるよう、3つの階層で情報を公開します。すべてカタログと同じソースから生成されるため、古くなる別のドキュメントはありません。",
+      "Koten UI は、システムを読む・コンポーネントを導入する・文法を拡張するという3つの階層を公開します。ドキュメントはカタログから生成され、古くなる別のソースはありません。",
     meta: "llms.txt · ページ別Markdown · 2 skills",
     docs: {
       title: "1 · 機械可読なドキュメント",
       meta: "llms.txt · llms-full.txt · Markdown",
-      body: "カタログは llms.txt の索引、全ファイル、コンポーネントとブロックごとの Markdown を公開します。各ページには導入、ファイル、要件、例、props、アクセシビリティをエージェント向けの英語で掲載します。",
+      body: "カタログは `llms.txt` の索引、全ファイル、コンポーネントとブロックごとの Markdown を英語で公開します。各ページには導入、ファイル、要件、例、props、アクセシビリティを掲載します。",
       items: [
         `/llms.txt: 46 コンポーネント、20 ブロック、ガイド、skills の索引。`,
         `/llms-full.txt: システム全体を1ファイルにまとめたもの。`,
@@ -99,7 +99,7 @@ curl ${site.origin}/md/blocks/erp/app-shell.md`,
     consume: {
       title: "2 · コンポーネント利用の skill",
       meta: "koten-ui · 一覧 · 合成",
-      body: "koten-ui は、適切な部品の選び方、koten-theme の導入、registry からの導入、KotenProvider の設定、API の維持を案内します。各コンポーネントの registry 名を含む生成済み一覧と、フォーム、テーブル、ドロワー、カードのレシピを同梱します。",
+      body: "`koten-ui` は選択、導入、合成、検証を扱います。生成済みの一覧と、フォーム、テーブル、ドロワー、カードのレシピを同梱します。",
       items: [
         "マークアップの前にプリミティブかブロックかを選ぶ。",
         "テーマを先に、コンポーネントを後に導入する。",
@@ -112,7 +112,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     design: {
       title: "3 · デザインシステム拡張の skill",
       meta: "koten-design-system · トークン · blueprint",
-      body: "koten-design-system は逆方向の作業を扱います。プリミティブやブロックの追加、テーマや密度の作成、カタログページの文書化、registry の準備です。パレットだけをコピーせず、Koten の文法を新しいシステムに適用する方法も説明します。",
+      body: "`koten-design-system` は逆方向の作業を扱います。プリミティブやブロックの追加、テーマや密度の作成、ページの文書化、registry の準備です。Koten の文法を新しいシステムに適用する方法も説明します。",
       items: [
         "トークン、プリミティブ、ブロック、テーマ、密度に分類する。",
         "マークアップの前に、バリアント、状態、ARIA の契約を決める。",
@@ -124,7 +124,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     why: {
       title: "この構成の理由",
       meta: "段階的開示 · 単一ソース",
-      body: "skills は Agent Skills 標準に従います。frontmatter の name/description は起動時に読み込まれ、本文はタスクが発火したときだけ読み込まれます。詳細は references/ に置き、コンテキストを節約します。一覧とガイドは apps/catalog/src/data/docs から生成されるため、カタログとエージェント向け文書は乖離しません。",
+      body: "skills は Agent Skills 標準に従います。frontmatter の `name`/`description` は起動時に読み込まれ、本文はタスクが発火したときだけ読み込まれます。詳細は `references/` に置き、コンテキストを節約します。",
       items: [
         "SKILL.md は短く、指示とリンクだけ。詳細は references に置く。",
         "何を・いつするかを説明に書き、適切な skill が選ばれるようにする。",
@@ -135,7 +135,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     sync: {
       title: "同期を保つ",
       meta: "bun run ai:docs · bun run ai:check",
-      body: "エージェント層はカタログ起動時と本番ビルド前に再生成されます。リポジトリの llms.txt、skill の一覧、frontmatter が仕様を満たさない場合は検査が失敗します。",
+      body: "エージェント層はカタログ起動時と本番ビルド前に再生成されます。`ai:check` は `llms.txt`、一覧、frontmatter が同期していなければ失敗します。",
       code: `bun run ai:docs    # llms.txt、Markdown、一覧を再生成
 bun run ai:check   # 古ければ失敗
 bun run check      # ai:check を含む`,
@@ -151,12 +151,12 @@ bun run check      # ai:check を含む`,
     eyebrow: "Foundations · 自動",
     title: "AI and agents",
     description:
-      "Koten UI exposes the system in three levels so an agent can read it, install components and extend the grammar without guessing the API. Everything is generated from the same source as the catalog, so there is no second documentation set to drift.",
+      "Koten UI exposes the system in three levels: read it, install components and extend the grammar. The documentation is generated from the catalog, so there is no second source to drift.",
     meta: "llms.txt · per-page Markdown · 2 skills",
     docs: {
       title: "1 · Machine-readable documentation",
       meta: "llms.txt · llms-full.txt · Markdown",
-      body: "The catalog publishes an llms.txt index, a full-file corpus and one Markdown page per component and block. Each page includes installation, files, requirements, examples, props and accessibility in English, the language agents consume.",
+      body: "The catalog publishes an `llms.txt` index, a full corpus and one Markdown page per component and block, in English. Each page includes installation, files, requirements, examples, props and accessibility.",
       items: [
         `/llms.txt: index of the 46 components, 20 blocks, guides and skills.`,
         `/llms-full.txt: the whole system in one file for a single load.`,
@@ -170,7 +170,7 @@ curl ${site.origin}/md/blocks/erp/app-shell.md`,
     consume: {
       title: "2 · Skill to consume components",
       meta: "koten-ui · inventory · composition",
-      body: "The koten-ui skill teaches an agent to pick the right piece, install koten-theme, install the registry item, wrap the app with KotenProvider and keep the API. It ships a generated inventory with each component's registry item and recipes for forms, tables, drawers and cards.",
+      body: "The `koten-ui` skill covers selection, installation, composition and verification. It ships a generated inventory and recipes for forms, tables, drawers and cards.",
       items: [
         "Choose a primitive or block before writing markup.",
         "Install the theme first, then the component.",
@@ -183,7 +183,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     design: {
       title: "3 · Skill to extend the design system",
       meta: "koten-design-system · tokens · blueprint",
-      body: "The koten-design-system skill covers the inverse work: add a primitive or block, create a theme or density, document the catalog page and prepare the registry. It also explains how to apply the Koten grammar to a new system instead of copying only the palette.",
+      body: "The `koten-design-system` skill covers the inverse work: add a primitive or block, create a theme or density, document the page and prepare the registry. It also explains how to apply the grammar to a new system.",
       items: [
         "Classify the piece: token, primitive, block, theme or density.",
         "Define the contract before markup: variants, states, ARIA.",
@@ -195,7 +195,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     why: {
       title: "Why it is built this way",
       meta: "Progressive disclosure · one source",
-      body: "The skills follow the Agent Skills standard: the name/description frontmatter loads at startup and the body loads only when the task activates it. Detail lives in references/, one level down, to save context. The inventory and guides are generated from apps/catalog/src/data/docs, so the catalog and the agent docs cannot diverge.",
+      body: "The skills follow the Agent Skills standard: the `name`/`description` frontmatter loads at startup and the body loads only when the task activates it. Detail lives in `references/` to save context.",
       items: [
         "A short SKILL.md with instructions and links; references for detail.",
         "Descriptions that state what and when, so the right skill activates.",
@@ -206,7 +206,7 @@ npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-co
     sync: {
       title: "Keeping it in sync",
       meta: "bun run ai:docs · bun run ai:check",
-      body: "The agent layer is regenerated when the catalog starts and before production builds. The check fails when the repository llms.txt, the skill inventory or a skill frontmatter breaks the contract.",
+      body: "The layer is regenerated when the catalog starts and before the production build. `ai:check` fails when `llms.txt`, the inventory or the frontmatter is out of sync.",
       code: `bun run ai:docs    # regenerate llms.txt, Markdown and inventory
 bun run ai:check   # fail when something is stale
 bun run check      # includes ai:check`,

@@ -2,7 +2,7 @@
 
 > **Tesis:** sencillez de medios, densidad de información.
 > La identidad no viene de adornos japoneses, sino de la gramática: marcos, reglas, tipografía, color semántico y ritmo.
-> Última actualización: 2026-10-21.
+> Última actualización: 2026-10-22.
 
 ## 1. Los tres registros
 
@@ -14,7 +14,7 @@
 
 Los tres comparten tokens, componentes y reglas. Cambian los valores semánticos, no la estructura.
 
-**Sumi** (墨) es el tema oscuro post-v1: invierte papel y tinta, aclara el primario y separa los fondos sólidos de estado (`*-solid` + `solid-fg`) para mantener AA. No es un registro nuevo: es cualquiera de los tres en oscuro.
+**Sumi** (墨) es el tema oscuro: invierte papel y tinta, aclara el primario y separa los fondos sólidos de estado (`*-solid` + `solid-fg`) para mantener AA. No es un registro nuevo: es cualquiera de los tres en oscuro.
 
 ## 2. Qué tomamos y qué rechazamos
 
@@ -226,7 +226,7 @@ Variantes: `plain`, `tinted`, `accent` (barra izquierda primaria), `flush` (body
 
 ### Badge y sello
 
-- Badge: 18–20 px alto, 11 px, radio 2 px, borde 1 px.
+- Badge: 18–20 px alto, 12 px, radio 2 px, borde 1 px.
 - `appearance`: soft, solid, outline.
 - `tone`: neutral, info, success, warning, danger, sale, new.
 - Estado siempre con texto; el punto de color es un refuerzo, no la única señal.
@@ -363,7 +363,7 @@ Convenciones:
   --radius-sm: 2px;
   --radius-md: 3px;
 
-  --text-2xs: 11px;
+  --text-2xs: 12px;
   --text-xs: 12px;
   --text-sm: 13px;
   --text-base: 14px;
@@ -436,7 +436,7 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 ## 8. Accesibilidad
 
 - WCAG 2.2 AA.
-- Texto mínimo 12 px; 11 px solo para metadatos no críticos.
+- Texto mínimo 12 px; sin excepciones.
 - Contraste: ink/paper ~15:1; muted/paper > 6:1; faint/paper y faint/tint > 4.5:1; shu/paper > 5:1; blanco/shu > 5:1; rule-strong/paper ≥ 3:1 en bordes de control.
 - Foco visible: `outline: 2px solid var(--focus); outline-offset: 1px`.
 - Teclado completo: tabs, menús, diálogos, tablas, formularios.
@@ -491,8 +491,8 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - Título 24 px.
 - Rating 12 px.
 - Precio 30 px shu, tabular.
-- `税込` 11 px.
-- Puntos 11 px ai.
+- `税込` 12 px.
+- Puntos 12 px ai.
 - Stock con badge matcha.
 - Entrega y garantía en 12 px.
 - Variantes con `ToggleGroup` o radios.
@@ -539,7 +539,7 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - Foco vuelve a la fila al cerrar el drawer.
 - Filtros en URL.
 - Sin backend; datos deterministas.
-- ES/JA sin clipping.
+- ES/JA/EN sin clipping.
 
 ## 12. Catálogo
 
@@ -550,9 +550,10 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 - **Empezar** separa dos caminos: **usar el sistema** (registry de shadcn, sin clonar el repositorio ni instalar Bun) y **desarrollar el sistema** (monorepo, catálogo, demos, auditorías y registry). Cada camino tiene requisitos, pasos numerados y comandos propios.
 - Los comandos de shadcn tienen un selector **npx / bunx** persistente en `localStorage`; la preferencia se comparte entre Empezar, la portada y las páginas de componente y bloque.
 - Pager anterior/siguiente y enlaces profundos compartibles.
-- Cada componente: preview, variantes, estados, props, código, a11y, i18n.
+- Requisitos, accesibilidad e índices se leen como listas con reglas; las tarjetas se reservan para la portada y la navegación (`D-050`).
+- Cada componente: instalación, ejemplos, props, accesibilidad e i18n.
 - Toggles de tema, densidad e idioma en el header; persistir en URL (`?theme=`, `?density=`, `?lang=`).
-- La documentación se mantiene en español; la interfaz y los ejemplos de formato cambian de idioma (`D-020`).
+- La documentación se mantiene en ES/JA/EN (`D-025`); los artefactos para agentes, en inglés (`D-045`).
 - La densidad y el tema afectan el layout, las tablas y el espaciado del catálogo; las muestras comparativas mantienen su valor fijo.
 - Botón de copiar código.
 - Do/Don’t con ejemplos reales.

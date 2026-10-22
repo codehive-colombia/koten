@@ -18,7 +18,7 @@ const copy = {
       "La fuente del sistema es una decisión de rendimiento y cobertura CJK: no se cargan archivos de varios megabytes. La jerarquía se construye con tamaño, peso, color y posición.",
     meta: "Stack del sistema · 0 bytes de fuentes CJK",
     families: { title: "Familias", meta: "Sans, serif y mono" },
-    scale: { title: "Escala", meta: "11 px solo para metadatos no críticos" },
+    scale: { title: "Escala", meta: "12 px mínimo · escala corta" },
     leading: {
       title: "Interlineado y reglas CJK",
       meta: "Latin y japonés",
@@ -42,7 +42,7 @@ const copy = {
       "システムフォントは性能とCJKカバレッジのための判断である。数MBのフォントファイルは読み込まない。階層はサイズ、太さ、色、位置で作る。",
     meta: "システムスタック · CJKフォント0バイト",
     families: { title: "書体", meta: "Sans、serif、mono" },
-    scale: { title: "スケール", meta: "11pxは非重要なメタ情報のみ" },
+    scale: { title: "スケール", meta: "最小12px · 短いスケール" },
     leading: {
       title: "行間とCJKの規則",
       meta: "欧文と日本語",
@@ -66,7 +66,7 @@ const copy = {
       "The system font is a performance and CJK-coverage decision: no multi-megabyte font files are loaded. Hierarchy is built with size, weight, color and position.",
     meta: "System stack · 0 bytes of CJK fonts",
     families: { title: "Families", meta: "Sans, serif and mono" },
-    scale: { title: "Scale", meta: "11 px only for non-critical metadata" },
+    scale: { title: "Scale", meta: "12 px minimum · short scale" },
     leading: {
       title: "Leading and CJK rules",
       meta: "Latin and Japanese",

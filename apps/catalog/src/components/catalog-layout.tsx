@@ -285,7 +285,6 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
           className="koten-container flex flex-wrap items-baseline justify-between gap-2 py-[var(--koten-panel-p)] text-2xs text-faint"
         >
           <p>Koten UI · 古典 · 2026</p>
-          <p>{labels.docsLanguage}</p>
         </div>
       </footer>
     </div>

@@ -13,12 +13,12 @@ const copy = {
     eyebrow: "Fundamentos · 使い方",
     title: "Empezar",
     description:
-      "Hay dos caminos y no se parecen. Si vienes a usar Koten UI en tu producto, instalas el tema y los componentes con el registry de shadcn, sin clonar este repositorio. Si vienes a desarrollar el sistema, trabajas dentro del monorepo con el catálogo, las demos y las auditorías. Elige el tuyo.",
+      "Hay dos caminos: usar Koten UI en tu producto o desarrollar el sistema. Cada uno tiene requisitos y comandos propios.",
     meta: "Dos caminos · usar el sistema o desarrollarlo · ES/JA/EN",
     choose: {
       title: "Elige tu camino",
       meta: "Dos guías · un sistema",
-      body: "La primera decisión no es técnica: es qué quieres hacer. Cada guía asume un punto de partida distinto y no mezcla comandos que no necesitas.",
+      body: "Cada guía asume un punto de partida distinto y no mezcla comandos que no necesitas.",
       use: {
         kicker: "Usar el sistema",
         title: "Quiero usar Koten UI",
@@ -61,7 +61,7 @@ const copy = {
       blockComment: "también puedes instalar un bloque completo",
       provider: {
         title: "3 · Conecta el provider",
-        body: "Envuelve la app una vez. Importa el CSS de Tailwind que ya usa tu proyecto; el tema se escribe ahí, no en un archivo aparte. Los ejemplos usan el alias `@/`; si tu `components.json` usa `~/` u otro prefijo, el CLI lo reescribe.",
+        body: "Envuelve la app una vez e importa el CSS de Tailwind que ya usa tu proyecto; el tema se escribe ahí. Los ejemplos usan `@/`; el CLI lo reescribe al prefijo de tu `components.json`.",
         code: `import "./app.css"; // el CSS de Tailwind de tu components.json
 import { KotenProvider } from "@/lib/koten/provider";
 
@@ -176,12 +176,12 @@ bun run ai:check`,
     eyebrow: "基礎 · 使い方",
     title: "はじめかた",
     description:
-      "道は2つあり、内容は似ていません。プロダクトで Koten UI を使うなら、このリポジトリを clone せずに shadcn レジストリでテーマとコンポーネントを導入します。システムを開発するなら、モノレポの中でカタログ・デモ・監査を動かします。自分の道を選んでください。",
+      "道は2つあります。プロダクトで Koten UI を使うか、システムを開発するかです。それぞれ要件とコマンドが異なります。",
     meta: "2つの道 · 使う / 開発する · ES/JA/EN",
     choose: {
       title: "道を選ぶ",
       meta: "2つのガイド · 1つのシステム",
-      body: "最初の判断は技術的なものではありません。何をしたいかです。各ガイドは出発点が違い、不要なコマンドを混ぜません。",
+      body: "各ガイドは出発点が異なり、不要なコマンドを混ぜません。",
       use: {
         kicker: "システムを使う",
         title: "Koten UI を使いたい",
@@ -223,7 +223,7 @@ bun run ai:check`,
       blockComment: "ブロックをまとめて導入することもできます",
       provider: {
         title: "3 · provider を接続する",
-        body: "アプリを一度だけ包みます。テーマは既存の Tailwind CSS に書き込まれるので、その CSS を読み込みます。例は `@/` エイリアスです。`components.json` が `~/` などなら CLI が書き換えます。",
+        body: "アプリを一度だけ包み、既存の Tailwind CSS を読み込みます。テーマはそこに書き込まれます。例は `@/` を使い、CLI が `components.json` の接頭辞に書き換えます。",
         code: `import "./app.css"; // components.json の Tailwind CSS
 import { KotenProvider } from "@/lib/koten/provider";
 
@@ -338,12 +338,12 @@ bun run ai:check`,
     eyebrow: "Foundations · 使い方",
     title: "Getting started",
     description:
-      "There are two paths and they do not look alike. If you are here to use Koten UI in your product, install the theme and components from the shadcn registry without cloning this repository. If you are here to develop the system, work inside the monorepo with the catalog, the demos and the audits. Pick yours.",
+      "There are two paths: use Koten UI in your product or develop the system. Each one has its own requirements and commands.",
     meta: "Two paths · use the system or build it · ES/JA/EN",
     choose: {
       title: "Choose your path",
       meta: "Two guides · one system",
-      body: "The first decision is not technical: it is what you want to do. Each guide assumes a different starting point and does not mix commands you will not need.",
+      body: "Each guide assumes a different starting point and does not mix commands you will not need.",
       use: {
         kicker: "Use the system",
         title: "I want to use Koten UI",
@@ -386,7 +386,7 @@ bun run ai:check`,
       blockComment: "you can also install a whole block",
       provider: {
         title: "3 · Wire the provider",
-        body: "Wrap the app once. Import the Tailwind CSS your project already uses; the theme is written there, not in a separate file. The examples use the `@/` alias; if your `components.json` uses `~/` or another prefix, the CLI rewrites it.",
+        body: "Wrap the app once and import the Tailwind CSS your project already uses; the theme is written there. The examples use `@/`; the CLI rewrites it to your `components.json` prefix.",
         code: `import "./app.css"; // the Tailwind CSS from components.json
 import { KotenProvider } from "@/lib/koten/provider";
 
@@ -502,7 +502,7 @@ bun run ai:check`,
 type Copy = (typeof copy)["es"];
 const copyByLocale: Record<KotenLocale, Copy> = copy;
 
-function PathCard({
+function PathItem({
   href,
   kicker,
   title,
@@ -516,19 +516,21 @@ function PathCard({
   action: string;
 }) {
   return (
-    <a
-      href={href}
-      className="group flex h-full flex-col border border-rule bg-surface text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1"
-    >
-      <span className="border-b border-rule bg-tint px-[var(--koten-panel-p)] py-1 text-2xs font-semibold uppercase tracking-[0.12em] text-faint">
-        {kicker}
-      </span>
-      <span className="flex flex-1 flex-col gap-2 p-[var(--koten-panel-p)]">
-        <span className="font-serif text-xl font-semibold leading-tight">{title}</span>
-        <span className="text-xs leading-relaxed text-muted">{description}</span>
-        <span className="mt-auto pt-2 text-xs font-semibold text-link">{action} →</span>
-      </span>
-    </a>
+    <li>
+      <a
+        href={href}
+        className="group grid gap-1 py-3 text-ink no-underline transition-colors hover:bg-tint focus-visible:outline-2 focus-visible:outline-offset-1 sm:grid-cols-[10rem_minmax(0,1fr)_11rem] sm:items-baseline sm:gap-4"
+      >
+        <span className="text-2xs font-semibold uppercase tracking-[0.12em] text-faint">
+          {kicker}
+        </span>
+        <span className="min-w-0">
+          <span className="block font-serif text-lg font-semibold leading-tight">{title}</span>
+          <span className="mt-1 block text-xs leading-relaxed text-muted">{description}</span>
+        </span>
+        <span className="text-xs font-semibold text-link sm:text-end">{action} →</span>
+      </a>
+    </li>
   );
 }
 
@@ -602,22 +604,22 @@ export function StartPage() {
       <div className="mt-[calc(var(--koten-gap)*2)] space-y-[calc(var(--koten-gap)*2)]">
         <Section id="caminos" title={t.choose.title} jp="選択" meta={t.choose.meta}>
           <Body>{t.choose.body}</Body>
-          <div className="mt-[var(--koten-gap)] grid gap-[var(--koten-gap)] sm:grid-cols-2">
-            <PathCard
+          <ul className="mt-[var(--koten-gap)] divide-y divide-rule border-y border-rule">
+            <PathItem
               href="#usar"
               kicker={t.choose.use.kicker}
               title={t.choose.use.title}
               description={t.choose.use.description}
               action={t.choose.use.action}
             />
-            <PathCard
+            <PathItem
               href="#desarrollar"
               kicker={t.choose.develop.kicker}
               title={t.choose.develop.title}
               description={t.choose.develop.description}
               action={t.choose.develop.action}
             />
-          </div>
+          </ul>
         </Section>
 
         <Section id="usar" title={t.use.title} jp="利用" meta={t.use.meta}>
