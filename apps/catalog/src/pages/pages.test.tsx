@@ -114,6 +114,7 @@ describe("catalog pages", () => {
     expect(screen.getAllByText(/npx skills add codehive-colombia\/koten/).length).toBeGreaterThan(
       0,
     );
+    expect(screen.getAllByText(/koten-design-language/).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: /llms\.txt/ })).toHaveAttribute(
       "href",
       "http://localhost:5173/llms.txt",
