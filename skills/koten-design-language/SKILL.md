@@ -27,6 +27,10 @@ This skill is portable: it works in any project that has Koten installed. It is 
 
 A piece that follows every token but ignores these principles still looks foreign. The principles decide the anatomy; the tokens only decide the values.
 
+## Language and decoration
+
+Default to the project's language. Do not add Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern to a new piece unless the user explicitly asks. The Japanese references shape the grammar; they are not a content requirement. If a piece has an optional editorial label, make it optional and leave it empty by default.
+
 ## Before you write code
 
 1. **Search what is already installed.** Read the component inventory (the `koten-ui` skill ships one) or the local `components/ui` and `components/patterns` folders. A missing *name* is not a missing *piece*: a `Notice` may already be `Alert`, a `Tag` may be `Badge`, a `Sidebar` may be a composition of `Panel` and `Link`.
@@ -45,7 +49,7 @@ Before markup, write one sentence of purpose and a small table:
 - **Semantics** — what it is: `dl` for specs, `table` for records, `nav` for navigation, `section` + heading for a region.
 - **States** — default, hover, focus, active, selected, disabled, loading, invalid, empty. Only the ones that exist.
 - **Variants** — express meaning (`primary`, `danger`, `sale`), never colors (`blue`, `red`).
-- **Content** — every string arrives by prop or provider. The component contains no UI copy.
+- **Content** — every string arrives by prop or provider. The component contains no UI copy and no baked-in Japanese labels or decorative kanji.
 - **Accessible name and role** — how a screen reader announces it, and which keyboard keys operate it.
 - **Non-configurable** — what must stay fixed because changing it would break the grammar: 1 px frames, radii, the 12 px floor, state colors.
 

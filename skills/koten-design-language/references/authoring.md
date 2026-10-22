@@ -103,11 +103,17 @@ import {
   DefinitionValue,
 } from "@/components/ui/definition-list";
 
-export function SpecPanel({ items }: { items: Array<{ label: string; value: string }> }) {
+export function SpecPanel({
+  title,
+  items,
+}: {
+  title: string;
+  items: Array<{ label: string; value: string }>;
+}) {
   return (
     <Panel>
       <PanelHeader>
-        <PanelTitle>仕様</PanelTitle>
+        <PanelTitle>{title}</PanelTitle>
       </PanelHeader>
       <PanelBody flush>
         <DefinitionList>
@@ -203,13 +209,13 @@ describe("DefinitionList", () => {
     render(
       <DefinitionList>
         <DefinitionRow>
-          <DefinitionTerm>重量</DefinitionTerm>
+          <DefinitionTerm>Weight</DefinitionTerm>
           <DefinitionValue>1.2 kg</DefinitionValue>
         </DefinitionRow>
       </DefinitionList>,
     );
 
-    expect(screen.getByRole("term")).toHaveTextContent("重量");
+    expect(screen.getByRole("term")).toHaveTextContent("Weight");
     expect(screen.getByRole("definition")).toHaveTextContent("1.2 kg");
   });
 

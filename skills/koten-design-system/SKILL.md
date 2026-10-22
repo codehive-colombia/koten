@@ -10,6 +10,10 @@ metadata:
 
 Koten UI is a grammar, not a skin. The identity comes from frames, rules, density, semantic color and typographic rhythm; the Japanese references supply the posture, not decorative stickers. A new component or a new product must extend that grammar instead of adding a parallel one.
 
+## Language and decoration
+
+The catalog and these references use Japanese labels as part of their internal visual language. That is documentation styling. When you apply the grammar to a new product, use the product's language and do not add Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern unless the user explicitly asks for that treatment.
+
 ## When to use this skill
 
 - You are adding a primitive to `packages/ui/src/components/ui`.

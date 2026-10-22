@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-018` · listas en Límites y Reglas de formato |
+| Última tarea completada | `M-019` · japonés opcional en consumo |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,29 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 049 — Japonés opcional en consumo (`M-019`)
+
+- **Objetivo:** separar el japonés como lenguaje visual interno del japonés como contenido impuesto a quien consume Koten o crea piezas externas con `koten-design-language`.
+- **Hecho:**
+  - **Skills de consumo y autoría:** `koten-ui` y `koten-design-language` declaran que el japonés es opt-in; no se agregan textos, kanji, etiquetas `jp`, Tategaki, Hanko ni Pattern salvo que el usuario lo pida. `koten-design-system` aclara que el japonés del catálogo es estilo interno.
+  - **Ejemplos:** el `SpecPanel` de autoría recibe el título por prop y el test usa `Weight`; el snippet de tema de `koten-ui` usa `lang="en"`; Empezar usa `lang="es"` en la copia española.
+  - **Documentación para agentes:** `llms.txt` y cada página Markdown avisan de que las etiquetas japonesas son metadatos de documentación; `llms-full.txt` repite la regla. `scripts/build-ai-docs.ts` y sus tests la conservan.
+  - **Superficies humanas:** README/README.es, `/ai`, `DESIGN-SYSTEM.md` §7/§14 y `RECIPES.md` explican la distinción consumo vs. documentación interna.
+  - **Trazabilidad:** `D-057`, `R-031`, `M-019`.
+- **Tareas tocadas:** `M-019` → `done`.
+- **Decisiones:** `D-057`.
+- **Evidencia:**
+  - `skills/koten-ui/**`; `skills/koten-design-language/**`; `skills/koten-design-system/SKILL.md`; `skills/README.md`.
+  - `scripts/build-ai-docs.ts` + `build-ai-docs.test.ts`; `llms.txt`.
+  - `apps/catalog/src/pages/{ai,start}.tsx`; `docs/{DESIGN-SYSTEM,RECIPES,REQUIREMENTS}.md`; `README.md`; `README.es.md`.
+  - `bun run check` verde: Biome, TypeScript, i18n, `ai:check` y **38 archivos / 254 tests**.
+  - `bun run build` del catálogo OK; `bun run budget` → catálogo **264,0 KB inicial / 454,3 KB total**.
+- **Sin validar:** lectura completa de las skills por un agente externo; la regla está en los puntos de entrada y en los checklists.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
 
 ---
 

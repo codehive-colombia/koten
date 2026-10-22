@@ -46,6 +46,7 @@
 - [D-054 · Configuración del catálogo en un panel flotante](#d-054)
 - [D-055 · Empezar: requisitos en prosa y solo pasos necesarios numerados](#d-055)
 - [D-056 · Quitar la sección de límites del diseñador de temas](#d-056)
+- [D-057 · Japonés opcional en consumo y autoría externa](#d-057)
 
 ---
 
@@ -904,3 +905,21 @@
 - **Consecuencias:** La página termina en la exportación, sin una segunda lista de restricciones. El lector sigue sabiendo que no hay color libre y que tipografía, espaciado, sombras y movimiento no se editan, pero esa información aparece donde decide, no después. La documentación de `D-051` conserva la especificación completa.
 - **Alternativas:** Mantener la sección (repite lo ya dicho); moverla a un `details` (sigue siendo una lista de restricciones al final); integrarla en el cuerpo de exportación (alarga el bloque que el usuario necesita copiar); dejar solo el título (no aporta); eliminar también la explicación de los guardrails en la introducción y la exportación (el usuario perdería el contexto de por qué solo hay cinco parámetros).
 - **Evidencia:** `apps/catalog/src/pages/theme.tsx`; `apps/catalog/src/pages/theme.test.tsx`; `docs/PROGRESS.md` (sesión 047).
+
+---
+
+<a id="d-057"></a>
+## D-057 · Japonés opcional en consumo y autoría externa
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-019`; precisa `D-025`, `D-045` y `D-049`; implementa `R-031`)
+- **Contexto:** La identidad de Koten usa el japonés como lenguaje visual: etiquetas `jp` en las páginas, `Tategaki`, `Hanko`, `Pattern` y títulos con kanji en la documentación. Esa decisión es correcta para el catálogo, pero la capa de agentes no distinguía entre **consumo** y **documentación interna**. `koten-ui` y `koten-design-language` podían arrastrar etiquetas japonesas a la UI de un producto aunque el usuario no las hubiera pedido; el ejemplo de autoría incluso horneaba `仕様` y `重量` en un componente, y el snippet de tema usaba `lang="ja"` como valor por defecto. Un agente que lee `llms.txt` o una página Markdown podía interpretar el japonés como parte del contrato del componente.
+- **Decisión:**
+  - **Dos contextos explícitos.** En **consumo** (usar las piezas en un producto) y **autoría externa** (`koten-design-language` en otro proyecto), el japonés es **opt-in**: no se agregan textos japoneses, kanji, etiquetas `jp`, `Tategaki`, `Hanko` ni `Pattern` salvo que el usuario lo pida. El idioma por defecto es el del producto.
+  - **Documentación interna.** `koten-design-system`, el catálogo, las demos y estas guías pueden seguir usando el japonés como lenguaje visual. Ese uso es estilístico y no debe filtrarse a componentes consumidos.
+  - **Artefactos alineados.** `skills/koten-ui`, `skills/koten-design-language`, `skills/koten-design-system`, `skills/README.md`, `llms.txt`, las páginas Markdown generadas, `docs/RECIPES.md`, `README.md`/`README.es.md`, `/ai` y `DESIGN-SYSTEM.md` §7 y §14 explican la distinción.
+  - **Ejemplos neutrales.** El ejemplo de `SpecPanel` recibe el título por prop y el test usa `Weight`; el snippet de tema de `koten-ui` usa `lang="en"`; el ejemplo de apariencia en Empezar usa `lang="es"` en la copia española. No se elimina el japonés del catálogo ni de las etiquetas internas.
+  - **Trazabilidad.** `R-031` fija el criterio; `M-019` registra el cambio.
+- **Consecuencias:** Un agente que consume Koten o crea una pieza externa no impone japonés por defecto y puede usar el idioma real del producto. El catálogo conserva su identidad visual japonesa y las docs internas siguen siendo coherentes. La regla es explícita en los artefactos que un agente carga primero (`llms.txt`, `SKILL.md`, páginas Markdown) y en los que lee una persona (README, `/ai`, Empezar). No cambia la API ni los componentes; `Hanko`, `Tategaki` y `Pattern` siguen disponibles como acentos opt-in.
+- **Alternativas:** Quitar el japonés de toda la documentación (pierde la identidad del catálogo y el contexto de los registros); dejarlo implícito (el agente no puede distinguir consumo de docs internas); cambiarlo solo en `koten-design-language` (la skill de consumo y `llms.txt` seguirían ambiguos); agregar un flag por proyecto (complejidad innecesaria para una regla editorial); prohibir `Hanko`/`Tategaki`/`Pattern` (siguen siendo piezas válidas cuando el usuario las pide).
+- **Evidencia:** `skills/koten-ui/SKILL.md` y `references/{composition,quality}.md`; `skills/koten-design-language/SKILL.md` y `references/{authoring,verification}.md`; `skills/koten-design-system/SKILL.md`; `skills/README.md`; `scripts/build-ai-docs.ts` y `build-ai-docs.test.ts`; `llms.txt`; `apps/catalog/src/pages/{ai,start}.tsx`; `docs/{DESIGN-SYSTEM,RECIPES,REQUIREMENTS}.md`; `README.md`; `README.es.md`; `D-057`; `R-031`.

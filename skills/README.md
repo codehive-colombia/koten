@@ -2,6 +2,10 @@
 
 Agent skills for [Koten UI](https://koten.codehive.com.co). They follow the [Agent Skills](https://agentskills.io/specification) format and are discovered by [`npx skills`](https://github.com/vercel-labs/skills) from this `skills/` directory.
 
+## Consumption vs. internal documentation
+
+`koten-ui` and `koten-design-language` treat Japanese as opt-in: use the product's language and do not add Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern unless the user asks for that treatment. `koten-design-system` and the catalog can use Japanese as part of the internal visual language.
+
 | Skill | Use it when |
 | --- | --- |
 | [`koten-ui`](./koten-ui/SKILL.md) | You are consuming the components: choosing, installing, composing, theming and verifying a screen. |

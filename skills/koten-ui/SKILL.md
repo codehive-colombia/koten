@@ -60,6 +60,7 @@ When a project needs its own surface values, do not hand-edit the token file. Op
 - Dates, currency and numbers use the provider formatters (`Intl`), never concatenation or `toFixed`.
 - Logical properties only: `text-start`, `ps-*`, `pe-*`, `border-s-*`, `start-*`/`end-*`.
 - Real text, never text inside images. No full CJK font downloads.
+- **Japanese is opt-in.** Koten's Japanese references are visual grammar, not content. Do not add Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern to a consumer's UI unless the user explicitly asks for that treatment. Use the product's language; the catalog's Japanese labels are documentation styling.
 - If a component needs a provider, hook, portal, controlled state or dependency, its catalog page says so under **Requirements**. Respect it.
 
 ## Choosing the right piece
@@ -119,7 +120,7 @@ The error must reach both the message and the control (`Field` handles `aria-des
 ### Theme switch
 
 ```tsx
-<html data-theme="daicho" data-density="compact" lang="ja">
+<html data-theme="daicho" data-density="compact" lang="en">
 ```
 
 Changing the theme must not require editing component files. If a value is missing, add a token role in `koten-theme`, not a one-off class.

@@ -25,7 +25,7 @@ Los tres comparten tokens, componentes y reglas. Cambian los valores semánticos
 - **Clasicismo de bajo costo:** enlaces subrayados, reglas horizontales, serif para titulares, cero dependencias innecesarias.
 - **Chirashi:** color saturado y tipografía gruesa en superficies acotadas (banners, badges, campañas).
 - **Tipografía del sistema:** velocidad y cobertura CJK sin fuentes de megabytes.
-- **Tategaki y hanko:** como acentos editoriales, no como decoración obligatoria.
+- **Tategaki y hanko:** como acentos editoriales, no como decoración obligatoria; en una app que consume Koten son opt-in.
 
 ### Rechazamos
 
@@ -453,6 +453,7 @@ Koten separa tres capas y no impone un runtime de contenido:
 - Calendario japonés (令和) como opción, no por defecto.
 - `lang` correcto en `<html>` y en fragmentos; lo declara la app, no el provider.
 - Propiedades lógicas (`ms`, `me`, `ps`, `pe`, `start`, `end`) para RTL best-effort.
+- **Japonés en consumo:** en una app que consume Koten no se agregan textos japoneses, kanji, etiquetas `jp`, Tategaki, Hanko ni Pattern salvo que el usuario lo pida. El japonés del catálogo es lenguaje visual de la documentación interna, no un requisito del producto (`R-031`, `D-057`).
 - Evitar alturas fijas en textos; usar `min-height` y `text-wrap: pretty`.
 - Probar ES/EN, que suelen ser más largos que JA.
 - No usar mayúsculas como único recurso de jerarquía.
@@ -636,6 +637,8 @@ Las skills siguen el estándar [Agent Skills](https://agentskills.io/specificati
 | `koten-ui` | Elegir, instalar, componer, tematizar y verificar una pantalla con las piezas existentes. |
 | `koten-design-system` | Agregar una primitiva o un bloque, crear tokens/temas/densidades dentro del repositorio y aplicar la gramática a un sistema nuevo. |
 | `koten-design-language` | Crear una pieza que el catálogo no trae, en cualquier proyecto que ya use Koten: esencia, tokens, marcos, sombras, contraste y accesibilidad. |
+
+- **Consumo vs. documentación interna:** `koten-ui` y `koten-design-language` tratan el japonés como opt-in; `koten-design-system` y el catálogo pueden usarlo como lenguaje visual. `llms.txt`, las páginas Markdown y las skills lo indican explícitamente (`R-031`, `D-057`).
 
 Estructura:
 

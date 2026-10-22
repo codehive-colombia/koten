@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
@@ -47,6 +47,7 @@ describe("agent documentation", () => {
     expect(markdown).toContain("## Props");
     expect(markdown).toContain("## Accessibility");
     expect(markdown).toContain("```tsx");
+    expect(markdown).toContain("documentation metadata");
     expect(markdown).not.toContain("undefined");
     expect(markdown).not.toContain("[object Object]");
   });
@@ -74,6 +75,15 @@ describe("agent documentation", () => {
     expect(index).toContain("npx skills add codehive-colombia/koten --skill koten-ui");
     expect(index).toContain("koten-design-system");
     expect(index).toContain("koten-design-language");
+    expect(index).toContain("Japanese is opt-in for consumers");
+  });
+
+  it("keeps Japanese opt-in in the consumption and authoring skills", () => {
+    const ui = readFileSync(join(rootPath, "skills/koten-ui/SKILL.md"), "utf8");
+    const language = readFileSync(join(rootPath, "skills/koten-design-language/SKILL.md"), "utf8");
+
+    expect(ui).toContain("Japanese is opt-in");
+    expect(language).toContain("Default to the project's language");
   });
 
   it("generates the shared inventory with registry names for FormRow and Calendar", () => {

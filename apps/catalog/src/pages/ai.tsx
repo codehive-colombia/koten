@@ -35,6 +35,8 @@ curl ${site.origin}/md/blocks/erp/app-shell.md`,
         "Componer con render; nunca asChild.",
         "Verificar tokens, teclado, foco, 12 px e i18n.",
       ],
+      language:
+        "El japonés no es un requisito de consumo: no agregues texto japonés, kanji, etiquetas `jp`, Tategaki, Hanko ni Pattern a la UI de tu producto salvo que el usuario lo pida. El japonés del catálogo es lenguaje visual de la documentación interna.",
       code: `npx skills add codehive-colombia/koten --list
 npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-code`,
     },
@@ -107,6 +109,8 @@ curl ${site.origin}/md/blocks/erp/app-shell.md`,
         "合成は render を使い、asChild は使わない。",
         "トークン、キーボード、フォーカス、12 px、i18n を確認する。",
       ],
+      language:
+        "日本語は消費側の要件ではありません。ユーザーが明示的に求めない限り、プロダクトUIに日本語のテキスト、漢字、`jp` ラベル、縦書き、判子、パターンを追加しないでください。カタログの日本語は内部ドキュメントの視覚言語です。",
       code: `npx skills add codehive-colombia/koten --list
 npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-code`,
     },
@@ -179,6 +183,8 @@ curl ${site.origin}/md/blocks/erp/app-shell.md`,
         "Compose with render; never asChild.",
         "Check tokens, keyboard, focus, 12 px and i18n.",
       ],
+      language:
+        "Japanese is not a consumption requirement: do not add Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern to your product UI unless the user asks for them. The Japanese in the catalog is the visual language of the internal documentation.",
       code: `npx skills add codehive-colombia/koten --list
 npx skills add codehive-colombia/koten --skill koten-ui -a opencode -a claude-code`,
     },
@@ -251,6 +257,9 @@ export function AIPage() {
         <Section id="consume" title={t.consume.title} jp="利用" meta={t.consume.meta}>
           <p className="text-xs leading-relaxed text-muted">{t.consume.body}</p>
           <List items={t.consume.items} label={t.consume.title} />
+          <p className="mt-[var(--koten-gap)] text-xs leading-relaxed text-muted">
+            {t.consume.language}
+          </p>
           <Code>{t.consume.code}</Code>
         </Section>
 

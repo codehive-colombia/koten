@@ -105,5 +105,6 @@ Koten UI is not an npm package. Components are copied into the project with the 
 ## Notes
 
 - shadcn commands accept `npx` (Node) or `bunx` (Bun); the catalog remembers the runner choice in localStorage.
+- Japanese is opt-in for consumers: do not add Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern to a product UI unless the user asks. The Japanese labels in the catalog are internal documentation styling (R-031, D-057).
 - Generated Markdown is English because it targets coding agents; the human catalog body is ES/JA/EN and the internal working docs are Spanish (D-008, D-025).
 - Every page is generated from `apps/catalog/src/data/docs`; do not edit `llms.txt` or the inventory by hand. Run `bun run ai:docs`.

@@ -127,6 +127,7 @@ describe("catalog pages", () => {
       0,
     );
     expect(screen.getAllByText(/koten-design-language/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/El japonés no es un requisito de consumo/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /llms\.txt/ })).toHaveAttribute(
       "href",
       "http://localhost:5173/llms.txt",

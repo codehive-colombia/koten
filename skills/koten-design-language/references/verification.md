@@ -97,6 +97,7 @@ Also check:
 - [ ] Frames are 1 px and visible; major sections use a double rule, not a shadow.
 - [ ] Radii are 2–3 px; there are no pills except a status dot or avatar.
 - [ ] No shadow outside an overlay; no gradient, blur or decorative texture.
+- [ ] No Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern unless the user requested them.
 - [ ] The primary color appears once per region; state colors carry text.
 - [ ] Text is at least 12 px; metadata uses `faint`, not a smaller size.
 - [ ] Numbers are tabular and aligned to the end.
@@ -124,5 +125,6 @@ Stop and change the approach when:
 - [ ] Full keyboard path, visible focus, correct ARIA, focus return where relevant.
 - [ ] ES and EN fit at 1024 px; mobile stacks at 390 px; JA line height is correct.
 - [ ] No UI strings, no inline colors, no `@apply`, no `asChild`, no text in images.
+- [ ] The default copy uses the project's language; Japanese text and decoration are opt-in.
 - [ ] axe has no `serious` or `critical` findings on the page that uses it.
 - [ ] A test covers the semantics and the slots when the project has tests.

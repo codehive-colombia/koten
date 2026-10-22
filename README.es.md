@@ -28,6 +28,7 @@ Sistema de componentes React con la gramática del web japonés clásico: densid
 - El marco es la unidad: panel, cabecera, regla, borde.
 - El color señala; no decora.
 - Tipografía del sistema y texto real, nunca texto en imágenes.
+- El japonés es una referencia visual, no un requisito de contenido: usa el idioma de tu producto. Las etiquetas japonesas, el kanji, la escritura vertical, el hanko y los patrones son opcionales.
 - Desktop primero, accesible por defecto, rápido por diseño.
 
 ## Stack

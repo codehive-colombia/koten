@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-22**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-018`** · listas en Límites y Reglas de formato
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable), **`M-012`** (documentación directa y listas), **`M-013`** (diseñador de temas), **`M-014`** (README en inglés con versión en español), **`M-015`** (panel flotante de configuración), **`M-016`** (flujo de lectura de Empezar), **`M-017`** (límites del diseñador de temas) y **`M-018`** (listas en Límites y Reglas de formato)
+> Última tarea completada: **`M-019`** · japonés opcional en consumo
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable), **`M-012`** (documentación directa y listas), **`M-013`** (diseñador de temas), **`M-014`** (README en inglés con versión en español), **`M-015`** (panel flotante de configuración), **`M-016`** (flujo de lectura de Empezar), **`M-017`** (límites del diseñador de temas), **`M-018`** (listas en Límites y Reglas de formato) y **`M-019`** (japonés opcional en consumo)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -132,6 +132,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-054` | Configuración del catálogo en un panel flotante anclado al header. | accepted | [D-054](./docs/DECISIONS.md#d-054) |
 | `D-055` | Empezar: requisitos en prosa y solo pasos necesarios numerados. | accepted | [D-055](./docs/DECISIONS.md#d-055) |
 | `D-056` | Quitar la sección de límites del diseñador de temas. | accepted | [D-056](./docs/DECISIONS.md#d-056) |
+| `D-057` | Japonés opcional en consumo y autoría externa. | accepted | [D-057](./docs/DECISIONS.md#d-057) |
 
 ---
 
@@ -317,6 +318,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-016` | Flujo de lectura de Empezar: requisitos en prosa, pasos obligatorios numerados y opcionales sin numerar (`D-055`). | `done` | Se elimina **Antes de empezar** en los dos caminos; `components.json` y `shadcn init` se explican en la introducción; solo se numeran los pasos necesarios; skills, auditorías y registry quedan como opcionales; las listas de trabajo y mapa pasan a una columna con reglas; el selector de runner deja de ser una tarjeta; tests y a11y verdes. | `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `docs/DESIGN-SYSTEM.md` §12; `docs/REQUIREMENTS.md` (`R-025`); `D-055`. |
 | `M-017` | Quitar la sección **Lo que no se toca** del diseñador de temas (`D-056`). | `done` | La página `/theme` termina en la exportación; los límites siguen explicados en la introducción, el cuerpo de exportación y las comprobaciones AA; sin cambios de parámetros, cálculos ni comportamiento; tests verdes. | `apps/catalog/src/pages/theme.tsx`; `apps/catalog/src/pages/theme.test.tsx`; `D-056`. |
 | `M-018` | Sustituir las tarjetas de **Límites** y **Reglas** en `/tokens/format` por listas con reglas (`D-050`). | `done` | Las dos últimas secciones usan una lista de una columna con `divide-y` y borde superior/inferior; sin rejilla de dos columnas ni barra lateral; el contenido y los encabezados se conservan; `bun run check` verde. | `apps/catalog/src/pages/tokens/format.tsx`; `D-050`. |
+| `M-019` | Japonés opcional en consumo y autoría externa (`R-031`, `D-057`). | `done` | `koten-ui` y `koten-design-language` prohíben el japonés por defecto y lo dejan opt-in; `koten-design-system` y el catálogo conservan el japonés como lenguaje visual; `llms.txt`, Markdown por pieza, README, `/ai`, Empezar y RECIPES explican la distinción; ejemplos con etiquetas japonesas horneadas se reemplazan por props o texto neutro; tests y `ai:check` verdes. | `skills/**`; `scripts/build-ai-docs.ts` + test; `llms.txt`; `apps/catalog/src/pages/{ai,start}.tsx`; `docs/{DESIGN-SYSTEM,RECIPES,REQUIREMENTS}.md`; `README.md`; `README.es.md`; `D-057`; `R-031`. |
 
 ---
 
@@ -440,6 +442,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-028` | i18n personalizable: cualquier BCP 47, diccionarios JSON por idioma y un único punto de edición. | `M-011`, `D-049` | `done` |
 | `R-029` | Documentación directa: sin repeticiones ni explicaciones fuera de lugar, y listas en lugar de tarjetas en las secciones de lectura. | `M-012`, `D-050` | `done` |
 | `R-030` | Diseñador de temas con parámetros curados, validación AA y export de un overlay de tokens. | `M-013`, `D-051` | `done` |
+| `R-031` | Japonés opcional en consumo y autoría externa: sin texto, kanji, etiquetas `jp`, Tategaki, Hanko ni Pattern por defecto. | `M-019`, `D-057` | `done` |
 
 ---
 
@@ -553,3 +556,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-22 | Mejora puntual `M-016`: **Empezar** elimina las secciones **Antes de empezar**, integra los requisitos en la introducción, numera solo los pasos obligatorios y deja skills, auditorías y registry como opcionales; las listas de trabajo y mapa pasan a una columna con reglas y el selector de runner deja de ser una tarjeta. `D-055`, `R-025`. | Sesión 046 |
 | 2026-10-22 | Mejora puntual `M-017`: `/theme` elimina la sección **Lo que no se toca**; los límites siguen en la introducción, la exportación y las comprobaciones AA. `D-056`. | Sesión 047 |
 | 2026-10-22 | Mejora puntual `M-018`: **Límites** y **Reglas** de `/tokens/format` pasan de una rejilla de dos columnas con barra lateral a una lista de una columna con reglas. `D-050`. | Sesión 048 |
+| 2026-10-22 | Mejora puntual `M-019`: el japonés queda como opt-in en consumo y autoría externa (`koten-ui`, `koten-design-language`, `llms.txt`, Markdown, README y `/ai`); el catálogo y `koten-design-system` conservan el japonés como lenguaje visual interno. `D-057`, `R-031`. | Sesión 049 |

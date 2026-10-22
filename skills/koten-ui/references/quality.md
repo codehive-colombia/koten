@@ -27,6 +27,7 @@ Run this before declaring a Koten UI screen or component done.
 ## Visual grammar
 
 - [ ] Borders are 1 px; radii stay at 3 px or less.
+- [ ] No Japanese text, kanji, `jp` labels, Tategaki, Hanko or Pattern in a consumer UI unless the user requested them.
 - [ ] No decorative gradients, pill buttons, rounded cards with shadow or floating-card layouts.
 - [ ] Color comes from semantic roles (`primary`, `danger`, `sale`, `success`, `link`), not raw palette names.
 - [ ] Numbers use `tabular-nums`; prices and totals align to the end.

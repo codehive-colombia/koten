@@ -47,6 +47,10 @@ For a locale without a dictionary, pass a full or partial `labels` object. Unkno
 
 `useKoten()` types `locale` as the installed dictionaries. Use `useKoten<string>()` or `useKoten<"fr-FR">()` when you read a locale that has no installed dictionary. Koten does not provide a content runtime: your product copy stays in your own dictionaries or i18n library.
 
+## Language and decoration
+
+Koten's Japanese references are visual grammar, not content. Keep the product's language. Do not add Japanese labels, kanji, vertical writing, `Hanko` or `Pattern` unless the user asks for that treatment. `SectionHeader`'s optional `jp` label and the Japanese accents in the catalog are documentation styling, not part of the component contract.
+
 ## Page shape
 
 A Koten screen is built from frames, not floating cards:

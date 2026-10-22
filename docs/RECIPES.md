@@ -5,6 +5,8 @@
 > `KotenProvider` (ver [Empezar](/start) en el catálogo y `apps/catalog/src/pages/start.tsx`).
 >
 > Este documento está en español por `D-008`; el catálogo y las demos están en ES/JA/EN.
+>
+> Los ejemplos usan el idioma del producto. El japonés del catálogo es lenguaje visual de la documentación interna, no un requisito de consumo: no agregues texto japonés, kanji, etiquetas `jp`, Tategaki, Hanko ni Pattern a tu UI salvo que el usuario lo pida (`R-031`).
 
 ## 0. Base mínima
 

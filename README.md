@@ -30,6 +30,7 @@ Working documents — roadmap, decisions, log and protocol — are kept in Spani
 - The frame is the unit: panel, header, rule, border.
 - Color signals; it does not decorate.
 - System typography and real text, never text in images.
+- Japanese is a visual reference, not a content requirement: use your product's language. Japanese labels, kanji, vertical writing, hanko and patterns are opt-in.
 - Desktop first, accessible by default, fast by design.
 
 ## Stack

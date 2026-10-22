@@ -76,7 +76,7 @@ createRoot(document.getElementById("root")!).render(
       appearance: {
         title: "5 · Tema, densidad e idioma",
         body: "No edites los componentes para cambiar el tono. El tema y la densidad viven en el elemento raíz; el idioma va en el provider y acepta cualquier BCP 47 (ES/JA/EN son los diccionarios incluidos, no un requisito). Chirashi es comercio, Daichō es backoffice, Kanso es lectura y Sumi es el modo oscuro. Para crear una variante sin editar tokens, abre `/theme`.",
-        code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
+        code: `<html lang="es" data-theme="daicho" data-density="compact">`,
       },
       agents: {
         title: "Opcional · Skills de agente",
