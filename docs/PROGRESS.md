@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-014` · README en inglés y espejo en español |
+| Última tarea completada | `M-018` · listas en Límites y Reglas de formato |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,85 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 048 — Listas en Límites y Reglas de formato (`M-018`)
+
+- **Objetivo:** quitar las tarjetas de las dos últimas secciones de `/tokens/format` y dejarlas como listas, siguiendo `D-050`.
+- **Hecho:**
+  - **Límites:** la rejilla de dos columnas con barra lateral se sustituye por una lista de una columna con `divide-y` y borde superior/inferior.
+  - **Reglas:** el mismo tratamiento, sin barra lateral ni columnas.
+  - **Contenido:** se conservan el encabezado, el subtítulo y todos los elementos; solo cambia la presentación.
+- **Tareas tocadas:** `M-018` → `done`.
+- **Decisiones:** `D-050` (aplicación directa; sin decisión nueva).
+- **Evidencia:** `apps/catalog/src/pages/tokens/format.tsx`; revisión visual a 1440: **Límites** y **Reglas** se leen como listas de una columna con reglas; `bun run check` verde.
+- **Sin validar:** revisión visual de la página en JA/EN; la estructura es la misma para los tres idiomas.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-22 · Sesión 047 — Límites del diseñador de temas (`M-017`)
+
+- **Objetivo:** quitar la sección **Lo que no se toca** de `/theme` para que la página termine en la exportación y no repita restricciones ya explicadas.
+- **Hecho:**
+  - **Copy:** se elimina `locked` en ES/JA/EN.
+  - **UI:** se elimina la sección `theme-limites`; la página queda con parámetros, contraste, vista previa y exportación.
+  - **Guardrails:** siguen vigentes en la descripción (“no hay selector de color libre”), en el cuerpo de exportación (“tipografía, espaciado, sombras y movimiento siguen viniendo de Koten”) y en las 11 comprobaciones AA. No cambia ningún parámetro, cálculo ni comportamiento.
+  - **Docs:** `D-056`, `ROADMAP.md` (`M-017`) y esta bitácora.
+- **Tareas tocadas:** `M-017` → `done`.
+- **Decisiones:** `D-056`.
+- **Evidencia:** `apps/catalog/src/pages/theme.tsx`; `apps/catalog/src/pages/theme.test.tsx` (5 tests verdes); revisión visual a 1440: la página termina en CSS y paginación, sin la sección de límites; `bun run check` verde.
+- **Sin validar:** revisión visual del final de `/theme` en JA/EN; el cambio es de eliminación y los tests cubren la página.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-22 · Sesión 046 — Flujo de lectura de Empezar (`M-016`)
+
+- **Objetivo:** quitar las secciones **Antes de empezar**, integrar los requisitos en la introducción y dejar una secuencia clara entre lo obligatorio y lo opcional.
+- **Hecho:**
+  - **Requisitos en prosa:** React 19, Tailwind 4, `components.json`, `shadcn init`, Node 20 y `resolveJsonModule` se explican en el párrafo de uso, en el orden en que se necesitan. En desarrollo, Bun, Git, navegador y Chromium se integran en la introducción.
+  - **Pasos:** solo se numeran los cinco pasos de uso y los cuatro de desarrollo. Skills de agente, auditorías y registry quedan como **Opcional** o **Herramientas**, sin número.
+  - **Listas:** **Trabaja en el sistema** y **Mapa del repositorio** pasan de una rejilla de dos columnas con barra lateral a una lista de una columna con reglas. El selector `npx` / `bunx` deja de ser un panel con borde y fondo.
+  - **Tests:** se comprueba que no aparece **Antes de empezar**, que el comando de `shadcn init` está en la introducción y que las secciones opcionales conservan su encabezado.
+  - **Docs:** `DESIGN-SYSTEM.md` §12, `REQUIREMENTS.md` (`R-025`), `ROADMAP.md` (`M-016`, `D-055`), `DECISIONS.md` y esta bitácora.
+- **Tareas tocadas:** `M-016` → `done`.
+- **Decisiones:** `D-055`.
+- **Evidencia:**
+  - `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`.
+  - Revisión visual en navegador a 1440 y 390: la página abre con el selector de caminos, sigue con la introducción y los requisitos en prosa, el runner entre reglas y los pasos numerados; las listas de trabajo y mapa se leen en una columna.
+  - `bun run check` verde: Biome, TypeScript, i18n (155 archivos), `ai:check`, axe de la página y **38 archivos / 253 tests**.
+  - `bun run build` del catálogo OK; `bun run budget` → catálogo **264,0 KB inicial / 454,6 KB total**.
+- **Sin validar:** lectura con lector de pantalla del flujo completo y revisión en JA/EN más allá de los tests de copy.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
+
+---
+
+## 2026-10-22 · Sesión 045 — Panel flotante de configuración (`M-015`)
+
+- **Objetivo:** sacar tema, densidad e idioma del header para que la configuración no crezca en línea y el header quede con una sola acción.
+- **Hecho:**
+  - **Disparador:** botón **Configuración** con icono de sliders en el header; etiqueta visible en desktop, solo icono con `aria-label` en mobile.
+  - **Panel:** `SettingsPanel` usa el `Popover` del sistema, con título, descripción, cierre y nota de persistencia en la URL. Tema en dos columnas; densidad e idioma en tres.
+  - **Escala:** las opciones salen de `themes`, `densities` y los locales; `ToggleGroup` gana `layout="stacked"` y `columns`, así que agregar valores no cambia la estructura. El popup limita ancho y alto, hace scroll y mantiene la cabecera sticky.
+  - **Estado:** sin cambios; tema, densidad e idioma siguen en `?theme=`, `?density=` y `?lang=`, y el resumen del subheader se conserva.
+  - **Docs:** `DESIGN-SYSTEM.md` §12, `REQUIREMENTS.md`, `ROADMAP.md` (`M-015`, `D-054`), `DECISIONS.md` y esta bitácora.
+- **Tareas tocadas:** `M-015` → `done`.
+- **Decisiones:** `D-054`.
+- **Evidencia:**
+  - `apps/catalog/src/components/settings-panel.tsx` + `settings-panel.test.tsx` (apertura, grupos, selección de tema/densidad/idioma e i18n).
+  - `apps/catalog/src/components/view-toggles.tsx` (layout apilado y columnas); `catalog-layout.tsx`; `data/catalog.ts`; `pages/i18n.test.tsx`.
+  - Revisión visual en navegador a 1440 y 390: panel abierto, opciones legibles y sin overflow; el trigger conserva la etiqueta en desktop y el icono en mobile. Al elegir Chirashi se actualizó `?theme=chirashi` y el resumen del subheader; el botón de cierre cerró el panel.
+  - `bun run check` verde: Biome, TypeScript, i18n (155 archivos), `ai:check` y **38 archivos / 253 tests**.
+  - `bun run build` del catálogo OK; `bun run budget` → catálogo **264,0 KB inicial / 455,0 KB total**, storefront 122,3 KB y ERP 199,4 KB.
+  - `qa:a11y`: **114 páginas**, 0 violaciones serious/critical, 0 textos < 12 px y 0 focos sin indicador; el script sale con código 1 por escenarios `select-popup` de las demos de ERP, no por el panel de configuración.
+- **Sin validar:** lectura con lector de pantalla del panel; el cierre con Escape se apoya en Base UI y no tiene test propio.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
 
 ---
 

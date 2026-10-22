@@ -114,19 +114,6 @@ const copy = {
       fixNote: "Lleva el papel al paso más cercano que cumple AA sin cambiar el pigmento.",
       file: "koten-custom.css",
     },
-    locked: {
-      title: "Lo que no se toca",
-      meta: "Guardrails",
-      items: [
-        "Pigmentos de la paleta: Ai, Shu, Kin y Matcha. No hay selector de color libre.",
-        "Tipografía del sistema; ninguna fuente CJK completa.",
-        "Piso tipográfico de 12 px y escala fija.",
-        "Radios de 0 a 3 px; bordes de 1 px.",
-        "Sombras solo en overlays; sin gradientes decorativos.",
-        "Los colores de estado mantienen su significado.",
-        "El espaciado y las densidades son las de Koten.",
-      ],
-    },
     previewLabels: {
       preview: "Espécimen",
       product: "Producto",
@@ -234,19 +221,6 @@ const copy = {
       fix: "安全な紙を使う",
       fixNote: "顔料を変えずに、AAを満たす最も近い紙の段階へ移動します。",
       file: "koten-custom.css",
-    },
-    locked: {
-      title: "変えないもの",
-      meta: "ガードレール",
-      items: [
-        "パレットの顔料は藍・朱・金・抹茶のみ。自由な色選択はありません。",
-        "システムフォントのみ。CJKフォントは読み込みません。",
-        "文字は12 pxが下限で、尺度は固定です。",
-        "角丸は0〜3 px、罫線は1 pxです。",
-        "影はオーバーレイのみ。装飾的なグラデーションはありません。",
-        "状態色の意味は変えません。",
-        "余白と密度はKotenのものです。",
-      ],
     },
     previewLabels: {
       preview: "見本",
@@ -356,19 +330,6 @@ const copy = {
       fix: "Use safe paper",
       fixNote: "Moves paper to the nearest step that passes AA without changing the pigment.",
       file: "koten-custom.css",
-    },
-    locked: {
-      title: "What stays fixed",
-      meta: "Guardrails",
-      items: [
-        "Palette pigments only: Ai, Shu, Kin and Matcha. There is no free color picker.",
-        "System fonts only; no full CJK font is loaded.",
-        "A 12 px typographic floor and a fixed scale.",
-        "Radii from 0 to 3 px; 1 px borders.",
-        "Shadows only on overlays; no decorative gradients.",
-        "Status colors keep their meaning.",
-        "Spacing and densities stay Koten's.",
-      ],
     },
     previewLabels: {
       preview: "Specimen",
@@ -757,16 +718,6 @@ export function ThemeDesignerPage() {
             <span aria-live="polite" className="sr-only">
               {copied ? t.export.copied : ""}
             </span>
-          </Section>
-
-          <Section id="theme-limites" title={t.locked.title} jp="制約" meta={t.locked.meta}>
-            <ul className="grid gap-[var(--koten-gap)] text-xs text-muted sm:grid-cols-2">
-              {t.locked.items.map((item) => (
-                <li key={item} className="border-s-2 border-primary ps-2">
-                  {item}
-                </li>
-              ))}
-            </ul>
           </Section>
         </div>
       </div>

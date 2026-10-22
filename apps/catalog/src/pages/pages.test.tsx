@@ -97,6 +97,18 @@ describe("catalog pages", () => {
       "#desarrollar",
     );
     expect(screen.getByText(/koten-theme\.json/)).toBeInTheDocument();
+    expect(screen.queryByText("Antes de empezar")).not.toBeInTheDocument();
+    expect(screen.getAllByText(/components\.json/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/npx shadcn@latest init/)).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: /Opcional · Skills de agente/ }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: /Opcional · Auditorías/ }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 3, name: /Herramientas · Registry/ }),
+    ).toBeInTheDocument();
     expect(screen.getAllByText(/bun run dev/).length).toBeGreaterThan(0);
     expect(screen.getAllByText(/bun run check/).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: "Ver componentes" })).toHaveAttribute(

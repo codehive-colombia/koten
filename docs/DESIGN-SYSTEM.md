@@ -568,16 +568,16 @@ Koten separa tres capas y no impone un runtime de contenido:
 ## 12. Catálogo
 
 - Formato wiki: sidebar sticky de 220 px + contenido max 900; menú plegable en mobile.
-- **Portada (`/`)**: landing editorial del sistema, con layout ancho (sin sidebar de escritorio; header, toggles, menú móvil y footer se conservan). Orden: masthead con hanko, declaración y cifras; placa viva con piezas reales; tres registros con `data-theme` local; índice rápido; sistema en piezas e índice completo; principios y calidad; demos HIKARI y KURA; cierre con instalación por URL.
+- **Portada (`/`)**: landing editorial del sistema, con layout ancho (sin sidebar de escritorio; header, panel de configuración, menú móvil y footer se conservan). Orden: masthead con hanko, declaración y cifras; placa viva con piezas reales; tres registros con `data-theme` local; índice rápido; sistema en piezas e índice completo; principios y calidad; demos HIKARI y KURA; cierre con instalación por URL.
 - La portada usa datos y componentes reales: la placa responde a tema, densidad e idioma; no hay capturas ni texto en imágenes.
 - Rutas por fundamento (`/tokens/color`, `/tokens/typography`, …) y por componente (`/components/button`, …).
 - **Diseñar un tema (`/theme`)**: cinco parámetros curados (registro, pigmento, papel, radio y densidad), 11 comprobaciones AA, bloqueo de exportación y overlay de tokens; se enlaza desde Temas y la navegación.
-- **Empezar** separa dos caminos: **usar el sistema** (registry de shadcn, sin clonar el repositorio ni instalar Bun) y **desarrollar el sistema** (monorepo, catálogo, demos, auditorías y registry). Cada camino tiene requisitos, pasos numerados y comandos propios.
+- **Empezar** separa dos caminos: **usar el sistema** (registry de shadcn, sin clonar el repositorio ni instalar Bun) y **desarrollar el sistema** (monorepo, catálogo, demos, auditorías y registry). Cada camino integra sus requisitos en la introducción, numera solo los pasos necesarios y deja auditorías y skills como opcionales sin numerar.
 - Los comandos de shadcn tienen un selector **npx / bunx** persistente en `localStorage`; la preferencia se comparte entre Empezar, la portada y las páginas de componente y bloque.
 - Pager anterior/siguiente y enlaces profundos compartibles.
 - Requisitos, accesibilidad e índices se leen como listas con reglas; las tarjetas se reservan para la portada y la navegación (`D-050`).
 - Cada componente: instalación, ejemplos, props, accesibilidad e i18n.
-- Toggles de tema, densidad e idioma en el header; persistir en URL (`?theme=`, `?density=`, `?lang=`).
+- Panel flotante de configuración anclado al header (tema, densidad e idioma); el disparador muestra la etiqueta en desktop y solo el icono en mobile; el estado se persiste en la URL (`?theme=`, `?density=`, `?lang=`).
 - La documentación se mantiene en ES/JA/EN (`D-025`); los artefactos para agentes, en inglés (`D-045`).
 - La densidad y el tema afectan el layout, las tablas y el espaciado del catálogo; las muestras comparativas mantienen su valor fijo.
 - Botón de copiar código.

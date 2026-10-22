@@ -84,6 +84,8 @@ describe("catalog i18n", () => {
 
       expect(labels.docsLanguage.length).toBeGreaterThan(0);
       expect(labels.catalog.length).toBeGreaterThan(0);
+      expect(labels.settings.length).toBeGreaterThan(0);
+      expect(labels.settingsDescription.length).toBeGreaterThan(0);
       expect(labels.tagline.length).toBeGreaterThan(0);
     }
 

@@ -39,14 +39,15 @@ describe("App", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("switches the UI language and the document lang", () => {
+  it("switches the UI language and the document lang", async () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <App />
       </MemoryRouter>,
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "日本語" }));
+    fireEvent.click(screen.getByRole("button", { name: "Configuración" }));
+    fireEvent.click(await screen.findByRole("button", { name: "日本語" }));
 
     expect(screen.getAllByText("基礎").length).toBeGreaterThan(0);
     expect(new URL(window.location.href).searchParams.get("lang")).toBe("ja");

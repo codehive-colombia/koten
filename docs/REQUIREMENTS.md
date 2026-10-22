@@ -108,7 +108,7 @@ La fase 5 completó el registry, Sumi, DatePicker, CommandPalette y la virtualiz
 | `R-022` | Should | Documentación individual por componente y bloque. | Una página por primitiva en `/components/<slug>` y una por bloque en `/blocks/<categoría>/<slug>`, con instalación, preview/código, props, a11y y referencia Base UI. |
 | `R-023` | Must | Despliegue de producción en un dominio con rutas para catálogo, storefront y ERP. | Imagen Docker reproducible, compose de tres puertos, reglas de proxy que conservan el prefijo, URLs públicas y registry correctos, y CI que publica la imagen. |
 | `R-024` | Should | Capa de documentación y skills para agentes. | `llms.txt` y `llms-full.txt` en el catálogo, Markdown por componente y bloque, skills `koten-ui` y `koten-design-system` compatibles con `npx skills`, generación determinista y `bun run ai:check` dentro de `bun run check`. |
-| `R-025` | Should | Empezar separado por audiencia. | Dos caminos explícitos: usar el sistema (registry, `KotenProvider`, sin Bun ni clonar) y desarrollar el sistema (monorepo, `bun run dev`, `check`, auditorías), con requisitos y comandos propios. |
+| `R-025` | Should | Empezar separado por audiencia. | Dos caminos explícitos: usar el sistema (registry, `KotenProvider`, sin Bun ni clonar) y desarrollar el sistema (monorepo, `bun run dev`, `check`, auditorías), con requisitos integrados en la introducción y comandos propios. |
 | `R-026` | Should | Runner de los comandos de shadcn configurable. | Selector `npx` / `bunx` en Empezar, portada y páginas de componente/bloque; la preferencia persiste en `localStorage` y todos los comandos copiados la respetan. |
 | `R-027` | Should | Skill portátil para crear piezas que el catálogo no trae. | `koten-design-language` con la esencia de Koten, roles semánticos, marcos de 1 px, radios, sombras solo en overlays, contraste AA, tipografía, densidad, contrato de autoría, ejemplo completo y verificación; referencias en inglés y tokens validados por `ai:check`. |
 | `R-028` | Should | i18n personalizable por el consumidor. | `locale` acepta cualquier BCP 47; el runtime y el inglés base viven en `koten-i18n`; cada idioma adicional es un pack JSON opcional (`koten-i18n-es`, `koten-i18n-ja`) que se registra en `dictionaries.ts`; un locale sin diccionario usa el inglés o los `labels` del provider; ES/JA/EN no son obligatorios. |
@@ -257,7 +257,7 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 - Patrones: storefront y ERP.
 - Plantillas: enlaces a los dos demos.
 - Do/Don’t.
-- Toggles de tema, densidad e idioma persistidos en URL.
+- Panel de configuración de tema, densidad e idioma persistido en URL.
 - Copiar código.
 - Documentación para agentes: `llms.txt`, `llms-full.txt`, Markdown por componente y bloque, y enlaces a las skills.
 - **Diseñador de temas** (`/theme`): registro, pigmento, papel, radio y densidad con valores derivados, validación AA y exportación de un overlay de tokens.

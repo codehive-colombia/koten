@@ -149,6 +149,9 @@ export type ShellLabels = {
   theme: string;
   density: string;
   language: string;
+  settings: string;
+  settingsDescription: string;
+  settingsHint: string;
   tagline: string;
   docsLanguage: string;
   preview: string;
@@ -169,6 +172,9 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Tema",
     density: "Densidad",
     language: "Idioma",
+    settings: "Configuración",
+    settingsDescription: "Tema, densidad e idioma del catálogo.",
+    settingsHint: "Se guarda en la URL y se comparte con el enlace.",
     tagline: "46 componentes · 20 bloques · 4 temas · 3 densidades",
     docsLanguage:
       "Documentación completa en ES/JA/EN · interfaz, cuerpo y ejemplos cambian de idioma",
@@ -188,6 +194,9 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "テーマ",
     density: "密度",
     language: "言語",
+    settings: "設定",
+    settingsDescription: "カタログのテーマ、密度、言語。",
+    settingsHint: "URL に保存され、リンクで共有されます。",
     tagline: "46 コンポーネント · 20 ブロック · 4 テーマ · 3 密度",
     docsLanguage: "ドキュメントはES/JA/ENで完備 · UI・本文・例が言語に追従します",
     preview: "プレビュー",
@@ -206,6 +215,9 @@ export const shellLabels: Record<KotenLocale, ShellLabels> = {
     theme: "Theme",
     density: "Density",
     language: "Language",
+    settings: "Settings",
+    settingsDescription: "Theme, density and language for the catalog.",
+    settingsHint: "Saved in the URL and shared with the link.",
     tagline: "46 components · 20 blocks · 4 themes · 3 densities",
     docsLanguage: "Full documentation in ES/JA/EN · UI, body and examples follow the language",
     preview: "Preview",

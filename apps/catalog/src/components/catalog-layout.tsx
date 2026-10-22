@@ -11,7 +11,7 @@ import {
 } from "../data/catalog";
 import { themes } from "../data/tokens";
 import { syncViewToUrl, type useCatalogView } from "../lib/use-catalog-view";
-import { DensityToggle, LocaleToggle, ThemeToggle } from "./view-toggles";
+import { SettingsPanel } from "./settings-panel";
 
 type CatalogViewState = ReturnType<typeof useCatalogView>;
 
@@ -154,11 +154,6 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
   const labels = shellLabels[view.locale];
   const themeLabel = themes.find((theme) => theme.id === view.theme)?.label ?? view.theme;
   const densityLabel = densityLabels[view.density][view.locale];
-  const densityOptions = {
-    compact: densityLabels.compact[view.locale],
-    default: densityLabels.default[view.locale],
-    comfortable: densityLabels.comfortable[view.locale],
-  };
 
   useEffect(() => {
     if (pathname) {
@@ -206,17 +201,14 @@ export function CatalogLayout({ view, children }: { view: CatalogViewState; chil
               <span className="block text-2xs text-faint">{labels.catalog} · 古典</span>
             </span>
           </NavLink>
-          <div
-            lang={view.locale}
-            className="flex flex-wrap items-center gap-x-[var(--koten-gap)] gap-y-2"
-          >
-            <LocaleToggle value={view.locale} label={labels.language} onChange={view.setLocale} />
-            <ThemeToggle value={view.theme} label={labels.theme} onChange={view.setTheme} />
-            <DensityToggle
-              value={view.density}
-              label={labels.density}
-              optionLabels={densityOptions}
-              onChange={view.setDensity}
+          <div lang={view.locale} className="flex items-center">
+            <SettingsPanel
+              locale={view.locale}
+              theme={view.theme}
+              density={view.density}
+              onThemeChange={view.setTheme}
+              onDensityChange={view.setDensity}
+              onLocaleChange={view.setLocale}
             />
           </div>
         </div>

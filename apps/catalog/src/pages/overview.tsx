@@ -91,7 +91,7 @@ const copy = {
       title: "Tres registros, una gramática",
       jp: "三面",
       meta: "Misma estructura; cambian los valores semánticos",
-      note: "Chirashi para vender, Daichō para operar, Kanso para leer. Cada muestra conserva su tema para compararlas; el resto de la página sigue el selector del encabezado.",
+      note: "Chirashi para vender, Daichō para operar, Kanso para leer. Cada muestra conserva su tema para compararlas; el resto de la página sigue el panel de configuración.",
       action: "Ver el tema",
       chirashi: {
         title: "Chirashi",
@@ -293,7 +293,7 @@ const copy = {
       title: "三つの様式、一つの文法",
       jp: "三面",
       meta: "構造は同じで、意味的な値だけが変わる",
-      note: "Chirashiは売るため、Daichōは運用するため、Kansoは読むため。各サンプルは比較できるよう独自のテーマを保ち、ページの残りはヘッダーの選択に従う。",
+      note: "Chirashiは売るため、Daichōは運用するため、Kansoは読むため。各サンプルは比較できるよう独自のテーマを保ち、ページの残りは設定パネルに従う。",
       action: "テーマを見る",
       chirashi: {
         title: "Chirashi",
@@ -496,7 +496,7 @@ const copy = {
       title: "Three registers, one grammar",
       jp: "三面",
       meta: "Same structure; the semantic values change",
-      note: "Chirashi to sell, Daichō to operate, Kanso to read. Each card keeps its own theme for comparison; the rest of the page follows the header selector.",
+      note: "Chirashi to sell, Daichō to operate, Kanso to read. Each card keeps its own theme for comparison; the rest of the page follows the settings panel.",
       action: "See the theme",
       chirashi: {
         title: "Chirashi",

@@ -14,7 +14,7 @@ const copy = {
     comparison: {
       title: "Comparación",
       meta: "Una pieza, cuatro registros",
-      note: "Las tarjetas mantienen su tema para poder compararlas. El resto del catálogo cambia con el selector del encabezado.",
+      note: "Las tarjetas mantienen su tema para poder compararlas. El resto del catálogo cambia desde el panel de configuración.",
     },
     designer: {
       title: "Diseñar tu propio tema",
@@ -43,7 +43,7 @@ const copy = {
     comparison: {
       title: "比較",
       meta: "1つの部品、4つの様式",
-      note: "カードは比較できるよう独自のテーマを保つ。カタログの残りはヘッダーのセレクタで変わる。",
+      note: "カードは比較できるよう独自のテーマを保つ。カタログの残りは設定パネルで変わる。",
     },
     designer: {
       title: "自分のテーマを設計",
@@ -72,7 +72,7 @@ const copy = {
     comparison: {
       title: "Comparison",
       meta: "One piece, four registers",
-      note: "The cards keep their theme so they can be compared. The rest of the catalog changes with the header selector.",
+      note: "The cards keep their theme so they can be compared. The rest of the catalog changes from the settings panel.",
     },
     designer: {
       title: "Design your own theme",

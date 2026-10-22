@@ -38,19 +38,11 @@ const copy = {
       title: "Usar Koten UI en tu proyecto",
       meta: "React 19 · Tailwind 4 · shadcn · sin Bun",
       intro:
-        "Koten UI no es un paquete npm: es un conjunto de archivos que se copian a tu proyecto. No necesitas clonar este repositorio ni instalar Bun. El registry de shadcn hace la instalación y respeta los aliases de tu components.json.",
+        "Koten UI no es un paquete npm: es un conjunto de archivos que se copian a tu proyecto. No necesitas clonar este repositorio ni instalar Bun. El registry de shadcn hace la instalación y respeta los aliases de tu `components.json`.",
       runnerNote:
         "Los comandos de shadcn se copian con el runner que elijas. La preferencia se guarda en este navegador y se mantiene al cambiar de página.",
-      requirements: {
-        title: "Antes de empezar",
-        items: [
-          "React 19 y Tailwind CSS 4 en el proyecto.",
-          "Un `components.json` de shadcn. Si no existe, ejecuta `{init}`.",
-          "`resolveJsonModule` en el `tsconfig` para los diccionarios JSON del i18n (Vite y Next lo traen).",
-          "Node 20 o superior para `npx`; el CLI de shadcn lo usa.",
-          "Opcional: una skill de agente para que la instalación y el uso sigan las reglas del sistema (`koten-ui`); `koten-design-language` si vas a crear piezas que el catálogo no trae.",
-        ],
-      },
+      prereqs:
+        "Necesitas React 19 y Tailwind CSS 4 en el proyecto, y un `components.json` de shadcn. Si no existe, ejecuta `{init}`. Para `npx`, usa Node 20 o superior; el i18n usa diccionarios JSON, así que el `tsconfig` necesita `resolveJsonModule` (Vite y Next lo traen).",
       theme: {
         title: "1 · Instala el tema una vez",
         body: "`koten-theme` escribe tokens, temas y densidad en el archivo `tailwind.css` declarado en tu `components.json`. No crea una carpeta `styles/`. Si el proyecto ya tenía tokens de shadcn, instálalo primero para reemplazarlos.",
@@ -87,7 +79,7 @@ createRoot(document.getElementById("root")!).render(
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
-        title: "6 · Deja que un agente te ayude",
+        title: "Opcional · Skills de agente",
         body: "La documentación para agentes no es el catálogo humano: es un índice `llms.txt`, una página Markdown por pieza y tres skills. La skill `koten-ui` instala y compone; `koten-design-system` extiende el sistema dentro del repositorio; `koten-design-language` enseña a crear una pieza que el catálogo no trae, con tokens, marcos y contraste, en cualquier proyecto que ya use Koten.",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
@@ -97,15 +89,8 @@ createRoot(document.getElementById("root")!).render(
       meta: "Bun 1.4.3 · monorepo · catálogo y demos",
       intro:
         "Este camino es para trabajar dentro del repositorio: el catálogo, las primitivas, los bloques, las demos, las auditorías y el registry. Usa Bun; no instales ni copies piezas a mano.",
-      requirements: {
-        title: "Antes de empezar",
-        items: [
-          "Bun 1.4.3 (workspaces, scripts y tests).",
-          "Git y un navegador moderno: Chrome, Edge, Firefox o Safari recientes.",
-          "Chromium en PATH solo para las auditorías opcionales (`qa:a11y`, `qa:overflow`, `qa:perf`, `qa:visual`).",
-          "No hace falta Node, ni una fuente CJK, ni un servicio externo: todo corre local.",
-        ],
-      },
+      prereqs:
+        "Necesitas Bun 1.4.3, Git y un navegador moderno. Chromium en PATH solo hace falta para las auditorías opcionales. No necesitas Node, ni una fuente CJK, ni un servicio externo: todo corre local.",
       setup: {
         title: "1 · Clona e instala",
         body: "El repositorio es un monorepo de Bun con tres apps y un paquete compartido. `bun install` resuelve todo desde el lockfile.",
@@ -140,15 +125,15 @@ bun run budget  # presupuesto de JS/CSS y fuentes`,
         ],
       },
       audits: {
-        title: "5 · Auditorías opcionales",
-        body: "Requieren Chromium en PATH y, en algunos casos, el servidor de desarrollo levantado. No son necesarias para cada cambio, pero sí antes de cerrar una pieza nueva.",
+        title: "Opcional · Auditorías",
+        body: "No son necesarias para cada cambio, pero sí antes de cerrar una pieza nueva. Algunas requieren el servidor de desarrollo levantado.",
         code: `bun run qa:a11y
 bun run qa:overflow
 bun run qa:perf
 bun run qa:visual`,
       },
       tooling: {
-        title: "6 · Registry y documentación de agentes",
+        title: "Herramientas · Registry y documentación de agentes",
         body: "`predev` y `prebuild` ya generan el registry y la capa de agentes. Estos comandos son para regenerarlos a mano o comprobar que están en sincronía.",
         code: `bun run registry
 bun run ai:docs
@@ -205,16 +190,8 @@ bun run ai:check`,
         "Koten UI は npm パッケージではありません。プロジェクトにコピーするファイル群です。このリポジトリを clone する必要も、Bun を入れる必要もありません。shadcn レジストリが導入し、`components.json` のエイリアスを尊重します。",
       runnerNote:
         "shadcn のコマンドは選んだランナーでコピーされます。設定はこのブラウザに保存され、ページを移動しても維持されます。",
-      requirements: {
-        title: "はじめる前に",
-        items: [
-          "プロジェクトに React 19 と Tailwind CSS 4 がある。",
-          "shadcn の `components.json` がある。なければ `{init}` を実行。",
-          "i18nのJSON辞書には tsconfig の resolveJsonModule が必要（ViteとNextは既定で有効）。",
-          "`npx` 用に Node 20 以上（shadcn CLI が使います）。",
-          "任意：エージェント用の skill `koten-ui` を入れると、導入と利用が規約に沿います。カタログにない部品を作るなら `koten-design-language` も入れてください。",
-        ],
-      },
+      prereqs:
+        "プロジェクトに React 19 と Tailwind CSS 4、そして shadcn の `components.json` が必要です。なければ `{init}` を実行してください。`npx` には Node 20 以上が必要です。i18n は JSON 辞書を使うため、`tsconfig` に `resolveJsonModule` が必要です（Vite と Next は既定で有効）。",
       theme: {
         title: "1 · テーマを一度だけ導入する",
         body: "`koten-theme` はトークン・テーマ・密度を、`components.json` で指定した `tailwind.css` に書き込みます。`styles/` フォルダーは作りません。既存の shadcn トークンがある場合は、置き換えるために最初に導入します。",
@@ -251,7 +228,7 @@ createRoot(document.getElementById("root")!).render(
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
-        title: "6 · エージェントに任せる",
+        title: "任意 · エージェント用スキル",
         body: "エージェント向け文書は人間向けカタログとは別です。`llms.txt` の索引、部品ごとの Markdown、3つの skills があります。`koten-ui` は導入と合成、`koten-design-system` はリポジトリ内での拡張、`koten-design-language` は Koten を導入済みの任意のプロジェクトで、カタログにない部品をトークン、枠、コントラストに沿って作る方法を担当します。",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
@@ -261,15 +238,8 @@ createRoot(document.getElementById("root")!).render(
       meta: "Bun 1.4.3 · モノレポ · カタログとデモ",
       intro:
         "この道はリポジトリの中で作業する人向けです。カタログ、プリミティブ、ブロック、デモ、監査、レジストリを扱います。Bun を使い、部品を手でコピーしません。",
-      requirements: {
-        title: "はじめる前に",
-        items: [
-          "Bun 1.4.3（ワークスペース・スクリプト・テスト）。",
-          "Git とモダンブラウザ（最新の Chrome、Edge、Firefox、Safari）。",
-          "任意の監査（`qa:a11y`、`qa:overflow`、`qa:perf`、`qa:visual`）には PATH 上の Chromium。",
-          "Node も CJK フォントも外部サービスも不要です。すべてローカルで動きます。",
-        ],
-      },
+      prereqs:
+        "Bun 1.4.3、Git、モダンブラウザが必要です。Chromium は任意の監査にだけ PATH へ入れてください。Node も CJK フォントも外部サービスも不要で、すべてローカルで動きます。",
       setup: {
         title: "1 · clone してインストール",
         body: "Bun のモノレポで、3つのアプリと共有パッケージがあります。`bun install` が lockfile からすべて解決します。",
@@ -304,15 +274,15 @@ bun run budget  # JS/CSS とフォントの予算`,
         ],
       },
       audits: {
-        title: "5 · 任意の監査",
-        body: "PATH 上の Chromium と、場合によっては開発サーバーが必要です。毎回ではありませんが、新しい部品を閉じる前には実行します。",
+        title: "任意 · 監査",
+        body: "毎回ではありませんが、新しい部品を閉じる前には実行します。一部は開発サーバーが必要です。",
         code: `bun run qa:a11y
 bun run qa:overflow
 bun run qa:perf
 bun run qa:visual`,
       },
       tooling: {
-        title: "6 · レジストリとエージェント文書",
+        title: "ツール · レジストリとエージェント文書",
         body: "`predev` と `prebuild` がレジストリとエージェント層を生成します。以下は手動で再生成し、同期を確認するコマンドです。",
         code: `bun run registry
 bun run ai:docs
@@ -367,19 +337,11 @@ bun run ai:check`,
       title: "Use Koten UI in your project",
       meta: "React 19 · Tailwind 4 · shadcn · no Bun",
       intro:
-        "Koten UI is not an npm package: it is a set of files copied into your project. You do not need to clone this repository or install Bun. The shadcn registry performs the install and respects your components.json aliases.",
+        "Koten UI is not an npm package: it is a set of files copied into your project. You do not need to clone this repository or install Bun. The shadcn registry performs the install and respects your `components.json` aliases.",
       runnerNote:
         "shadcn commands are copied with your runner. The preference is saved in this browser and survives page changes.",
-      requirements: {
-        title: "Before you start",
-        items: [
-          "React 19 and Tailwind CSS 4 in the project.",
-          "A shadcn `components.json`. If it does not exist, run `{init}`.",
-          "`resolveJsonModule` in `tsconfig` for the i18n JSON dictionaries (Vite and Next enable it).",
-          "Node 20 or newer for `npx`; the shadcn CLI uses it.",
-          "Optional: an agent skill so installation and usage follow the system rules (`koten-ui`); add `koten-design-language` when you need pieces the catalog does not ship.",
-        ],
-      },
+      prereqs:
+        "You need React 19 and Tailwind CSS 4 in the project, plus a shadcn `components.json`. If it does not exist, run `{init}`. For `npx`, use Node 20 or newer; i18n uses JSON dictionaries, so `tsconfig` needs `resolveJsonModule` (Vite and Next enable it).",
       theme: {
         title: "1 · Install the theme once",
         body: "`koten-theme` writes tokens, themes and density into the `tailwind.css` file declared in your `components.json`. It does not create a `styles/` folder. If the project already had shadcn tokens, install it first so they are replaced.",
@@ -416,7 +378,7 @@ createRoot(document.getElementById("root")!).render(
         code: `<html lang="en" data-theme="daicho" data-density="compact">`,
       },
       agents: {
-        title: "6 · Let an agent help",
+        title: "Optional · Agent skills",
         body: "The agent documentation is not the human catalog: it is an `llms.txt` index, one Markdown page per piece and three skills. The `koten-ui` skill installs and composes; `koten-design-system` extends the system inside the repository; `koten-design-language` teaches how to author a piece the catalog does not ship, with tokens, frames and contrast, in any project that already uses Koten.",
         code: `npx skills add codehive-colombia/koten --skill koten-ui`,
       },
@@ -426,15 +388,8 @@ createRoot(document.getElementById("root")!).render(
       meta: "Bun 1.4.3 · monorepo · catalog and demos",
       intro:
         "This path is for working inside the repository: the catalog, the primitives, the blocks, the demos, the audits and the registry. Use Bun; do not install or copy pieces by hand.",
-      requirements: {
-        title: "Before you start",
-        items: [
-          "Bun 1.4.3 (workspaces, scripts and tests).",
-          "Git and a modern browser: recent Chrome, Edge, Firefox or Safari.",
-          "Chromium on PATH only for the optional audits (`qa:a11y`, `qa:overflow`, `qa:perf`, `qa:visual`).",
-          "No Node, no CJK font and no external service: everything runs locally.",
-        ],
-      },
+      prereqs:
+        "You need Bun 1.4.3, Git and a modern browser. Chromium on PATH is only for the optional audits. You do not need Node, a CJK font or an external service: everything runs locally.",
       setup: {
         title: "1 · Clone and install",
         body: "The repository is a Bun monorepo with three apps and one shared package. `bun install` resolves everything from the lockfile.",
@@ -469,15 +424,15 @@ bun run budget  # JS/CSS and font budget`,
         ],
       },
       audits: {
-        title: "5 · Optional audits",
-        body: "They require Chromium on PATH and, in some cases, the dev server running. They are not needed for every change, but they are before closing a new piece.",
+        title: "Optional · Audits",
+        body: "They are not needed for every change, but they are before closing a new piece. Some require the dev server running.",
         code: `bun run qa:a11y
 bun run qa:overflow
 bun run qa:perf
 bun run qa:visual`,
       },
       tooling: {
-        title: "6 · Registry and agent documentation",
+        title: "Tooling · Registry and agent documentation",
         body: "`predev` and `prebuild` already generate the registry and the agent layer. These commands regenerate them by hand or check that they are in sync.",
         code: `bun run registry
 bun run ai:docs
@@ -561,14 +516,14 @@ function Inline({ text }: { text: string }) {
   );
 }
 
-function RichList({ items, label }: { items: readonly string[]; label: string }) {
+function RuleList({ items, label }: { items: readonly string[]; label: string }) {
   return (
     <ul
       aria-label={label}
-      className="mt-[var(--koten-gap)] grid gap-[var(--koten-gap)] text-xs text-muted sm:grid-cols-2"
+      className="mt-[var(--koten-gap)] divide-y divide-rule border-y border-rule text-xs text-muted"
     >
       {items.map((item) => (
-        <li key={item} className="border-s-2 border-primary ps-2">
+        <li key={item} className="py-2">
           <Inline text={item} />
         </li>
       ))}
@@ -595,7 +550,7 @@ export function StartPage() {
   const [componentsLabel, blocksLabel, agentsLabel] = t.next.links.split("|");
   const runnerLabel = shellLabels[locale].runner;
   const initCommand = `${packageRunner(packageManager)} shadcn@latest init`;
-  const requirements = t.use.requirements.items.map((item) => item.replace("{init}", initCommand));
+  const usePrereqs = t.use.prereqs.replace("{init}", initCommand);
 
   return (
     <article>
@@ -629,18 +584,20 @@ export function StartPage() {
         </Section>
 
         <Section id="usar" title={t.use.title} jp="利用" meta={t.use.meta}>
-          <Body>{t.use.intro}</Body>
-          <div className="mt-[var(--koten-gap)] flex flex-wrap items-center gap-3 border border-rule bg-surface p-[var(--koten-panel-p)]">
+          <div className="space-y-2">
+            <Body>{t.use.intro}</Body>
+            <Body>{usePrereqs}</Body>
+          </div>
+          <div className="mt-[var(--koten-gap)] flex flex-col gap-2 border-y border-rule py-2 sm:flex-row sm:items-center sm:gap-3">
             <PackageManagerTabs
               value={packageManager}
               label={runnerLabel}
               onChange={setPackageManager}
             />
-            <p className="min-w-0 flex-1 text-2xs leading-relaxed text-muted">{t.use.runnerNote}</p>
+            <p className="min-w-0 text-2xs leading-relaxed text-muted sm:flex-1">
+              {t.use.runnerNote}
+            </p>
           </div>
-
-          <Step>{t.use.requirements.title}</Step>
-          <RichList items={requirements} label={t.use.requirements.title} />
 
           <Step>{t.use.theme.title}</Step>
           <Body>{t.use.theme.body}</Body>
@@ -668,10 +625,10 @@ export function StartPage() {
         </Section>
 
         <Section id="desarrollar" title={t.develop.title} jp="開発" meta={t.develop.meta}>
-          <Body>{t.develop.intro}</Body>
-
-          <Step>{t.develop.requirements.title}</Step>
-          <RichList items={t.develop.requirements.items} label={t.develop.requirements.title} />
+          <div className="space-y-2">
+            <Body>{t.develop.intro}</Body>
+            <Body>{t.develop.prereqs}</Body>
+          </div>
 
           <Step>{t.develop.setup.title}</Step>
           <Body>{t.develop.setup.body}</Body>
@@ -687,7 +644,7 @@ export function StartPage() {
 
           <Step>{t.develop.work.title}</Step>
           <Body>{t.develop.work.body}</Body>
-          <RichList items={t.develop.work.items} label={t.develop.work.title} />
+          <RuleList items={t.develop.work.items} label={t.develop.work.title} />
 
           <Step>{t.develop.audits.title}</Step>
           <Body>{t.develop.audits.body}</Body>
@@ -698,7 +655,7 @@ export function StartPage() {
           <Code>{t.develop.tooling.code}</Code>
 
           <Step>{t.develop.map.title}</Step>
-          <RichList items={t.develop.map.items} label={t.develop.map.title} />
+          <RuleList items={t.develop.map.items} label={t.develop.map.title} />
         </Section>
 
         <Section id="siguientes" title={t.next.title} jp="応用" meta={t.next.meta}>

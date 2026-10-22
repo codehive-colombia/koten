@@ -587,9 +587,9 @@ export function TokensFormatPage() {
 
         <Section id="limites" title={t.limits.title} jp="限界" meta={t.limits.meta}>
           <SubHeading>{t.limits.heading}</SubHeading>
-          <ul className="mt-[var(--koten-gap)] grid gap-[var(--koten-gap)] text-xs text-muted sm:grid-cols-2">
+          <ul className="mt-[var(--koten-gap)] divide-y divide-rule border-y border-rule text-xs text-muted">
             {t.limits.items.map((item) => (
-              <li key={item} className="border-s-2 border-rule-strong ps-2">
+              <li key={item} className="py-2">
                 {item}
               </li>
             ))}
@@ -598,9 +598,9 @@ export function TokensFormatPage() {
 
         <Section id="reglas" title={t.rules.title} jp="規則" meta={t.rules.meta}>
           <SubHeading>{t.rules.heading}</SubHeading>
-          <ul className="mt-[var(--koten-gap)] grid gap-[var(--koten-gap)] text-xs text-muted sm:grid-cols-2">
+          <ul className="mt-[var(--koten-gap)] divide-y divide-rule border-y border-rule text-xs text-muted">
             {t.rules.items.map((rule) => (
-              <li key={rule} className="border-s-2 border-primary ps-2">
+              <li key={rule} className="py-2">
                 {rule}
               </li>
             ))}

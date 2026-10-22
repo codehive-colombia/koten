@@ -21,7 +21,7 @@ const copy = {
       title: "Demostración",
       meta: "La misma pieza en las tres densidades",
       heading: "Tabla y controles",
-      note: "Cada muestra lleva su propio data-density para comparar. El resto del catálogo responde al selector del encabezado.",
+      note: "Cada muestra lleva su propio data-density para comparar. El resto del catálogo responde al panel de configuración.",
     },
   },
   ja: {
@@ -39,7 +39,7 @@ const copy = {
       title: "比較",
       meta: "3つの密度での同じ部品",
       heading: "表とコントロール",
-      note: "各サンプルは比較用に独自の data-density を持つ。カタログの残りはヘッダーのセレクタに従う。",
+      note: "各サンプルは比較用に独自の data-density を持つ。カタログの残りは設定パネルに従う。",
     },
   },
   en: {
@@ -57,7 +57,7 @@ const copy = {
       title: "Demo",
       meta: "The same piece in all three densities",
       heading: "Table and controls",
-      note: "Each sample carries its own data-density for comparison. The rest of the catalog follows the header selector.",
+      note: "Each sample carries its own data-density for comparison. The rest of the catalog follows the settings panel.",
     },
   },
 };

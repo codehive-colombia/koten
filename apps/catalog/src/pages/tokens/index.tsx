@@ -12,7 +12,7 @@ const copy = {
     eyebrow: "Fundamentos · 基礎",
     title: "Fundamentos",
     description:
-      "El contrato visual de Koten UI: color, tipografía, espacio, forma, densidad, temas y formato. Los valores viven en variables CSS y siguen el tema y la densidad del encabezado.",
+      "El contrato visual de Koten UI: color, tipografía, espacio, forma, densidad, temas y formato. Los valores viven en variables CSS y siguen el tema y la densidad elegidos en Configuración.",
     meta: "7 páginas · 4 temas · 3 densidades · ES/JA/EN",
     sections: [
       {
@@ -67,7 +67,7 @@ const copy = {
     ],
     start: {
       title: "Siguiente paso",
-      body: "Cambia tema y densidad en el encabezado y recorre los fundamentos. Después instala una primitiva o un bloque.",
+      body: "Abre Configuración para cambiar tema y densidad y recorre los fundamentos. Después instala una primitiva o un bloque.",
       links: "Empezar|Ver componentes",
     },
   },
@@ -75,7 +75,7 @@ const copy = {
     eyebrow: "基礎 · 概要",
     title: "基礎",
     description:
-      "Koten UIの視覚的契約：色、タイポグラフィ、余白、形、密度、テーマ、書式。値はCSS変数にあり、ヘッダーのテーマと密度に従う。",
+      "Koten UIの視覚的契約：色、タイポグラフィ、余白、形、密度、テーマ、書式。値はCSS変数にあり、設定で選んだテーマと密度に従う。",
     meta: "7ページ · 4テーマ · 3密度 · ES/JA/EN",
     sections: [
       {
@@ -130,7 +130,7 @@ const copy = {
     ],
     start: {
       title: "次のステップ",
-      body: "ヘッダーでテーマと密度を変え、基礎を見て回る。その後、プリミティブかブロックを導入する。",
+      body: "設定でテーマと密度を変え、基礎を見て回る。その後、プリミティブかブロックを導入する。",
       links: "はじめる|部品を見る",
     },
   },
@@ -138,7 +138,7 @@ const copy = {
     eyebrow: "Foundations · 基礎",
     title: "Foundations",
     description:
-      "The visual contract of Koten UI: color, typography, space, shape, density, themes and format. Values live in CSS variables and follow the header theme and density.",
+      "The visual contract of Koten UI: color, typography, space, shape, density, themes and format. Values live in CSS variables and follow the theme and density chosen in Settings.",
     meta: "7 pages · 4 themes · 3 densities · ES/JA/EN",
     sections: [
       {
@@ -193,7 +193,7 @@ const copy = {
     ],
     start: {
       title: "Next step",
-      body: "Change theme and density in the header and walk the foundations. Then install a primitive or a block.",
+      body: "Open Settings to change theme and density, then walk the foundations. Then install a primitive or a block.",
       links: "Getting started|Browse components",
     },
   },

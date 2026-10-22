@@ -43,6 +43,9 @@
 - [D-051 · Diseñador de temas con parámetros curados, contraste AA y export superpuesto](#d-051)
 - [D-052 · README en inglés como entrada y versión en español opcional](#d-052)
 - [D-053 · Licencia MIT y cierre de Q-005](#d-053)
+- [D-054 · Configuración del catálogo en un panel flotante](#d-054)
+- [D-055 · Empezar: requisitos en prosa y solo pasos necesarios numerados](#d-055)
+- [D-056 · Quitar la sección de límites del diseñador de temas](#d-056)
 
 ---
 
@@ -852,3 +855,52 @@
 - **Consecuencias:** Cualquiera puede usar Koten en proyectos gratuitos o de pago, modificarlo, sublicenciarlo y venderlo, siempre que conserve el aviso de copyright y permiso en copias o porciones sustanciales. MIT no exige declarar cambios, no concede patentes y no impide que un derivado se ofrezca como producto; la atribución es la mínima del aviso. `Q-005` deja de estar abierta y `F0-001` queda con la licencia definida.
 - **Alternativas:** Apache-2.0 (atribución y aviso de cambios más fuertes, con concesión de patentes, pero más fricción para un kit copiable); MPL-2.0 (obliga a publicar las modificaciones de los archivos de Koten); GPL/AGPL (copyleft incompatible con la promesa de uso libre en productos propietarios); una licencia custom o `Commons Clause` (deja de ser open source y complica la compatibilidad); dejar `Q-005` abierta (bloquea la distribución clara del repositorio y del registry).
 - **Evidencia:** `LICENSE`; `package.json`, `apps/*/package.json`, `packages/ui/package.json`; `README.md` y `README.es.md`; `ROADMAP.md` (`Q-005` cerrada); `docs/PROGRESS.md` (sesión 044).
+
+---
+
+<a id="d-054"></a>
+## D-054 · Configuración del catálogo en un panel flotante
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-015`)
+- **Contexto:** El header del catálogo mostraba tres grupos de toggles inline —tema, densidad e idioma— y una línea de resumen. Con cuatro temas y tres valores por grupo todavía cabía, pero cualquier tema, idioma de ejemplo o densidad nueva empujaba el header, partía la fila en mobile y competía con el logo y la navegación. La configuración es una tarea secundaria y no necesita ocupar espacio permanente.
+- **Decisión:**
+  - **Un solo disparador:** el header muestra un botón **Configuración** con icono de sliders. En desktop conserva la etiqueta; en mobile queda solo el icono con `aria-label`. El botón abre un **Popover** anclado y portaleado, con título, descripción, cierre propio y una nota de que el estado vive en la URL.
+  - **Tres grupos en el panel:** tema, densidad e idioma se presentan como rejillas de opciones apiladas (`layout="stacked"`), con leyenda visible, `aria-pressed` y columnas 2/3/3. Los temas usan dos columnas; densidad e idioma, tres. Las opciones se generan desde `themes`, `densities` y el conjunto de locales, así que agregar valores no cambia la estructura.
+  - **Reutilización:** se usa el `Popover` y el `Button` del sistema; `ToggleGroup` gana `layout` y `columns` para el modo apilado. No se crea una primitiva nueva ni se duplican estilos.
+  - **Crecimiento:** el popup tiene ancho máximo `22rem`, se limita al viewport, desplaza su contenido y mantiene la cabecera sticky. La selección no cierra el panel, para poder cambiar tema, densidad e idioma en una sola visita.
+  - **Persistencia:** no cambia. Tema, densidad e idioma siguen en `?theme=`, `?density=` y `?lang=`; el resumen del subheader y el `lang` del documento se mantienen.
+  - **Mobile:** el menú plegable de navegación sigue debajo del header; el panel flota sobre el contenido y se cierra con Escape, con el botón de cierre o al hacer clic fuera.
+- **Consecuencias:** El header queda con una sola acción de configuración y el panel puede crecer verticalmente sin romper la fila. La configuración deja de ser visible de un vistazo: hay que abrir el panel, pero el resumen del subheader conserva tema y densidad actuales. Más opciones implican scroll dentro del panel, no más ruido en el header. No cambia la API de los componentes ni la URL.
+- **Alternativas:** Mantener los toggles inline (el problema original); usar selects (ocultan las opciones y agregan clics); un drawer lateral (demasiado peso para tres grupos); una página de ajustes (saca al lector del contexto); un popover propio (duplica el primitivo y sus reglas de foco).
+- **Evidencia:** `apps/catalog/src/components/settings-panel.tsx` + `settings-panel.test.tsx`; `apps/catalog/src/components/view-toggles.tsx`; `apps/catalog/src/components/catalog-layout.tsx`; `apps/catalog/src/data/catalog.ts`; `apps/catalog/src/pages/i18n.test.tsx`; `docs/DESIGN-SYSTEM.md` §12; `docs/REQUIREMENTS.md`.
+
+---
+
+<a id="d-055"></a>
+## D-055 · Empezar: requisitos en prosa y solo pasos necesarios numerados
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-016`; precisa `D-046` y `D-050`)
+- **Contexto:** La página **Empezar** abría cada camino con una sección **Antes de empezar** que mezclaba cosas distintas: requisitos reales (React 19, Tailwind 4), una instrucción de arranque (`components.json` y `shadcn init`), una condición técnica del i18n (`resolveJsonModule`), el runtime de `npx` y una recomendación opcional de skills. Esa lista en dos columnas parecía una tarjeta, interrumpía el flujo antes del primer paso y ponía el detalle de `components.json` fuera del orden en que se necesita. En desarrollo pasaba lo mismo con Bun, Git, el navegador y Chromium.
+- **Decisión:**
+  - **Sin sección de requisitos.** Se elimina **Antes de empezar** en los dos caminos. Los requisitos se explican en la introducción, en el orden en que el lector los encuentra: qué es Koten, qué necesita el proyecto, cómo se crea el `components.json` si falta y qué condiciones tiene el runner o el i18n.
+  - **Solo pasos numerados.** En el camino de uso se numeran los cinco pasos necesarios: tema, componente, provider, uso y tema/densidad/idioma. En desarrollo se numeran clonar/instalar, ejecutar, verificar y trabajar en el sistema. Las skills de agente, las auditorías y el registry quedan como secciones **Opcional** o **Herramientas**, sin número, para que no parezcan parte del recorrido obligatorio.
+  - **Listas, no tarjetas.** Las referencias de **Trabaja en el sistema** y el **Mapa del repositorio** pasan de una rejilla de dos columnas con barra lateral a una lista de una columna con reglas. El selector `npx` / `bunx` deja de ser un panel con borde y fondo y se convierte en una fila entre reglas.
+  - **El flujo manda.** El detalle puntual que no cambia una decisión del lector se queda en la prosa; solo se enumera lo que hay que hacer en secuencia. La sección **Elige tu camino** se mantiene como dos filas de lista, no como tarjetas.
+- **Consecuencias:** La página se lee de arriba abajo sin una parada artificial: qué es, qué necesito, cómo lo instalo y qué es opcional. El `components.json` y el `shadcn init` aparecen donde se usan, no en una tarjeta lateral. La página sigue siendo larga por los bloques de código, pero la jerarquía ahora distingue recorrido obligatorio de material de referencia. No cambia la API ni los comandos.
+- **Alternativas:** Mantener **Antes de empezar** y convertirla en una lista de una columna (sigue interrumpiendo el flujo); mover los requisitos a un `details` plegable (los esconde antes de que el lector sepa que los necesita); crear una página aparte de requisitos (agrega un salto innecesario); dejar las tarjetas y solo cambiar el copy (el problema es la estructura, no el texto); numerar también las auditorías y las skills (las presenta como obligatorias).
+- **Evidencia:** `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `docs/DESIGN-SYSTEM.md` §12; `docs/REQUIREMENTS.md` (`R-025`); revisión visual de la página en ES a 1440 y 390 px.
+
+---
+
+<a id="d-056"></a>
+## D-056 · Quitar la sección de límites del diseñador de temas
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-017`)
+- **Contexto:** La página `/theme` cerraba con una sección **Lo que no se toca** que enumeraba siete límites del diseñador: pigmentos, fuentes, piso tipográfico, radios, sombras, estados y espaciado. La información ya estaba repartida en la descripción (“no hay selector de color libre”), en el cuerpo de exportación (“componentes, tipografía, espaciado, sombras y movimiento siguen viniendo de Koten”) y en las comprobaciones AA. Al final de la página, después de exportar, la lista repetía restricciones y alargaba una tarea que ya estaba terminada.
+- **Decisión:** Se elimina la sección **Lo que no se toca** y su copy `locked` en ES/JA/EN. Los guardrails siguen vigentes y se comunican en la introducción, en el texto de exportación y en la validación de contraste; no cambia ningún parámetro, cálculo ni comportamiento del diseñador.
+- **Consecuencias:** La página termina en la exportación, sin una segunda lista de restricciones. El lector sigue sabiendo que no hay color libre y que tipografía, espaciado, sombras y movimiento no se editan, pero esa información aparece donde decide, no después. La documentación de `D-051` conserva la especificación completa.
+- **Alternativas:** Mantener la sección (repite lo ya dicho); moverla a un `details` (sigue siendo una lista de restricciones al final); integrarla en el cuerpo de exportación (alarga el bloque que el usuario necesita copiar); dejar solo el título (no aporta); eliminar también la explicación de los guardrails en la introducción y la exportación (el usuario perdería el contexto de por qué solo hay cinco parámetros).
+- **Evidencia:** `apps/catalog/src/pages/theme.tsx`; `apps/catalog/src/pages/theme.test.tsx`; `docs/PROGRESS.md` (sesión 047).
