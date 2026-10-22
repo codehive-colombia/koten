@@ -46,6 +46,7 @@ const copy = {
         items: [
           "React 19 y Tailwind CSS 4 en el proyecto.",
           "Un `components.json` de shadcn. Si no existe, ejecuta `{init}`.",
+          "`resolveJsonModule` en el `tsconfig` para los diccionarios JSON del i18n (Vite y Next lo traen).",
           "Node 20 o superior para `npx`; el CLI de shadcn lo usa.",
           "Opcional: una skill de agente para que la instalación y el uso sigan las reglas del sistema (`koten-ui`); `koten-design-language` si vas a crear piezas que el catálogo no trae.",
         ],
@@ -56,14 +57,14 @@ const copy = {
       },
       component: {
         title: "2 · Instala el componente que necesitas",
-        body: "Cada página de componente muestra su comando. El item trae el archivo y el núcleo `lib/koten`; el CLI reescribe los imports a los aliases de tu proyecto. Instala solo lo que vas a usar.",
+        body: "Cada página de componente muestra su comando. El item trae el archivo y, como dependencia, `lib/koten` y `lib/koten/i18n`; el CLI reescribe los imports a los aliases de tu proyecto. Instala solo lo que vas a usar.",
       },
       blockComment: "también puedes instalar un bloque completo",
       provider: {
         title: "3 · Conecta el provider",
-        body: "Envuelve la app una vez. Importa el CSS de Tailwind que ya usa tu proyecto; el tema se escribe ahí, no en un archivo aparte. Los ejemplos usan el alias `@/`; si tu `components.json` usa `~/` u otro prefijo, el CLI lo reescribe.",
+        body: "Envuelve la app una vez. Importa el CSS de Tailwind que ya usa tu proyecto; el tema se escribe ahí, no en un archivo aparte. `locale` acepta cualquier BCP 47; los diccionarios ES/JA/EN son opcionales. Los ejemplos usan el alias `@/`; si tu `components.json` usa `~/` u otro prefijo, el CLI lo reescribe.",
         code: `import "./app.css"; // el CSS de Tailwind de tu components.json
-import { KotenProvider } from "@/lib/koten/provider";
+import { KotenProvider } from "@/lib/koten/i18n/provider";
 
 createRoot(document.getElementById("root")!).render(
   <KotenProvider locale="es">
@@ -82,7 +83,7 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · Tema, densidad e idioma",
-        body: "No edites los componentes para cambiar el tono. El tema y la densidad viven en el elemento raíz; el idioma va en el provider. Chirashi es comercio, Daichō es backoffice, Kanso es lectura y Sumi es el modo oscuro.",
+        body: "No edites los componentes para cambiar el tono. El tema y la densidad viven en el elemento raíz; el idioma va en el provider y acepta cualquier BCP 47 (ES/JA/EN son los diccionarios incluidos, no un requisito). Chirashi es comercio, Daichō es backoffice, Kanso es lectura y Sumi es el modo oscuro.",
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
@@ -209,6 +210,7 @@ bun run ai:check`,
         items: [
           "プロジェクトに React 19 と Tailwind CSS 4 がある。",
           "shadcn の `components.json` がある。なければ `{init}` を実行。",
+          "i18nのJSON辞書には tsconfig の resolveJsonModule が必要（ViteとNextは既定で有効）。",
           "`npx` 用に Node 20 以上（shadcn CLI が使います）。",
           "任意：エージェント用の skill `koten-ui` を入れると、導入と利用が規約に沿います。カタログにない部品を作るなら `koten-design-language` も入れてください。",
         ],
@@ -219,14 +221,14 @@ bun run ai:check`,
       },
       component: {
         title: "2 · 必要なコンポーネントを導入する",
-        body: "各コンポーネントのページにコマンドがあります。項目にはファイルとコアの `lib/koten` が含まれ、CLI がインポートをプロジェクトのエイリアスに書き換えます。使うものだけ導入してください。",
+        body: "各コンポーネントのページにコマンドがあります。項目にはファイルと、依存として `lib/koten` と `lib/koten/i18n` が含まれ、CLI がインポートをプロジェクトのエイリアスに書き換えます。使うものだけ導入してください。",
       },
       blockComment: "ブロックをまとめて導入することもできます",
       provider: {
         title: "3 · provider を接続する",
-        body: "アプリを一度だけ包みます。テーマは既存の Tailwind CSS に書き込まれるので、その CSS を読み込みます。例は `@/` エイリアスです。`components.json` が `~/` などなら CLI が書き換えます。",
+        body: "アプリを一度だけ包みます。テーマは既存の Tailwind CSS に書き込まれるので、その CSS を読み込みます。`locale` は任意の BCP 47 を受け付け、ES/JA/EN の辞書は任意です。例は `@/` エイリアスです。`components.json` が `~/` などなら CLI が書き換えます。",
         code: `import "./app.css"; // components.json の Tailwind CSS
-import { KotenProvider } from "@/lib/koten/provider";
+import { KotenProvider } from "@/lib/koten/i18n/provider";
 
 createRoot(document.getElementById("root")!).render(
   <KotenProvider locale="ja">
@@ -245,7 +247,7 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · テーマ・密度・言語",
-        body: "色を変えるためにコンポーネントを編集しないでください。テーマと密度はルート要素、言語は provider に置きます。Chirashi は商業、Daichō はバックオフィス、Kanso は読書、Sumi はダークです。",
+        body: "色を変えるためにコンポーネントを編集しないでください。テーマと密度はルート要素、言語は provider に置き、任意の BCP 47 を受け付けます（ES/JA/EN は同梱辞書であり必須ではありません）。Chirashi は商業、Daichō はバックオフィス、Kanso は読書、Sumi はダークです。",
         code: `<html lang="ja" data-theme="daicho" data-density="compact">`,
       },
       agents: {
@@ -373,6 +375,7 @@ bun run ai:check`,
         items: [
           "React 19 and Tailwind CSS 4 in the project.",
           "A shadcn `components.json`. If it does not exist, run `{init}`.",
+          "`resolveJsonModule` in `tsconfig` for the i18n JSON dictionaries (Vite and Next enable it).",
           "Node 20 or newer for `npx`; the shadcn CLI uses it.",
           "Optional: an agent skill so installation and usage follow the system rules (`koten-ui`); add `koten-design-language` when you need pieces the catalog does not ship.",
         ],
@@ -383,14 +386,14 @@ bun run ai:check`,
       },
       component: {
         title: "2 · Install the component you need",
-        body: "Every component page shows its command. The item brings the file and the `lib/koten` core; the CLI rewrites imports to your project aliases. Install only what you will use.",
+        body: "Every component page shows its command. The item brings the file and, as dependencies, `lib/koten` and `lib/koten/i18n`; the CLI rewrites imports to your project aliases. Install only what you will use.",
       },
       blockComment: "you can also install a whole block",
       provider: {
         title: "3 · Wire the provider",
-        body: "Wrap the app once. Import the Tailwind CSS your project already uses; the theme is written there, not in a separate file. The examples use the `@/` alias; if your `components.json` uses `~/` or another prefix, the CLI rewrites it.",
+        body: "Wrap the app once. Import the Tailwind CSS your project already uses; the theme is written there, not in a separate file. `locale` accepts any BCP 47; the ES/JA/EN dictionaries are optional. The examples use the `@/` alias; if your `components.json` uses `~/` or another prefix, the CLI rewrites it.",
         code: `import "./app.css"; // the Tailwind CSS from components.json
-import { KotenProvider } from "@/lib/koten/provider";
+import { KotenProvider } from "@/lib/koten/i18n/provider";
 
 createRoot(document.getElementById("root")!).render(
   <KotenProvider locale="en">
@@ -409,7 +412,7 @@ createRoot(document.getElementById("root")!).render(
       },
       appearance: {
         title: "5 · Theme, density and language",
-        body: "Do not edit components to change the tone. Theme and density live on the root element; language goes in the provider. Chirashi is commerce, Daichō is back office, Kanso is reading and Sumi is dark mode.",
+        body: "Do not edit components to change the tone. Theme and density live on the root element; language goes in the provider and accepts any BCP 47 (ES/JA/EN are the included dictionaries, not a requirement). Chirashi is commerce, Daichō is back office, Kanso is reading and Sumi is dark mode.",
         code: `<html lang="en" data-theme="daicho" data-density="compact">`,
       },
       agents: {

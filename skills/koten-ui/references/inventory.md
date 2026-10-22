@@ -2,7 +2,7 @@
 
 Generated from `apps/catalog/src/data/docs` by `bun run ai:docs`. Do not edit by hand.
 
-Use the registry item with `npx shadcn@latest add https://koten.codehive.com.co/r/<item>.json`. Install `koten-theme` first when the project has no Koten tokens.
+Use the registry item with `npx shadcn@latest add https://koten.codehive.com.co/r/<item>.json`. Install `koten-theme` first when the project has no Koten tokens. Components depend on `koten-i18n`; add `koten-i18n-es` or `koten-i18n-ja` only for those dictionaries.
 
 ## Components (46)
 

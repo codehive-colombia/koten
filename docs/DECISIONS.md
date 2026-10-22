@@ -38,6 +38,7 @@
 - [D-046 · Empezar se separa en usar y desarrollar el sistema](#d-046)
 - [D-047 · Runner de shadcn configurable: npx o bunx](#d-047)
 - [D-048 · Tercera skill: lenguaje de diseño para crear piezas nuevas](#d-048)
+- [D-049 · i18n del consumidor: diccionarios JSON por idioma y locale BCP 47](#d-049)
 
 ---
 
@@ -756,3 +757,22 @@
   - El catálogo mantiene **tres niveles** de acceso (lectura, consumo, extensión); el nivel de extensión ahora presenta las dos skills, `koten-design-system` y `koten-design-language`. Se actualizan `/ai`, `/start`, `llms.txt`, el README, `skills/README.md` y `DESIGN-SYSTEM.md` §14.
 - **Consecuencias:** Un agente elige la skill por contexto: instalar piezas, cambiarlas en el sistema o crear una pieza nueva. La skill nueva no depende de rutas del monorepo, así que viaja con el consumidor. La gramática se explica dos veces desde ángulos distintos (sistema vs. autoría), con riesgo de divergencia contenido por la validación de tokens y por la regla de que los tokens son la fuente de verdad. La descripción de `koten-design-language` debe seguir siendo explícita sobre lo que **no** hace para no activarse en tareas de repositorio.
 - **Alternativas:** Fusionarla con `koten-design-system` (la descripción se vuelve ambigua, la mitad del contenido son rutas y trámites del monorepo que el consumidor no tiene); publicarla en un repositorio aparte (deja de viajar con el registry y con `npx skills add`); confiar solo en `llms.txt` y los Markdown generados (describen piezas existentes, no el juicio para crear una nueva); generar `tokens.md` desde el CSS (perdería el significado de cada rol, el contraste y las reglas de composición, que son la parte que el agente necesita).
+
+---
+
+<a id="d-049"></a>
+## D-049 · i18n del consumidor: diccionarios JSON por idioma y locale BCP 47
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-011`; precisa `D-020`, `D-025` y `D-044`; cierra parte de `R-004`)
+- **Contexto:** `KotenLocale` era `"es" | "ja" | "en"` y el provider resolvía labels solo para esos tres. Un proyecto con `fr-FR` no podía usar el provider sin castear, y el registry incrustaba `labels.ts`, `provider.tsx`, `format.ts` e `intl.ts` en cada componente: no había un único punto de edición y cada instalación podía pisar traducciones. La documentación contaba que había ES/JA/EN, pero no de quién era cada capa ni cómo se agregaba un idioma, así que parecía que los tres eran obligatorios.
+- **Decisión:**
+  - **Tres capas:** labels internos del kit (21 strings), copy de la app (nunca en Koten) y formato (`Intl` vía `useKotenFormatters`). Koten no impone un runtime de contenido; i18next, FormatJS o Lingui se componen.
+  - **Locale:** el provider acepta cualquier BCP 47 (`KotenLocaleCode = KotenLocale | (string & {})`); `KotenLocale` sigue siendo el conjunto de diccionarios instalados, así que los diccionarios de las apps conservan exhaustividad. `useKoten()` tipa el locale con los diccionarios instalados; para leer otro se usa `useKoten<string>()` o la unión de la app.
+  - **Diccionarios JSON:** `packages/ui/src/i18n/messages/{es,ja,en}.json`; `dictionaries.ts` los registra con `satisfies Record<string, KotenLabels>`. El inglés es la base y el fallback; `fallbackLocale = "en"`.
+  - **Registry:** `koten-i18n` instala el runtime (`provider.tsx`, `labels.ts`, `format.ts`, `intl.ts`), un `dictionaries.ts` que solo importa inglés y `messages/en.json` en `lib/koten/i18n/`. Cada idioma adicional es un item `registry:file` independiente (`koten-i18n-es`, `koten-i18n-ja`, `koten-i18n-en`) que instala solo su JSON; el consumidor lo registra en `dictionaries.ts`. Los componentes dependen de `koten-i18n` y ya no incrustan la copia.
+  - **Fallback:** diccionario del locale, o inglés si no existe; luego `labels` del provider (completo o parcial).
+  - **Documentación:** `/tokens/format` explica las capas, la instalación por packs, un locale `fr-FR` en vivo, los límites y el fallback; `DESIGN-SYSTEM.md` §7, `RECIPES.md` §6, las skills y `llms.txt` siguen el mismo modelo.
+  - **ES/JA/EN** siguen siendo los idiomas del catálogo y de los demos (`D-025`), y los diccionarios que Koten incluye; no son un requisito para el consumidor.
+- **Consecuencias:** Un consumidor instala `koten-i18n` como dependencia y elige qué packs agregar; el inglés funciona sin configuración. `KotenProvider` sin `locale` ahora usa inglés (antes español), y los componentes fuera de un provider también. Cambia la ruta instalada de `lib/koten/{labels,provider,format,intl}` a `lib/koten/i18n/`; es una ruptura de import para instalaciones previas, aceptable antes de la v1. El JSON agrega ~1 KB por idioma y no requiere runtime, pero el `tsconfig` del consumidor necesita `resolveJsonModule` (Vite y Next lo traen). `labels.ts`, `provider.tsx` y el registry tienen tests de locale desconocido, merge parcial, fallback y packs.
+- **Alternativas:** Mantener `KotenLocale` cerrado y exigir `labels` completos (no resuelve la ergonomía ni el tipado); `KotenLocale = string` puro (obliga a reescribir ~30 archivos de demos y pierde exhaustividad); un runtime propio con interpolación y plurales (peso y alcance fuera del kit); un solo `dictionaries.ts` con los tres idiomas (hace obligatorio lo que se quiere opcional); cargar JSON por fetch (parpadeo, asincronía y sin tipos).

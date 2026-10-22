@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-22**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-010`** · skill `koten-design-language`
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx) y **`M-010`** (skill de lenguaje de diseño)
+> Última tarea completada: **`M-011`** · i18n personalizable
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño) y **`M-011`** (i18n personalizable)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -300,6 +300,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-008` | Empezar separado por audiencia: usar el sistema vs desarrollar el sistema (`R-025`). | `done` | `/start` abre con dos caminos y tarjetas; el camino de uso instala `koten-theme` y componentes por registry, sin Bun ni clonar; el de desarrollo clona el monorepo, ejecuta las tres apps, verifica y audita; se elimina el flujo obsoleto de copiar `packages/ui`; README replica la separación; tests y a11y verdes. | `apps/catalog/src/pages/start.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `apps/catalog/src/pages/a11y.test.tsx`; `README.md`; `docs/DESIGN-SYSTEM.md` §12; `docs/REQUIREMENTS.md` (`R-025`); `D-046`. |
 | `M-009` | Selector `npx` / `bunx` persistente para los comandos de shadcn (`R-026`). | `done` | Empezar, portada e instalación de cada componente/bloque muestran tabs npx/bunx; la elección se guarda en `localStorage` y se comparte entre páginas; `registryCommand` y el `shadcn init` de Empezar respetan el runner; la documentación generada incluye ambos comandos. | `apps/catalog/src/lib/package-manager.ts`; `apps/catalog/src/lib/site.ts`; `apps/catalog/src/components/view-toggles.tsx`; `apps/catalog/src/components/doc-page.tsx`; `apps/catalog/src/pages/{start,overview}.tsx`; `apps/catalog/src/data/catalog.ts`; `scripts/build-ai-docs.ts`; tests de `site` y páginas; `D-047`. |
 | `M-010` | Tercera skill `koten-design-language`: autoría portátil bajo la gramática de Koten (`R-027`). | `done` | Skill instalable por sí sola en cualquier proyecto con Koten; explica la esencia, los roles semánticos, marcos de 1 px, radios de 2–3 px, sombras solo en overlays, contraste 4.5:1/3:1, tipografía, densidad y temas; incluye contrato previo, plantilla, matriz de estados, ejemplo completo, tests y verificación; `/ai` conserva tres niveles y presenta las dos skills de extensión; `ai:check` rechaza tokens `--koten-*` inventados; README, skills/README, DESIGN-SYSTEM, REQUIREMENTS y DECISIONS actualizados. | `skills/koten-design-language/{SKILL.md,references/{tokens,authoring,verification}.md}`; `scripts/build-ai-docs.ts` + `build-ai-docs.test.ts`; `llms.txt`; `apps/catalog/src/pages/{ai,start}.tsx` + `pages.test.tsx`; `skills/README.md`; `README.md`; `docs/DESIGN-SYSTEM.md` §14; `docs/REQUIREMENTS.md` (`R-027`); `D-048`; `R-027`. |
+| `M-011` | i18n personalizable: locale BCP 47, diccionarios JSON por idioma y un único punto de edición (`R-028`). | `done` | El provider acepta cualquier BCP 47; `koten-i18n` instala el runtime y el inglés base en `lib/koten/i18n`; `koten-i18n-es` y `koten-i18n-ja` instalan solo su JSON; `dictionaries.ts` registra los packs; un locale sin diccionario cae al inglés o a `labels`; `/tokens/format`, Empezar, DESIGN-SYSTEM, RECIPES y skills explican las tres capas; `bun run check` verde. | `packages/ui/src/i18n/**`; `scripts/build-registry.ts` + test; `apps/catalog/src/pages/tokens/format.tsx`; `apps/catalog/src/pages/start.tsx`; `docs/{DESIGN-SYSTEM,RECIPES,REQUIREMENTS}.md`; `skills/koten-ui/**`; `D-049`. |
 
 ---
 
@@ -420,6 +421,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-025` | Empezar separado en usar el sistema y desarrollar el sistema, con requisitos y comandos propios. | `M-008`, `D-046` | `done` |
 | `R-026` | Selector npx/bunx persistente para los comandos de shadcn. | `M-009`, `D-047` | `done` |
 | `R-027` | Skill portátil para crear piezas que el catálogo no trae, con la gramática, tokens, forma y contraste de Koten. | `M-010`, `D-048` | `done` |
+| `R-028` | i18n personalizable: cualquier BCP 47, diccionarios JSON por idioma y un único punto de edición. | `M-011`, `D-049` | `done` |
 
 ---
 
@@ -522,3 +524,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-21 | Mejora puntual `M-008`: **Empezar** se separa en dos caminos, usar Koten UI (registry, `KotenProvider`, sin Bun ni clonar) y desarrollar Koten UI (monorepo, `bun run dev`, `check`, auditorías); se elimina el flujo obsoleto de copiar `packages/ui`; README replica la separación. `D-046`, `R-025`. | Sesión 037 |
 | 2026-10-21 | Mejora puntual `M-009`: selector **npx / bunx** en Empezar, portada e instalación de cada componente/bloque, persistido en `localStorage` y compartido entre páginas; `registryCommand` respeta el runner y la documentación generada incluye ambos comandos. `D-047`, `R-026`. | Sesión 038 |
 | 2026-10-22 | Mejora puntual `M-010`: tercera skill `koten-design-language`, portátil y enfocada en crear una pieza que el catálogo no trae con la esencia de Koten (roles semánticos, marcos de 1 px, radios de 2–3 px, sombras solo en overlays, contraste AA, tipografía y densidad); `/ai` conserva tres niveles y presenta las dos skills de extensión; `ai:check` valida que cada `--koten-*` citado exista en el tema. `D-048`, `R-027`. | Sesión 039 |
+| 2026-10-22 | Mejora puntual `M-011`: i18n personalizable con cualquier BCP 47, runtime e inglés base en `koten-i18n`, packs JSON por idioma (`koten-i18n-es`, `koten-i18n-ja`), registro en `dictionaries.ts` y documentación de las tres capas en `/tokens/format`, Empezar, RECIPES y skills. `D-049`, `R-028`. | Sesión 040 |

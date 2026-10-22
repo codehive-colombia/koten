@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-010` · skill `koten-design-language` |
+| Última tarea completada | `M-011` · i18n personalizable |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,31 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 040 — i18n personalizable (`M-011`)
+
+- **Objetivo:** que el i18n no dependa de los tres idiomas de la documentación: cualquier BCP 47, diccionarios editables por idioma y un único punto de edición instalado por el registry.
+- **Hecho:**
+  - **Tres capas explícitas**: labels internos del kit (21 strings), copy de la app (fuera del kit) y formato `Intl` (`useKotenFormatters`). El provider ya no es el dueño del contenido.
+  - **API**: `KotenLocaleCode = KotenLocale | (string & {})` en `locale`; `KotenLocale` sigue siendo el conjunto de diccionarios instalados, así que las apps conservan exhaustividad. `useKoten()` acepta un genérico (`useKoten<string>()`, `useKoten<"fr-FR">()`) para leer un locale sin diccionario. `labels` acepta un diccionario completo o un override parcial; la base es el diccionario del locale o el inglés, y los overrides se aplican al final. Sin `locale`, el provider usa inglés.
+  - **Diccionarios JSON**: `packages/ui/src/i18n/messages/{es,ja,en}.json`, registrados en `dictionaries.ts` con `satisfies Record<string, KotenLabels>`; `format.ts` e `intl.ts` se movieron a `packages/ui/src/i18n/`.
+  - **Registry**: nuevo item `koten-i18n` (`registry:lib`) que instala el runtime y el inglés base en `lib/koten/i18n`; `koten-i18n-es`, `koten-i18n-ja` y `koten-i18n-en` son items `registry:file` con un solo JSON. Los componentes dependen de `koten-i18n` y dejaron de incrustar `labels`/`provider`/`format`/`intl`; 69 items generados.
+  - **Catálogo**: `/tokens/format` pasa a explicar las tres capas, la instalación por packs, el registro en `dictionaries.ts`, un locale `fr-FR` en vivo con `KotenProvider` anidado y los límites; Empezar y los textos de Fundamentos se alinean.
+  - **Agentes**: `llms.txt`, el inventario y las skills `koten-ui` usan la nueva ruta `@/lib/koten/i18n/provider` y explican que ES/JA/EN son opcionales.
+  - **Docs**: `DESIGN-SYSTEM.md` §7, `RECIPES.md` §6, `REQUIREMENTS.md` (`R-028`), `DECISIONS.md` (`D-049`), `ROADMAP.md` (`M-011`), README y AGENTS.
+- **Tareas tocadas:** `M-011` → `done`; `R-028` → `done`.
+- **Decisiones:** `D-049`.
+- **Evidencia:**
+  - `packages/ui/src/i18n/{labels,provider,dictionaries,format,intl}.ts(x)` + `messages/{es,ja,en}.json`; tests de locale desconocido, merge parcial, fallback y formatters (`labels.test.ts`, `provider.test.tsx`, `format.test.ts`).
+  - `scripts/build-registry.ts` + `build-registry.test.ts`: 69 items, `koten-i18n` con `dictionaries.ts` solo inglés y `messages/en.json`, packs `koten-i18n-{en,es,ja}` con `registry:file`, componentes dependientes de tema e i18n.
+  - `apps/catalog/src/pages/tokens/format.tsx`; `apps/catalog/src/pages/start.tsx`; `pages/tokens/index.tsx`; `pages/a11y.test.tsx` incluye la página de formato; `bun run check` verde (**35 archivos / 234 tests**, Biome, TypeScript, i18n 151 archivos y `ai:check`).
+  - `bun run build` OK; `bun run budget` → catálogo **263,6/444,9 KB**, storefront 122,3 KB, ERP 199,4 KB; `bun run registry` → **69 items** en `apps/catalog/public/r`.
+  - **Instalación real** con `shadcn@4.22.1` en un proyecto temporal con aliases `~/`: `koten-i18n` creó los 6 archivos en `lib/koten/i18n` y reescribió `@/` → `~/`; `koten-i18n-es` instaló el core + `messages/es.json` y mostró el snippet de registro; `button` instaló tema + i18n + `cn` y reescribió imports. El proyecto de prueba no tenía Tailwind configurado, así que la actualización de `app.css` del tema falló con `proxyOf`; el i18n no depende de ese paso.
+- **Sin validar:** `qa:a11y`/`qa:overflow` de navegador no se repitieron, aunque axe cubre la página de formato en tests.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
 
 ---
 

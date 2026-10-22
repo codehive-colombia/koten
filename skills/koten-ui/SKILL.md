@@ -34,9 +34,9 @@ Do **not** use it to invent a new Koten primitive or to redesign the token syste
    npx shadcn@latest add https://koten.codehive.com.co/r/button.json
    ```
    Targets use the project aliases (`@/components/ui`, `@/components/patterns`, `@/lib/koten`).
-5. **Wire the provider** once at the app root. The examples use the canonical `@/` alias; your `components.json` may use `~/` or another prefix:
+5. **Wire the provider** once at the app root. Components depend on `koten-i18n`, which installs `lib/koten/i18n` with an English base. `locale` accepts any BCP 47 tag; install `koten-i18n-es` or `koten-i18n-ja` only if you want those dictionaries, then register them in `lib/koten/i18n/dictionaries.ts`. The examples use the canonical `@/` alias; your `components.json` may use `~/` or another prefix:
    ```tsx
-   import { KotenProvider } from "@/lib/koten/provider";
+   import { KotenProvider } from "@/lib/koten/i18n/provider";
 
    <KotenProvider locale="es">{children}</KotenProvider>;
    ```
@@ -52,6 +52,7 @@ Do **not** use it to invent a new Koten primitive or to redesign the token syste
 - The 12 px floor is real. Do not add `text-[10px]` or smaller.
 - Focus must stay visible. Do not add `outline: none` without a replacement.
 - No strings inside `packages/ui` components. Labels come from props or from `KotenProvider`.
+- `locale` is any BCP 47 tag; ES/JA/EN are the catalog languages and optional dictionaries, not a requirement. A locale without a dictionary falls back to English or to the `labels` you pass.
 - Dates, currency and numbers use the provider formatters (`Intl`), never concatenation or `toFixed`.
 - Logical properties only: `text-start`, `ps-*`, `pe-*`, `border-s-*`, `start-*`/`end-*`.
 - Real text, never text inside images. No full CJK font downloads.

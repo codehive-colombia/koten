@@ -5,7 +5,7 @@ Recipes for wiring the system into a real screen. The catalog has the same examp
 ## App root
 
 ```tsx
-import { KotenProvider } from "@/lib/koten/provider";
+import { KotenProvider } from "@/lib/koten/i18n/provider";
 import "./app.css";
 
 createRoot(root).render(
@@ -23,6 +23,29 @@ useEffect(() => {
   document.documentElement.dataset.density = density; // compact | default | comfortable
 }, [theme, density]);
 ```
+
+### Locale and labels
+
+`locale` is any BCP 47 tag (`es`, `ja-JP`, `fr-FR`). The `koten-i18n` dependency installs an English base in `lib/koten/i18n/messages/en.json`; `koten-i18n-es` and `koten-i18n-ja` add their JSON. Register each installed dictionary in `lib/koten/i18n/dictionaries.ts`:
+
+```ts
+import en from "./messages/en.json";
+import es from "./messages/es.json";
+
+export const labelsByLocale = { en, es } satisfies Record<string, KotenLabels>;
+```
+
+The dictionaries are JSON, so `tsconfig.json` needs `resolveJsonModule: true`; Vite and Next enable it by default.
+
+For a locale without a dictionary, pass a full or partial `labels` object. Unknown keys fall back to English:
+
+```tsx
+<KotenProvider locale="fr-FR" labels={fr} currency="EUR">
+  <App />
+</KotenProvider>
+```
+
+`useKoten()` types `locale` as the installed dictionaries. Use `useKoten<string>()` or `useKoten<"fr-FR">()` when you read a locale that has no installed dictionary. Koten does not provide a content runtime: your product copy stays in your own dictionaries or i18n library.
 
 ## Page shape
 
@@ -174,8 +197,10 @@ const copy = {
   en: { save: "Save", total: (value: number) => `${value} orders` },
 } as const;
 
-const { locale, formatters } = useKoten();
+const { locale } = useKoten();
+const formatters = useKotenFormatters();
+
 <Button>{copy[locale].save}</Button>;
 ```
 
-Dates, money and numbers always go through `formatters`. Use logical CSS properties so the layout mirrors under RTL.
+Dates, money and numbers always go through `useKotenFormatters()`. Use logical CSS properties so the layout mirrors under RTL.

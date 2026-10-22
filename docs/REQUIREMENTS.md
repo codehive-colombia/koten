@@ -111,6 +111,7 @@ Las referencias se usan para **extraer principios**, no para copiar píxeles. El
 | `R-025` | Should | Empezar separado por audiencia. | Dos caminos explícitos: usar el sistema (registry, `KotenProvider`, sin Bun ni clonar) y desarrollar el sistema (monorepo, `bun run dev`, `check`, auditorías), con requisitos y comandos propios. |
 | `R-026` | Should | Runner de los comandos de shadcn configurable. | Selector `npx` / `bunx` en Empezar, portada y páginas de componente/bloque; la preferencia persiste en `localStorage` y todos los comandos copiados la respetan. |
 | `R-027` | Should | Skill portátil para crear piezas que el catálogo no trae. | `koten-design-language` con la esencia de Koten, roles semánticos, marcos de 1 px, radios, sombras solo en overlays, contraste AA, tipografía, densidad, contrato de autoría, ejemplo completo y verificación; referencias en inglés y tokens validados por `ai:check`. |
+| `R-028` | Should | i18n personalizable por el consumidor. | `locale` acepta cualquier BCP 47; el runtime y el inglés base viven en `koten-i18n`; cada idioma adicional es un pack JSON opcional (`koten-i18n-es`, `koten-i18n-ja`) que se registra en `dictionaries.ts`; un locale sin diccionario usa el inglés o los `labels` del provider; ES/JA/EN no son obligatorios. |
 
 ## 6. Requisitos no funcionales
 

@@ -1,12 +1,12 @@
 # Koten UI
 
-> Koten UI is a copy-in React component system for dense, editorial interfaces inspired by classical Japanese web design. It ships 46 primitives, 20 blocks, four themes, three densities and ES/JA/EN support through a shadcn registry.
+> Koten UI is a copy-in React component system for dense, editorial interfaces inspired by classical Japanese web design. It ships 46 primitives, 20 blocks, four themes, three densities and i18n labels for any BCP 47 locale through a shadcn registry.
 
-Koten UI is not an npm package. Components are copied into the project with the shadcn CLI, so the source stays editable. The grammar is built from 1 px frames, warm paper, semantic color roles, system fonts and a 12 px typographic floor. Tokens, theme and density travel in the `koten-theme` registry item.
+Koten UI is not an npm package. Components are copied into the project with the shadcn CLI, so the source stays editable. The grammar is built from 1 px frames, warm paper, semantic color roles, system fonts and a 12 px typographic floor. Tokens, theme and density travel in the `koten-theme` registry item; labels, locale resolution and `Intl` formatters travel in `koten-i18n`, with English as the base and optional `koten-i18n-es` / `koten-i18n-ja` dictionaries.
 
 ## Start
 
-- [Getting started](https://koten.codehive.com.co/start): install the theme, copy primitives and wire KotenProvider.
+- [Getting started](https://koten.codehive.com.co/start): install the theme and i18n base, copy primitives and wire KotenProvider.
 - [AI and agents](https://koten.codehive.com.co/ai): the three access levels, commands and generated artifacts.
 - [Design system](https://koten.codehive.com.co/md/guides/design-system.md): visual grammar, tokens, components, i18n, accessibility and performance.
 - [Recipes](https://koten.codehive.com.co/md/guides/recipes.md): form, dense table, drawer, product card and i18n recipes.

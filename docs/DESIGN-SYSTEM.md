@@ -421,13 +421,26 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 
 ## 7. i18n
 
+Koten separa tres capas y no impone un runtime de contenido:
+
+| Capa | Dueño | Contrato |
+| --- | --- | --- |
+| Labels internos | Koten | `lib/koten/i18n/messages/*.json`; el inglés es la base. |
+| Copy del producto | La app | Diccionarios propios o i18next/FormatJS/Lingui. |
+| Fechas, moneda y números | `Intl` | `useKotenFormatters()`. |
+
 - Los componentes no contienen strings de UI. Todo label pasa por props o por `KotenProvider`.
+- `locale` acepta cualquier BCP 47 (`es`, `ja-JP`, `fr-FR`). ES/JA/EN son los idiomas del catálogo y los diccionarios incluidos, no un requisito del consumidor (`R-004`, `D-049`).
+- El item `koten-i18n` instala el runtime y el inglés base; `koten-i18n-es` y `koten-i18n-ja` agregan su JSON. Cada pack se registra en `lib/koten/i18n/dictionaries.ts`.
+- Los diccionarios son JSON: el `tsconfig` del consumidor necesita `resolveJsonModule` (Vite y Next lo traen por defecto).
+- `labels` en `KotenProvider` acepta un diccionario completo o un override parcial. La base es el diccionario del locale o, si no existe, el inglés; los overrides se aplican al final.
+- `useKoten()` tipa el locale como los diccionarios instalados; para un idioma sin diccionario se usa `useKoten<string>()` o la unión propia de la app.
 - Textos internos: cerrar, anterior, siguiente, vacío, cargando, seleccionar, quitar.
 - `Intl.DateTimeFormat` y `Intl.NumberFormat`.
-- Moneda: JPY sin decimales; EUR/USD con dos.
+- Moneda: JPY sin decimales; EUR/USD con dos. El provider fija `currency` y `timeZone`.
 - Fechas: `2026/10/21 (水)` en JA; `21 oct 2026` en ES; `Oct 21, 2026` en EN.
 - Calendario japonés (令和) como opción, no por defecto.
-- `lang` correcto en `<html>` y en fragmentos.
+- `lang` correcto en `<html>` y en fragmentos; lo declara la app, no el provider.
 - Propiedades lógicas (`ms`, `me`, `ps`, `pe`, `start`, `end`) para RTL best-effort.
 - Evitar alturas fijas en textos; usar `min-height` y `text-wrap: pretty`.
 - Probar ES/EN, que suelen ser más largos que JA.

@@ -2,7 +2,7 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5), con despliegue de producción en <https://koten.codehive.com.co> (`M-005`, `D-043`). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización, registry shadcn, una capa de documentación y skills para agentes (`M-007`, `D-045`) y la skill de autoría `koten-design-language` (`M-010`, `D-048`).
+> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5), con despliegue de producción en <https://koten.codehive.com.co> (`M-005`, `D-043`). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización, registry shadcn, la skill de autoría `koten-design-language` (`M-010`, `D-048`), el i18n personalizable (`M-011`, `D-049`) y una capa de documentación y skills para agentes (`M-007`, `D-045`).
 > **Siguiente:** sin tareas abiertas; el roadmap deja la fase 5 como cierre opcional ya completada.
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
