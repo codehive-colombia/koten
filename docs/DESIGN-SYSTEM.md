@@ -419,6 +419,17 @@ Esto impide que aparezcan `bg-blue-500`, `rounded-xl` o `text-5xl` por accidente
 }
 ```
 
+### Diseñador de temas (`/theme`)
+
+El catálogo expone un diseñador para quien no quiere editar doscientos tokens. **No es un editor de CSS libre**: es una matriz de decisiones curadas.
+
+- **Entradas:** registro (`kanso`, `chirashi`, `daicho`, `sumi`), pigmento (`ai`, `shu`, `kin`, `matcha`), papel (5 pasos), radio (0–3 px) y densidad (`compact`, `default`, `comfortable`).
+- **Derivados:** hover, strong, `primary-fg`, tintes, neutros (`muted`, `faint`, reglas), selección, estados, fondos sólidos, overlays y sombras se calculan desde esas entradas. El usuario no escribe hex.
+- **Bloqueado:** colores libres, tipografía, escala (piso 12 px), espaciado, anchos de borde, sombras, movimiento y el significado de los estados.
+- **Validación:** 11 pares AA (texto, secundario, metadatos, primario, texto sobre primario, foco, bordes de control y texto sobre los cuatro estados sólidos). Si un par falla, **la exportación se bloquea** y se ofrece el paso de papel seguro más cercano. El caso conocido es Shu con los dos papeles más cálidos.
+- **Salida:** un overlay `:root` con valores semánticos para pegar después de `koten-theme`; no reescribe componentes ni duplica tokens. La densidad exportada puede volver a cambiar si el proyecto usa `data-density`.
+- **Estado compartible:** `?ks=registro.pigmento.papel.radio.densidad`. El tema no se aplica al catálogo: solo al espécimen de la página, para que el resto del catálogo siga siendo comparable.
+
 ## 7. i18n
 
 Koten separa tres capas y no impone un runtime de contenido:
@@ -560,6 +571,7 @@ Koten separa tres capas y no impone un runtime de contenido:
 - **Portada (`/`)**: landing editorial del sistema, con layout ancho (sin sidebar de escritorio; header, toggles, menú móvil y footer se conservan). Orden: masthead con hanko, declaración y cifras; placa viva con piezas reales; tres registros con `data-theme` local; índice rápido; sistema en piezas e índice completo; principios y calidad; demos HIKARI y KURA; cierre con instalación por URL.
 - La portada usa datos y componentes reales: la placa responde a tema, densidad e idioma; no hay capturas ni texto en imágenes.
 - Rutas por fundamento (`/tokens/color`, `/tokens/typography`, …) y por componente (`/components/button`, …).
+- **Diseñar un tema (`/theme`)**: cinco parámetros curados (registro, pigmento, papel, radio y densidad), 11 comprobaciones AA, bloqueo de exportación y overlay de tokens; se enlaza desde Temas y la navegación.
 - **Empezar** separa dos caminos: **usar el sistema** (registry de shadcn, sin clonar el repositorio ni instalar Bun) y **desarrollar el sistema** (monorepo, catálogo, demos, auditorías y registry). Cada camino tiene requisitos, pasos numerados y comandos propios.
 - Los comandos de shadcn tienen un selector **npx / bunx** persistente en `localStorage`; la preferencia se comparte entre Empezar, la portada y las páginas de componente y bloque.
 - Pager anterior/siguiente y enlaces profundos compartibles.

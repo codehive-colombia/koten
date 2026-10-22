@@ -113,6 +113,7 @@ La fase 5 completó el registry, Sumi, DatePicker, CommandPalette y la virtualiz
 | `R-027` | Should | Skill portátil para crear piezas que el catálogo no trae. | `koten-design-language` con la esencia de Koten, roles semánticos, marcos de 1 px, radios, sombras solo en overlays, contraste AA, tipografía, densidad, contrato de autoría, ejemplo completo y verificación; referencias en inglés y tokens validados por `ai:check`. |
 | `R-028` | Should | i18n personalizable por el consumidor. | `locale` acepta cualquier BCP 47; el runtime y el inglés base viven en `koten-i18n`; cada idioma adicional es un pack JSON opcional (`koten-i18n-es`, `koten-i18n-ja`) que se registra en `dictionaries.ts`; un locale sin diccionario usa el inglés o los `labels` del provider; ES/JA/EN no son obligatorios. |
 | `R-029` | Should | Documentación directa y listas en lugar de tarjetas. | Requisitos y accesibilidad como listas con reglas; índices de Fundamentos, Bloques y Empezar sin tarjetas; sin boilerplate repetido; referencias de 12 px y alcance vigentes; `bun run check` verde. |
+| `R-030` | Should | Diseñador de temas con guardrails para usuarios que no editan tokens. | Página `/theme` con registro, pigmento de la paleta, papel, radio y densidad; valores derivados; 11 comprobaciones AA; exportación bloqueada si falla; overlay de tokens sobre `koten-theme`; enlaces desde Temas y la navegación. |
 
 ## 6. Requisitos no funcionales
 
@@ -259,6 +260,7 @@ El catálogo es la tercera web y la herramienta de trabajo del sistema.
 - Toggles de tema, densidad e idioma persistidos en URL.
 - Copiar código.
 - Documentación para agentes: `llms.txt`, `llms-full.txt`, Markdown por componente y bloque, y enlaces a las skills.
+- **Diseñador de temas** (`/theme`): registro, pigmento, papel, radio y densidad con valores derivados, validación AA y exportación de un overlay de tokens.
 - **Empezar** separa el camino de quien usa los componentes (registry, sin clonar) del de quien desarrolla el sistema (monorepo, demos, auditorías).
 
 ### Validaciones

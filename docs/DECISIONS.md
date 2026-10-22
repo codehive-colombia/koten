@@ -40,6 +40,7 @@
 - [D-048 · Tercera skill: lenguaje de diseño para crear piezas nuevas](#d-048)
 - [D-049 · i18n del consumidor: diccionarios JSON por idioma y locale BCP 47](#d-049)
 - [D-050 · Documentación directa y listas en lugar de tarjetas](#d-050)
+- [D-051 · Diseñador de temas con parámetros curados, contraste AA y export superpuesto](#d-051)
 
 ---
 
@@ -794,3 +795,22 @@
   - La documentación sigue en ES/JA/EN (`D-025`) y los artefactos para agentes se regeneran desde la misma fuente (`D-045`).
 - **Consecuencias:** Las páginas de componente son más cortas y fáciles de recorrer; la información repetida vive una sola vez y los índices se leen como documentos. Las tarjetas de la portada conservan su función editorial. El cambio es de presentación y copy, no de API ni de tokens.
 - **Alternativas:** Mantener tarjetas en todas las secciones (más peso visual y menos densidad); mover la explicación de instalación a un modal o tooltip (oculta información que el lector necesita al copiar); dejar las metas genéricas (ruido en cada página); recortar también la portada (pierde su función de muestra del sistema).
+
+---
+
+<a id="d-051"></a>
+## D-051 · Diseñador de temas con parámetros curados, contraste AA y export superpuesto
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-013`; precisa `D-004`, `D-011`, `D-035` y `D-044`)
+- **Contexto:** Koten ya tiene cuatro temas funcionales, pero un consumidor que llega al catálogo se enfrenta a más de doscientos tokens. Para adaptar el sistema a su marca tendría que editar `tokens.css`, entender qué valores son semánticos y comprobar contrastes a mano. Esa libertad es la vía más rápida para salirse de la gramática: un radio de 12 px, una fuente distinta o un primario con 3:1 rompen la identidad aunque los componentes sigan iguales. Hacía falta una herramienta que permita **personalizar sin diseñar un sistema nuevo**.
+- **Decisión:**
+  - Se agrega la página **`/theme` · Diseñar un tema**, enlazada desde la navegación de Fundamentos y desde `/tokens/themes`. Trabaja sobre un espécimen propio; no cambia el tema del catálogo.
+  - Solo hay **cinco entradas**: registro (`kanso`, `chirashi`, `daicho`, `sumi`), pigmento de la paleta (`ai`, `shu`, `kin`, `matcha`), papel (5 pasos), radio (0–3 px) y densidad (3). No hay selector de color, campo de hex, fuente, espaciado ni sombra.
+  - Todos los demás valores se **derivan** de esas entradas: hover, strong, `primary-fg`, tintes, neutros (`fg`, `muted`, `faint`, reglas), selección, estados, fondos sólidos, overlays y sombras. Los estados conservan su significado; Sumi mantiene sus sólidos y su `color-scheme`.
+  - Antes de exportar se validan **11 pares WCAG 2.2 AA**: texto, secundario, metadatos, primario como texto, texto sobre primario, foco, bordes de control y texto sobre los cuatro estados sólidos. Si alguno falla, **la copia y la descarga se bloquean**; se ofrece **usar el papel seguro**, que mueve el papel al paso más cercano que cumple sin cambiar el pigmento. El único caso curado que falla es Shu con los papeles 4 y 5.
+  - La salida es un **overlay de tokens** (`:root` con valores semánticos) para pegar al final del `tailwind.css`, después de `koten-theme`. No duplica el tema completo ni reescribe componentes; la densidad exportada puede volver a cambiar si el proyecto usa `data-density`.
+  - El estado vive en la URL con `?ks=registro.pigmento.papel.radio.densidad`, validado y acotado al leerlo; un enlace compartido reproduce el tema. No se guarda en `localStorage` ni se aplica globalmente.
+  - La lógica pura vive en `apps/catalog/src/lib/theme-designer.ts` (paleta, mezclas, luminancia, contraste, serialización y CSS), con tests de todas las combinaciones de registro, pigmento y papel. La página se cubre con tests de interacción, i18n y axe.
+- **Consecuencias:** Un usuario común puede producir un tema coherente en cinco decisiones y once comprobaciones, sin leer el archivo de tokens. La herramienta no permite crear un Koten “alternativo”: la tipografía, la escala, el espaciado, los bordes, las sombras, el movimiento y los estados quedan fuera de su alcance. El resultado sigue siendo un proyecto que depende de `koten-theme`; actualizar tokens de Koten sigue siendo una reinstalación del item. El CSS exportado es editable a mano, así que el contraste puede romperse después de la herramienta (`RISK-018`); la página lo advierte y la documentación pide verificar el resultado con contenido real.
+- **Alternativas:** Un editor libre de todos los tokens (convierte el catálogo en un generador de sistemas y rompe `D-004`); un color picker con validación de contraste (sigue permitiendo cualquier pigmento y diluye la paleta); exportar un `tokens.css` completo (se desincroniza en la siguiente versión y duplica valores); aplicar el tema al catálogo entero (impide comparar y puede volver ilegible la documentación); guardar el tema en `localStorage` (una preferencia personal no debería alterar enlaces compartidos); un paquete o CLI de temas (más superficie que una página estática).

@@ -4,8 +4,8 @@
 > Última actualización: **2026-10-22**
 > Fase actual: **5 — Opcional / posterior** (`done`)
 > Tarea en curso: **ninguna**
-> Última tarea completada: **`M-012`** · documentación directa y listas
-> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable) y **`M-012`** (documentación directa y listas)
+> Última tarea completada: **`M-013`** · diseñador de temas
+> Mejoras puntuales completadas: **`M-001`** (i18n del catálogo), **`M-002`** (source en inglés y Fundamentos para el usuario), **`M-003`** (portada editorial), **`M-004`** (componentes y bloques individuales), **`M-005`** (despliegue de producción), **`M-006`** (aliases y tema del registry), **`M-007`** (documentación para agentes y skills), **`M-008`** (Empezar por audiencia), **`M-009`** (runner npx/bunx), **`M-010`** (skill de lenguaje de diseño), **`M-011`** (i18n personalizable), **`M-012`** (documentación directa y listas) y **`M-013`** (diseñador de temas)
 > Bloqueos: **ninguno**
 
 ## Índice
@@ -123,6 +123,10 @@ ISO 8601: `YYYY-MM-DD`.
 | `D-045` | Documentación para agentes en tres niveles y skills de consumo y diseño. | accepted | [D-045](./docs/DECISIONS.md#d-045) |
 | `D-046` | Empezar se separa en usar el sistema y desarrollar el sistema. | accepted | [D-046](./docs/DECISIONS.md#d-046) |
 | `D-047` | Runner de shadcn configurable y persistente: npx o bunx. | accepted | [D-047](./docs/DECISIONS.md#d-047) |
+| `D-048` | Tercera skill `koten-design-language` para crear piezas nuevas. | accepted | [D-048](./docs/DECISIONS.md#d-048) |
+| `D-049` | i18n del consumidor: diccionarios JSON por idioma y locale BCP 47. | accepted | [D-049](./docs/DECISIONS.md#d-049) |
+| `D-050` | Documentación directa y listas en lugar de tarjetas. | accepted | [D-050](./docs/DECISIONS.md#d-050) |
+| `D-051` | Diseñador de temas con parámetros curados, contraste AA y export superpuesto. | accepted | [D-051](./docs/DECISIONS.md#d-051) |
 
 ---
 
@@ -302,6 +306,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `M-010` | Tercera skill `koten-design-language`: autoría portátil bajo la gramática de Koten (`R-027`). | `done` | Skill instalable por sí sola en cualquier proyecto con Koten; explica la esencia, los roles semánticos, marcos de 1 px, radios de 2–3 px, sombras solo en overlays, contraste 4.5:1/3:1, tipografía, densidad y temas; incluye contrato previo, plantilla, matriz de estados, ejemplo completo, tests y verificación; `/ai` conserva tres niveles y presenta las dos skills de extensión; `ai:check` rechaza tokens `--koten-*` inventados; README, skills/README, DESIGN-SYSTEM, REQUIREMENTS y DECISIONS actualizados. | `skills/koten-design-language/{SKILL.md,references/{tokens,authoring,verification}.md}`; `scripts/build-ai-docs.ts` + `build-ai-docs.test.ts`; `llms.txt`; `apps/catalog/src/pages/{ai,start}.tsx` + `pages.test.tsx`; `skills/README.md`; `README.md`; `docs/DESIGN-SYSTEM.md` §14; `docs/REQUIREMENTS.md` (`R-027`); `D-048`; `R-027`. |
 | `M-011` | i18n personalizable: locale BCP 47, diccionarios JSON por idioma y un único punto de edición (`R-028`). | `done` | El provider acepta cualquier BCP 47; `koten-i18n` instala el runtime y el inglés base en `lib/koten/i18n`; `koten-i18n-es` y `koten-i18n-ja` instalan solo su JSON; `dictionaries.ts` registra los packs; un locale sin diccionario cae al inglés o a `labels`; `/tokens/format`, Empezar, DESIGN-SYSTEM, RECIPES y skills explican las tres capas; `bun run check` verde. | `packages/ui/src/i18n/**`; `scripts/build-registry.ts` + test; `apps/catalog/src/pages/tokens/format.tsx`; `apps/catalog/src/pages/start.tsx`; `docs/{DESIGN-SYSTEM,RECIPES,REQUIREMENTS}.md`; `skills/koten-ui/**`; `D-049`. |
 | `M-012` | Revisión editorial de la documentación y sustitución de tarjetas por listas (`R-029`). | `done` | Requisitos y accesibilidad de componentes/bloques usan listas con reglas; índices de Fundamentos, Bloques y Empezar dejan de ser tarjetas; se retira el boilerplate repetido de instalación, archivos y metas de sección; se corrigen referencias obsoletas a 11 px y al alcance de la v1; README y guías internas quedan en tono directo; `bun run check` verde. | `apps/catalog/src/components/{doc-page,catalog-layout}.tsx`; `apps/catalog/src/pages/{start,ai,overview}.tsx`; `apps/catalog/src/pages/{tokens/index,blocks/index,components/index,tokens/typography}.tsx`; `README.md`; `docs/{DESIGN-SYSTEM,REQUIREMENTS}.md`; `D-050`; `R-029`. |
+| `M-013` | Diseñador de temas con guardrails, validación AA y export de tokens (`R-030`). | `done` | Página `/theme` con registro, pigmento, papel, radio y densidad; el resto de valores se deriva; 11 comprobaciones AA con exportación bloqueada y papel seguro; overlay `:root` para pegar tras `koten-theme`; estado en `?ks=`; enlace desde Temas y la navegación; tests de lógica, interacción, i18n y axe; `qa:a11y` y `qa:overflow` cubren la ruta. | `apps/catalog/src/lib/theme-designer.ts` + `theme-designer.test.ts`; `apps/catalog/src/components/theme-preview.tsx`; `apps/catalog/src/pages/theme.tsx` + `theme.test.tsx`; `apps/catalog/src/pages/tokens/themes.tsx`; `apps/catalog/src/App.tsx`; `apps/catalog/src/data/catalog.ts`; `apps/catalog/src/pages/a11y.test.tsx`; `scripts/qa-a11y.ts`; `scripts/qa-overflow.ts`; `D-051`; `R-030`. |
 
 ---
 
@@ -424,6 +429,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `R-027` | Skill portátil para crear piezas que el catálogo no trae, con la gramática, tokens, forma y contraste de Koten. | `M-010`, `D-048` | `done` |
 | `R-028` | i18n personalizable: cualquier BCP 47, diccionarios JSON por idioma y un único punto de edición. | `M-011`, `D-049` | `done` |
 | `R-029` | Documentación directa: sin repeticiones ni explicaciones fuera de lugar, y listas en lugar de tarjetas en las secciones de lectura. | `M-012`, `D-050` | `done` |
+| `R-030` | Diseñador de temas con parámetros curados, validación AA y export de un overlay de tokens. | `M-013`, `D-051` | `done` |
 
 ---
 
@@ -448,6 +454,7 @@ ISO 8601: `YYYY-MM-DD`.
 | `RISK-015` | Un overlay modal o una lista de datos inestable bloquea la interacción de la página. | Alto | `Select` no modal por defecto, dropdown estándar y `DataTable` con identidad estable; tests de regresión y `D-024`; stress en navegador antes de cerrar. |
 | `RISK-016` | El prefijo del proxy y el `base` de Vite se desincronizan y los assets de las demos caen en el catálogo. | Alto | nginx conserva el prefijo y hace fallback por app; `base` de producción probado con `vite preview`, `docker build`, curls a `/demos/{store,erp}/` y navegador; presupuesto acepta cualquier `base`; variables `VITE_*` para cambiar dominio sin tocar código. |
 | `RISK-017` | La capa de agentes se desactualiza o `npx skills` no puede acceder al repositorio si cambia de visibilidad. | Medio | Generación desde una sola fuente en `predev`/`prebuild`; `bun run ai:check` dentro de `bun run check`; el catálogo sigue funcionando sin skills; documentar el acceso requerido al instalar. |
+| `RISK-018` | Un tema exportado se edita a mano después del diseñador y rompe el contraste o la gramática. | Medio | El diseñador solo acepta parámetros curados y bloquea la exportación si falla AA; el CSS declara que es un overlay y la documentación pide verificar con contenido real; las combinaciones por defecto están cubiertas por tests. |
 
 ---
 
@@ -528,3 +535,4 @@ El detalle operativo está en [AGENTS.md](./AGENTS.md).
 | 2026-10-22 | Mejora puntual `M-010`: tercera skill `koten-design-language`, portátil y enfocada en crear una pieza que el catálogo no trae con la esencia de Koten (roles semánticos, marcos de 1 px, radios de 2–3 px, sombras solo en overlays, contraste AA, tipografía y densidad); `/ai` conserva tres niveles y presenta las dos skills de extensión; `ai:check` valida que cada `--koten-*` citado exista en el tema. `D-048`, `R-027`. | Sesión 039 |
 | 2026-10-22 | Mejora puntual `M-011`: i18n personalizable con cualquier BCP 47, runtime e inglés base en `koten-i18n`, packs JSON por idioma (`koten-i18n-es`, `koten-i18n-ja`), registro en `dictionaries.ts` y documentación de las tres capas en `/tokens/format`, Empezar, RECIPES y skills. `D-049`, `R-028`. | Sesión 040 |
 | 2026-10-22 | Mejora puntual `M-012`: revisión editorial del catálogo y las guías; requisitos y accesibilidad como listas, índices sin tarjetas, menos boilerplate repetido, README y documentos internos más directos, y corrección de referencias obsoletas a 11 px. `D-050`, `R-029`. | Sesión 041 |
+| 2026-10-22 | Mejora puntual `M-013`: página `/theme` para diseñar un tema con cinco parámetros curados (registro, pigmento, papel, radio, densidad), 11 comprobaciones AA, bloqueo de exportación y papel seguro; overlay de tokens para pegar tras `koten-theme`, estado compartible en `?ks=` y enlace desde Temas. `D-051`, `R-030`, `RISK-018`. | Sesión 042 |

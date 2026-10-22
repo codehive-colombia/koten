@@ -2,7 +2,7 @@
 
 Sistema de componentes React con la gramática del web japonés clásico: densidad informativa, marcos de 1 px, papel cálido, tipografía del sistema y jerarquía por reglas. **Chirashi** cubre comercio, **Daichō** backoffice, **Kanso** lectura y **Sumi** el modo oscuro.
 
-> **Estado:** fases 0–5 cerradas, tag `v0.1.0-poc` y despliegue en <https://koten.codehive.com.co>. 46 componentes y 20 bloques documentados, demos HIKARI y KURA en ES/JA/EN, auditorías de accesibilidad y performance, registry shadcn, i18n personalizable y tres skills para agentes.
+> **Estado:** fases 0–5 cerradas, tag `v0.1.0-poc` y despliegue en <https://koten.codehive.com.co>. 46 componentes y 20 bloques documentados, demos HIKARI y KURA en ES/JA/EN, auditorías de accesibilidad y performance, registry shadcn, i18n personalizable, tres skills para agentes y un diseñador de temas con guardrails (`M-013`, `D-051`).
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
 ## Documentación
@@ -86,6 +86,12 @@ npx shadcn@latest add https://koten.codehive.com.co/r/button.json
 ```
 
 En local, `bun run dev` sirve el registry en `http://localhost:5173/r/`. Los items usan los aliases de `components.json` (`@ui`, `@components`, `@lib`) y reescriben los imports al prefijo del proyecto. `koten-theme` escribe tokens, temas y densidad en el `tailwind.css` declarado; no crea una carpeta `styles/`. `koten-i18n` instala el runtime y el inglés; `koten-i18n-es` y `koten-i18n-ja` agregan solo su diccionario.
+
+## Diseñador de temas
+
+La página **`/theme`** permite adaptar Koten sin editar doscientos tokens. Solo se eligen cinco cosas: registro, pigmento de la paleta, papel, radio y densidad. Los valores derivados (hover, tintes, neutros, estados, sombras) se calculan; la tipografía, el espaciado, los bordes, el movimiento y el significado de los estados no se tocan. Antes de exportar se validan 11 pares WCAG 2.2 AA; si alguno falla, la copia y la descarga se bloquean y se ofrece el papel seguro más cercano.
+
+La salida es un archivo `koten-custom.css` con un overlay `:root` de valores semánticos. Se pega al final del `tailwind.css`, **después de `koten-theme`**, y el tema se comparte con `?ks=registro.pigmento.papel.radio.densidad`. La especificación completa está en [DESIGN-SYSTEM.md](./docs/DESIGN-SYSTEM.md) §6.
 
 ## IA y agentes
 

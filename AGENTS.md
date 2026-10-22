@@ -34,6 +34,7 @@ No empieces a escribir código sin leer al menos 1, 2 y 3.
 - No cargar fuentes CJK completas.
 - No bajar de 12 px en texto normal.
 - No usar `outline: none` sin reemplazo visible.
+- Mantener el diseñador de temas (`/theme`) dentro de sus parámetros curados: no agregar colores libres, fuentes, espaciado ni sombras, y no exportar CSS si falla una comprobación AA.
 - Mantener los componentes copiables: imports mínimos, sin dependencias internas ocultas.
 - Si un componente necesita un patrón nuevo, crearlo en `packages/ui/src/components/patterns/` y documentarlo.
 - Si una primitiva de Base UI no cubre el caso, usar HTML nativo y dejarlo anotado.
@@ -196,7 +197,7 @@ AGENTS.md
 
 ## 13. Primer paso según el estado
 
-Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 46 componentes, 20 bloques, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`), la capa de documentación y skills para agentes (`M-007`, `D-045`), la separación de **Empezar** en usar el sistema y desarrollar el sistema (`M-008`, `D-046`), el selector persistente **npx / bunx** (`M-009`, `D-047`), la skill de autoría `koten-design-language` (`M-010`, `D-048`), el i18n personalizable con locale BCP 47 y diccionarios JSON por idioma (`M-011`, `D-049`) y la revisión editorial con listas en lugar de tarjetas (`M-012`, `D-050`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
+Las fases 0 a 5 están cerradas: workspace, catálogo wiki, tokens/temas/densidad, 46 componentes, 20 bloques, los dos demos, las auditorías de fase 4 y los extras de fase 5 (Sumi, DatePicker, CommandPalette, virtualización y registry shadcn), más el despliegue de producción en una imagen Docker con tres puertos internos servidos detrás de Traefik (`M-005`, `D-043`), la capa de documentación y skills para agentes (`M-007`, `D-045`), la separación de **Empezar** en usar el sistema y desarrollar el sistema (`M-008`, `D-046`), el selector persistente **npx / bunx** (`M-009`, `D-047`), la skill de autoría `koten-design-language` (`M-010`, `D-048`), el i18n personalizable con locale BCP 47 y diccionarios JSON por idioma (`M-011`, `D-049`), la revisión editorial con listas en lugar de tarjetas (`M-012`, `D-050`) y el diseñador de temas con guardrails y export de tokens (`M-013`, `D-051`). **No repitas `git init`, el workspace ni `bun install`.** El repo tiene historial de commits; revisa `git status` antes de empezar.
 
 1. Leer `PROGRESS.md`, `ROADMAP.md` y `DECISIONS.md`.
 2. No hay tareas abiertas: cualquier trabajo nuevo entra como `M-*` o una fase 6 con decisión `D-*`.

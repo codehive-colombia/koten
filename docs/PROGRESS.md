@@ -10,7 +10,7 @@
 | --- | --- |
 | Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-012` · documentación directa y listas |
+| Última tarea completada | `M-013` · diseñador de temas |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,32 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 042 — Diseñador de temas (`M-013`)
+
+- **Objetivo:** permitir que un usuario común adapte Koten sin editar doscientos tokens y sin poder romper la gramática: cinco decisiones curadas, contraste validado y un CSS que se superpone al tema instalado.
+- **Hecho:**
+  - **Página `/theme`**: nueva herramienta trilingüe enlazada desde la navegación de Fundamentos y desde **Temas**. Tiene parámetros, espécimen, comprobaciones y exportación; no aplica el tema al catálogo.
+  - **Cinco parámetros**: registro (Kanso/Chirashi/Daichō/Sumi, con preset completo), pigmento de la paleta (Ai/Shu/Kin/Matcha), papel (5 pasos), radio (0–3 px) y densidad (3). No hay selector de color libre, fuente, espaciado, borde ni sombra.
+  - **Derivación**: `theme-designer.ts` calcula hover, strong, `primary-fg`, tintes, neutros, selección, estados, sólidos, overlays, radios y densidad desde esas entradas. Sumi conserva su `color-scheme` y sus sólidos.
+  - **Guardrails**: 11 pares WCAG 2.2 AA en vivo. Si falla alguno, copiar y descargar se deshabilitan; **Usar papel seguro** mueve el papel al paso más cercano que cumple. El caso conocido —Shu con los papeles 4 y 5— se probó en navegador.
+  - **Exportación**: overlay `:root` con valores semánticos, generado para pegar después de `koten-theme`; incluye una advertencia sobre `data-density`. El estado del tema vive en `?ks=registro.pigmento.papel.radio.densidad`, validado al leerlo.
+  - **Espécimen**: producto, pedidos y formulario reales, con paneles, tabla, badges, botones, enlace, input y alerta; usa los tokens derivados y la densidad elegida.
+  - **Docs**: `DESIGN-SYSTEM.md` (§6 y §12), `REQUIREMENTS.md` (`R-030`), `ROADMAP.md` (`M-013`, `D-051`, `R-030`, `RISK-018`), `PROGRESS.md`, `README.md`, `AGENTS.md` y la skill `koten-ui`. La página `/theme` entra en la matriz de `qa:a11y` y `qa:overflow`.
+- **Tareas tocadas:** `M-013` → `done`; `R-030` → `done`.
+- **Decisiones:** `D-051`; `RISK-018`.
+- **Evidencia:**
+  - Lógica: `apps/catalog/src/lib/theme-designer.ts` + `theme-designer.test.ts` (9 tests de presets, combinaciones, contraste, mezclas, serialización y CSS).
+  - UI: `apps/catalog/src/pages/theme.tsx` + `theme.test.tsx` (5 tests: AA inicial, cambio a Sumi y URL, bloqueo/reparación de Shu, ES/JA/EN y portapapeles); `apps/catalog/src/components/theme-preview.tsx`; `pages/tokens/themes.tsx`; `App.tsx`; `data/catalog.ts`; `pages/a11y.test.tsx`; `scripts/qa-a11y.ts`; `scripts/qa-overflow.ts`.
+  - `bun run check` verde: **37 archivos / 250 tests**, Biome, TypeScript, i18n (154 archivos) y `ai:check`.
+  - `bun run build` OK; `bun run budget` → catálogo **263,3 KB inicial / 454,2 KB total**, storefront 122,3 KB, ERP 199,4 KB, 0 fuentes.
+  - `qa:a11y` del catálogo (5173): **66 páginas**, 0 violaciones serious/critical, 0 textos < 12 px y 0 focos sin indicador; **diseñador de tema 6/6** en ES/JA/EN × 1440/390.
+  - `qa:overflow` del catálogo: **96 combinaciones** sin overflow, clipping, truncation ni RTL; diseñador **12/12** en ES/JA/EN × 1440/1280/1024/390.
+- **Sin validar:** lectura con lector de pantalla del diseñador; la copia al portapapeles se cubre con un test que simula `navigator.clipboard`, no con permisos reales del navegador.
+- **Próximo:** ninguna tarea abierta; si se agrega una primitiva o un bloque, `bun run ai:docs` actualiza la capa de agentes.
+- **Bloqueos:** ninguno.
 
 ---
 

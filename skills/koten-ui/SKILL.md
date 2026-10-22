@@ -43,6 +43,10 @@ Do **not** use it to invent a new Koten primitive or to redesign the token syste
 6. **Compose** with the documented props. Prefer blocks for whole screens, primitives for single controls.
 7. **Verify** the result with [references/quality.md](references/quality.md).
 
+### Custom theme without leaving the grammar
+
+When a project needs its own surface values, do not hand-edit the token file. Open the theme designer at `https://koten.codehive.com.co/theme`, choose a register, one palette pigment, a paper step, a radius and a density, and export the `:root` overlay. The designer validates 11 AA pairs and blocks the export when one fails. Paste the overlay at the end of the `tailwind.css` file, after `koten-theme`. It does not expose free colors, fonts, spacing, shadows or motion; if the design needs those, it is a new system, not a Koten theme.
+
 ## Non-negotiable rules
 
 - Use tokens and semantic roles. Never hardcode hex colors, font sizes, radii or shadows.
