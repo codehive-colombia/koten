@@ -8,9 +8,9 @@
 
 | Campo | Valor |
 | --- | --- |
-| Fecha | 2026-10-21 |
+| Fecha | 2026-10-22 |
 | Fase | 5 — Opcional (`done`) · v1 en tag `v0.1.0-poc` |
-| Última tarea completada | `M-009` · selector npx/bunx persistente |
+| Última tarea completada | `M-010` · skill `koten-design-language` |
 | Tarea en curso | ninguna — roadmap completo y producción desplegable |
 | Bloqueos | ninguno |
 | Decisiones abiertas | `Q-005` (licencia) y `Q-006` (matriz de navegadores); el resto cerradas por `D-*` |
@@ -38,6 +38,32 @@ Reglas:
 - Si una tarea queda a medias, dejarla `in_progress` y explicar el estado exacto.
 - Si aparece un bloqueo, marcarlo `blocked` en el roadmap y describirlo acá.
 - La evidencia debe ser verificable: ruta de archivo, comando ejecutado o hash de commit.
+
+---
+
+## 2026-10-22 · Sesión 039 — Skill `koten-design-language` (`M-010`)
+
+- **Objetivo:** dar a los agentes un manual portátil de la esencia de Koten y del criterio para crear una pieza que el catálogo no trae, sin mezclarlo con el trabajo dentro del repositorio.
+- **Hecho:**
+  - **Tercera skill**: `skills/koten-design-language/` con `SKILL.md` y tres referencias. La descripción separa los tres trabajos: consumir (`koten-ui`), extender el repositorio (`koten-design-system`) y crear una pieza local (`koten-design-language`).
+  - **Esencia y reglas**: tesis de sencillez de medios y densidad de información; el marco como unidad; roles semánticos; marcos de 1 px; radios de 2–3 px; sombras solo en overlays; tipografía con piso de 12 px; densidad por tokens; movimiento mínimo; teclado, foco y contraste AA.
+  - **`references/tokens.md`**: dos capas (primitivas vs. roles), tabla completa de roles y utilidades, cómo elegir un rol, contrato de contraste (4.5:1 texto, 3:1 bordes de control y foco), tipografía, forma, densidad, los cuatro temas, extensión local de tokens y anti-patrones.
+  - **`references/authoring.md`**: cuándo crear y cuándo componer, contrato previo, plantilla con CVA/`data-slot`, composición con Base UI (`render`, nunca `asChild`), matriz de estados, contrato de accesibilidad por familia, i18n, ejemplo completo `DefinitionList` con tests y checklist de revisión.
+  - **`references/verification.md`**: procedimiento de contraste con calculadora, matriz de temas/densidades/anchos, guiones de teclado, chequeos automáticos, revisión visual, cuándo escalar y definición de terminado.
+  - **Anti-drift**: `validateSkills` ahora rechaza cualquier `--koten-*` citado por una skill que no esté declarado en `tokens.css` o `globals.css`; hay test de regresión. El inventario y las guías siguen generándose con `ai:docs`.
+  - **Catálogo**: `/ai` mantiene los tres niveles y el nivel 3 presenta las dos skills de extensión/creación; `/start` menciona las tres skills; `llms.txt`, README, `skills/README.md` y `DESIGN-SYSTEM.md` §14 quedan alineados.
+- **Tareas tocadas:** `M-010` → `done`; `R-027` → `done`.
+- **Decisiones:** `D-048`.
+- **Evidencia:**
+  - `skills/koten-design-language/{SKILL.md,references/{tokens,authoring,verification}.md}`.
+  - `scripts/build-ai-docs.ts` + `scripts/build-ai-docs.test.ts`; `llms.txt` regenerado.
+  - `apps/catalog/src/pages/{ai,start}.tsx`; `apps/catalog/src/pages/pages.test.tsx`; `README.md`; `skills/README.md`; `docs/{DESIGN-SYSTEM,REQUIREMENTS,DECISIONS}.md`; `ROADMAP.md`.
+  - `bun run ai:docs` → 46 componentes, 20 bloques, 70 archivos de sitio y 3 archivos rastreados; `bun run ai:check` verde.
+  - `bun run check` verde: **35 archivos / 226 tests**, Biome, TypeScript en 4 workspaces, i18n y `ai:check`.
+  - `bun run build` verde; `bun run budget` → catálogo **263,6/441,0 KB**, storefront 122,3 KB, ERP 199,3 KB, 0 fuentes.
+- **Sin validar:** axe real sobre `/ai` tras el cambio de copy; lectura con lector de pantalla de la página. La skill se probó con `npx skills add` solo de forma indirecta (estructura validada por `ai:check`), no en un proyecto consumidor nuevo.
+- **Próximo:** ninguna tarea abierta.
+- **Bloqueos:** ninguno.
 
 ---
 

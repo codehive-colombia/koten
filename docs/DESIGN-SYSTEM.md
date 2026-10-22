@@ -2,7 +2,7 @@
 
 > **Tesis:** sencillez de medios, densidad de información.
 > La identidad no viene de adornos japoneses, sino de la gramática: marcos, reglas, tipografía, color semántico y ritmo.
-> Última actualización: 2026-10-21.
+> Última actualización: 2026-10-22.
 
 ## 1. Los tres registros
 
@@ -608,14 +608,16 @@ Las skills siguen el estándar [Agent Skills](https://agentskills.io/specificati
 | Skill | Para qué |
 | --- | --- |
 | `koten-ui` | Elegir, instalar, componer, tematizar y verificar una pantalla con las piezas existentes. |
-| `koten-design-system` | Agregar una primitiva o un bloque, crear tokens/temas/densidades y aplicar la gramática a un sistema nuevo. |
+| `koten-design-system` | Agregar una primitiva o un bloque, crear tokens/temas/densidades dentro del repositorio y aplicar la gramática a un sistema nuevo. |
+| `koten-design-language` | Crear una pieza que el catálogo no trae, en cualquier proyecto que ya use Koten: esencia, tokens, marcos, sombras, contraste y accesibilidad. |
 
 Estructura:
 
 - `SKILL.md` corto, con el **qué** y el **cuándo** en `name`/`description`.
-- `references/` con el detalle que solo se carga cuando hace falta: inventario, composición, calidad, gramática, blueprint y extensión.
+- `references/` con el detalle que solo se carga cuando hace falta: inventario, composición, calidad, gramática, blueprint, extensión, tokens y verificación.
 - Referencias relativas, sin rutas absolutas ni secretos.
 - El inventario y los enlaces a guías se generan; no se editan a mano.
+- Cada token `--koten-*` citado por una skill debe existir en `tokens.css`/`globals.css`; `ai:check` falla si una skill inventa uno.
 
 La instalación típica es:
 
@@ -623,12 +625,13 @@ La instalación típica es:
 npx skills add codehive-colombia/koten --list
 npx skills add codehive-colombia/koten --skill koten-ui
 npx skills add codehive-colombia/koten --skill koten-design-system
+npx skills add codehive-colombia/koten --skill koten-design-language
 ```
 
 ### 14.3 Generación y control
 
 - `bun run ai:docs` regenera `apps/catalog/public/llms.txt`, `llms-full.txt`, `md/**` y los archivos rastreados (`llms.txt` raíz y `skills/koten-ui/references/{inventory,guides}.md`).
-- `bun run ai:check` falla si un archivo rastreado está desactualizado o si una skill rompe el frontmatter o una referencia relativa. Forma parte de `bun run check`.
+- `bun run ai:check` falla si un archivo rastreado está desactualizado, si una skill rompe el frontmatter o una referencia relativa, o si cita un token `--koten-*` que el tema no declara. Forma parte de `bun run check`.
 - `predev` y `prebuild` del catálogo generan la capa de agentes junto con el registry, así que el sitio y la imagen de producción nunca publican documentación vieja.
 - El catálogo tiene una página `/ai` con los tres niveles, los comandos y el enlace a los artefactos.
 

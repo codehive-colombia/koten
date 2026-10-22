@@ -2,7 +2,7 @@
 
 > ADR ligero. Cada decisión tiene ID estable y no se renumera.
 > Si una decisión se reemplaza, se agrega una nueva con `supersede a D-00x`.
-> Última actualización: 2026-10-21.
+> Última actualización: 2026-10-22.
 
 ## Índice
 
@@ -37,6 +37,7 @@
 - [D-045 · Documentación para agentes y skills de consumo y diseño](#d-045)
 - [D-046 · Empezar se separa en usar y desarrollar el sistema](#d-046)
 - [D-047 · Runner de shadcn configurable: npx o bunx](#d-047)
+- [D-048 · Tercera skill: lenguaje de diseño para crear piezas nuevas](#d-048)
 
 ---
 
@@ -738,3 +739,20 @@
   - La documentación generada para agentes incluye ambos comandos (`# Node` y `# Bun`), aunque el frontmatter conserva `npx` como forma canónica.
 - **Consecuencias:** Un proyecto Bun copia `bunx` en todas las páginas sin repetir la elección; un proyecto Node sigue viendo `npx`. La preferencia sobrevive a la navegación y a recargar la página. `site.test.ts` cubre ambos runners y `pages.test.tsx` comprueba el cambio, el `localStorage` y la persistencia entre páginas. No se escribe la preferencia en la URL, así que un enlace compartido no impone un runner.
 - **Alternativas:** Duplicar cada comando con dos líneas fijas (más ruido y copy desactualizado); usar la URL (contamina enlaces y `replaceState` con una preferencia personal); un provider nuevo (más ceremonia para un valor global simple); detectar Bun por heurística (frágil: el navegador no sabe qué runner usa el proyecto).
+
+---
+
+<a id="d-048"></a>
+## D-048 · Tercera skill: lenguaje de diseño para crear piezas nuevas
+
+- **Fecha:** 2026-10-22
+- **Estado:** `accepted` (`M-010`; precisa `D-045`, `D-020` y `D-044`)
+- **Contexto:** Las dos skills existentes cubren **consumir** las piezas instaladas (`koten-ui`) y **extender el repositorio** de Koten (`koten-design-system`), pero ninguna resuelve el caso más común en un proyecto que ya usa Koten: hace falta una pieza que el catálogo no trae. Sin una guía portátil, un agente improvisa una tarjeta con sombra, un botón pill o un color hardcodeado, o copia una primitiva y la renombra. `koten-design-system` no sirve para ese caso porque está escrita para el monorepo: rutas de `packages/ui`, páginas del catálogo, registry y puerta de calidad del repositorio.
+- **Decisión:**
+  - Se agrega una tercera skill, **`koten-design-language`**, portátil y enfocada en la **esencia** de Koten y en la autoría local de una pieza que no existe en la base. Se instala sola en cualquier proyecto que ya tenga los tokens de Koten.
+  - Las tres skills tienen un trabajo distinto y descripciones que no se solapan: `koten-ui` instala y compone; `koten-design-system` agrega primitivas, bloques, tokens, temas o densidades **dentro del repositorio**; `koten-design-language` crea una pieza **en el proyecto del consumidor** sin forkear ni inventar valores.
+  - Contenido de `koten-design-language`: `SKILL.md` con la tesis, el orden de trabajo y las reglas no negociables; `references/tokens.md` con las dos capas, todos los roles y utilidades, el contrato de contraste (4.5:1 / 3:1), forma, tipografía, densidad y temas; `references/authoring.md` con el contrato previo, plantilla, CVA, composición con Base UI, matriz de estados, i18n, un ejemplo completo (`DefinitionList`) y tests; `references/verification.md` con el procedimiento de contraste, la matriz de temas/densidades/anchos, guiones de teclado y la definición de terminado.
+  - Los artefactos siguen en **inglés** (`D-045`). La skill es documentación escrita a mano, no generada, porque el significado de un rol y el juicio de autoría no se derivan del CSS; lo que sí se valida automáticamente es que **cada `--koten-*` citado exista** en `tokens.css` o `globals.css`. `bun run ai:check` falla ante un token inventado, una referencia rota o un frontmatter inválido.
+  - El catálogo mantiene **tres niveles** de acceso (lectura, consumo, extensión); el nivel de extensión ahora presenta las dos skills, `koten-design-system` y `koten-design-language`. Se actualizan `/ai`, `/start`, `llms.txt`, el README, `skills/README.md` y `DESIGN-SYSTEM.md` §14.
+- **Consecuencias:** Un agente elige la skill por contexto: instalar piezas, cambiarlas en el sistema o crear una pieza nueva. La skill nueva no depende de rutas del monorepo, así que viaja con el consumidor. La gramática se explica dos veces desde ángulos distintos (sistema vs. autoría), con riesgo de divergencia contenido por la validación de tokens y por la regla de que los tokens son la fuente de verdad. La descripción de `koten-design-language` debe seguir siendo explícita sobre lo que **no** hace para no activarse en tareas de repositorio.
+- **Alternativas:** Fusionarla con `koten-design-system` (la descripción se vuelve ambigua, la mitad del contenido son rutas y trámites del monorepo que el consumidor no tiene); publicarla en un repositorio aparte (deja de viajar con el registry y con `npx skills add`); confiar solo en `llms.txt` y los Markdown generados (describen piezas existentes, no el juicio para crear una nueva); generar `tokens.md` desde el CSS (perdería el significado de cada rol, el contraste y las reglas de composición, que son la parte que el agente necesita).

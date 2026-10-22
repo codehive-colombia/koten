@@ -2,7 +2,7 @@
 
 Sistema de componentes React inspirado en el web japonés clásico: densidad informativa, marcos de 1px, papel cálido, tipografía del sistema y jerarquía por reglas. La misma gramática visual se adapta a dos registros: **Chirashi** para comercio y **Daichō** para backoffice.
 
-> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5), con despliegue de producción en <https://koten.codehive.com.co> (`M-005`, `D-043`). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización, registry shadcn y una capa de documentación y skills para agentes (`M-007`, `D-045`).
+> **Estado:** fases 0–5 cerradas (**`v0.1.0-poc`** + fase 5), con despliegue de producción en <https://koten.codehive.com.co> (`M-005`, `D-043`). 46 componentes y 20 bloques documentados en páginas individuales; storefront HIKARI y ERP KURA en JA/ES/EN, auditados con axe, con presupuestos de bundle, tema oscuro Sumi, DatePicker, CommandPalette, virtualización, registry shadcn, una capa de documentación y skills para agentes (`M-007`, `D-045`) y la skill de autoría `koten-design-language` (`M-010`, `D-048`).
 > **Siguiente:** sin tareas abiertas; el roadmap deja la fase 5 como cierre opcional ya completada.
 > **Fuente de verdad:** [ROADMAP.md](./ROADMAP.md).
 
@@ -17,7 +17,7 @@ Sistema de componentes React inspirado en el web japonés clásico: densidad inf
 | [docs/PROGRESS.md](./docs/PROGRESS.md) | Bitácora append-only de sesiones y handoff. |
 | [docs/RECIPES.md](./docs/RECIPES.md) | Recetas copiables: formulario, tabla, drawer, tarjeta, i18n y checklist. |
 | [llms.txt](./llms.txt) | Índice de documentación para agentes: componentes, bloques, guías y skills. |
-| [skills/](./skills) | Skills `koten-ui` y `koten-design-system` para consumir y extender el sistema. |
+| [skills/](./skills) | Skills `koten-ui`, `koten-design-system` y `koten-design-language` para consumir, extender y crear piezas. |
 | [docs/qa/](./docs/qa/) | Capturas de QA visual por fecha, con la matriz de viewports. |
 | [AGENTS.md](./AGENTS.md) | Protocolo para retomar el proyecto en otra sesión o con otro agente. |
 
@@ -111,12 +111,14 @@ El sistema se puede leer, instalar y extender con un agente. Hay tres niveles, t
 | --- | --- | --- |
 | Lectura | `/llms.txt`, `/llms-full.txt`, `/md/components/<slug>.md`, `/md/blocks/<categoría>/<slug>.md` | Índice, corpus y una página por pieza. El catálogo muestra el enlace **Markdown para agentes** en cada página. |
 | Consumo | `skills/koten-ui` | Elegir, instalar, componer, tematizar y verificar una pantalla. |
-| Extensión | `skills/koten-design-system` | Agregar primitivas o bloques, tokens, temas, densidades y aplicar la gramática a un sistema nuevo. |
+| Extensión | `skills/koten-design-system` | Agregar primitivas o bloques, tokens, temas y densidades dentro del repositorio, y aplicar la gramática a un sistema nuevo. |
+| Autoría | `skills/koten-design-language` | Crear una pieza que el catálogo no trae, en cualquier proyecto que ya use Koten, con roles semánticos, marcos, sombras y contraste. |
 
 ```bash
 npx skills add codehive-colombia/koten --list
 npx skills add codehive-colombia/koten --skill koten-ui
 npx skills add codehive-colombia/koten --skill koten-design-system
+npx skills add codehive-colombia/koten --skill koten-design-language
 ```
 
 En producción, el sitio publica <https://koten.codehive.com.co/llms.txt> y <https://koten.codehive.com.co/llms-full.txt>. La página `/ai` explica los tres niveles y los comandos. `predev` y `prebuild` regeneran la capa de agentes junto con el registry; `bun run ai:check` corre dentro de `bun run check`. Las skills siguen el estándar [Agent Skills](https://agentskills.io/specification) y se instalan con [`npx skills`](https://github.com/vercel-labs/skills).
@@ -177,7 +179,7 @@ packages/
     src/styles/globals.css
     src/lib/
 infra/nginx/    # runtime de la imagen de producción
-skills/         # skills para agentes (koten-ui, koten-design-system)
+skills/         # skills para agentes (koten-ui, koten-design-system, koten-design-language)
 scripts/        # registry, documentación para agentes y QA
 Dockerfile
 docker-compose.yml
